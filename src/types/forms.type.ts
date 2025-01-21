@@ -206,6 +206,58 @@ export interface IArticleForm {
   categoryId: string
 }
 
+export interface IUserForm {
+  id?: string | undefined
+  userType: number
+  roleIds: string[]
+  isActive: boolean
+  thumbnail: File | null
+  idCardThumbnail: File | null
+  mobileNumber: string
+  passCode:string
+  //optional 
+  firstName: string
+  familyName: string
+  fatherName?: string
+  telePhone?: string
+  city: {
+    id?: number
+    name: string
+    slug?: string
+    province_id?: number
+  }
+  province: {
+    id?: number
+    name: string
+    slug?: string
+  }
+  postalCode?: string
+  firstAddress?: string
+  secondAddress?: string
+  birthDate?: string
+  idNumber?: string
+  nationalCode?: string
+  bankAccountNumber?: string
+  shabaNumber?: string
+  note?: string
+
+  // Supplier
+  storeName?: string
+  storeTelephone?: string
+  storeAddress?: string
+  bussinessLicenseNumber?: string
+  // store setting
+  isActiveAddProduct?: boolean
+  isPublishProduct?: boolean
+  isSelectedAsSpecialSeller?: boolean
+  commissionType?: number
+  percentageValue?: string
+  sellerPerformance?: string
+  timelySupply?: string
+  shippingCommitment?: string
+  noReturns?: string
+}
+
 export interface IGeneralSettingForm {
   id?: string | undefined
   title: string

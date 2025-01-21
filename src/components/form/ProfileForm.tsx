@@ -62,23 +62,7 @@ const ProfileForm: React.FC<Props> = ({ onSubmit, isLoading, defaultValues }) =>
     mode: 'onChange',
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [birthDate, setBirthDate] = useState({ day: '', month: '', year: '' })
 
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    // if (defaultValues?.birthDate !== '' && defaultValues?.birthDate != '--') {
-    //   const defaultBirthDate = new Date(defaultValues?.birthDate)
-    //   const jalaaliBirthDate = toJalaali(defaultBirthDate)
-    //   setValue(
-    //     'birthDate',
-    //     `${digitsEnToFa(jalaaliBirthDate.year)}/${digitsEnToFa(jalaaliBirthDate.month)}/${digitsEnToFa(
-    //       jalaaliBirthDate.day
-    //     )}`
-    //   )
-    // }
-    // reset(defaultValues)
-  }, [defaultValues, reset, setValue])
 
   const handleDateChange = (field: 'day' | 'month' | 'year', value: string) => {
     const birthDate = watch('birthDate') || ''
@@ -183,9 +167,7 @@ const ProfileForm: React.FC<Props> = ({ onSubmit, isLoading, defaultValues }) =>
             control={control}
             errors={errors.nationalCode}
             name="nationalCode"
-            // type="number"
             inputMode="numeric"
-            // {...field} inputMode="numeric" control={control} errors={errors.nationalCode} label="کد ملی (اختیاری)"
           />
         )}
       />
@@ -207,7 +189,7 @@ const ProfileForm: React.FC<Props> = ({ onSubmit, isLoading, defaultValues }) =>
             </div>
             <div
               onClick={handleModalOpen}
-              className="bg-[#e90089] flex justify-center gap-3 hover:bg-[#e90088c0] text-center cursor-pointer border-[#e90089] rounded-l-md border text-sm text-white py-2.5 mt-1.5 w-full"
+              className="bg-[#e90089] flex justify-center gap-3 hover:bg-[#e90088c0] text-center cursor-pointer border-[#e90089] rounded-l-md border text-sm text-white h-[38px] lg:h-[42px] items-center  whitespace-nowrap mt-1.5 w-full"
             >
               <FaRegCalendarAlt  className='w-5 h-5 text-white'  />
               انتخاب تاریخ تولد

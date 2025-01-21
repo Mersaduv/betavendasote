@@ -6,6 +6,61 @@ export const articleFormValidationSchema = Yup.object().shape({
   thumbnail: Yup.mixed().required('تصویر نمایه الزامی است'),
 })
 
+export const userFormValidationSchema = Yup.object().shape({
+  id: Yup.string().optional(),
+  userType: Yup.number().required('نوع کاربر الزامی است'),
+  roleIds: Yup.array()
+    .optional(),
+  isActive: Yup.boolean().required('وضعیت فعال بودن الزامی است'),
+  thumbnail: Yup.mixed().optional(),
+  idCardThumbnail: Yup.mixed().optional(),
+  mobileNumber: Yup.string()
+    .required('شماره موبایل الزامی است')
+    .matches(/^09[0-9]{9}$/, 'شماره موبایل معتبر نیست'),
+  passCode: Yup.string()
+    .required('کد عبور الزامی است')
+    .min(4, 'کد عبور باید حداقل 4 کاراکتر باشد'),
+  firstName: Yup.string().required('نام الزامی است'),
+  familyName: Yup.string().required('نام خانوادگی الزامی است'),
+  fatherName: Yup.string().optional(),
+  telePhone: Yup.string().optional(),
+  city: Yup.object().shape({
+    id: Yup.number().optional(),
+    name: Yup.string().optional(),
+    slug: Yup.string().optional(),
+    province_id: Yup.number().optional(),
+  }),
+  province: Yup.object().shape({
+    id: Yup.number().optional(),
+    name: Yup.string().optional(),
+    slug: Yup.string().optional(),
+  }),
+  postalCode: Yup.string().optional(),
+  firstAddress: Yup.string().optional(),
+  secondAddress: Yup.string().optional(),
+  birthDate: Yup.string().optional(),
+  idNumber: Yup.string().optional(),
+  nationalCode: Yup.string()
+    .optional()
+    .matches(/^[0-9]{10}$/, 'کد ملی معتبر نیست'),
+  bankAccountNumber: Yup.string().optional(),
+  shabaNumber: Yup.string().optional(),
+  note: Yup.string().optional(),
+  storeName: Yup.string().optional(),
+  storeTelephone: Yup.string().optional(),
+  storeAddress: Yup.string().optional(),
+  bussinessLicenseNumber: Yup.string().optional(),
+  isActiveAddProduct: Yup.boolean().optional(),
+  isPublishProduct: Yup.boolean().optional(),
+  isSelectedAsSpecialSeller: Yup.boolean().optional(),
+  commissionType: Yup.number().optional(),
+  percentageValue: Yup.string().optional(),
+  sellerPerformance: Yup.string().optional(),
+  timelySupply: Yup.string().optional(),
+  shippingCommitment: Yup.string().optional(),
+  noReturns: Yup.string().optional(),
+})
+
 export const registerSchema = Yup.object().shape({
   name: Yup.string()
     .required('نام و نام خانوادگی  لازم است ثبت شود')

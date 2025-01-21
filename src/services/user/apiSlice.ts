@@ -8,8 +8,8 @@ import type {
   MsgResult,
   MsgResultSecond,
 } from './types'
-import { getToken } from '@/utils'
-import { ServiceResponse } from '@/types'
+import { generateQueryParams, getToken } from '@/utils'
+import { IPagination, IPermission, IRole, QueryParams, ServiceResponse } from '@/types'
 
 export const userApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -74,6 +74,57 @@ export const userApiSlice = baseApi.injectEndpoints({
     //   }),
     //   invalidatesTags: ['User'],
     // }),
+
+    upsertUser: builder.mutation<ServiceResponse<boolean>, FormData>({
+      query: (body) => ({
+        url: '/api/user',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body,
+      }),
+    }),
+
+    getRoles: builder.query<ServiceResponse<IPagination<IRole[]>>, QueryParams>({
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/roles?${queryParams}`,
+          method: 'GET',
+        }
+      },
+      providesTags: (result) =>
+        result?.data?.data
+          ? [
+              ...result.data.data.map(({ id }) => ({
+                type: 'Roles' as const,
+                id: id,
+              })),
+              'Roles',
+            ]
+          : ['Roles'],
+    }),
+
+    getPermissions: builder.query<ServiceResponse<IPagination<IPermission[]>>, QueryParams>({
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/permissions?${queryParams}`,
+          method: 'GET',
+        }
+      },
+      providesTags: (result) =>
+        result?.data?.data
+          ? [
+              ...result.data.data.map(({ id }) => ({
+                type: 'Permissions' as const,
+                id: id,
+              })),
+              'Permissions',
+            ]
+          : ['Permissions'],
+    }),
   }),
 })
 
@@ -83,4 +134,7 @@ export const {
   useGetUserAddressInfoQuery,
   useAddUserAddressMutation,
   useEditUserAddressMutation,
+  useUpsertUserMutation,
+  useGetPermissionsQuery,
+  useGetRolesQuery,
 } = userApiSlice

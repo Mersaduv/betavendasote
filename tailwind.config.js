@@ -17,6 +17,7 @@ module.exports = {
     extend: {
       fontFamily: {
         iransans: 'IRANSansWeb',
+        iranyekan: ['IRANYekan', 'sans-serif'],
       },
       boxShadow: {
         '3xl': '0 0 10px 3px rgba(0,0,0,0.08)',

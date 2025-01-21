@@ -36,7 +36,9 @@ const apiSlice = createApi({
     'Redirects',
     'Copyright',
     'ColumnFooter',
-    'StoreBrands'
+    'StoreBrands',
+    'Permissions',
+    'Roles'
   ],
   endpoints: (builder) => ({}),
 })

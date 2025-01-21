@@ -593,7 +593,7 @@ const ArticleForm: React.FC<Props> = (props) => {
                 ) : (
                   <div className="flex px-10 py-10 pt-6 flex-col xs:flex-row">
                     <label
-                      htmlFor="title"
+                      htmlFor="isActive"
                       className="flex items-center justify-center xs:py-0 py-2 px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                     >
                       <img className="w-5 h-5" src="/assets/svgs/duotone/eye.svg" alt="" />

@@ -1,5 +1,6 @@
 @import 'tailwindcss/base';
 @import '/fonts/iransans.css';
+@import '/fonts/iranyekan.css';
 @import '/abstracts';
 
 @import 'tailwindcss/components';

@@ -43,20 +43,7 @@ import { HandleResponse } from '../shared'
 import { useAppDispatch } from '@/hooks'
 import { showAlert } from '@/store'
 import { DesignItemForm, StoreBrandForm, StoreCategoryForm } from '../designs'
-const fetchImageAsFile = async (url: string): Promise<File> => {
-  try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      console.error(`Failed to fetch image from `)
-    }
-    const blob = await response.blob()
-    const fileName = url.split('/').pop()
-    return new File([blob], fileName || 'image.jpg', { type: blob.type })
-  } catch (error) {
-    console.error(`Failed to fetch image from ${url}:`, error)
-    throw error
-  }
-}
+
 interface FormData {
   sliders: ISliderForm[]
   slidersIsActive: boolean
@@ -92,30 +79,50 @@ const MainPageAdsForm: React.FC = () => {
     data: designItemsData,
     isLoading: isLoadingDesignItems,
     isError: isErrorDesignItems,
+    refetch: designItemRefetch,
   } = useGetDesignItemsQuery()
   const {
     data: storeCategoriesData,
     isLoading: isLoadingStoreCategories,
     isError: isErrorStoreCategories,
+    refetch: storeCategoriesRefetch,
   } = useGetStoreCategoriesQuery()
   const {
     data: storeBrandsData,
     isLoading: isLoadingStoreBrands,
     isError: isErrorStoreBrands,
+    refetch: storeBrandsRefetch,
   } = useGetStoreBrandsQuery()
 
-  const { data: headerTextData, isLoading: isLoadingHeaderText, isError: isErrorHeaderText } = useGetHeaderTextQuery()
-  const { data: sliderData, isLoading: isLoadingSlider, isError: isErrorSlider } = useGetAllSlidersQuery()
-  const { data: bannerData, isLoading: isLoadingBanner, isError: isErrorBanner } = useGetAllBannersQuery()
+  const {
+    data: headerTextData,
+    isLoading: isLoadingHeaderText,
+    isError: isErrorHeaderText,
+    refetch: headerTextRefetch,
+  } = useGetHeaderTextQuery()
+  const {
+    data: sliderData,
+    isLoading: isLoadingSlider,
+    isError: isErrorSlider,
+    refetch: sliderRefetch,
+  } = useGetAllSlidersQuery()
+  const {
+    data: bannerData,
+    isLoading: isLoadingBanner,
+    isError: isErrorBanner,
+    refetch: bannerRefetch,
+  } = useGetAllBannersQuery()
   const {
     data: articleBannerData,
     isLoading: isLoadingArticleBanner,
     isError: isErrorArticleBanner,
+    refetch: articleBannerRefetch,
   } = useGetAllArticleBannersQuery()
   const {
     data: articleData,
     isLoading: isLoadingArticle,
     isError: isErrorArticle,
+    refetch: articleRefetch,
   } = useGetArticlesQuery({
     page: 1,
     pageSize: 99999,
@@ -125,6 +132,7 @@ const MainPageAdsForm: React.FC = () => {
     data: footerBannerData,
     isLoading: isLoadingFooterBanner,
     isError: isErrorFooterBanner,
+    refetch: footerBannerRefetch,
   } = useGetAllFooterBannersQuery()
 
   // Upsert
@@ -247,6 +255,62 @@ const MainPageAdsForm: React.FC = () => {
     },
   ] = useDeleteDesignItemsMutation()
 
+  const handleAllRefetch = () => {
+    designItemRefetch()
+    storeCategoriesRefetch()
+    storeBrandsRefetch()
+    headerTextRefetch()
+    sliderRefetch()
+    bannerRefetch()
+    articleBannerRefetch()
+    articleRefetch()
+    footerBannerRefetch()
+  }
+
+  useEffect(() => {
+    if (isUpsertSuccessDesignItems) handleAllRefetch()
+    if (isUpsertSuccessStoreCategory) handleAllRefetch()
+    if (isUpsertSuccessStoreBrand) handleAllRefetch()
+    if (isUpsertSuccessHeaderText) handleAllRefetch()
+    if (isUpsertSuccessSlider) handleAllRefetch()
+    if (isUpsertSuccessBanner) handleAllRefetch()
+    if (isUpsertSuccessArticleBanner) handleAllRefetch()
+    if (isUpsertSuccessFooterBanner) handleAllRefetch()
+
+    if (isSuccessDeleteStoreCategory) handleAllRefetch()
+    if (isSuccessDeleteStoreBrand) handleAllRefetch()
+    if (isSuccessDelete) handleAllRefetch()
+    if (isSuccessDesignItemDelete) handleAllRefetch()
+  }, [
+    isUpsertSuccessDesignItems,
+    isUpsertSuccessStoreCategory,
+    isUpsertSuccessStoreBrand,
+    isUpsertSuccessHeaderText,
+    isUpsertSuccessSlider,
+    isUpsertSuccessBanner,
+    isUpsertSuccessArticleBanner,
+    isUpsertSuccessFooterBanner,
+    isSuccessDeleteStoreCategory,
+    isSuccessDeleteStoreBrand,
+    isSuccessDelete,
+    isSuccessDesignItemDelete,
+  ])
+  const fetchImageAsFile = async (url: string): Promise<File> => {
+    try {
+      const response = await fetch(url)
+      if (!response.ok) {
+        console.error(`Failed to fetch image from `)
+        handleAllRefetch()
+      }
+      const blob = await response.blob()
+      const fileName = url.split('/').pop()
+      return new File([blob], fileName || 'image.jpg', { type: blob.type })
+    } catch (error) {
+      console.error(`Failed to fetch image from ${url}:`, error)
+      handleAllRefetch()
+      throw error
+    }
+  }
   const methods: UseFormReturn<FormData> = useForm<FormData>({
     defaultValues: {
       textMarquee: {
@@ -304,7 +368,7 @@ const MainPageAdsForm: React.FC = () => {
       if (sliderData?.data) {
         return await Promise.all(
           sliderData.data.map(async (slider) => {
-            const imageFile = await fetchImageAsFile(slider.image.imageUrl)
+            const imageFile = slider.image && (await fetchImageAsFile(slider.image.imageUrl))
             return {
               id: slider.id,
               thumbnail: imageFile,
@@ -322,21 +386,21 @@ const MainPageAdsForm: React.FC = () => {
     const loadDesignItemImages = async () => {
       if (designItemsData?.data) {
         return await Promise.all(
-          designItemsData.data.map(async (designItem) => {
-            const imageFile = designItem.image ? await fetchImageAsFile(designItem.image.imageUrl) : null
-            const item: IDesignItemForm = {
-              id: designItem.id,
-              thumbnail: imageFile,
-              title: designItem.title,
-              link: designItem.link,
-              type: designItem.type,
-              index: designItem.index,
-              created: designItem.created,
-              lastUpdated: designItem.lastUpdated,
-            }
-
-            if (designItem.type === 'lists') listItems.push(item)
-          })
+          designItemsData.data
+            .filter((item) => item.type === 'lists')
+            .map(async (designItem) => {
+              const imageFile = designItem.image ? await fetchImageAsFile(designItem.image.imageUrl) : null
+              return {
+                id: designItem.id,
+                thumbnail: imageFile,
+                title: designItem.title,
+                link: designItem.link,
+                type: designItem.type,
+                index: designItem.index,
+                created: designItem.created,
+                lastUpdated: designItem.lastUpdated,
+              }
+            })
         )
       }
       return []
@@ -346,7 +410,7 @@ const MainPageAdsForm: React.FC = () => {
       if (bannerData?.data) {
         return await Promise.all(
           bannerData.data.map(async (banner) => {
-            const imageFile = await fetchImageAsFile(banner.image.imageUrl)
+            const imageFile = banner.image && (await fetchImageAsFile(banner.image.imageUrl))
             return {
               id: banner.id,
               index: banner.index,
@@ -380,7 +444,7 @@ const MainPageAdsForm: React.FC = () => {
       if (footerBannerData?.data) {
         return await Promise.all(
           footerBannerData.data.map(async (banner) => {
-            const imageFile = await fetchImageAsFile(banner.image.imageUrl)
+            const imageFile = banner.image && await fetchImageAsFile(banner.image.imageUrl)
             return {
               id: banner.id,
               thumbnail: imageFile,
@@ -396,35 +460,9 @@ const MainPageAdsForm: React.FC = () => {
     }
 
     const loadAllData = async () => {
-      const [slidersWithFiles, bannersWithFiles, articleBanners, footerBannersWithFiles] = await Promise.all([
-        loadSliderImages(),
-        loadBannerImages(),
-        loadArticleBanners(),
-        loadFooterBannerImages(),
-        // loadDesignItemImages(),
-      ])
-      const listItemsLoad: IDesignItemForm[] = []
-      if (designItemsData?.data) {
-        await Promise.all(
-          designItemsData.data.map(async (designItem) => {
-            const imageFile = designItem.image ? await fetchImageAsFile(designItem.image.imageUrl) : null
-            const item: IDesignItemForm = {
-              id: designItem.id,
-              thumbnail: imageFile,
-              title: designItem.title,
-              link: designItem.link,
-              type: designItem.type,
-              index: designItem.index,
-              created: designItem.created,
-              lastUpdated: designItem.lastUpdated,
-            }
-
-            if (designItem.type === 'lists') listItemsLoad.push(item)
-          })
-        )
-      }
-
-      setListItems(listItemsLoad)
+      const [slidersWithFiles, bannersWithFiles, articleBanners, footerBannersWithFiles, listItems] = await Promise.all(
+        [loadSliderImages(), loadBannerImages(), loadArticleBanners(), loadFooterBannerImages(), loadDesignItemImages()]
+      )
       if (storeCategoriesData?.data) {
         setStoreCategories(storeCategoriesData.data)
       }
@@ -810,6 +848,7 @@ const MainPageAdsForm: React.FC = () => {
     isUpsertLoadingStoreBrand ||
     isUpsertDesignItemsSetting
 
+  if (isLoadingSlider || isLoadingBanner || isLoadingDesignItems) return <div>loadingComponent..</div>
   return (
     <>
       <FormProvider {...methods}>

@@ -41,7 +41,7 @@ const Combobox: React.FC<Props> = (props) => {
   // ? Render(s)
   return (
     <HUICombobox value={field.value} name={field.name} onChange={field.onChange}>
-      <div className="relative max-w-xl">
+      <div className="relative">
         <div className="relative w-full cursor-default overflow-hidden rounded-lg border border-gray-200 bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
           <HUICombobox.Input
             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 outline-none focus:ring-0"

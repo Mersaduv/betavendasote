@@ -40,20 +40,7 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm, UseFormReturn } from 'react-hook-form'
-const fetchImageAsFile = async (url: string): Promise<File> => {
-  try {
-    const response = await fetch(url)
-    if (!response.ok) {
-      console.error(`Failed to fetch image from `)
-    }
-    const blob = await response.blob()
-    const fileName = url.split('/').pop()
-    return new File([blob], fileName || 'image.jpg', { type: blob.type })
-  } catch (error) {
-    console.error(`Failed to fetch image from ${url}:`, error)
-    throw error
-  }
-}
+
 interface FormData {
   designItems: IDesignItemForm[]
   sloganFooter: ISloganFooter
@@ -80,19 +67,35 @@ const Footer: NextPage = () => {
     data: designItemsData,
     isLoading: isLoadingDesignItems,
     isError: isErrorDesignItems,
+    refetch: refetchDesignItems, // اضافه شد
   } = useGetDesignItemsQuery()
+
   const {
     data: sloganFooterData,
     isLoading: isLoadingSloganFooter,
     isError: isErrorSloganFooter,
+    refetch: refetchSloganFooter, // اضافه شد
   } = useGetSloganFooterQuery()
 
-  const { data: supportData, isLoading: isLoadingSupport, isError: isErrorSupport } = useGetSupportQuery()
-  const { data: copyrightData, isLoading: isLoadingCopyright, isError: isErrorCopyright } = useGetCopyrightQuery()
+  const {
+    data: supportData,
+    isLoading: isLoadingSupport,
+    isError: isErrorSupport,
+    refetch: refetchSupport, // اضافه شد
+  } = useGetSupportQuery()
+
+  const {
+    data: copyrightData,
+    isLoading: isLoadingCopyright,
+    isError: isErrorCopyright,
+    refetch: refetchCopyright, // اضافه شد
+  } = useGetCopyrightQuery()
+
   const {
     data: columnFootersData,
     isLoading: isLoadingColumnFooter,
     isError: isErrorColumnFooter,
+    refetch: refetchColumnFooters, // اضافه شد
   } = useGetColumnFootersQuery()
 
   // ? State
@@ -102,6 +105,7 @@ const Footer: NextPage = () => {
   const [columnFooters, setColumnFooters] = useState<IColumnFooter[]>([])
   const [deletedColumnFooter, setDeletedColumnFooter] = useState<IColumnFooter[]>([])
   const [deletedFooterArticleColumn, setDeletedFooterArticle] = useState<IFooterArticleColumn[]>([])
+
   // ? Upsert
   const [
     upsertDesignItems,
@@ -164,6 +168,7 @@ const Footer: NextPage = () => {
       isLoading: isLoadingDelete,
     },
   ] = useDeleteDesignItemsMutation()
+
   const [
     deleteColumnFooter,
     {
@@ -186,6 +191,55 @@ const Footer: NextPage = () => {
     },
   ] = useDeleteFooterArticleColumnMutation()
 
+  // تابع برای refetch همه کوئری‌ها
+  const handleAllRefetch = () => {
+    refetchDesignItems()
+    refetchSloganFooter()
+    refetchSupport()
+    refetchCopyright()
+    refetchColumnFooters()
+  }
+
+  // useEffect برای بررسی موفقیت عملیات‌ها و فراخوانی refetchAll
+  useEffect(() => {
+    if (
+      isUpsertSuccessDesignItems ||
+      isUpsertSuccessSupport ||
+      isUpsertSuccessColumnFooter ||
+      isUpsertSuccessCopyright ||
+      isUpsertSuccessSloganFooter ||
+      isSuccessDelete ||
+      isSuccessColumnFooterDelete ||
+      isSuccessFooterArticleColumn
+    ) {
+      handleAllRefetch()
+    }
+  }, [
+    isUpsertSuccessDesignItems,
+    isUpsertSuccessSupport,
+    isUpsertSuccessColumnFooter,
+    isUpsertSuccessCopyright,
+    isUpsertSuccessSloganFooter,
+    isSuccessDelete,
+    isSuccessColumnFooterDelete,
+    isSuccessFooterArticleColumn,
+  ])
+  const fetchImageAsFile = async (url: string): Promise<File> => {
+    try {
+      const response = await fetch(url)
+      if (!response.ok) {
+        console.error(`Failed to fetch image from ${url}`)
+        handleAllRefetch()
+      }
+      const blob = await response.blob()
+      const fileName = url.split('/').pop()
+      return new File([blob], fileName || 'image.jpg', { type: blob.type })
+    } catch (error) {
+      handleAllRefetch()
+      console.error(`Failed to fetch image from ${url}:`, error)
+      throw error
+    }
+  }
   const onSubmit = async (data: FormData) => {
     console.log(data, 'data all')
 
@@ -322,22 +376,42 @@ const Footer: NextPage = () => {
 
       if (designItemsData?.data) {
         await Promise.all(
-          designItemsData.data.map(async (designItem) => {
-            const imageFile = designItem.image ? await fetchImageAsFile(designItem.image.imageUrl) : null
-            const item: IDesignItemForm = {
-              id: designItem.id,
-              thumbnail: imageFile,
-              title: designItem.title,
-              link: designItem.link,
-              type: designItem.type,
-              index: designItem.index,
-              created: designItem.created,
-              lastUpdated: designItem.lastUpdated,
-            }
+          designItemsData.data
+            .filter((item) => item.type === 'services')
+            .map(async (designItem) => {
+              const imageFile = designItem.image ? await fetchImageAsFile(designItem.image.imageUrl) : null
+              const item: IDesignItemForm = {
+                id: designItem.id,
+                thumbnail: imageFile,
+                title: designItem.title,
+                link: designItem.link,
+                type: designItem.type,
+                index: designItem.index,
+                created: designItem.created,
+                lastUpdated: designItem.lastUpdated,
+              }
 
-            if (designItem.type === 'services') serviceItems.push(item)
-            else if (designItem.type === 'socialMedia') socialMediaItems.push(item)
-          })
+              serviceItems.push(item)
+            })
+        )
+
+        await Promise.all(
+          designItemsData.data
+            .filter((item) => item.type === 'socialMedia')
+            .map(async (designItem) => {
+              const imageFile = designItem.image ? await fetchImageAsFile(designItem.image.imageUrl) : null
+              const item: IDesignItemForm = {
+                id: designItem.id,
+                thumbnail: imageFile,
+                title: designItem.title,
+                link: designItem.link,
+                type: designItem.type,
+                index: designItem.index,
+                created: designItem.created,
+                lastUpdated: designItem.lastUpdated,
+              }
+              socialMediaItems.push(item)
+            })
         )
       }
 
@@ -356,7 +430,6 @@ const Footer: NextPage = () => {
 
     loadAllData()
   }, [sloganFooterData, supportData, designItemsData, copyrightData, columnFootersData, methods])
-
   // handle success alert
   useEffect(() => {
     let alertMessage = ' بروزرسانی با موفقیت انجام شد'

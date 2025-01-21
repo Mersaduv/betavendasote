@@ -1,6 +1,7 @@
 @layer components {
   .farsi-digits {
-    font-feature-settings: 'ss01';
+    font-family: 'IRANYekan', sans-serif;
+    font-feature-settings: 'ss01'; 
   }
 
   .icon {

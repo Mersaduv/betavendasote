@@ -34,7 +34,7 @@ const UserHistory: NextPage = () => {
           </div>
           {lastSeen.length > 0 ? (
             <div className="space-y-4 px-3 md:grid md:grid-cols-2 md:gap-x-2 md:gap-y-3 md:space-y-0 md:py-4 lg:grid-cols-3">
-              {lastSeen.map((item) => (
+              {/* {lastSeen.map((item) => (
                 <article className="border-b md:h-64 md:border-0 md:hover:shadow-3xl " key={item.productID}>
                   <Link
                     href={`/products/${item.slug}`}
@@ -51,7 +51,7 @@ const UserHistory: NextPage = () => {
                     <h5 className="flex-1 px-3 text-right text-gray-800 md:h-32">{truncate(item.title, 80)}</h5>
                   </Link>
                 </article>
-              ))}
+              ))} */}
             </div>
           ) : (
             <section className="py-20">

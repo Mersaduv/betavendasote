@@ -12,6 +12,10 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   isSheba?: boolean
   isBankNumber?: boolean
   isBirthDay?: boolean
+  isUserForm?: boolean
+  isCenter?: boolean
+  isRequire?: boolean
+  isPercentageValue?:boolean
 }
 interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   classStyle?: string | null
@@ -19,6 +23,7 @@ interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   errors?: FieldError | undefined
   name: string
   control: Control<any>
+  isUserForm?: boolean
 }
 const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
   const {
@@ -26,17 +31,22 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     label,
     isSheba,
     isBankNumber,
+    isUserForm,
+    isCenter,
+    isRequire,
     errors,
     name,
     isBirthDay,
+    isPercentageValue,
     type = 'text',
     control,
+    disabled,
     ...restProps
   } = props
 
   const { field } = useController({ name, control, rules: { required: true } })
 
-  const direction = /^[a-zA-Z0-9]+$/.test(field.value?.[0]) ? 'rtl' : 'rtl'
+  const direction = type === 'text' ? 'rtl' : /^[a-zA-Z0-9]+$/.test(field.value?.[0]) ? 'ltr' : 'rtl'
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value
@@ -57,12 +67,14 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
       {isSheba || isBankNumber ? (
         <div>
           {label && (
-            <label className="mb-3 block text-xs text-gray-700 md:min-w-max lg:text-sm" htmlFor={name}>
+            <label className={`${isUserForm ? 'mb-1.5' : 'mb-3'} block text-gray-700 md:min-w-max`} htmlFor={name}>
               {label}
             </label>
           )}
           <label
-            className={`flex items-center rounded-md ${isBankNumber && 'pl-2'}   bg-zinc-100 border border-gray-200 `}
+            className={`flex items-center rounded-md ${isBankNumber && 'pl-2'} ${
+              isUserForm ? 'bg-white' : 'bg-zinc-100'
+            }  border border-gray-200 `}
             htmlFor={name}
           >
             {/* <input
@@ -87,16 +99,17 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
               classStyle={classStyle}
               // type="number"
               inputMode="numeric"
+              isUserForm
             />
             {!isBankNumber && <div className="text-lg font-normal px-1.5">IR</div>}
           </label>
           <DisplayError errors={errors} />
         </div>
       ) : (
-        <div>
+        <div className={`${isPercentageValue && "flex-1"}`}>
           {label && (
-            <label className="mb-3 block text-xs text-gray-700 md:min-w-max lg:text-sm" htmlFor={name}>
-              {label}
+            <label className={`${isUserForm ? 'mb-1.5' : 'mb-3'} block text-gray-700 md:min-w-max`} htmlFor={name}>
+              {label} {isRequire && <span className="text-red-600 font-bold">*</span>}
             </label>
           )}
           <input
@@ -104,7 +117,9 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
               isBirthDay && 'border-l-0 rounded-l-none  text-center'
             } appearance-none focus:outline-none outline-none ring-0 focus:ring-0 w-full ${
               classStyle ? classStyle : 'rounded-md bg-zinc-100'
-            } border border-gray-200  px-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
+            } border border-gray-200 ${isUserForm && ' farsi-digits'} ${(isUserForm && disabled) ? "bg-zinc-100" :""} ${
+              isCenter && 'text-center'
+            }  px-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
             style={{ direction }}
             id={name}
             type={type}
@@ -112,10 +127,11 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
             name={field.name}
             onBlur={field.onBlur}
             onChange={onChangeHandler}
+            disabled={disabled}
             ref={ref}
             {...restProps}
           />
-          <DisplayError errors={errors} />
+          {!isPercentageValue && <DisplayError errors={errors} />}        
         </div>
       )}
     </>
@@ -123,7 +139,7 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
 })
 
 const TextFieldFa = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
-  const { classStyle, label, errors, name, type = 'text', control, ...restProps } = props
+  const { classStyle, label, errors, name, isUserForm, type = 'text', control, ...restProps } = props
 
   const { field } = useController({ name, control, rules: { required: true } })
 
@@ -144,7 +160,7 @@ const TextFieldFa = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
     <input
       className={`block appearance-none focus:outline-none bg-transparent outline-none ring-0 focus:ring-0 w-full ${
         classStyle ? classStyle : ''
-      } border-none pl-0  pr-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
+      } border-none pl-0 ${isUserForm && "farsi-digits font-medium"} pr-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
       style={{ direction }}
       id={name}
       type="tel"
