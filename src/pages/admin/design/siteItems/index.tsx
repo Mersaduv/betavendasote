@@ -3,6 +3,7 @@ import { RedirectForm } from '@/components/designs'
 import { DashboardLayout } from '@/components/Layouts'
 import DesignTabDashboardLayout from '@/components/Layouts/DesignTabDashboardLayout'
 import { Button } from '@/components/ui'
+import { ProtectedRouteWrapper } from '@/components/user'
 import { useAppDispatch } from '@/hooks'
 import {
   useGetGeneralSettingQuery,
@@ -235,40 +236,42 @@ const SiteItems: NextPage = () => {
   ])
   const isFormSubmitting = isUpsertLoadingGeneralSetting || isUpsertLoadingLogoImagesSetting || isUpsertLoadingRedirect
   return (
-    <>
-      <DashboardLayout>
-        <DesignTabDashboardLayout>
-          <Head>
-            <title>نمای سایت | تنظیمات عمومی</title>
-          </Head>
-          <FormProvider {...methods}>
-            <form className="space-y-5 mb-2 mx-3" onSubmit={methods.handleSubmit(onSubmit)}>
-              {/* 1. تنظیمات عمومی */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <GeneralSettingForm />
-                <LogoImagesForm
-                  selectedFaviconFile={selectedFaviconFile}
-                  setFaviconFile={setFaviconFile}
-                  selectedMainFile={selectedMainFile}
-                  setMainSelectedFiles={setMainSelectedFiles}
-                />
-              </div>
-              <RedirectForm />
-              <div className="w-full flex justify-end mt-6">
-                <Button
-                  isLoading={isFormSubmitting}
-                  type="submit"
-                  className="bg-[#e90089] px-5 py-2.5 hover:bg-[#e90088bb]"
-                  // disabled={isFormSubmitting}
-                >
-                  {'بروزسانی'}
-                </Button>
-              </div>
-            </form>
-          </FormProvider>
-        </DesignTabDashboardLayout>
-      </DashboardLayout>
-    </>
+    <ProtectedRouteWrapper>
+      <>
+        <DashboardLayout>
+          <DesignTabDashboardLayout>
+            <Head>
+              <title>نمای سایت | تنظیمات عمومی</title>
+            </Head>
+            <FormProvider {...methods}>
+              <form className="space-y-5 mb-2 mx-3" onSubmit={methods.handleSubmit(onSubmit)}>
+                {/* 1. تنظیمات عمومی */}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <GeneralSettingForm />
+                  <LogoImagesForm
+                    selectedFaviconFile={selectedFaviconFile}
+                    setFaviconFile={setFaviconFile}
+                    selectedMainFile={selectedMainFile}
+                    setMainSelectedFiles={setMainSelectedFiles}
+                  />
+                </div>
+                <RedirectForm />
+                <div className="w-full flex justify-end mt-6">
+                  <Button
+                    isLoading={isFormSubmitting}
+                    type="submit"
+                    className="bg-[#e90089] px-5 py-2.5 hover:bg-[#e90088bb]"
+                    // disabled={isFormSubmitting}
+                  >
+                    {'بروزسانی'}
+                  </Button>
+                </div>
+              </form>
+            </FormProvider>
+          </DesignTabDashboardLayout>
+        </DashboardLayout>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 

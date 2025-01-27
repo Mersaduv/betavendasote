@@ -9,17 +9,14 @@ export const articleFormValidationSchema = Yup.object().shape({
 export const userFormValidationSchema = Yup.object().shape({
   id: Yup.string().optional(),
   userType: Yup.number().required('نوع کاربر الزامی است'),
-  roleIds: Yup.array()
-    .optional(),
+  roleIds: Yup.array().optional(),
   isActive: Yup.boolean().required('وضعیت فعال بودن الزامی است'),
-  thumbnail: Yup.mixed().optional(),
+  thumbnail: Yup.mixed().required('عکس پرسنلی الزامی است'),
   idCardThumbnail: Yup.mixed().optional(),
   mobileNumber: Yup.string()
     .required('شماره موبایل الزامی است')
     .matches(/^09[0-9]{9}$/, 'شماره موبایل معتبر نیست'),
-  passCode: Yup.string()
-    .required('کد عبور الزامی است')
-    .min(4, 'کد عبور باید حداقل 4 کاراکتر باشد'),
+  passCode: Yup.string().required('کد عبور الزامی است').min(4, 'کد عبور باید حداقل 4 کاراکتر باشد'),
   firstName: Yup.string().required('نام الزامی است'),
   familyName: Yup.string().required('نام خانوادگی الزامی است'),
   fatherName: Yup.string().optional(),
@@ -59,6 +56,16 @@ export const userFormValidationSchema = Yup.object().shape({
   timelySupply: Yup.string().optional(),
   shippingCommitment: Yup.string().optional(),
   noReturns: Yup.string().optional(),
+})
+
+export const roleFormValidationSchema = Yup.object().shape({
+  id: Yup.string().optional(),
+  title: Yup.string().required('عنوان نقش الزامی است'),
+  permissions: Yup.object()
+    .required('دسترسی ها الزامی هستند')
+    .test('at-least-one-permission', 'باید حداقل یک دسترسی انتخاب شده باشد', (permissions) =>
+      Object.values(permissions || {}).some((value) => value === true)
+    ),
 })
 
 export const registerSchema = Yup.object().shape({
@@ -136,15 +143,16 @@ export const bannerSchema = Yup.object().shape({
 export const addressSchema = Yup.object().shape({
   // fullName: Yup.string().required('نام و نام خانوادگی الزامی است'),
   fullName: Yup.string()
-  .matches(/^[\u0600-\u06FF\s]+$/, 'نام باید فقط شامل حروف فارسی باشد')
-  .required('نام لازم است'),
+    .matches(/^[\u0600-\u06FF\s]+$/, 'نام باید فقط شامل حروف فارسی باشد')
+    .required('نام لازم است'),
   // mobileNumber: Yup.string().required('شماره موبایل الزامی است'),
-  mobileNumber: Yup.string().required('شماره موبایل الزامی است')
-  .test(
-    'length-check',
-    'لطفا شماره موبایل را به طور صحیح وارد کنید',
-    (value) => !value || (value.length >= 11 && value.length <= 11)
-  ),
+  mobileNumber: Yup.string()
+    .required('شماره موبایل الزامی است')
+    .test(
+      'length-check',
+      'لطفا شماره موبایل را به طور صحیح وارد کنید',
+      (value) => !value || (value.length >= 11 && value.length <= 11)
+    ),
   city: Yup.object().shape({
     id: Yup.number().optional(),
     name: Yup.string().required('نام شهر الزامی است'),
@@ -156,13 +164,16 @@ export const addressSchema = Yup.object().shape({
     name: Yup.string().required('نام استان الزامی است'),
     slug: Yup.string().optional(),
   }),
-  fullAddress: Yup.string().matches(/^[\u0600-\u06FF\s]+$/, 'نام باید فقط شامل حروف فارسی باشد').required('آدرس کامل الزامی است'),
-  postalCode: Yup.string().required('کد پستی الزامی است')
-  .test(
-    'length-check',
-    'لطفا کد پستی را به طور صحیح وارد کنید',
-    (value) => !value || (value.length >= 10 && value.length <= 10)
-  ),
+  fullAddress: Yup.string()
+    .matches(/^[\u0600-\u06FF\s]+$/, 'نام باید فقط شامل حروف فارسی باشد')
+    .required('آدرس کامل الزامی است'),
+  postalCode: Yup.string()
+    .required('کد پستی الزامی است')
+    .test(
+      'length-check',
+      'لطفا کد پستی را به طور صحیح وارد کنید',
+      (value) => !value || (value.length >= 10 && value.length <= 10)
+    ),
 })
 
 export const reviewSchema = Yup.object().shape({

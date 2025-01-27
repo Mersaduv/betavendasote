@@ -38,7 +38,9 @@ const Users: NextPage = () => {
           <title>مدیریت | مقالات</title>
         </Head>
         <DashboardLayout>
-            <section>یوزر</section>
+            <section>
+              
+            </section>
         </DashboardLayout>
       </main>
     </>

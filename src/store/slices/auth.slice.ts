@@ -5,7 +5,8 @@ interface AuthState {
   token: string | null
   refreshToken: string | null
   userInfo: {
-    roles: string[]
+    role: string
+    userType: number
     mobileNumber: string | null
     fullName: string | null
     expireTime: number | null

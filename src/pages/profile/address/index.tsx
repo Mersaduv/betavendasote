@@ -87,7 +87,7 @@ const BasicAddresses: NextPage = () => {
           <title>پروفایل | آدرس‌ها</title>
         </Head>
         <Header />
-        <ProfileLayout>
+        <ProfileLayout isProfile>
           <PageContainer title="">
             {selectedAddress == null ? (
               <AddressModal

@@ -9,6 +9,7 @@ import { useCreateProductMutation } from '@/services'
 import { ProductForm } from '@/components/form'
 import { useDispatch } from 'react-redux'
 import { setUpdated } from '@/store'
+import { ProtectedRouteWrapper } from '@/components/user'
 
 interface Props {}
 const Create: NextPage<Props> = () => {
@@ -30,28 +31,30 @@ const Create: NextPage<Props> = () => {
   }
 
   return (
-    <>
-      {(isSuccess || isError) && (
-        <HandleResponse
-          isError={isError}
-          isSuccess={isSuccess}
-          error={error}
-          message={data?.message}
-          onSuccess={onSuccess}
-        />
-      )}
+    <ProtectedRouteWrapper>
+      <>
+        {(isSuccess || isError) && (
+          <HandleResponse
+            isError={isError}
+            isSuccess={isSuccess}
+            error={error}
+            message={data?.message}
+            onSuccess={onSuccess}
+          />
+        )}
 
-      <main>
-        <Head>
-          <title>محصول جدید</title>
-        </Head>
-        <DashboardLayout>
-          <section className="bg-[#f5f8fa] w-full">
-            <ProductForm mode="create" createHandler={createHandler} isLoadingCreate={isLoading} />
-          </section>
-        </DashboardLayout>
-      </main>
-    </>
+        <main>
+          <Head>
+            <title>محصول جدید</title>
+          </Head>
+          <DashboardLayout>
+            <section className="bg-[#f5f8fa] w-full">
+              <ProductForm mode="create" createHandler={createHandler} isLoadingCreate={isLoading} />
+            </section>
+          </DashboardLayout>
+        </main>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 

@@ -4,29 +4,33 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { DashboardLayout } from '@/components/Layouts'
 import { HandleResponse } from '@/components/shared'
-import { IProductForm } from '@/types'
-import { useCreateProductMutation, useUpsertArticleMutation } from '@/services'
-import { ArticleForm, ProductForm } from '@/components/form'
+import { IProductForm, IRoleRequest } from '@/types'
+import {
+  useCreateProductMutation,
+  useUpsertArticleMutation,
+  useUpsertRoleMutation,
+  useUpsertUserMutation,
+} from '@/services'
+import { ArticleForm, ProductForm, RoleForm, UserForm } from '@/components/form'
 import { useDispatch } from 'react-redux'
 import { setUpdated } from '@/store'
 import { ProtectedRouteWrapper } from '@/components/user'
 
 interface Props {}
-const Create: NextPage<Props> = () => {
+const New: NextPage<Props> = () => {
   // ? Assets
   const { push } = useRouter()
   const dispatch = useDispatch()
   // ? Queries
-  //*   Create Product
-  const [createArticle, { data, isSuccess, isLoading, isError, error }] = useUpsertArticleMutation()
+  const [createRole, { data, isSuccess, isLoading, isError, error }] = useUpsertRoleMutation()
 
   // ? Handlers
-  const createHandler = (data: FormData) => {
-    createArticle(data)
+  const createHandler = (data: IRoleRequest) => {
+    createRole(data)
   }
 
   const onSuccess = () => {
-    push(`/admin/articles/edit/${data?.data}`)
+    push(`/admin/users/roles/edit/${data?.data}`)
   }
 
   return (
@@ -44,11 +48,11 @@ const Create: NextPage<Props> = () => {
 
         <main>
           <Head>
-            <title>مقاله جدید</title>
+            <title>سمت جدید</title>
           </Head>
           <DashboardLayout>
             <section className="bg-[#f5f8fa] w-full">
-              <ArticleForm mode="create" createHandler={createHandler} isLoadingCreate={isLoading} />
+              <RoleForm mode="create" createHandler={createHandler} isLoadingCreate={isLoading} />
             </section>
           </DashboardLayout>
         </main>
@@ -57,4 +61,4 @@ const Create: NextPage<Props> = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(Create), { ssr: false })
+export default dynamic(() => Promise.resolve(New), { ssr: false })

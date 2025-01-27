@@ -6,6 +6,7 @@ import type { NextPage } from 'next'
 import { DashboardLayout } from '@/components/Layouts'
 import { MainPageAdsForm } from '@/components/form'
 import DesignTabDashboardLayout from '@/components/Layouts/DesignTabDashboardLayout'
+import { ProtectedRouteWrapper } from '@/components/user'
 
 const Main: NextPage = () => {
   // ? Assets
@@ -17,9 +18,10 @@ const Main: NextPage = () => {
 
   // ? Render(s)
   return (
-    <>
-      {/*  Handle Login Response */}
-      {/* {(isSuccess || isError) && (
+    <ProtectedRouteWrapper>
+      <>
+        {/*  Handle Login Response */}
+        {/* {(isSuccess || isError) && (
         <HandleResponse
           isError={isError}
           isSuccess={isSuccess}
@@ -30,19 +32,20 @@ const Main: NextPage = () => {
         />
       )} */}
 
-      <main className="grid min-h-screen items-center">
-        <Head>
-          <title>نمای سایت | صفحه اصلی</title>
-        </Head>
-        <DashboardLayout>
-        <DesignTabDashboardLayout>
-          <section className="bg-[#f5f8fa] w-full mt-9">
-            <MainPageAdsForm />
-          </section>
-          </DesignTabDashboardLayout>
-        </DashboardLayout>
-      </main>
-    </>
+        <main className="grid min-h-screen items-center">
+          <Head>
+            <title>نمای سایت | صفحه اصلی</title>
+          </Head>
+          <DashboardLayout>
+            <DesignTabDashboardLayout>
+              <section className="bg-[#f5f8fa] w-full mt-9">
+                <MainPageAdsForm />
+              </section>
+            </DesignTabDashboardLayout>
+          </DashboardLayout>
+        </main>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 

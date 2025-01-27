@@ -24,6 +24,7 @@ import { Button } from '@/components/ui'
 import { EmptyCustomList } from '@/components/emptyList'
 import { ProductFeature } from '@/services/feature/types'
 import SubCategorySizesUpdateModal from '@/components/modals/SubCategorySizesUpdateModal'
+import { ProtectedRouteWrapper } from '@/components/user'
 
 const ParentSubCategoriesTree: NextPage = () => {
   const { query, push } = useRouter()
@@ -157,134 +158,137 @@ const ParentSubCategoriesTree: NextPage = () => {
       return isDone
     }
 
-    console.log(categories , "categories");
-    
+    console.log(categories, 'categories')
+
     return (
-      <>
-        <FeaturesModal
-          refetch={subRefetch}
-          category={stateCategoryFeatures ?? undefined}
-          isShow={isShowFeaturesModal}
-          onClose={featuresModalHandlers.close}
-          featureDb={featureDb}
-          setFeatureDb={setFeatureDb}
-        />
-        <ConfirmDeleteModal
-          deleted
-          title="زیر دسته بندی"
-          isLoading={isLoadingDelete}
-          isShow={isShowConfirmDeleteModal}
-          onClose={confirmDeleteModalHandlers.close}
-          onCancel={onCancel}
-          onConfirm={onConfirm}
-        />
-
-        {/* Handle Delete Response */}
-        {(isSuccessDelete || isErrorDelete) && (
-          <HandleResponse
-            isError={isErrorDelete}
-            isSuccess={isSuccessDelete}
-            error={errorDelete}
-            message={dataDelete?.message}
-            onSuccess={onSuccess}
-            onError={onError}
+      <ProtectedRouteWrapper>
+        <>
+          <FeaturesModal
+            refetch={subRefetch}
+            category={stateCategoryFeatures ?? undefined}
+            isShow={isShowFeaturesModal}
+            onClose={featuresModalHandlers.close}
+            featureDb={featureDb}
+            setFeatureDb={setFeatureDb}
           />
-        )}
+          <ConfirmDeleteModal
+            deleted
+            title="زیر دسته بندی"
+            isLoading={isLoadingDelete}
+            isShow={isShowConfirmDeleteModal}
+            onClose={confirmDeleteModalHandlers.close}
+            onCancel={onCancel}
+            onConfirm={onConfirm}
+          />
 
-        <SizesModal
-          refetch={subRefetch}
-          category={stateCategorySizes ?? undefined}
-          isShow={isShowSizesModal}
-          onClose={sizesModalHandlers.close}
-        />
-        <ul className="flex flex-col">
-          {categories.map((category) => {
-            return (
-              <li key={category.id} className={`w-[850px] ${category.level > 1 ? 'mr-10' : ''}`}>
-                <div
-                  className={`${
-                    category.isActive ? 'bg-[#eee]' : 'bg-red-100'
-                  } px-1.5 py-1 border border-[#ccc] rounded-lg mb-6 flex justify-between items-center`}
-                >
-                  <div className="flex items-center gap-3">
-                    <img className="w-8 h-8 object-contain" src={category.imagesSrc?.imageUrl} alt={category.name} />
-                    <div
-                      onClick={() => handlerEditSubCategoryModal(category)}
-                      className="text-sky-500 cursor-pointer text-sm"
-                    >
-                      {category.name}
+          {/* Handle Delete Response */}
+          {(isSuccessDelete || isErrorDelete) && (
+            <HandleResponse
+              isError={isErrorDelete}
+              isSuccess={isSuccessDelete}
+              error={errorDelete}
+              message={dataDelete?.message}
+              onSuccess={onSuccess}
+              onError={onError}
+            />
+          )}
+
+          <SizesModal
+            refetch={subRefetch}
+            category={stateCategorySizes ?? undefined}
+            isShow={isShowSizesModal}
+            onClose={sizesModalHandlers.close}
+          />
+          <ul className="flex flex-col">
+            {categories.map((category) => {
+              return (
+                <li key={category.id} className={`w-[850px] ${category.level > 1 ? 'mr-10' : ''}`}>
+                  <div
+                    className={`${
+                      category.isActive ? 'bg-[#eee]' : 'bg-red-100'
+                    } px-1.5 py-1 border border-[#ccc] rounded-lg mb-6 flex justify-between items-center`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <img className="w-8 h-8 object-contain" src={category.imagesSrc?.imageUrl} alt={category.name} />
+                      <div
+                        onClick={() => handlerEditSubCategoryModal(category)}
+                        className="text-sky-500 cursor-pointer text-sm"
+                      >
+                        {category.name}
+                      </div>
                     </div>
-                  </div>
-                  {/* buttons logic */}
-                  <div className="flex gap-3.5 items-center">
-                    <Button
-                      disabled={!category.isActiveProduct}
-                      onClick={() => handlerEditFeaturesModal(category)}
-                      className={`${
-                        category.isActiveProduct === true ? 'bg-sky-500' : ' bg-gray-400'
-                      } text-white text-xs  font-medium rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
-                    >
-                      ویژگی {handleChecked(category) ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
-                    </Button>
-                    {category.hasSizeProperty ? (
+                    {/* buttons logic */}
+                    <div className="flex gap-3.5 items-center">
                       <Button
                         disabled={!category.isActiveProduct}
-                        onClick={() => handlerEditSizeModal(category)}
+                        onClick={() => handlerEditFeaturesModal(category)}
+                        className={`${
+                          category.isActiveProduct === true ? 'bg-sky-500' : ' bg-gray-400'
+                        } text-white text-xs  font-medium rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
+                      >
+                        ویژگی {handleChecked(category) ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
+                      </Button>
+                      {category.hasSizeProperty ? (
+                        <Button
+                          disabled={!category.isActiveProduct}
+                          onClick={() => handlerEditSizeModal(category)}
+                          className={` ${
+                            category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
+                          } text-white text-xs  font-medium  rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
+                        >
+                          سایزبندی {category.sizeCount > 0 ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
+                        </Button>
+                      ) : null}
+                      <Button
+                        disabled={!category.isActiveProduct}
+                        onClick={() => handlerEditProductSizeModal(category)}
                         className={` ${
                           category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
                         } text-white text-xs  font-medium  rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
                       >
-                        سایزبندی {category.sizeCount > 0 ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
+                        اندازه ها{' '}
+                        {category.productSizeCount > 0 ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
                       </Button>
-                    ) : null}
-                    <Button
-                      disabled={!category.isActiveProduct}
-                      onClick={() => handlerEditProductSizeModal(category)}
-                      className={` ${
-                        category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
-                      } text-white text-xs  font-medium  rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
-                    >
-                      اندازه ها {category.productSizeCount > 0 ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
-                    </Button>
-                    <Button
-                      disabled={!category.isActiveProduct}
-                      onClick={() => handlerEditFeaturesModal(category)}
-                      className={` ${
-                        category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
-                      } text-white text-xs  font-medium rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
-                    >
-                      استرداد
-                    </Button>
-                    <Button
-                      disabled={!category.isActiveProduct}
-                      onClick={() => handleChangePage(category.id)}
-                      className={` ${
-                        category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
-                      } text-white text-xs  font-medium rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
-                    >
-                      محصول {category.count > 0 ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
-                    </Button>
+                      <Button
+                        disabled={!category.isActiveProduct}
+                        onClick={() => handlerEditFeaturesModal(category)}
+                        className={` ${
+                          category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
+                        } text-white text-xs  font-medium rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
+                      >
+                        استرداد
+                      </Button>
+                      <Button
+                        disabled={!category.isActiveProduct}
+                        onClick={() => handleChangePage(category.id)}
+                        className={` ${
+                          category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
+                        } text-white text-xs  font-medium rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}
+                      >
+                        محصول {category.count > 0 ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
+                      </Button>
 
-                    <Button
-                      onClick={() => handleDelete(category)}
-                      className="text-white text-xs  font-medium bg-red-500 rounded-md w-[50px] px-0 text-center whitespace-nowrap py-1"
-                    >
-                      حذف{' '}
-                    </Button>
+                      <Button
+                        onClick={() => handleDelete(category)}
+                        className="text-white text-xs  font-medium bg-red-500 rounded-md w-[50px] px-0 text-center whitespace-nowrap py-1"
+                      >
+                        حذف{' '}
+                      </Button>
 
-                    <div className="pl-1 pr-0.5 py-2 cursor-grab">
-                      <img className="w-4 h-4" src="/images/icons/menu-burger.png" alt="" />
+                      <div className="pl-1 pr-0.5 py-2 cursor-grab">
+                        <img className="w-4 h-4" src="/images/icons/menu-burger.png" alt="" />
+                      </div>
                     </div>
                   </div>
-                </div>
-                {category.childCategories && category.childCategories.length > 0 && (
-                  <CategoryTree categories={category.childCategories} />
-                )}
-              </li>
-            )
-          })}
-        </ul>
-      </>
+                  {category.childCategories && category.childCategories.length > 0 && (
+                    <CategoryTree categories={category.childCategories} />
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </>
+      </ProtectedRouteWrapper>
     )
   }
 

@@ -6,12 +6,13 @@ import { useEffect } from 'react'
 
 interface Props {
   children: React.ReactNode
-  allowedRoles: string[]
+  allowedRoles?: number[]
+  isProfile?: boolean
 }
 
 const ProtectedRouteWrapper: React.FC<Props> = (props) => {
   // ? Props
-  const { allowedRoles, children } = props
+  const { allowedRoles, children, isProfile } = props
 
   // ? Assets
   const { push, asPath } = useRouter()
@@ -23,9 +24,10 @@ const ProtectedRouteWrapper: React.FC<Props> = (props) => {
   useEffect(() => {
     if (userInfo) {
       // Check if any of the user's roles are in the allowedRoles array
-      const hasAccess = userInfo.roles?.some((role: string) => allowedRoles.includes(role))
+      const hasAccess = userInfo.userType
 
-      if (!hasAccess) {
+      if (hasAccess === 0 && !isProfile) {
+        console.log('pass',isProfile)
         asPath.includes('/admin')
           ? push(`/admin/authentication/login?redirectTo=${asPath}`)
           : push(`/authentication/login?redirectTo=${asPath}`)
@@ -37,7 +39,7 @@ const ProtectedRouteWrapper: React.FC<Props> = (props) => {
     }
   }, [userInfo, allowedRoles, asPath, push])
 
-  if (userInfo && userInfo.roles?.some((role: string) => allowedRoles.includes(role))) {
+  if (userInfo) {
     return <>{children}</>
   }
 

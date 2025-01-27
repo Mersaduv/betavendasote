@@ -444,7 +444,7 @@ const MainPageAdsForm: React.FC = () => {
       if (footerBannerData?.data) {
         return await Promise.all(
           footerBannerData.data.map(async (banner) => {
-            const imageFile = banner.image && await fetchImageAsFile(banner.image.imageUrl)
+            const imageFile = banner.image && (await fetchImageAsFile(banner.image.imageUrl))
             return {
               id: banner.id,
               thumbnail: imageFile,
@@ -478,16 +478,22 @@ const MainPageAdsForm: React.FC = () => {
         },
         storeCategories: storeCategoriesData?.data || [],
         storeBrands: storeBrandsData?.data || [],
-        storeCategoryIsActive: storeCategoriesData?.data?.length > 0 && storeCategoriesData.data[0].isActive,
-        storeBrandIsActive: storeBrandsData?.data?.length > 0 && storeBrandsData.data[0].isActive,
+        storeCategoryIsActive:
+          storeCategoriesData?.data && storeCategoriesData?.data?.length > 0
+            ? storeCategoriesData.data[0].isActive
+            : false,
+        storeBrandIsActive:
+          storeBrandsData?.data && storeBrandsData?.data?.length > 0 ? storeBrandsData.data[0].isActive : false,
         sliders: slidersWithFiles,
-        slidersIsActive: sliderData?.data?.length > 0 && sliderData.data[0].isActive,
+        slidersIsActive: sliderData?.data && sliderData?.data?.length > 0 ? sliderData.data[0].isActive : false,
         banners: bannersWithFiles,
-        bannersIsActive: bannerData?.data?.length > 0 && bannerData.data[0].isActive,
+        bannersIsActive: bannerData?.data && bannerData?.data?.length > 0 ? bannerData.data[0].isActive : false,
         footerBanners: footerBannersWithFiles,
-        footerBannersIsActive: footerBannerData?.data?.length > 0 && footerBannerData.data[0].isActive,
+        footerBannersIsActive:
+          footerBannerData?.data && footerBannerData?.data?.length > 0 ? footerBannerData.data[0].isActive : false,
         articleBanners: articleBanners,
-        articleBannersIsActive: articleBannerData?.data?.length > 0 && articleBannerData.data[0].isActive,
+        articleBannersIsActive:
+          articleBannerData?.data && articleBannerData?.data?.length > 0 ? articleBannerData.data[0].isActive : false,
       })
 
       setSliders(slidersWithFiles)

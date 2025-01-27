@@ -18,6 +18,7 @@ import { ProductForm, ProductFormEdit } from '@/components/form'
 import { useGetSingleProductQuery, useUpdateProductMutation } from '@/services'
 import { useDispatch } from 'react-redux'
 import { setUpdated } from '@/store'
+import { ProtectedRouteWrapper } from '@/components/user'
 
 interface Props {}
 const Edit: NextPage<Props> = () => {
@@ -60,40 +61,42 @@ const Edit: NextPage<Props> = () => {
   }
 
   return (
-    <>
-      {(isSuccessUpdate || isErrorUpdate) && (
-        <HandleResponse
-          isError={isErrorUpdate}
-          isSuccess={isSuccessUpdate}
-          error={errorUpdate}
-          message={dataUpdate?.message}
-          onSuccess={onSuccess}
-        />
-      )}
+    <ProtectedRouteWrapper>
+      <>
+        {(isSuccessUpdate || isErrorUpdate) && (
+          <HandleResponse
+            isError={isErrorUpdate}
+            isSuccess={isSuccessUpdate}
+            error={errorUpdate}
+            message={dataUpdate?.message}
+            onSuccess={onSuccess}
+          />
+        )}
 
-      <main>
-        <Head>
-          <title>{'ویرایش محصول'}</title>
-        </Head>
+        <main>
+          <Head>
+            <title>{'ویرایش محصول'}</title>
+          </Head>
 
-        <DashboardLayout>
-          {isLoadingGetSelectedProduct ? (
-            <div className="px-3 py-20">
-              <FullScreenLoading />
-            </div>
-          ) : selectedProduct?.data ? (
-            <section className="bg-[#f5f8fa] w-full ">
-              <ProductFormEdit
-                mode="edit"
-                isLoadingUpdate={isLoadingUpdate}
-                updateHandle={updateHandle}
-                selectedProduct={selectedProduct.data}
-              />
-            </section>
-          ) : null}
-        </DashboardLayout>
-      </main>
-    </>
+          <DashboardLayout>
+            {isLoadingGetSelectedProduct ? (
+              <div className="px-3 py-20">
+                <FullScreenLoading />
+              </div>
+            ) : selectedProduct?.data ? (
+              <section className="bg-[#f5f8fa] w-full ">
+                <ProductFormEdit
+                  mode="edit"
+                  isLoadingUpdate={isLoadingUpdate}
+                  updateHandle={updateHandle}
+                  selectedProduct={selectedProduct.data}
+                />
+              </section>
+            ) : null}
+          </DashboardLayout>
+        </main>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 

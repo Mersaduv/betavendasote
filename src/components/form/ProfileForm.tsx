@@ -324,7 +324,7 @@ const ProfileForm: React.FC<Props> = ({ onSubmit, isLoading, defaultValues }) =>
 }
 
 const TextFieldFa = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
-  const { classStyle, label, errors, name, type = 'text', control, ...restProps } = props
+  const { classStyle, label, errors, name,readOnly, type = 'text', control, ...restProps } = props
 
   const { field } = useController({ name, control, rules: { required: true } })
 
@@ -349,7 +349,7 @@ const TextFieldFa = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
         </label>
       )}
       <input
-        className={`block appearance-none focus:outline-none outline-none ring-0 focus:ring-0 w-full ${
+        className={`block ${readOnly && "farsi-digits"} appearance-none focus:outline-none outline-none ring-0 focus:ring-0 w-full ${
           classStyle ? classStyle : 'rounded-md bg-zinc-100'
         } border border-gray-200  px-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
         style={{ direction }}
@@ -360,6 +360,7 @@ const TextFieldFa = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
         onBlur={field.onBlur}
         onChange={onChangeHandler}
         ref={ref}
+        readOnly={readOnly}
         {...restProps}
       />
       <DisplayError errors={errors} />

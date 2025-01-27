@@ -35,7 +35,7 @@ const OrderPage: NextPage = () => {
         keywords={generalSetting?.googleTags || ' اینترنتی, فروشگاه'}
       />
       <Header />
-      <ProfileLayout>
+      <ProfileLayout isProfile>
         <PageContainer title="">
           <div className="flex w-full mt-4">
             {' '}

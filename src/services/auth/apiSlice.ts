@@ -34,11 +34,12 @@ export const authApiSlice = baseApi.injectEndpoints({
                 token: data.data!.token,
                 refreshToken: data.data!.refreshToken,
                 userInfo: {
-                  roles: data.data?.roles,
-                  mobileNumber: data.data!.mobileNumber,
-                  fullName: data.data!.fullName,
-                  expireTime: data.data!.expireTime,
-                  refreshTokenExpireTime: data.data!.refreshTokenExpireTime,
+                  role: data.data?.role,
+                  userType: data.data?.userType,
+                  mobileNumber: data.data?.mobileNumber,
+                  fullName: data.data?.fullName,
+                  expireTime: data.data?.expireTime,
+                  refreshTokenExpireTime: data.data?.refreshTokenExpireTime,
                 },
                 loggedIn: true,
               })
@@ -64,17 +65,20 @@ export const authApiSlice = baseApi.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          if (data && data.data!.token && data.data!.refreshToken) {
+          console.log(data , "datadata");
+          if (data && data.data?.token && data.data?.refreshToken) {
+            
             dispatch(
               setCredentials({
-                token: data.data!.token,
-                refreshToken: data.data!.refreshToken,
+                token: data.data?.token,
+                refreshToken: data.data?.refreshToken,
                 userInfo: {
-                  roles: data.data?.roles,
-                  mobileNumber: data.data!.mobileNumber,
-                  fullName: data.data!.fullName,
-                  expireTime: data.data!.expireTime,
-                  refreshTokenExpireTime: data.data!.refreshTokenExpireTime,
+                  role: data.data?.role ?? "",
+                  userType: data.data?.userType,
+                  mobileNumber: data.data?.mobileNumber,
+                  fullName: data.data?.fullName,
+                  expireTime: data.data?.expireTime,
+                  refreshTokenExpireTime: data.data?.refreshTokenExpireTime,
                 },
                 loggedIn: true,
               })
@@ -134,6 +138,7 @@ export const authApiSlice = baseApi.injectEndpoints({
           Authorization: `Bearer ${getToken()}`,
         },
       }),
+      providesTags: (result, error, mobileNumber) => [{ type: 'User', id: mobileNumber }],
       async onQueryStarted(mobileNumber, { dispatch, queryFulfilled, getState }) {
         try {
           const { data } = await queryFulfilled
@@ -181,11 +186,12 @@ export const authApiSlice = baseApi.injectEndpoints({
           Authorization: `Bearer ${getToken()}`,
         },
       }),
+      providesTags: (result, error, arg) => [{ type: 'User', id: 'ME' }],
       async onQueryStarted(args, { dispatch, queryFulfilled, getState }) {
         try {
           const { data } = await queryFulfilled
-          // save new data localStorage
-          window.localStorage.setItem('userInfo', JSON.stringify(data.data))
+          // // save new data localStorage
+          // window.localStorage.setItem('userInfo', JSON.stringify(data.data?.userInfo))
         } catch (error) {
           const err = error as ApiError
           if (err.error.status === 401) {

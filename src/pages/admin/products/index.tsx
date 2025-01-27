@@ -31,6 +31,7 @@ import { ProductBreadcrumb } from '@/components/product'
 import { CustomCheckbox } from '@/components/ui'
 import { GetProductsResult, ProductsResult } from '@/services/product/types'
 import { ArrowDown } from '@/icons'
+import { ProtectedRouteWrapper } from '@/components/user'
 
 interface SelectedCategories {
   categorySelected?: ICategory
@@ -469,1133 +470,1149 @@ const Products: NextPage = () => {
   console.log(categoryId, 'categoryId')
 
   return (
-    <>
-      {/* Confirm Delete Product Modal */}
-      <ConfirmDeleteModal
-        title="محصول"
-        deleted
-        isLoading={isLoadingDelete}
-        isShow={isShowConfirmDeleteModal}
-        onClose={confirmDeleteModalHandlers.close}
-        onCancel={onCancel}
-        onConfirm={onConfirmDelete}
-      />
-
-      {/* Handle Delete Product Response */}
-      {(isSuccessDelete || isErrorDelete) && (
-        <HandleResponse
-          isError={isErrorDelete}
-          isSuccess={isSuccessDelete}
-          error={errorDelete}
-          message={dataDelete?.message}
-          onSuccess={onSuccess}
-          onError={onError}
+    <ProtectedRouteWrapper>
+      <>
+        {/* Confirm Delete Product Modal */}
+        <ConfirmDeleteModal
+          title="محصول"
+          deleted
+          isLoading={isLoadingDelete}
+          isShow={isShowConfirmDeleteModal}
+          onClose={confirmDeleteModalHandlers.close}
+          onCancel={onCancel}
+          onConfirm={onConfirmDelete}
         />
-      )}
 
-      {/* Handle restore Product Response */}
-      {(isSuccessRestore || isErrorRestore) && (
-        <HandleResponse
-          isError={isErrorRestore}
-          isSuccess={isSuccessRestore}
-          error={errorRestore}
-          message={dataRestore?.message}
-          onSuccess={onSuccess}
-          onError={onError}
+        {/* Handle Delete Product Response */}
+        {(isSuccessDelete || isErrorDelete) && (
+          <HandleResponse
+            isError={isErrorDelete}
+            isSuccess={isSuccessDelete}
+            error={errorDelete}
+            message={dataDelete?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
+
+        {/* Handle restore Product Response */}
+        {(isSuccessRestore || isErrorRestore) && (
+          <HandleResponse
+            isError={isErrorRestore}
+            isSuccess={isSuccessRestore}
+            error={errorRestore}
+            message={dataRestore?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
+
+        {/* Confirm Delete Trash Product Modal */}
+        <ConfirmDeleteModal
+          title="محصول در زباله‌دان"
+          isLoading={isLoadingTrashDelete}
+          isShow={isShowConfirmTrashDeleteModal}
+          onClose={confirmTrashDeleteModalHandlers.close}
+          onCancel={onCancel}
+          onConfirm={onConfirmTrashDelete}
         />
-      )}
 
-      {/* Confirm Delete Trash Product Modal */}
-      <ConfirmDeleteModal
-        title="محصول در زباله‌دان"
-        isLoading={isLoadingTrashDelete}
-        isShow={isShowConfirmTrashDeleteModal}
-        onClose={confirmTrashDeleteModalHandlers.close}
-        onCancel={onCancel}
-        onConfirm={onConfirmTrashDelete}
-      />
-
-      <ConfirmUpdateModal
-        title="محصول"
-        isLoading={isLoadingRestore}
-        isShow={isShowConfirmUpdateModal}
-        onClose={confirmUpdateModalHandlers.close}
-        onConfirm={onConfirmRestore}
-        onCancel={onCancel}
-      />
-
-      {/* Handle Delete Trash Product Response */}
-      {(isSuccessTrashDelete || isErrorTrashDelete) && (
-        <HandleResponse
-          isError={isErrorTrashDelete}
-          isSuccess={isSuccessTrashDelete}
-          error={errorTrashDelete}
-          message={dataTrashDelete?.message}
-          onSuccess={onSuccess}
-          onError={onError}
+        <ConfirmUpdateModal
+          title="محصول"
+          isLoading={isLoadingRestore}
+          isShow={isShowConfirmUpdateModal}
+          onClose={confirmUpdateModalHandlers.close}
+          onConfirm={onConfirmRestore}
+          onCancel={onCancel}
         />
-      )}
-      <main>
-        <Head>
-          <title>همه محصولات</title>
-        </Head>
-        <DashboardLayout>
-          <section id="_adminProducts" className=" w-full">
-            <div className="bg-white rounded-lg shadow-item mx-3">
-              <div className="flex justify-between mt-7">
-                <h2 className="p-4 text-gray-600">همه محصولات</h2>
-                {/* filter control  */}
-                <div className="flex justify-end px-4 gap-x-6 gap-y-2.5 flex-wrap py-4">
-                  {/* first group work */}
-                  <div className="flex border w-fit rounded-lg">
-                    <select
-                      className="w-44 text-sm focu appearance-none border-none rounded-r-lg"
-                      name="انتخاب "
-                      id=""
-                      value={bulkAction}
-                      onChange={(e) => setBulkAction(e.target.value)}
-                    >
-                      <option className="appearance-none text-sm" value="">
-                        کارهای گروهی
-                      </option>
-                      {tabKey !== 'activeProducts' && tabKey !== 'deletedProducts' && (
-                        <option value="1">فعال کردن</option>
-                      )}
-                      {tabKey !== 'inactiveProducts' && tabKey !== 'deletedProducts' && (
-                        <option value="2">غیر فعال کردن</option>
-                      )}
-                      {tabKey !== 'deletedProducts' && <option value="3">انتقال به زباله دان</option>}
-                      {tabKey === 'deletedProducts' && <option value="4">بازگردانی محصول</option>}
-                      {tabKey === 'deletedProducts' && <option value="5">حذف</option>}
-                    </select>
-                    <div
-                      className="bg-gray-100 cursor-pointer hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center items-center w-14"
-                      onClick={handleBulkAction}
-                    >
-                      اجرا
-                    </div>
-                  </div>
-                  {/* category filter */}
-                  <div className="flex border w-fit rounded-lg">
-                    <label
-                      title="نمایش محصولات زیر دسته"
-                      className="bg-gray-100 hover:bg-gray-200 rounded-r-md text-sm flex justify-center cursor-pointer items-center w-14"
-                    >
-                      <input
-                        onChange={handleTheOnlyCategory}
-                        checked={singleCategory}
-                        type="checkbox"
-                        name=""
+
+        {/* Handle Delete Trash Product Response */}
+        {(isSuccessTrashDelete || isErrorTrashDelete) && (
+          <HandleResponse
+            isError={isErrorTrashDelete}
+            isSuccess={isSuccessTrashDelete}
+            error={errorTrashDelete}
+            message={dataTrashDelete?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
+        <main>
+          <Head>
+            <title>همه محصولات</title>
+          </Head>
+          <DashboardLayout>
+            <section id="_adminProducts" className=" w-full">
+              <div className="bg-white rounded-lg shadow-item mx-3">
+                <div className="flex justify-between mt-7">
+                  <h2 className="p-4 text-gray-600">همه محصولات</h2>
+                  {/* filter control  */}
+                  <div className="flex justify-end px-4 gap-x-6 gap-y-2.5 flex-wrap py-4">
+                    {/* first group work */}
+                    <div className="flex border w-fit rounded-lg">
+                      <select
+                        className="w-44 text-sm focu appearance-none border-none rounded-r-lg"
+                        name="انتخاب "
                         id=""
-                        className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 cursor-pointer focus:ring-0 rounded-md text-xl w-5 h-5"
-                      />
-                    </label>
-                    <select
-                      className="w-44 text-sm focus:outline-none appearance-none border-none"
-                      name="انتخاب"
-                      id=""
-                      value={categoryId || selectedCategory}
-                      onChange={handleCategoryChange}
-                    >
-                      <option className="appearance-none text-sm" value="default">
-                        همه دسته بندی ها
-                      </option>
-                      {allCategories?.map((category) => (
-                        <option
-                          className={category.level === 0 ? 'text-blue-600' : ''}
-                          key={category.id}
-                          value={category.id}
-                        >
-                          {category.name}
+                        value={bulkAction}
+                        onChange={(e) => setBulkAction(e.target.value)}
+                      >
+                        <option className="appearance-none text-sm" value="">
+                          کارهای گروهی
                         </option>
-                      ))}
-                    </select>
-                    <div
-                      className="bg-gray-100 hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center cursor-pointer items-center w-14"
-                      onClick={handleFilterClick}
-                    >
-                      صافی
+                        {tabKey !== 'activeProducts' && tabKey !== 'deletedProducts' && (
+                          <option value="1">فعال کردن</option>
+                        )}
+                        {tabKey !== 'inactiveProducts' && tabKey !== 'deletedProducts' && (
+                          <option value="2">غیر فعال کردن</option>
+                        )}
+                        {tabKey !== 'deletedProducts' && <option value="3">انتقال به زباله دان</option>}
+                        {tabKey === 'deletedProducts' && <option value="4">بازگردانی محصول</option>}
+                        {tabKey === 'deletedProducts' && <option value="5">حذف</option>}
+                      </select>
+                      <div
+                        className="bg-gray-100 cursor-pointer hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center items-center w-14"
+                        onClick={handleBulkAction}
+                      >
+                        اجرا
+                      </div>
                     </div>
-                  </div>
-                  {/* stock filter */}
-                  <div className="flex border w-fit rounded-lg">
-                    <select
-                      className="w-44 text-sm focus:outline-none appearance-none border-none rounded-r-lg"
-                      name="انتخاب"
-                      id=""
-                      onChange={handleStockChange}
-                    >
-                      <option className="appearance-none text-sm" value="">
-                        فیلتر بر اساس موجودی
-                      </option>
-                      <option value="1">موجود در انبار</option>
-                      <option value="2">پایان موجودی</option>
-                    </select>
-                    <div
-                      onClick={handleInStockClick}
-                      className="bg-gray-100 hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center cursor-pointer items-center w-14 "
-                    >
-                      صافی
+                    {/* category filter */}
+                    <div className="flex border w-fit rounded-lg">
+                      <label
+                        title="نمایش محصولات زیر دسته"
+                        className="bg-gray-100 hover:bg-gray-200 rounded-r-md text-sm flex justify-center cursor-pointer items-center w-14"
+                      >
+                        <input
+                          onChange={handleTheOnlyCategory}
+                          checked={singleCategory}
+                          type="checkbox"
+                          name=""
+                          id=""
+                          className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 cursor-pointer focus:ring-0 rounded-md text-xl w-5 h-5"
+                        />
+                      </label>
+                      <select
+                        className="w-44 text-sm focus:outline-none appearance-none border-none"
+                        name="انتخاب"
+                        id=""
+                        value={categoryId || selectedCategory}
+                        onChange={handleCategoryChange}
+                      >
+                        <option className="appearance-none text-sm" value="default">
+                          همه دسته بندی ها
+                        </option>
+                        {allCategories?.map((category) => (
+                          <option
+                            className={category.level === 0 ? 'text-blue-600' : ''}
+                            key={category.id}
+                            value={category.id}
+                          >
+                            {category.name}
+                          </option>
+                        ))}
+                      </select>
+                      <div
+                        className="bg-gray-100 hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center cursor-pointer items-center w-14"
+                        onClick={handleFilterClick}
+                      >
+                        صافی
+                      </div>
                     </div>
-                  </div>
-                  {/* search filter */}
-                  <div className="flex border w-fit rounded-lg">
-                    <label
-                      htmlFor="search"
-                      className="bg-gray-100 hover:bg-gray-200 ml-[1px] rounded-r-md flex justify-center cursor-pointer items-center w-14"
-                    >
-                      <LuSearch className="icon text-gray-500" />
-                    </label>
-                    <input
-                      id="search"
-                      type="text"
-                      className="w-44 text-sm placeholder:text-center focus:outline-none appearance-none border-none rounded-l-lg"
-                      placeholder="جستجو"
-                      value={searchTerm}
-                      onChange={handleSearchChange}
-                    />
+                    {/* stock filter */}
+                    <div className="flex border w-fit rounded-lg">
+                      <select
+                        className="w-44 text-sm focus:outline-none appearance-none border-none rounded-r-lg"
+                        name="انتخاب"
+                        id=""
+                        onChange={handleStockChange}
+                      >
+                        <option className="appearance-none text-sm" value="">
+                          فیلتر بر اساس موجودی
+                        </option>
+                        <option value="1">موجود در انبار</option>
+                        <option value="2">پایان موجودی</option>
+                      </select>
+                      <div
+                        onClick={handleInStockClick}
+                        className="bg-gray-100 hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center cursor-pointer items-center w-14 "
+                      >
+                        صافی
+                      </div>
+                    </div>
+                    {/* search filter */}
+                    <div className="flex border w-fit rounded-lg">
+                      <label
+                        htmlFor="search"
+                        className="bg-gray-100 hover:bg-gray-200 ml-[1px] rounded-r-md flex justify-center cursor-pointer items-center w-14"
+                      >
+                        <LuSearch className="icon text-gray-500" />
+                      </label>
+                      <input
+                        id="search"
+                        type="text"
+                        className="w-44 text-sm placeholder:text-center focus:outline-none appearance-none border-none rounded-l-lg"
+                        placeholder="جستجو"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* tab changed  */}
-              <div className="relative overflow-x-auto min-h-96">
-                {selectedProducts[tabKey]?.length > 0 && (
-                  <div className="sm:absolute top-3 left-4 pr-4">
-                    {digitsEnToFa(selectedProducts[tabKey].length)} کالا انتخاب شد
-                  </div>
-                )}
+                {/* tab changed  */}
+                <div className="relative overflow-x-auto min-h-96">
+                  {selectedProducts[tabKey]?.length > 0 && (
+                    <div className="sm:absolute top-3 left-4 pr-4">
+                      {digitsEnToFa(selectedProducts[tabKey].length)} کالا انتخاب شد
+                    </div>
+                  )}
 
-                <Tab.Group
-                  selectedIndex={
-                    tabKey === 'allProducts'
-                      ? 0
-                      : tabKey === 'activeProducts'
-                      ? 1
-                      : tabKey === 'inactiveProducts'
-                      ? 2
-                      : tabKey === 'pendingProducts'
-                      ? 3
-                      : tabKey === 'deletedProducts'
-                      ? 4
-                      : 0
-                  }
-                  onChange={(index) => {
-                    switch (index) {
-                      case 0:
-                        setTabKey('allProducts')
-                        break
-                      case 1:
-                        setTabKey('activeProducts')
-                        break
-                      case 2:
-                        setTabKey('inactiveProducts')
-                        break
-                      case 3:
-                        setTabKey('pendingProducts')
-                        break
-                      case 4:
-                        setTabKey('deletedProducts')
-                        break
-                      default:
-                        setTabKey('allProducts')
+                  <Tab.Group
+                    selectedIndex={
+                      tabKey === 'allProducts'
+                        ? 0
+                        : tabKey === 'activeProducts'
+                        ? 1
+                        : tabKey === 'inactiveProducts'
+                        ? 2
+                        : tabKey === 'pendingProducts'
+                        ? 3
+                        : tabKey === 'deletedProducts'
+                        ? 4
+                        : 0
                     }
-                  }}
-                >
-                  <Tab.List className="flex gap-4 p-2 border-b-2 border-gray-200">
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                    onChange={(index) => {
+                      switch (index) {
+                        case 0:
+                          setTabKey('allProducts')
+                          break
+                        case 1:
+                          setTabKey('activeProducts')
+                          break
+                        case 2:
+                          setTabKey('inactiveProducts')
+                          break
+                        case 3:
+                          setTabKey('pendingProducts')
+                          break
+                        case 4:
+                          setTabKey('deletedProducts')
+                          break
+                        default:
+                          setTabKey('allProducts')
                       }
-                    >
-                      همه ({digitsEnToFa(productsPagination?.data?.pagination.totalCount ?? 0)})
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
-                      }
-                    >
-                      فعال ({digitsEnToFa(productsActivePagination?.data?.pagination.totalCount ?? 0)})
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
-                      }
-                    >
-                      غیرفعال ({digitsEnToFa(productsInActivePagination?.data?.pagination.totalCount ?? 0)})
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
-                      }
-                    >
-                      در انتظار ({digitsEnToFa(productsIsPendingPagination?.data?.pagination.totalCount ?? 0)})
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
-                      }
-                    >
-                      زباله دان ({digitsEnToFa(productsIsDeletedPagination?.data?.pagination.totalCount ?? 0)})
-                    </Tab>
-                  </Tab.List>
+                    }}
+                  >
+                    <Tab.List className="flex gap-4 p-2 border-b-2 border-gray-200">
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        همه ({digitsEnToFa(productsPagination?.data?.pagination.totalCount ?? 0)})
+                      </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        فعال ({digitsEnToFa(productsActivePagination?.data?.pagination.totalCount ?? 0)})
+                      </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        غیرفعال ({digitsEnToFa(productsInActivePagination?.data?.pagination.totalCount ?? 0)})
+                      </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        در انتظار ({digitsEnToFa(productsIsPendingPagination?.data?.pagination.totalCount ?? 0)})
+                      </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        زباله دان ({digitsEnToFa(productsIsDeletedPagination?.data?.pagination.totalCount ?? 0)})
+                      </Tab>
+                    </Tab.List>
 
-                  <Tab.Panels className="mt-3 rounded-xl bg-white p-3">
-                    <Tab.Panel>
-                      <div id="_adminProducts">
-                        <DataStateDisplay
-                          isError={isAllProductsError}
-                          refetch={refetchAllProducts}
-                          isFetching={isAllProductsFetching}
-                          isSuccess={isAllProductsSuccess}
-                          dataLength={
-                            productsPagination?.data?.pagination.data ? productsPagination.data?.productsLength : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className="w-[700px] md:w-full mx-auto z-10">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
-                                  <div className="flex items-center">
-                                    <input
-                                      className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
-                                      type="checkbox"
-                                      checked={
-                                        selectedProducts[tabKey]?.length ===
-                                        productsPagination?.data?.pagination?.data?.length
-                                      }
-                                      onChange={handleSelectAllProduct}
-                                    />
-                                    <ArrowDown className="icon text-gray-500" />
-                                  </div>
-                                </th>
-                                <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
-                                  نام محصول
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {productsPagination?.data?.pagination?.data &&
-                                productsPagination.data?.pagination.data.map((product, index) => (
-                                  <tr
-                                    key={product.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                    <Tab.Panels className="mt-3 rounded-xl bg-white p-3">
+                      <Tab.Panel>
+                        <div id="_adminProducts">
+                          <DataStateDisplay
+                            isError={isAllProductsError}
+                            refetch={refetchAllProducts}
+                            isFetching={isAllProductsFetching}
+                            isSuccess={isAllProductsSuccess}
+                            dataLength={
+                              productsPagination?.data?.pagination.data ? productsPagination.data?.productsLength : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className="w-[700px] md:w-full mx-auto z-10">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
+                                    <div className="flex items-center">
                                       <input
-                                        className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                        className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
                                         type="checkbox"
-                                        checked={selectedProducts[tabKey]?.includes(product) || false}
-                                        onChange={() => handleSelectProduct(product)}
+                                        checked={
+                                          selectedProducts[tabKey]?.length ===
+                                          productsPagination?.data?.pagination?.data?.length
+                                        }
+                                        onChange={handleSelectAllProduct}
                                       />
-                                    </td>
-                                    <td>
-                                      <img
-                                        className="w-[50px] h-[50px] rounded"
-                                        src={product.mainImageSrc.imageUrl}
-                                        alt="p-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
-                                      <Link className="text-sky-500" href={`/products/${product.slug}`}>
-                                        {product.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(product.code)}</td>
-
-                                    <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
-                                      {product.parentCategories.category.name}
-                                      <span className="tooltip-text">
-                                        <ProductBreadcrumb isAdmin categoryLevels={product.parentCategories} isAdminTable/>
-                                      </span>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) && product.inStock > 0
-                                        ? '✓'
-                                        : digitsEnToFa(product.inStock)}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {product.reviewCount === 0 ? (
-                                        '-'
-                                      ) : (
-                                        <Link className="text-sky-500" href={`/`}>
-                                          {'✓'}
+                                      <ArrowDown className="icon text-gray-500" />
+                                    </div>
+                                  </th>
+                                  <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
+                                    نام محصول
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {productsPagination?.data?.pagination?.data &&
+                                  productsPagination.data?.pagination.data.map((product, index) => (
+                                    <tr
+                                      key={product.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                                        <input
+                                          className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                          type="checkbox"
+                                          checked={selectedProducts[tabKey]?.includes(product) || false}
+                                          onChange={() => handleSelectProduct(product)}
+                                        />
+                                      </td>
+                                      <td>
+                                        <img
+                                          className="w-[50px] h-[50px] rounded"
+                                          src={product.mainImageSrc.imageUrl}
+                                          alt="p-img"
+                                        />
+                                      </td>
+                                      <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
+                                        <Link className="text-sky-500" href={`/products/${product.slug}`}>
+                                          {product.title}
                                         </Link>
-                                      )}
-                                    </td>
-                                    <td className="text-center">
-                                      {product.publishTime ? (
-                                        <span className="text-sm text-orange-400 font-medium">در انتظار</span>
-                                      ) : product.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(product.code)}
+                                      </td>
 
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <Link
-                                                    href={`/admin/products/edit/${product.id}`}
-                                                    onClick={close}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>ویرایش</span>
-                                                  </Link>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDeleteTrash(product.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>زباله دان</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                      <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
+                                        {product.parentCategories.category.name}
+                                        <span className="tooltip-text">
+                                          <ProductBreadcrumb
+                                            isAdmin
+                                            categoryLevels={product.parentCategories}
+                                            isAdminTable
+                                          />
+                                        </span>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) && product.inStock > 0
+                                          ? '✓'
+                                          : digitsEnToFa(product.inStock)}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {product.reviewCount === 0 ? (
+                                          '-'
+                                        ) : (
+                                          <Link className="text-sky-500" href={`/`}>
+                                            {'✓'}
+                                          </Link>
+                                        )}
+                                      </td>
+                                      <td className="text-center">
+                                        {product.publishTime ? (
+                                          <span className="text-sm text-orange-400 font-medium">در انتظار</span>
+                                        ) : product.isActive ? (
+                                          <span className="text-sm text-green-500">فعال</span>
+                                        ) : (
+                                          <span className="text-sm text-red-500">غیر فعال</span>
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
 
-                        {productsPagination &&
-                          productsPagination.data &&
-                          productsPagination?.data?.productsLength > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={productsPagination?.data.pagination}
-                                section="_adminProducts"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <Link
+                                                      href={`/admin/products/edit/${product.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </Link>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDeleteTrash(product.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>زباله دان</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                    <Tab.Panel>
-                      <div id="_adminActiveProducts">
-                        <DataStateDisplay
-                          isError={isActiveProductsError}
-                          refetch={refetchActiveProducts}
-                          isFetching={isActiveProductsFetching}
-                          isSuccess={isActiveProductsSuccess}
-                          dataLength={
-                            productsActivePagination?.data?.pagination.data
-                              ? productsActivePagination.data?.productsLength
-                              : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className=" w-[700px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
-                                  <div className="flex items-center">
-                                    <input
-                                      className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        handleSelectAll(e, productsActivePagination?.data?.pagination?.data ?? [])
-                                      }
-                                      checked={
-                                        selectedProducts[tabKey]?.length ===
-                                        productsActivePagination?.data?.pagination.data?.length
-                                      }
-                                    />
-                                    <ArrowDown className="icon text-gray-500" />
-                                  </div>
-                                </th>
-                                <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
-                                  نام محصول
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {productsActivePagination?.data?.pagination?.data &&
-                                productsActivePagination.data?.pagination.data.map((product, index) => (
-                                  <tr
-                                    key={product.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                          {productsPagination &&
+                            productsPagination.data &&
+                            productsPagination?.data?.productsLength > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={productsPagination?.data.pagination}
+                                  section="_adminProducts"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
+
+                      <Tab.Panel>
+                        <div id="_adminActiveProducts">
+                          <DataStateDisplay
+                            isError={isActiveProductsError}
+                            refetch={refetchActiveProducts}
+                            isFetching={isActiveProductsFetching}
+                            isSuccess={isActiveProductsSuccess}
+                            dataLength={
+                              productsActivePagination?.data?.pagination.data
+                                ? productsActivePagination.data?.productsLength
+                                : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className=" w-[700px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
+                                    <div className="flex items-center">
                                       <input
-                                        className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                        className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
                                         type="checkbox"
-                                        checked={selectedProducts[tabKey]?.includes(product) || false}
-                                        onChange={() => handleSelectProduct(product)}
+                                        onChange={(e) =>
+                                          handleSelectAll(e, productsActivePagination?.data?.pagination?.data ?? [])
+                                        }
+                                        checked={
+                                          selectedProducts[tabKey]?.length ===
+                                          productsActivePagination?.data?.pagination.data?.length
+                                        }
                                       />
-                                    </td>
-                                    <td>
-                                      <img
-                                        className="w-[50px] h-[50px] rounded"
-                                        src={product.mainImageSrc.imageUrl}
-                                        alt="p-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
-                                      <Link className="text-sky-500" href={`/products/${product.slug}`}>
-                                        {product.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(product.code)}</td>
-                                    {/* <td
+                                      <ArrowDown className="icon text-gray-500" />
+                                    </div>
+                                  </th>
+                                  <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
+                                    نام محصول
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {productsActivePagination?.data?.pagination?.data &&
+                                  productsActivePagination.data?.pagination.data.map((product, index) => (
+                                    <tr
+                                      key={product.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                                        <input
+                                          className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                          type="checkbox"
+                                          checked={selectedProducts[tabKey]?.includes(product) || false}
+                                          onChange={() => handleSelectProduct(product)}
+                                        />
+                                      </td>
+                                      <td>
+                                        <img
+                                          className="w-[50px] h-[50px] rounded"
+                                          src={product.mainImageSrc.imageUrl}
+                                          alt="p-img"
+                                        />
+                                      </td>
+                                      <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
+                                        <Link className="text-sky-500" href={`/products/${product.slug}`}>
+                                          {product.title}
+                                        </Link>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(product.code)}
+                                      </td>
+                                      {/* <td
                                       title={`${product.parentCategories.category.name}`}
                                       className="text-sm text-gray-600 text-center"
                                     >
                                       {product.parentCategories.category.name}
                                     </td> */}
-                                    <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
-                                      {product.parentCategories.category.name}
-                                      <span className="tooltip-text">
-                                        <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
-                                      </span>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
-                                    <td className="text-center">
-                                      {product.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
+                                      <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
+                                        {product.parentCategories.category.name}
+                                        <span className="tooltip-text">
+                                          <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
+                                        </span>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
+                                      <td className="text-center">
+                                        {product.isActive ? (
+                                          <span className="text-sm text-green-500">فعال</span>
+                                        ) : (
+                                          <span className="text-sm text-red-500">غیر فعال</span>
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
 
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <Link
-                                                    href={`/admin/products/edit/${product.id}`}
-                                                    onClick={close}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>ویرایش</span>
-                                                  </Link>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDeleteTrash(product.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>زباله دان</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <Link
+                                                      href={`/admin/products/edit/${product.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </Link>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDeleteTrash(product.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>زباله دان</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                        {productsActivePagination &&
-                          productsActivePagination.data &&
-                          productsActivePagination?.data?.productsLength > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={productsActivePagination?.data.pagination}
-                                section="_adminActiveProducts"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
+                          {productsActivePagination &&
+                            productsActivePagination.data &&
+                            productsActivePagination?.data?.productsLength > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={productsActivePagination?.data.pagination}
+                                  section="_adminActiveProducts"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
 
-                    <Tab.Panel>
-                      <div id="_adminInActiveProducts">
-                        <DataStateDisplay
-                          isError={isInactiveProductsError}
-                          refetch={refetchInactiveProducts}
-                          isFetching={isInactiveProductsFetching}
-                          isSuccess={isInactiveProductsSuccess}
-                          dataLength={
-                            productsInActivePagination?.data?.pagination.data
-                              ? productsInActivePagination.data?.productsLength
-                              : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className=" w-[700px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
-                                  <div className="flex items-center">
-                                    <input
-                                      className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        handleSelectAll(e, productsInActivePagination?.data?.pagination?.data ?? [])
-                                      }
-                                      checked={
-                                        selectedProducts[tabKey]?.length ===
-                                        productsInActivePagination?.data?.pagination.data?.length
-                                      }
-                                    />
-                                    <ArrowDown className="icon text-gray-500" />
-                                  </div>
-                                </th>
-                                <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
-                                  نام محصول
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {productsInActivePagination?.data?.pagination?.data &&
-                                productsInActivePagination.data?.pagination.data.map((product, index) => (
-                                  <tr
-                                    key={product.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                      <Tab.Panel>
+                        <div id="_adminInActiveProducts">
+                          <DataStateDisplay
+                            isError={isInactiveProductsError}
+                            refetch={refetchInactiveProducts}
+                            isFetching={isInactiveProductsFetching}
+                            isSuccess={isInactiveProductsSuccess}
+                            dataLength={
+                              productsInActivePagination?.data?.pagination.data
+                                ? productsInActivePagination.data?.productsLength
+                                : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className=" w-[700px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
+                                    <div className="flex items-center">
                                       <input
-                                        className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                        className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
                                         type="checkbox"
-                                        checked={selectedProducts[tabKey]?.includes(product) || false}
-                                        onChange={() => handleSelectProduct(product)}
+                                        onChange={(e) =>
+                                          handleSelectAll(e, productsInActivePagination?.data?.pagination?.data ?? [])
+                                        }
+                                        checked={
+                                          selectedProducts[tabKey]?.length ===
+                                          productsInActivePagination?.data?.pagination.data?.length
+                                        }
                                       />
-                                    </td>
-                                    <td>
-                                      <img
-                                        className="w-[50px] h-[50px] rounded"
-                                        src={product.mainImageSrc.imageUrl}
-                                        alt="p-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
-                                      <Link className="text-sky-500" href={`/products/${product.slug}`}>
-                                        {product.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(product.code)}</td>
-                                    {/* <td
+                                      <ArrowDown className="icon text-gray-500" />
+                                    </div>
+                                  </th>
+                                  <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
+                                    نام محصول
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {productsInActivePagination?.data?.pagination?.data &&
+                                  productsInActivePagination.data?.pagination.data.map((product, index) => (
+                                    <tr
+                                      key={product.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                                        <input
+                                          className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                          type="checkbox"
+                                          checked={selectedProducts[tabKey]?.includes(product) || false}
+                                          onChange={() => handleSelectProduct(product)}
+                                        />
+                                      </td>
+                                      <td>
+                                        <img
+                                          className="w-[50px] h-[50px] rounded"
+                                          src={product.mainImageSrc.imageUrl}
+                                          alt="p-img"
+                                        />
+                                      </td>
+                                      <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
+                                        <Link className="text-sky-500" href={`/products/${product.slug}`}>
+                                          {product.title}
+                                        </Link>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(product.code)}
+                                      </td>
+                                      {/* <td
                                       title={`${product.parentCategories.category.name}`}
                                       className="text-sm text-gray-600 text-center"
                                     >
                                       {product.parentCategories.category.name}
                                     </td> */}
-                                    <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
-                                      {product.parentCategories.category.name}
-                                      <span className="tooltip-text">
-                                        <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
-                                      </span>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
-                                    <td className="text-center">
-                                      {product.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
+                                      <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
+                                        {product.parentCategories.category.name}
+                                        <span className="tooltip-text">
+                                          <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
+                                        </span>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
+                                      <td className="text-center">
+                                        {product.isActive ? (
+                                          <span className="text-sm text-green-500">فعال</span>
+                                        ) : (
+                                          <span className="text-sm text-red-500">غیر فعال</span>
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
 
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <Link
-                                                    href={`/admin/products/edit/${product.id}`}
-                                                    onClick={close}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>ویرایش</span>
-                                                  </Link>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDeleteTrash(product.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>زباله دان</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <Link
+                                                      href={`/admin/products/edit/${product.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </Link>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDeleteTrash(product.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>زباله دان</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                        {productsInActivePagination &&
-                          productsInActivePagination.data &&
-                          productsInActivePagination?.data?.productsLength > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={productsInActivePagination?.data.pagination}
-                                section="_adminInActiveProducts"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <div id="_adminIsPublishTimeProducts">
-                        <DataStateDisplay
-                          isError={isPendingProductsError}
-                          refetch={refetchPendingProducts}
-                          isFetching={isPendingProductsFetching}
-                          isSuccess={isPendingProductsSuccess}
-                          dataLength={
-                            productsIsPendingPagination?.data?.pagination.data
-                              ? productsIsPendingPagination.data?.productsLength
-                              : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className=" w-[700px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
-                                  <div className="flex items-center">
-                                    <input
-                                      className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        handleSelectAll(e, productsIsPendingPagination?.data?.pagination?.data ?? [])
-                                      }
-                                      checked={
-                                        selectedProducts[tabKey]?.length ===
-                                        productsIsPendingPagination?.data?.pagination.data?.length
-                                      }
-                                    />
-                                    <ArrowDown className="icon text-gray-500" />
-                                  </div>
-                                </th>
-                                <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
-                                  نام محصول
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {productsIsPendingPagination?.data?.pagination?.data &&
-                                productsIsPendingPagination.data?.pagination.data.map((product, index) => (
-                                  <tr
-                                    key={product.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                          {productsInActivePagination &&
+                            productsInActivePagination.data &&
+                            productsInActivePagination?.data?.productsLength > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={productsInActivePagination?.data.pagination}
+                                  section="_adminInActiveProducts"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
+                      <Tab.Panel>
+                        <div id="_adminIsPublishTimeProducts">
+                          <DataStateDisplay
+                            isError={isPendingProductsError}
+                            refetch={refetchPendingProducts}
+                            isFetching={isPendingProductsFetching}
+                            isSuccess={isPendingProductsSuccess}
+                            dataLength={
+                              productsIsPendingPagination?.data?.pagination.data
+                                ? productsIsPendingPagination.data?.productsLength
+                                : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className=" w-[700px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
+                                    <div className="flex items-center">
                                       <input
-                                        className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                        className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
                                         type="checkbox"
-                                        checked={selectedProducts[tabKey]?.includes(product) || false}
-                                        onChange={() => handleSelectProduct(product)}
+                                        onChange={(e) =>
+                                          handleSelectAll(e, productsIsPendingPagination?.data?.pagination?.data ?? [])
+                                        }
+                                        checked={
+                                          selectedProducts[tabKey]?.length ===
+                                          productsIsPendingPagination?.data?.pagination.data?.length
+                                        }
                                       />
-                                    </td>
-                                    <td>
-                                      <img
-                                        className="w-[50px] h-[50px] rounded"
-                                        src={product.mainImageSrc.imageUrl}
-                                        alt="p-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
-                                      <Link className="text-sky-500" href={`/products/${product.slug}`}>
-                                        {product.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(product.code)}</td>
-                                    {/* <td
+                                      <ArrowDown className="icon text-gray-500" />
+                                    </div>
+                                  </th>
+                                  <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
+                                    نام محصول
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {productsIsPendingPagination?.data?.pagination?.data &&
+                                  productsIsPendingPagination.data?.pagination.data.map((product, index) => (
+                                    <tr
+                                      key={product.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                                        <input
+                                          className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                          type="checkbox"
+                                          checked={selectedProducts[tabKey]?.includes(product) || false}
+                                          onChange={() => handleSelectProduct(product)}
+                                        />
+                                      </td>
+                                      <td>
+                                        <img
+                                          className="w-[50px] h-[50px] rounded"
+                                          src={product.mainImageSrc.imageUrl}
+                                          alt="p-img"
+                                        />
+                                      </td>
+                                      <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
+                                        <Link className="text-sky-500" href={`/products/${product.slug}`}>
+                                          {product.title}
+                                        </Link>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(product.code)}
+                                      </td>
+                                      {/* <td
                                       title={`${product.parentCategories.category.name}`}
                                       className="text-sm text-gray-600 text-center"
                                     >
                                       {product.parentCategories.category.name}
                                     </td> */}
-                                    <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
-                                      {product.parentCategories.category.name}
-                                      <span className="tooltip-text">
-                                        <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
-                                      </span>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
-                                    <td className="text-center">
-                                      {product.publishTime ? (
-                                        <span className="text-sm text-orange-400 font-medium">در انتظار</span>
-                                      ) : product.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
+                                      <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
+                                        {product.parentCategories.category.name}
+                                        <span className="tooltip-text">
+                                          <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
+                                        </span>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
+                                      <td className="text-center">
+                                        {product.publishTime ? (
+                                          <span className="text-sm text-orange-400 font-medium">در انتظار</span>
+                                        ) : product.isActive ? (
+                                          <span className="text-sm text-green-500">فعال</span>
+                                        ) : (
+                                          <span className="text-sm text-red-500">غیر فعال</span>
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
 
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <Link
-                                                    href={`/admin/products/edit/${product.id}`}
-                                                    onClick={close}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>ویرایش</span>
-                                                  </Link>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDeleteTrash(product.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>زباله دان</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <Link
+                                                      href={`/admin/products/edit/${product.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </Link>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDeleteTrash(product.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>زباله دان</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                        {productsIsPendingPagination &&
-                          productsIsPendingPagination.data &&
-                          productsIsPendingPagination?.data?.productsLength > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={productsIsPendingPagination?.data.pagination}
-                                section="_adminIsPublishTimeProducts"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
+                          {productsIsPendingPagination &&
+                            productsIsPendingPagination.data &&
+                            productsIsPendingPagination?.data?.productsLength > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={productsIsPendingPagination?.data.pagination}
+                                  section="_adminIsPublishTimeProducts"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
 
-                    <Tab.Panel>
-                      <div className="_adminIsDeletedProducts">
-                        <DataStateDisplay
-                          isError={isDeletedProductsError}
-                          refetch={refetchDeletedProducts}
-                          isFetching={isDeletedProductsFetching}
-                          isSuccess={isDeletedProductsSuccess}
-                          dataLength={
-                            productsIsDeletedPagination?.data?.pagination.data
-                              ? productsIsDeletedPagination.data?.productsLength
-                              : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className=" w-[700px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
-                                  <div className="flex items-center">
-                                    <input
-                                      className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
-                                      type="checkbox"
-                                      onChange={(e) =>
-                                        handleSelectAll(e, productsIsDeletedPagination?.data?.pagination?.data ?? [])
-                                      }
-                                      checked={
-                                        selectedProducts[tabKey]?.length ===
-                                        productsIsDeletedPagination?.data?.pagination.data?.length
-                                      }
-                                    />
-                                    <ArrowDown className="icon text-gray-500" />
-                                  </div>
-                                </th>
-                                <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
-                                  نام محصول
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {productsIsDeletedPagination?.data?.pagination?.data &&
-                                productsIsDeletedPagination.data?.pagination.data.map((product, index) => (
-                                  <tr
-                                    key={product.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                      <Tab.Panel>
+                        <div className="_adminIsDeletedProducts">
+                          <DataStateDisplay
+                            isError={isDeletedProductsError}
+                            refetch={refetchDeletedProducts}
+                            isFetching={isDeletedProductsFetching}
+                            isSuccess={isDeletedProductsSuccess}
+                            dataLength={
+                              productsIsDeletedPagination?.data?.pagination.data
+                                ? productsIsDeletedPagination.data?.productsLength
+                                : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className=" w-[700px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-center">
+                                    <div className="flex items-center">
                                       <input
-                                        className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                        className="appearance-none checked:bg-sky-500 border-none focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
                                         type="checkbox"
-                                        checked={selectedProducts[tabKey]?.includes(product) || false}
-                                        onChange={() => handleSelectProduct(product)}
+                                        onChange={(e) =>
+                                          handleSelectAll(e, productsIsDeletedPagination?.data?.pagination?.data ?? [])
+                                        }
+                                        checked={
+                                          selectedProducts[tabKey]?.length ===
+                                          productsIsDeletedPagination?.data?.pagination.data?.length
+                                        }
                                       />
-                                    </td>
-                                    <td>
-                                      <img
-                                        className="w-[50px] h-[50px] rounded"
-                                        src={product.mainImageSrc.imageUrl}
-                                        alt="p-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
-                                      <Link className="text-sky-500" href={`/products/${product.slug}`}>
-                                        {product.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(product.code)}</td>
-                                    {/* <td
+                                      <ArrowDown className="icon text-gray-500" />
+                                    </div>
+                                  </th>
+                                  <th className="text-sm py-3 px-2 font-normal w-[70px] text-start"></th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
+                                    نام محصول
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">کد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px]">دسته بندی</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {productsIsDeletedPagination?.data?.pagination?.data &&
+                                  productsIsDeletedPagination.data?.pagination.data.map((product, index) => (
+                                    <tr
+                                      key={product.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td className="text-sm py-3 px-2 pr-3 font-normal w-[1%] text-start">
+                                        <input
+                                          className="appearance-none border border-gray-300 checked:bg-sky-500 focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded-md text-xl w-4 h-4"
+                                          type="checkbox"
+                                          checked={selectedProducts[tabKey]?.includes(product) || false}
+                                          onChange={() => handleSelectProduct(product)}
+                                        />
+                                      </td>
+                                      <td>
+                                        <img
+                                          className="w-[50px] h-[50px] rounded"
+                                          src={product.mainImageSrc.imageUrl}
+                                          alt="p-img"
+                                        />
+                                      </td>
+                                      <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
+                                        <Link className="text-sky-500" href={`/products/${product.slug}`}>
+                                          {product.title}
+                                        </Link>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(product.code)}
+                                      </td>
+                                      {/* <td
                                       title={`${product.parentCategories.category.name}`}
                                       className="text-sm text-gray-600 text-center"
                                     >
                                       {product.parentCategories.category.name}
                                     </td> */}
-                                    <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
-                                      {product.parentCategories.category.name}
-                                      <span className="tooltip-text">
-                                        <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
-                                      </span>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
-                                    <td className="text-center">
-                                      {product.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
+                                      <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
+                                        {product.parentCategories.category.name}
+                                        <span className="tooltip-text">
+                                          <ProductBreadcrumb categoryLevels={product.parentCategories} isAdmin />
+                                        </span>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? 'متغیر' : 'ساده'}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {handleIsChangeable(product) ? '✓' : digitsEnToFa('1')}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
+                                      <td className="text-center">
+                                        {product.isActive ? (
+                                          <span className="text-sm text-green-500">فعال</span>
+                                        ) : (
+                                          <span className="text-sm text-red-500">غیر فعال</span>
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
 
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleRestoreTrash(product.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>بازگردانی</span>
-                                                  </button>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDelete(product.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>حذف</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleRestoreTrash(product.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>بازگردانی</span>
+                                                    </button>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDelete(product.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>حذف</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                        {productsIsDeletedPagination &&
-                          productsIsDeletedPagination.data &&
-                          productsIsDeletedPagination?.data?.productsLength > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={productsIsDeletedPagination?.data.pagination}
-                                section="_adminIsDeletedProducts"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
-                  </Tab.Panels>
-                </Tab.Group>
+                          {productsIsDeletedPagination &&
+                            productsIsDeletedPagination.data &&
+                            productsIsDeletedPagination?.data?.productsLength > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={productsIsDeletedPagination?.data.pagination}
+                                  section="_adminIsDeletedProducts"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
+                    </Tab.Panels>
+                  </Tab.Group>
+                </div>
+                <div></div>
               </div>
-              <div></div>
-            </div>
-          </section>
-        </DashboardLayout>
-      </main>
-    </>
+            </section>
+          </DashboardLayout>
+        </main>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 export default dynamic(() => Promise.resolve(Products), { ssr: false })

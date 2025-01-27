@@ -209,13 +209,13 @@ export interface IArticleForm {
 export interface IUserForm {
   id?: string | undefined
   userType: number
-  roleIds: string[]
+  roleId: string
   isActive: boolean
   thumbnail: File | null
   idCardThumbnail: File | null
   mobileNumber: string
-  passCode:string
-  //optional 
+  passCode: string
+  //optional
   firstName: string
   familyName: string
   fatherName?: string
@@ -250,7 +250,7 @@ export interface IUserForm {
   isActiveAddProduct?: boolean
   isPublishProduct?: boolean
   isSelectedAsSpecialSeller?: boolean
-  commissionType?: number
+  commissionType: number | null
   percentageValue?: string
   sellerPerformance?: string
   timelySupply?: string
@@ -281,4 +281,17 @@ export interface IDesignItemForm {
   index: number
   created?: string
   lastUpdated?: string
+}
+
+export interface IRoleForm {
+  id?: string
+  title: string
+  isActive: string
+  permissions: Record<string, boolean>;
+}
+export interface IRoleRequest {
+  id?: string
+  title: string
+  isActive: boolean
+  permissions: string[];
 }

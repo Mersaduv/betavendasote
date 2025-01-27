@@ -22,7 +22,7 @@ const Lists: NextPage = () => {
         keywords={generalSetting?.googleTags || ' اینترنتی, فروشگاه'}
       />
       <Header />
-      <ProfileLayout>
+      <ProfileLayout isProfile>
         <PageContainer title="لیست‌ها">
           <div className="flex mt-3 px-4 text-sm md:text-base mx-3 border border-[#e90089] rounded-md py-2 justify-between items-center bg-[#fde5f3] text-[#e90089]">
             {' '}

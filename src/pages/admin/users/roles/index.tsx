@@ -1,86 +1,59 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import { DashboardLayout, TabDashboardLayout } from '@/components/Layouts'
-import type { NextPage } from 'next'
+import { DashboardLayout, TabDashboardLayout, UserTabDashboardLayout } from '@/components/Layouts'
+import { useAppDispatch, useDisclosure } from '@/hooks'
+import { useRouter } from 'next/router'
+import {
+  useDeleteRoleMutation,
+  useDeleteTrashUserMutation,
+  useDeleteUserMutation,
+  useGetAllCategoriesQuery,
+  useGetRolesQuery,
+  useGetUsersQuery,
+  useRestoreUserMutation,
+} from '@/services'
+import { Fragment, useEffect, useState } from 'react'
+import { GetRolesResult, GetUsersResult } from '@/services/user/types'
+import { Menu, Tab, Transition } from '@headlessui/react'
+import { digitsEnToFa } from '@persian-tools/persian-tools'
+import { Button } from '@/components/ui'
+import { LuSearch } from 'react-icons/lu'
 import { DataStateDisplay, HandleResponse } from '@/components/shared'
 import { TableSkeleton } from '@/components/skeleton'
-import { EmptyCustomList } from '@/components/emptyList'
-import { digitsEnToFa } from '@persian-tools/persian-tools'
-import { Menu, Tab, Transition } from '@headlessui/react'
-import {
-  useDeleteBrandMutation,
-  useDeleteCategoryMutation,
-  useDeleteFeatureMutation,
-  useGetAllCategoriesQuery,
-  useGetBrandsQuery,
-  useGetFeaturesQuery,
-  useGetParenSubCategoriesQuery,
-} from '@/services'
-import { useRouter } from 'next/router'
-import { IBrand, ICategory } from '@/types'
-import { useAppDispatch, useAppSelector, useDisclosure } from '@/hooks'
-import {
-  BrandModal,
-  CategoryModal,
-  CategoryUpdateModal,
-  ConfirmDeleteModal,
-  FeatureModal,
-  SizesModal,
-} from '@/components/modals'
-import { Fragment, useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Pagination } from '@/components/navigation'
-import { useDispatch } from 'react-redux'
-import { LuSearch } from 'react-icons/lu'
-import { Button } from '@/components/ui'
-import { ParentSubCategoriesTree } from '@/components/categories'
-import { FeatureValue, ProductFeature } from '@/services/feature/types'
-import { showAlert } from '@/store'
-import { GetBrandsResult } from '@/services/brand/types'
+import { ConfirmDeleteModal, ConfirmUpdateModal } from '@/components/modals'
 import { ProtectedRouteWrapper } from '@/components/user'
-
-const Brands: NextPage = () => {
-  // States
-  const [isShowBrandModal, brandModalHandlers] = useDisclosure()
-  const [isShowEditBrandModal, editBrandModalHandlers] = useDisclosure()
-  const [isShowConfirmDeleteModal, confirmDeleteModalHandlers] = useDisclosure()
-
+import { IRole } from '@/types'
+import { showAlert } from '@/store'
+const Roles = () => {
+  // ? States
+  const [searchTerm, setSearchTerm] = useState('')
+  const [tabKey, setTabKey] = useState('allUsers')
   const [deleteInfo, setDeleteInfo] = useState({
     id: '',
   })
-  const [searchTerm, setSearchTerm] = useState('')
-  const [stateBrand, setStateBrand] = useState<IBrand>()
-  const [brandTabKey, setBrandTabKey] = useState('allBrands')
+  const [isShowConfirmDeleteModal, confirmDeleteModalHandlers] = useDisclosure()
 
-  // ? Assets
+  //? Assets
   const dispatch = useAppDispatch()
   const { query, push } = useRouter()
-  const brandPage = query.page ? +query.page : 1
-  // ? brands Query
-  const [brandsPagination, setBrandsPagination] = useState<GetBrandsResult>()
-  const [brandsActivePagination, setBrandsActivePagination] = useState<GetBrandsResult>()
-  const [brandsInActivePagination, setBrandsInActivePagination] = useState<GetBrandsResult>()
-  const [brandsIsActiveSliderPagination, setBrandsIsActiveSliderPagination] = useState<GetBrandsResult>()
-  // const {
-  //   data: brandData,
-  //   refetch,
-  //   ...brandsQueryProps
-  // } = useGetBrandsQuery({
-  //   pageSize: 20,
-  //   page: brandPage,
-  //   search: searchTerm,
-  // })
-  const useFetchBrands = (status: string) => {
-    const commonBrandQueryParams = {
+  const rolePage = query.page ? +query.page : 1
+
+  const [rolesPagination, setRolesPagination] = useState<GetRolesResult>()
+  const [rolesActivePagination, setRolesActivePagination] = useState<GetRolesResult>()
+  const [rolesInActivePagination, setRolesInActivePagination] = useState<GetRolesResult>()
+  const useFetchRoles = (status: string) => {
+    const commonRoleQueryParams = {
       pageSize: 8,
-      page: brandPage,
+      page: rolePage,
       search: searchTerm,
       isActive: status === 'isActive',
       inActive: status === 'inActive',
-      isDeleted: status === 'isDeleted',
-      isActiveSlider: status === 'isActiveSlider',
+      adminList: status === 'adminList',
     }
 
-    const { data, isError, isFetching, isSuccess, refetch } = useGetBrandsQuery({ ...commonBrandQueryParams })
+    const { data, isError, isFetching, isSuccess, refetch } = useGetRolesQuery({ ...commonRoleQueryParams })
 
     return {
       data,
@@ -92,49 +65,49 @@ const Brands: NextPage = () => {
   }
 
   const {
-    data: allBrands,
-    isError: isAllBrandsError,
-    isFetching: isAllBrandsFetching,
-    isSuccess: isAllBrandsSuccess,
-    refetch: refetchAllBrands,
-  } = useFetchBrands('allBrands')
+    data: allRoles,
+    isError: isAllRolesError,
+    isFetching: isAllRolesFetching,
+    isSuccess: isAllRolesSuccess,
+    refetch: refetchAllRoles,
+  } = useFetchRoles('adminList')
 
   const {
-    data: activeBrands,
-    isError: isActiveBrandsError,
-    isFetching: isActiveBrandsFetching,
-    isSuccess: isActiveBrandsSuccess,
-    refetch: refetchActiveBrands,
-  } = useFetchBrands('isActive')
+    data: activeRoles,
+    isError: isActiveRolesError,
+    isFetching: isActiveRolesFetching,
+    isSuccess: isActiveRolesSuccess,
+    refetch: refetchActiveRoles,
+  } = useFetchRoles('isActive')
 
   const {
-    data: inactiveBrands,
-    isError: isInactiveBrandsError,
-    isFetching: isInactiveBrandsFetching,
-    isSuccess: isInactiveBrandsSuccess,
-    refetch: refetchInactiveBrands,
-  } = useFetchBrands('inActive')
+    data: inactiveRoles,
+    isError: isInactiveRolesError,
+    isFetching: isInactiveRolesFetching,
+    isSuccess: isInactiveRolesSuccess,
+    refetch: refetchInactiveRoles,
+  } = useFetchRoles('inActive')
 
   useEffect(() => {
-    if (allBrands) {
-      setBrandsPagination(allBrands)
+    if (allRoles) {
+      setRolesPagination(allRoles)
     }
-  }, [allBrands])
+  }, [allRoles])
 
   useEffect(() => {
-    if (activeBrands) {
-      setBrandsActivePagination(activeBrands)
+    if (activeRoles) {
+      setRolesActivePagination(activeRoles)
     }
-  }, [activeBrands])
+  }, [activeRoles])
 
   useEffect(() => {
-    if (inactiveBrands) {
-      setBrandsInActivePagination(inactiveBrands)
+    if (inactiveRoles) {
+      setRolesInActivePagination(inactiveRoles)
     }
-  }, [inactiveBrands])
-  //*    Delete Category
+  }, [inactiveRoles])
+
   const [
-    deleteBrand,
+    deleteRole,
     {
       isSuccess: isSuccessDelete,
       isError: isErrorDelete,
@@ -142,32 +115,28 @@ const Brands: NextPage = () => {
       data: dataDelete,
       isLoading: isLoadingDelete,
     },
-  ] = useDeleteBrandMutation()
+  ] = useDeleteRoleMutation()
 
-  const handleChangePage = (id: string) => {
-    push(`/admin/products?brands=${id}`)
+  //? Handler
+  const handleChangePage = (roleQuery: string) => {
+    push(`/admin/users/personnel?role=${roleQuery}`)
   }
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
 
-  const handlerEditBrandModal = (brand: IBrand) => {
-    setStateBrand(brand)
-    editBrandModalHandlers.open()
-  }
-
   //*   Delete Handlers
-  const handleDelete = (brand: IBrand) => {
-    if (brand.count !== 0) {
+  const handleDelete = (role: IRole) => {
+    if (role.roleUserCount > 0) {
       return dispatch(
         showAlert({
           status: 'error',
-          title: 'برند مد نظر دارایی محصول مرتبط است',
+          title: 'سمت مد نظر تخصیص داده شده',
         })
       )
     } else {
-      setDeleteInfo({ id: brand.id })
+      setDeleteInfo({ id: role.id })
       confirmDeleteModalHandlers.open()
     }
   }
@@ -177,12 +146,12 @@ const Brands: NextPage = () => {
     confirmDeleteModalHandlers.close()
   }
 
-  const onConfirm = () => {
-    deleteBrand({ id: deleteInfo.id })
+  const onConfirmDelete = () => {
+    deleteRole({ id: deleteInfo.id })
   }
 
   const onSuccess = () => {
-    handleAllRefetch()
+    // handleAllRefetch()
     confirmDeleteModalHandlers.close()
     setDeleteInfo({ id: '' })
   }
@@ -191,16 +160,21 @@ const Brands: NextPage = () => {
     setDeleteInfo({ id: '' })
   }
 
-  const handleAllRefetch = () => {
-    refetchAllBrands()
-    refetchInactiveBrands()
-    refetchActiveBrands()
-  }
-
   return (
     <ProtectedRouteWrapper>
       <>
-        {/* Handle Delete Response */}
+        {/* Confirm Delete User Modal */}
+        <ConfirmDeleteModal
+          title="سمت"
+          deleted
+          isLoading={isLoadingDelete}
+          isShow={isShowConfirmDeleteModal}
+          onClose={confirmDeleteModalHandlers.close}
+          onCancel={onCancel}
+          onConfirm={onConfirmDelete}
+        />
+
+        {/* Handle Delete Product Response */}
         {(isSuccessDelete || isErrorDelete) && (
           <HandleResponse
             isError={isErrorDelete}
@@ -211,77 +185,36 @@ const Brands: NextPage = () => {
             onError={onError}
           />
         )}
-
-        <BrandModal
-          title="افزودن"
-          mode="create"
-          refetch={handleAllRefetch}
-          isShow={isShowBrandModal}
-          onClose={() => {
-            brandModalHandlers.close()
-          }}
-        />
-
-        <BrandModal
-          title="ویرایش"
-          mode="edit"
-          refetch={handleAllRefetch}
-          brand={stateBrand}
-          isShow={isShowEditBrandModal}
-          onClose={() => {
-            editBrandModalHandlers.close()
-          }}
-        />
-
-        <ConfirmDeleteModal
-          deleted
-          title="برند"
-          isLoading={isLoadingDelete}
-          isShow={isShowConfirmDeleteModal}
-          onClose={confirmDeleteModalHandlers.close}
-          onCancel={onCancel}
-          onConfirm={onConfirm}
-        />
-
+        <Head>
+          <title>سمت ها</title>
+        </Head>
         <DashboardLayout>
-          <TabDashboardLayout>
-            <Head>
-              <title> برندها</title>
-            </Head>
-
-            <div id="_adminBrands">
-              <div className="">
+          <section className="w-full mt-7 flex flex-col">
+            <div className="mx-3 bg-white rounded-xl shadow-item">
+              <div className="relative overflow-x-auto min-h-96">
                 <Tab.Group
                   selectedIndex={
-                    brandTabKey === 'allBrands'
-                      ? 0
-                      : brandTabKey === 'activeBrands'
-                      ? 1
-                      : brandTabKey === 'inactiveBrands'
-                      ? 2
-                      : brandTabKey === 'activeSliderBrands'
-                      ? 3
-                      : 0
+                    tabKey === 'allRoles' ? 0 : tabKey === 'isActiveRole' ? 1 : tabKey === 'inActiveRole' ? 2 : 0
                   }
                   onChange={(index) => {
                     switch (index) {
                       case 0:
-                        setBrandTabKey('allBrands')
+                        setTabKey('allRoles')
                         break
                       case 1:
-                        setBrandTabKey('activeBrands')
+                        setTabKey('isActiveRole')
                         break
                       case 2:
-                        setBrandTabKey('inactiveBrands')
+                        setTabKey('inActiveRole')
                         break
                       default:
-                        setBrandTabKey('allBrands')
+                        setTabKey('allRoles')
                     }
                   }}
                 >
                   <Tab.List className="flex flex-col xl2:flex-row justify-between px-2 py-4 border-b gap-4 border-gray-200 overflow-auto">
                     <div className="flex flex-col items-start justify-center">
-                      <h2 className="pr-4 pb-2">برندها</h2>
+                      <h2 className="pr-4 pb-2">سمت ها</h2>
                       <div className="flex items-center">
                         <Tab
                           className={({ selected }) =>
@@ -290,7 +223,7 @@ const Brands: NextPage = () => {
                             } px-4 py-2 rounded cursor-pointer text-sm`
                           }
                         >
-                          همه ({digitsEnToFa(brandsPagination?.data?.totalCount ?? 0)})
+                          همه ({digitsEnToFa(rolesPagination?.data?.totalCount ?? 0)})
                         </Tab>
                         <Tab
                           className={({ selected }) =>
@@ -299,7 +232,7 @@ const Brands: NextPage = () => {
                             } px-4 py-2 rounded cursor-pointer text-sm`
                           }
                         >
-                          فعال ({digitsEnToFa(brandsActivePagination?.data?.totalCount ?? 0)})
+                          فعال ({digitsEnToFa(rolesActivePagination?.data?.totalCount ?? 0)})
                         </Tab>
                         <Tab
                           className={({ selected }) =>
@@ -308,17 +241,17 @@ const Brands: NextPage = () => {
                             } px-4 py-2 rounded cursor-pointer text-sm`
                           }
                         >
-                          غیرفعال ({digitsEnToFa(brandsInActivePagination?.data?.totalCount ?? 0)})
+                          غیرفعال ({digitsEnToFa(rolesInActivePagination?.data?.totalCount ?? 0)})
                         </Tab>
                       </div>
                     </div>{' '}
                     <div className="flex items-end px-3 pr-3 xl2:pr-0 gap-y-4 sm:flex-row flex-col justify-between">
                       <div className="flex flex-col xs:flex-row items-center gap-4">
                         <Button
-                          onClick={brandModalHandlers.open}
+                          onClick={() => push('/admin/users/roles/new')}
                           className="hover:bg-sky-600 bg-sky-500 px-3 py-2.5 text-sm whitespace-nowrap"
                         >
-                          افزودن برند
+                          افزودن سمت
                         </Button>
                         {/* search filter */}
                         <div className="flex border w-fit rounded-lg">
@@ -342,77 +275,40 @@ const Brands: NextPage = () => {
                   </Tab.List>
                   <Tab.Panels className="mt-3 rounded-xl bg-white p-3">
                     <Tab.Panel>
-                      <div id="_adminBrandsAll">
+                      <div id="_adminRolesAll">
                         <DataStateDisplay
-                          isError={isAllBrandsError}
-                          refetch={refetchAllBrands}
-                          isFetching={isAllBrandsFetching}
-                          isSuccess={isAllBrandsSuccess}
-                          dataLength={brandsPagination?.data?.data ? brandsPagination.data?.data.length : 0}
+                          isError={isAllRolesError}
+                          refetch={refetchAllRoles}
+                          isFetching={isAllRolesFetching}
+                          isSuccess={isAllRolesSuccess}
+                          dataLength={rolesPagination?.data?.data ? rolesPagination.data?.data.length : 0}
                           loadingComponent={<TableSkeleton count={20} />}
                         >
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">عکس</th>
                                 <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
-                                  <div className="">نام فارسی</div>
+                                  عنوان
                                 </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
-                                  <div className="">نام انگلیسی</div>
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">توضیحات</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[18%]">محصولات مرتبط</th>
-
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تخصیص</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {brandsPagination?.data?.data &&
-                                brandsPagination?.data?.data.map((brand, index) => {
+                              {rolesPagination?.data?.data &&
+                                rolesPagination?.data?.data.map((role, index) => {
                                   return (
                                     <tr
-                                      key={brand.id}
+                                      key={role.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="">
-                                        <div className="w-full flex justify-center">
-                                          <img
-                                            className="w-[100px] object-contain rounded-lg h-[70px]"
-                                            src={brand.imagesSrc.imageUrl}
-                                            alt={brand.nameFa}
-                                          />
-                                        </div>
-                                      </td>
                                       <td className="text-center">
-                                        <div
-                                          onClick={() => handlerEditBrandModal(brand)}
-                                          className="text-sm text-sky-500 cursor-pointer px-2"
-                                        >
-                                          {brand.nameFa}
-                                        </div>
+                                        <div className="text-sm px-2">{role.title}</div>
                                       </td>
-
-                                      <td className="text-center">
-                                        <div className="text-sm  px-2">{brand.nameEn}</div>
-                                      </td>
-
-                                      <td className="text-center">
-                                        <div className="">{brand.description !== '' ? '✓' : '-'}</div>
-                                      </td>
-                                      <td className="text-center text-sm text-gray-600">
-                                        <div
-                                          className="text-sky-500 cursor-pointer"
-                                          onClick={() => handleChangePage(brand.id)}
-                                        >
-                                          {digitsEnToFa(brand.count)}
-                                        </div>
-                                      </td>
-
                                       <td className="text-center">
                                         <div>
-                                          {brand.isActive ? (
+                                          {role.isActive ? (
                                             <span className="text-sm text-green-500  px-1.5 rounded">فعال</span>
                                           ) : (
                                             <span className="text-sm text-red-500 px-1.5 rounded ">غیر فعال</span>
@@ -420,10 +316,23 @@ const Brands: NextPage = () => {
                                         </div>
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
+                                        {role.roleUserCount === 0 ? (
+                                          '-'
+                                        ) : (
+                                          <div
+                                            className="text-sky-500 cursor-pointer"
+                                            onClick={() => handleChangePage(role.id)}
+                                          >
+                                            {digitsEnToFa(role.roleUserCount)}
+                                          </div>
+                                        )}
+                                      </td>
+
+                                      <td className="text-center text-sm text-gray-600">
                                         <Menu as="div" className="dropdown">
                                           <Menu.Button className="">
                                             <div className="w-full flex justify-center items-center">
-                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
                                                 :
                                               </span>
                                             </div>
@@ -442,9 +351,16 @@ const Brands: NextPage = () => {
                                               <Menu.Item>
                                                 {({ close }) => (
                                                   <>
+                                                    <Link
+                                                      href={`/admin/users/roles/edit/${role.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>مشاهده</span>
+                                                    </Link>
                                                     <button
                                                       onClick={() => {
-                                                        handleDelete(brand)
+                                                        handleDelete(role)
                                                         close()
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
@@ -465,91 +381,51 @@ const Brands: NextPage = () => {
                           </table>
                         </DataStateDisplay>
 
-                        {brandsPagination?.data?.data &&
-                          brandsPagination?.data?.data?.length > 0 &&
-                          brandsPagination.data?.data && (
+                        {rolesPagination?.data?.data &&
+                          rolesPagination?.data?.data?.length > 0 &&
+                          rolesPagination.data?.data && (
                             <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination pagination={brandsPagination?.data} section="_adminBrands" client />
+                              <Pagination pagination={rolesPagination?.data} section="_adminUsersAll" client />
                             </div>
                           )}
                       </div>
                     </Tab.Panel>
 
                     <Tab.Panel>
-                      <div id="_adminActiveBrands">
+                      <div id="_adminActiveRoles">
                         <DataStateDisplay
-                          isError={isActiveBrandsError}
-                          refetch={refetchActiveBrands}
-                          isFetching={isActiveBrandsFetching}
-                          isSuccess={isActiveBrandsSuccess}
-                          dataLength={brandsActivePagination?.data?.data ? brandsActivePagination.data?.data.length : 0}
+                          isError={isActiveRolesError}
+                          refetch={refetchActiveRoles}
+                          isFetching={isActiveRolesFetching}
+                          isSuccess={isActiveRolesSuccess}
+                          dataLength={rolesActivePagination?.data?.data ? rolesActivePagination.data?.data.length : 0}
                           loadingComponent={<TableSkeleton count={20} />}
                         >
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">عکس</th>
                                 <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
-                                  <div className="">نام برند</div>
+                                  عنوان
                                 </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
-                                  <div className="">نام انگلیسی</div>
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">توضیحات</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[18%]">محصولات مرتبط</th>
-
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تخصیص</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {brandsActivePagination?.data?.data &&
-                                brandsActivePagination?.data?.data.map((brand, index) => {
+                              {rolesActivePagination?.data?.data &&
+                                rolesActivePagination?.data?.data.map((role, index) => {
                                   return (
                                     <tr
-                                      key={brand.id}
+                                      key={role.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="">
-                                        <div className="w-full flex justify-center">
-                                          <img
-                                            className="w-[100px] object-contain rounded-lg h-[70px]"
-                                            src={brand.imagesSrc.imageUrl}
-                                            alt={brand.nameFa}
-                                          />
-                                        </div>
-                                      </td>
                                       <td className="text-center">
-                                        <div
-                                          onClick={() => handlerEditBrandModal(brand)}
-                                          className="text-sm text-sky-500 cursor-pointer px-2"
-                                        >
-                                          {brand.nameFa}
-                                        </div>
+                                        <div className="text-sm px-2">{role.title}</div>
                                       </td>
-                                      <td className="text-center">
-                                        <div
-                                          onClick={() => handlerEditBrandModal(brand)}
-                                          className="text-sm text-sky-500 cursor-pointer px-2"
-                                        >
-                                          {brand.nameEn}
-                                        </div>
-                                      </td>
-                                      <td className="text-center">
-                                        <div className="">{brand.description !== '' ? '✓' : '-'}</div>
-                                      </td>
-                                      <td className="text-center text-sm text-gray-600">
-                                        <div
-                                          className="text-sky-500 cursor-pointer"
-                                          onClick={() => handleChangePage(brand.id)}
-                                        >
-                                          {digitsEnToFa(brand.count)}
-                                        </div>
-                                      </td>
-
                                       <td className="text-center">
                                         <div>
-                                          {brand.isActive ? (
+                                          {role.isActive ? (
                                             <span className="text-sm text-green-500  px-1.5 rounded">فعال</span>
                                           ) : (
                                             <span className="text-sm text-red-500 px-1.5 rounded ">غیر فعال</span>
@@ -557,10 +433,23 @@ const Brands: NextPage = () => {
                                         </div>
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
+                                        {role.roleUserCount === 0 ? (
+                                          '-'
+                                        ) : (
+                                          <div
+                                            className="text-sky-500 cursor-pointer"
+                                            onClick={() => handleChangePage(role.id)}
+                                          >
+                                            {digitsEnToFa(role.roleUserCount)}
+                                          </div>
+                                        )}
+                                      </td>
+
+                                      <td className="text-center text-sm text-gray-600">
                                         <Menu as="div" className="dropdown">
                                           <Menu.Button className="">
                                             <div className="w-full flex justify-center items-center">
-                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
                                                 :
                                               </span>
                                             </div>
@@ -579,9 +468,16 @@ const Brands: NextPage = () => {
                                               <Menu.Item>
                                                 {({ close }) => (
                                                   <>
+                                                    <Link
+                                                      href={`/admin/users/roles/edit/${role.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>مشاهده</span>
+                                                    </Link>
                                                     <button
                                                       onClick={() => {
-                                                        handleDelete(brand)
+                                                        handleDelete(role)
                                                         close()
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
@@ -602,97 +498,53 @@ const Brands: NextPage = () => {
                           </table>
                         </DataStateDisplay>
 
-                        {brandsActivePagination?.data?.data &&
-                          brandsActivePagination?.data?.data?.length > 0 &&
-                          brandsActivePagination.data?.data && (
+                        {rolesActivePagination?.data?.data &&
+                          rolesActivePagination?.data?.data?.length > 0 &&
+                          rolesActivePagination.data?.data && (
                             <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={brandsActivePagination?.data}
-                                section="_adminActiveBrands"
-                                client
-                              />
+                              <Pagination pagination={rolesActivePagination?.data} section="_adminUsersAll" client />
                             </div>
                           )}
                       </div>
                     </Tab.Panel>
 
                     <Tab.Panel>
-                      <div id="_adminInActiveBrands">
+                      <div id="_adminInActiveRoles">
                         <DataStateDisplay
-                          isError={isInactiveBrandsError}
-                          refetch={refetchInactiveBrands}
-                          isFetching={isInactiveBrandsFetching}
-                          isSuccess={isInactiveBrandsSuccess}
+                          isError={isInactiveRolesError}
+                          refetch={refetchInactiveRoles}
+                          isFetching={isInactiveRolesFetching}
+                          isSuccess={isInactiveRolesSuccess}
                           dataLength={
-                            brandsInActivePagination?.data?.data ? brandsInActivePagination.data?.data.length : 0
+                            rolesInActivePagination?.data?.data ? rolesInActivePagination.data?.data.length : 0
                           }
                           loadingComponent={<TableSkeleton count={20} />}
                         >
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">عکس</th>
                                 <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
-                                  <div className="">نام برند</div>
+                                  عنوان
                                 </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
-                                  <div className="">نام انگلیسی</div>
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">توضیحات</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[18%]">محصولات مرتبط</th>
-
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">تخصیص</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
                               </tr>
                             </thead>
                             <tbody>
-                              {brandsInActivePagination?.data?.data &&
-                                brandsInActivePagination?.data?.data.map((brand, index) => {
+                              {rolesInActivePagination?.data?.data &&
+                                rolesInActivePagination?.data?.data.map((role, index) => {
                                   return (
                                     <tr
-                                      key={brand.id}
+                                      key={role.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="">
-                                        <div className="w-full flex justify-center">
-                                          <img
-                                            className="w-[100px] object-contain rounded-lg h-[70px]"
-                                            src={brand.imagesSrc.imageUrl}
-                                            alt={brand.nameFa}
-                                          />
-                                        </div>
-                                      </td>
                                       <td className="text-center">
-                                        <div
-                                          onClick={() => handlerEditBrandModal(brand)}
-                                          className="text-sm text-sky-500 cursor-pointer px-2"
-                                        >
-                                          {brand.nameFa}
-                                        </div>
+                                        <div className="text-sm px-2">{role.title}</div>
                                       </td>
-                                      <td className="text-center">
-                                        <div
-                                          onClick={() => handlerEditBrandModal(brand)}
-                                          className="text-sm text-sky-500 cursor-pointer px-2"
-                                        >
-                                          {brand.nameEn}
-                                        </div>
-                                      </td>
-                                      <td className="text-center">
-                                        <div className="">{brand.description !== '' ? '✓' : '-'}</div>
-                                      </td>
-                                      <td className="text-center text-sm text-gray-600">
-                                        <div
-                                          className="text-sky-500 cursor-pointer"
-                                          onClick={() => handleChangePage(brand.id)}
-                                        >
-                                          {digitsEnToFa(brand.count)}
-                                        </div>
-                                      </td>
-
                                       <td className="text-center">
                                         <div>
-                                          {brand.isActive ? (
+                                          {role.isActive ? (
                                             <span className="text-sm text-green-500  px-1.5 rounded">فعال</span>
                                           ) : (
                                             <span className="text-sm text-red-500 px-1.5 rounded ">غیر فعال</span>
@@ -700,10 +552,23 @@ const Brands: NextPage = () => {
                                         </div>
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
+                                        {role.roleUserCount === 0 ? (
+                                          '-'
+                                        ) : (
+                                          <div
+                                            className="text-sky-500 cursor-pointer"
+                                            onClick={() => handleChangePage(role.id)}
+                                          >
+                                            {digitsEnToFa(role.roleUserCount)}
+                                          </div>
+                                        )}
+                                      </td>
+
+                                      <td className="text-center text-sm text-gray-600">
                                         <Menu as="div" className="dropdown">
                                           <Menu.Button className="">
                                             <div className="w-full flex justify-center items-center">
-                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
                                                 :
                                               </span>
                                             </div>
@@ -722,9 +587,16 @@ const Brands: NextPage = () => {
                                               <Menu.Item>
                                                 {({ close }) => (
                                                   <>
+                                                    <Link
+                                                      href={`/admin/users/roles/edit/${role.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>مشاهده</span>
+                                                    </Link>
                                                     <button
                                                       onClick={() => {
-                                                        handleDelete(brand)
+                                                        handleDelete(role)
                                                         close()
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
@@ -745,15 +617,11 @@ const Brands: NextPage = () => {
                           </table>
                         </DataStateDisplay>
 
-                        {brandsInActivePagination?.data?.data &&
-                          brandsInActivePagination?.data?.data?.length > 0 &&
-                          brandsInActivePagination.data?.data && (
+                        {rolesInActivePagination?.data?.data &&
+                          rolesInActivePagination?.data?.data?.length > 0 &&
+                          rolesInActivePagination.data?.data && (
                             <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={brandsInActivePagination?.data}
-                                section="_adminInActiveBrands"
-                                client
-                              />
+                              <Pagination pagination={rolesInActivePagination?.data} section="_adminUsersAll" client />
                             </div>
                           )}
                       </div>
@@ -762,11 +630,11 @@ const Brands: NextPage = () => {
                 </Tab.Group>
               </div>
             </div>
-          </TabDashboardLayout>
+          </section>
         </DashboardLayout>
       </>
     </ProtectedRouteWrapper>
   )
 }
 
-export default dynamic(() => Promise.resolve(Brands), { ssr: false })
+export default dynamic(() => Promise.resolve(Roles), { ssr: false })

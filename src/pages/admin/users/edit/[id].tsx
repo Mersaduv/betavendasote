@@ -5,8 +5,14 @@ import dynamic from 'next/dynamic'
 import { DashboardLayout } from '@/components/Layouts'
 import { HandleResponse } from '@/components/shared'
 import { IProductForm } from '@/types'
-import { useCreateProductMutation, useGetSingleArticleQuery, useUpsertArticleMutation } from '@/services'
-import { ArticleForm, ProductForm } from '@/components/form'
+import {
+  useCreateProductMutation,
+  useGetSingleArticleQuery,
+  useGetUserQuery,
+  useUpsertArticleMutation,
+  useUpsertUserMutation,
+} from '@/services'
+import { ArticleForm, ProductForm, UserForm } from '@/components/form'
 import { useDispatch } from 'react-redux'
 import { setUpdated } from '@/store'
 import { FullScreenLoading } from '@/components/ui'
@@ -20,12 +26,12 @@ const Edit: NextPage<Props> = () => {
   const id = query.id as string
   const dispatch = useDispatch()
   // ? Queries
-  //*    Get Article
-  const { refetch, data: selectedArticle, isLoading: isLoadingGetSelectedArticle } = useGetSingleArticleQuery({ id })
+  //*    Get
+  const { refetch, data: selectedUser, isLoading: isLoadingGetSelectedUser } = useGetUserQuery({ id })
 
-  //*   Create Article
-  const [updateArticle, { data, isSuccess, isLoading, isError, error }] = useUpsertArticleMutation()
-  console.log(selectedArticle, 'selectedArticle -- selectedArticle')
+  //*   Create
+  const [updateUser, { data, isSuccess, isLoading, isError, error }] = useUpsertUserMutation()
+  console.log(selectedUser, 'selectedUser -- selectedUser')
 
   useEffect(() => {
     if (isSuccess) {
@@ -37,13 +43,13 @@ const Edit: NextPage<Props> = () => {
   const updateHandler = (data: FormData) => {
     console.log(data, '==========data')
 
-    updateArticle(data)
+    updateUser(data)
     refetch()
   }
 
   const onSuccess = () => {
-    refetch() // این خط جدید
-    push(`/admin/articles/edit/${data?.data}`)
+    refetch()
+    push(`/admin/users/edit/${data?.data}`)
   }
 
   return (
@@ -61,18 +67,18 @@ const Edit: NextPage<Props> = () => {
 
         <main>
           <Head>
-            <title> ویرایش مقاله</title>
+            <title>ویرایش کاربر</title>
           </Head>
           <DashboardLayout>
-            {isLoadingGetSelectedArticle ? (
+            {isLoadingGetSelectedUser ? (
               <div className="px-3 py-20">
                 <FullScreenLoading />
               </div>
-            ) : selectedArticle?.data ? (
+            ) : selectedUser?.data ? (
               <section className="bg-[#f5f8fa] w-full">
-                <ArticleForm
+                <UserForm
                   mode="edit"
-                  selectedArticle={selectedArticle?.data}
+                  selectedUser={selectedUser?.data}
                   updateHandler={updateHandler}
                   isLoadingUpdate={isLoading}
                 />

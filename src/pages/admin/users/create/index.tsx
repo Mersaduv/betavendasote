@@ -4,11 +4,10 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { DashboardLayout } from '@/components/Layouts'
 import { HandleResponse } from '@/components/shared'
-import { IProductForm } from '@/types'
-import { useCreateProductMutation, useUpsertArticleMutation, useUpsertUserMutation } from '@/services'
-import { ArticleForm, ProductForm, UserForm } from '@/components/form'
+import { useUpsertUserMutation } from '@/services'
+import { UserForm } from '@/components/form'
 import { useDispatch } from 'react-redux'
-import { setUpdated } from '@/store'
+import { ProtectedRouteWrapper } from '@/components/user'
 
 interface Props {}
 const Create: NextPage<Props> = () => {
@@ -24,32 +23,34 @@ const Create: NextPage<Props> = () => {
   }
 
   const onSuccess = () => {
-    push(`/admin/user/edit/${data?.data}`)
+    push(`/admin/users/edit/${data?.data}`)
   }
 
   return (
-    <>
-      {(isSuccess || isError) && (
-        <HandleResponse
-          isError={isError}
-          isSuccess={isSuccess}
-          error={error}
-          message={data?.message}
-          onSuccess={onSuccess}
-        />
-      )}
+    <ProtectedRouteWrapper>
+      <>
+        {(isSuccess || isError) && (
+          <HandleResponse
+            isError={isError}
+            isSuccess={isSuccess}
+            error={error}
+            message={data?.message}
+            onSuccess={onSuccess}
+          />
+        )}
 
-      <main>
-        <Head>
-          <title>کاربر جدید</title>
-        </Head>
-        <DashboardLayout>
-          <section className="bg-[#f5f8fa] w-full">
-            <UserForm mode="create" createHandler={createHandler} isLoadingCreate={isLoading} />
-          </section>
-        </DashboardLayout>
-      </main>
-    </>
+        <main>
+          <Head>
+            <title>کاربر جدید</title>
+          </Head>
+          <DashboardLayout>
+            <section className="bg-[#f5f8fa] w-full">
+              <UserForm mode="create" createHandler={createHandler} isLoadingCreate={isLoading} />
+            </section>
+          </DashboardLayout>
+        </main>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 

@@ -25,6 +25,7 @@ import { TableSkeleton } from '@/components/skeleton'
 import { Pagination } from '@/components/navigation'
 import { LuSearch } from 'react-icons/lu'
 import { ProductBreadcrumb } from '@/components/product'
+import { ProtectedRouteWrapper } from '@/components/user'
 
 const extractChildCategories = (category: ICategory): ICategory[] => {
   let childCategories: ICategory[] = []
@@ -319,267 +320,441 @@ const Articles: NextPage = () => {
   }
 
   return (
-    <>
-      {/* Handle Delete Trash Article Response */}
-      {(isSuccessTrashDelete || isErrorTrashDelete) && (
-        <HandleResponse
-          isError={isErrorTrashDelete}
-          isSuccess={isSuccessTrashDelete}
-          error={errorTrashDelete}
-          message={dataTrashDelete?.message}
-          onSuccess={onSuccess}
-          onError={onError}
-        />
-      )}
-      {/* Handle Delete Article Response */}
-      {(isSuccessDelete || isErrorDelete) && (
-        <HandleResponse
-          isError={isErrorDelete}
-          isSuccess={isSuccessDelete}
-          error={errorDelete}
-          message={dataDelete?.message}
-          onSuccess={onSuccess}
-          onError={onError}
-        />
-      )}
+    <ProtectedRouteWrapper>
+      <>
+        {/* Handle Delete Trash Article Response */}
+        {(isSuccessTrashDelete || isErrorTrashDelete) && (
+          <HandleResponse
+            isError={isErrorTrashDelete}
+            isSuccess={isSuccessTrashDelete}
+            error={errorTrashDelete}
+            message={dataTrashDelete?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
+        {/* Handle Delete Article Response */}
+        {(isSuccessDelete || isErrorDelete) && (
+          <HandleResponse
+            isError={isErrorDelete}
+            isSuccess={isSuccessDelete}
+            error={errorDelete}
+            message={dataDelete?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
 
-      {/* Handle restore Article Response */}
-      {(isSuccessRestore || isErrorRestore) && (
-        <HandleResponse
-          isError={isErrorRestore}
-          isSuccess={isSuccessRestore}
-          error={errorRestore}
-          message={dataRestore?.message}
-          onSuccess={onSuccess}
-          onError={onError}
+        {/* Handle restore Article Response */}
+        {(isSuccessRestore || isErrorRestore) && (
+          <HandleResponse
+            isError={isErrorRestore}
+            isSuccess={isSuccessRestore}
+            error={errorRestore}
+            message={dataRestore?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
+        {/* Confirm Delete Trash Article Modal */}
+        <ConfirmDeleteModal
+          title="مقاله در زباله‌دان"
+          isLoading={isLoadingTrashDelete}
+          isShow={isShowConfirmTrashDeleteModal}
+          onClose={confirmTrashDeleteModalHandlers.close}
+          onCancel={onCancel}
+          onConfirm={onConfirmTrashDelete}
         />
-      )}
-      {/* Confirm Delete Trash Article Modal */}
-      <ConfirmDeleteModal
-        title="مقاله در زباله‌دان"
-        isLoading={isLoadingTrashDelete}
-        isShow={isShowConfirmTrashDeleteModal}
-        onClose={confirmTrashDeleteModalHandlers.close}
-        onCancel={onCancel}
-        onConfirm={onConfirmTrashDelete}
-      />
 
-      <ConfirmUpdateModal
-        title="مقاله"
-        isLoading={isLoadingRestore}
-        isShow={isShowConfirmUpdateModal}
-        onClose={confirmUpdateModalHandlers.close}
-        onConfirm={onConfirmRestore}
-        onCancel={onCancel}
-      />
-      {/* Confirm Delete Article Modal */}
-      <ConfirmDeleteModal
-        title="مقاله"
-        deleted
-        isLoading={isLoadingDelete}
-        isShow={isShowConfirmDeleteModal}
-        onClose={confirmDeleteModalHandlers.close}
-        onCancel={onCancel}
-        onConfirm={onConfirmDelete}
-      />
-      <main>
-        <Head>
-          <title> همه مقالات</title>
-        </Head>
-        <DashboardLayout>
-          <section className="w-full mt-7 flex flex-col">
-            <div className="mx-3 bg-white rounded-xl shadow-item">
-              <div className="flex justify-between">
-                <h2 className="p-4 text-gray-600">همه مقالات</h2>
-                {/* filter control  */}
-                <div className="flex justify-end px-4 gap-x-6 gap-y-2.5 flex-wrap py-4">
-                  {/* category filter */}
-                  {selectedPlace === '1' && (
+        <ConfirmUpdateModal
+          title="مقاله"
+          isLoading={isLoadingRestore}
+          isShow={isShowConfirmUpdateModal}
+          onClose={confirmUpdateModalHandlers.close}
+          onConfirm={onConfirmRestore}
+          onCancel={onCancel}
+        />
+        {/* Confirm Delete Article Modal */}
+        <ConfirmDeleteModal
+          title="مقاله"
+          deleted
+          isLoading={isLoadingDelete}
+          isShow={isShowConfirmDeleteModal}
+          onClose={confirmDeleteModalHandlers.close}
+          onCancel={onCancel}
+          onConfirm={onConfirmDelete}
+        />
+        <main>
+          <Head>
+            <title> همه مقالات</title>
+          </Head>
+          <DashboardLayout>
+            <section className="w-full mt-7 flex flex-col">
+              <div className="mx-3 bg-white rounded-xl shadow-item">
+                <div className="flex justify-between">
+                  <h2 className="p-4 text-gray-600">همه مقالات</h2>
+                  {/* filter control  */}
+                  <div className="flex justify-end px-4 gap-x-6 gap-y-2.5 flex-wrap py-4">
+                    {/* category filter */}
+                    {selectedPlace === '1' && (
+                      <div className="flex border w-fit rounded-lg">
+                        <select
+                          className="w-44 text-sm focus:outline-none appearance-none border-none  rounded-r-lg"
+                          name="انتخاب"
+                          id=""
+                          value={categoryId || selectedCategory}
+                          onChange={handleCategoryChange}
+                        >
+                          <option className="appearance-none text-sm" value="default">
+                            همه دسته بندی ها
+                          </option>
+                          {allCategories?.map((category) => (
+                            <option
+                              className={category.level === 0 ? 'text-blue-600' : ''}
+                              key={category.id}
+                              value={category.id}
+                            >
+                              {category.name}
+                            </option>
+                          ))}
+                        </select>
+                        <div
+                          className="bg-gray-100 hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center cursor-pointer items-center w-14"
+                          onClick={handleFilterByCategoryClick}
+                        >
+                          صافی
+                        </div>
+                      </div>
+                    )}
+
+                    {/* place filter */}
                     <div className="flex border w-fit rounded-lg">
                       <select
-                        className="w-44 text-sm focus:outline-none appearance-none border-none  rounded-r-lg"
+                        className="w-44 text-sm focus:outline-none appearance-none border-none rounded-r-lg"
                         name="انتخاب"
                         id=""
-                        value={categoryId || selectedCategory}
-                        onChange={handleCategoryChange}
+                        onChange={handlePlaceChange}
                       >
-                        <option className="appearance-none text-sm" value="default">
-                          همه دسته بندی ها
+                        <option className="appearance-none text-sm" value="">
+                          همه مقالات
                         </option>
-                        {allCategories?.map((category) => (
-                          <option
-                            className={category.level === 0 ? 'text-blue-600' : ''}
-                            key={category.id}
-                            value={category.id}
-                          >
-                            {category.name}
-                          </option>
-                        ))}
+                        <option className="appearance-none text-sm" value="1">
+                          با دسته بندی
+                        </option>{' '}
+                        <option className="appearance-none text-sm" value="2">
+                          بدون دسته بندی
+                        </option>
                       </select>
                       <div
                         className="bg-gray-100 hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center cursor-pointer items-center w-14"
-                        onClick={handleFilterByCategoryClick}
+                        onClick={handleFilterClick}
                       >
                         صافی
                       </div>
                     </div>
-                  )}
-
-                  {/* place filter */}
-                  <div className="flex border w-fit rounded-lg">
-                    <select
-                      className="w-44 text-sm focus:outline-none appearance-none border-none rounded-r-lg"
-                      name="انتخاب"
-                      id=""
-                      onChange={handlePlaceChange}
-                    >
-                      <option className="appearance-none text-sm" value="">
-                        همه مقالات
-                      </option>
-                      <option className="appearance-none text-sm" value="1">
-                        با دسته بندی
-                      </option>{' '}
-                      <option className="appearance-none text-sm" value="2">
-                        بدون دسته بندی
-                      </option>
-                    </select>
-                    <div
-                      className="bg-gray-100 hover:bg-gray-200 mr-[1px] rounded-l-md text-sm flex justify-center cursor-pointer items-center w-14"
-                      onClick={handleFilterClick}
-                    >
-                      صافی
+                    {/* search filter */}
+                    <div className="flex border w-fit rounded-lg">
+                      <label
+                        htmlFor="search"
+                        className="bg-gray-100 hover:bg-gray-200 ml-[1px] rounded-r-md flex justify-center cursor-pointer items-center w-14"
+                      >
+                        <LuSearch className="icon text-gray-500" />
+                      </label>
+                      <input
+                        id="search"
+                        type="text"
+                        className="w-44 text-sm placeholder:text-center focus:outline-none appearance-none border-none rounded-l-lg"
+                        placeholder="جستجو"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                      />
                     </div>
                   </div>
-                  {/* search filter */}
-                  <div className="flex border w-fit rounded-lg">
-                    <label
-                      htmlFor="search"
-                      className="bg-gray-100 hover:bg-gray-200 ml-[1px] rounded-r-md flex justify-center cursor-pointer items-center w-14"
-                    >
-                      <LuSearch className="icon text-gray-500" />
-                    </label>
-                    <input
-                      id="search"
-                      type="text"
-                      className="w-44 text-sm placeholder:text-center focus:outline-none appearance-none border-none rounded-l-lg"
-                      placeholder="جستجو"
-                      value={searchTerm}
-                      onChange={handleSearchChange}
-                    />
-                  </div>
                 </div>
-              </div>
 
-              {/* tab changed  */}
-              <div className="relative overflow-x-auto min-h-96">
-                <Tab.Group
-                  selectedIndex={
-                    tabKey === 'allArticles'
-                      ? 0
-                      : tabKey === 'activeArticles'
-                      ? 1
-                      : tabKey === 'inactiveArticles'
-                      ? 2
-                      : tabKey === 'deletedArticles'
-                      ? 3
-                      : 0
-                  }
-                  onChange={(index) => {
-                    switch (index) {
-                      case 0:
-                        setTabKey('allArticles')
-                        break
-                      case 1:
-                        setTabKey('activeArticles')
-                        break
-                      case 2:
-                        setTabKey('inactiveArticles')
-                        break
-                      case 3:
-                        setTabKey('deletedArticles')
-                        break
-                      default:
-                        setTabKey('allArticles')
+                {/* tab changed  */}
+                <div className="relative overflow-x-auto min-h-96">
+                  <Tab.Group
+                    selectedIndex={
+                      tabKey === 'allArticles'
+                        ? 0
+                        : tabKey === 'activeArticles'
+                        ? 1
+                        : tabKey === 'inactiveArticles'
+                        ? 2
+                        : tabKey === 'deletedArticles'
+                        ? 3
+                        : 0
                     }
-                  }}
-                >
-                  <Tab.List className="flex gap-4 p-2 border-b-2 border-gray-200">
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                    onChange={(index) => {
+                      switch (index) {
+                        case 0:
+                          setTabKey('allArticles')
+                          break
+                        case 1:
+                          setTabKey('activeArticles')
+                          break
+                        case 2:
+                          setTabKey('inactiveArticles')
+                          break
+                        case 3:
+                          setTabKey('deletedArticles')
+                          break
+                        default:
+                          setTabKey('allArticles')
                       }
-                    >
-                      همه ({digitsEnToFa(articlesPagination?.data?.totalCount ?? 0)})
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
-                      }
-                    >
-                      فعال ({digitsEnToFa(articlesActivePagination?.data?.totalCount ?? 0)})
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
-                      }
-                    >
-                      غیرفعال ({digitsEnToFa(articlesInActivePagination?.data?.totalCount ?? 0)})
-                    </Tab>
-                    <Tab
-                      className={({ selected }) =>
-                        selected
-                          ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                          : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
-                      }
-                    >
-                      زباله دان ({digitsEnToFa(articlesIsDeletedPagination?.data?.totalCount ?? 0)})
-                    </Tab>
-                  </Tab.List>
+                    }}
+                  >
+                    <Tab.List className="flex gap-4 p-2 border-b-2 border-gray-200">
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        همه ({digitsEnToFa(articlesPagination?.data?.totalCount ?? 0)})
+                      </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        فعال ({digitsEnToFa(articlesActivePagination?.data?.totalCount ?? 0)})
+                      </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        غیرفعال ({digitsEnToFa(articlesInActivePagination?.data?.totalCount ?? 0)})
+                      </Tab>
+                      <Tab
+                        className={({ selected }) =>
+                          selected
+                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
+                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                        }
+                      >
+                        زباله دان ({digitsEnToFa(articlesIsDeletedPagination?.data?.totalCount ?? 0)})
+                      </Tab>
+                    </Tab.List>
 
-                  <Tab.Panels className="mt-3 p-3">
-                    <Tab.Panel>
-                      <div id="_adminArticle">
-                        <DataStateDisplay
-                          isError={isAllArticlesError}
-                          refetch={refetchAllArticles}
-                          isFetching={isAllArticlesFetching}
-                          isSuccess={isAllArticlesSuccess}
-                          dataLength={articlesPagination?.data?.data ? articlesPagination.data?.data.length : 0}
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className="w-[780px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
-                                  عکس
-                                </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
-                                  عنوان
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal whitespace-nowrap">
-                                  کد مقاله
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal whitespace-nowrap">
-                                  دسته بندی{' '}
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {articlesPagination?.data?.data &&
-                                articlesPagination?.data?.data.map((article, index) => {
-                                  console.log(article, ' article.author')
+                    <Tab.Panels className="mt-3 p-3">
+                      <Tab.Panel>
+                        <div id="_adminArticle">
+                          <DataStateDisplay
+                            isError={isAllArticlesError}
+                            refetch={refetchAllArticles}
+                            isFetching={isAllArticlesFetching}
+                            isSuccess={isAllArticlesSuccess}
+                            dataLength={articlesPagination?.data?.data ? articlesPagination.data?.data.length : 0}
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className="w-[780px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
+                                    عکس
+                                  </th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[30%] text-start">
+                                    عنوان
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal whitespace-nowrap">
+                                    کد مقاله
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal whitespace-nowrap">
+                                    دسته بندی{' '}
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {articlesPagination?.data?.data &&
+                                  articlesPagination?.data?.data.map((article, index) => {
+                                    console.log(article, ' article.author')
 
-                                  return (
+                                    return (
+                                      <tr
+                                        key={article.id}
+                                        className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                      >
+                                        <td>
+                                          <img
+                                            className="w-[108px] h-[70px] rounded-md my-2 mr-2"
+                                            src={article.image.imageUrl}
+                                            alt="a-img"
+                                          />
+                                        </td>
+                                        <td className="text-sm text-gray-600 ">
+                                          <Link
+                                            className="text-sky-500 line-clamp-2 overflow-hidden text-ellipsis"
+                                            href={`/articles/${article.slug}`}
+                                          >
+                                            {article.title}
+                                          </Link>
+                                        </td>
+                                        <td className="text-center text-sm text-gray-600">
+                                          {digitsEnToFa(article.code)}
+                                        </td>
+                                        {/* <td className="text-center text-sm text-gray-600">
+                                        {article.category === '' ? (
+                                          <span className="text-lg">-</span>
+                                        ) : (
+                                          article.category
+                                        )}
+                                      </td> */}
+                                        <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
+                                          {article.parentCategories !== null
+                                            ? article.parentCategories?.category.name
+                                            : '-'}
+                                          {article.parentCategories !== null && (
+                                            <span className="tooltip-text">
+                                              <ProductBreadcrumb
+                                                categoryLevels={article.parentCategories}
+                                                isAdmin
+                                                isAdminTable
+                                              />
+                                            </span>
+                                          )}
+                                        </td>
+                                        <td className="text-center text-sm text-gray-600">
+                                          {article.numReviews === 0 ? (
+                                            '-'
+                                          ) : (
+                                            <Link className="text-sky-500" href={`/`}>
+                                              {'✓'}
+                                            </Link>
+                                          )}
+                                        </td>
+                                        <td
+                                          title={
+                                            article.author !== ' ' ||
+                                            article.author !== undefined ||
+                                            article.author !== null
+                                              ? article.author
+                                              : '-'
+                                          }
+                                          className="text-center text-sm text-gray-600 "
+                                        >
+                                          <div className=" line-clamp-1 overflow-hidden text-ellipsis">
+                                            {article.author !== ' ' ||
+                                            article.author !== undefined ||
+                                            article.author !== null
+                                              ? article.author
+                                              : '-'}
+                                          </div>
+                                        </td>
+                                        <td className="text-center">
+                                          {article.isActive ? (
+                                            <span className="text-sm text-green-500">فعال</span>
+                                          ) : (
+                                            <span className="text-sm text-red-500">غیر فعال</span>
+                                          )}
+                                        </td>
+                                        <td className="text-center text-sm text-gray-600">
+                                          <Menu as="div" className="dropdown">
+                                            <Menu.Button className="">
+                                              <div className="w-full flex justify-center items-center">
+                                                <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                  :
+                                                </span>
+                                              </div>
+                                            </Menu.Button>
+
+                                            <Transition
+                                              as={Fragment}
+                                              enter="transition ease-out duration-100"
+                                              enterFrom="transform opacity-0 scale-95"
+                                              enterTo="transform opacity-100 scale-100"
+                                              leave="transition ease-in duration-75"
+                                              leaveFrom="transform opacity-100 scale-100"
+                                              leaveTo="transform opacity-0 scale-95"
+                                            >
+                                              <Menu.Items className="dropdown__items w-32 ">
+                                                <Menu.Item>
+                                                  {({ close }) => (
+                                                    <>
+                                                      <Link
+                                                        href={`/admin/articles/edit/${article.id}`}
+                                                        onClick={close}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        <span>ویرایش</span>
+                                                      </Link>
+                                                      <button
+                                                        onClick={() => {
+                                                          handleDeleteTrash(article.id)
+                                                          close()
+                                                        }}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        <span>زباله دان</span>
+                                                      </button>
+                                                    </>
+                                                  )}
+                                                </Menu.Item>
+                                              </Menu.Items>
+                                            </Transition>
+                                          </Menu>
+                                        </td>
+                                      </tr>
+                                    )
+                                  })}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
+
+                          {articlesPagination &&
+                            articlesPagination.data &&
+                            articlesPagination?.data?.data &&
+                            articlesPagination?.data?.data?.length > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination pagination={articlesPagination?.data} section="_adminArticle" client />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
+                      <Tab.Panel>
+                        <div id="_adminActiveArticle">
+                          <DataStateDisplay
+                            isError={isActiveArticlesError}
+                            refetch={refetchActiveArticles}
+                            isFetching={isActiveArticlesFetching}
+                            isSuccess={isActiveArticlesSuccess}
+                            dataLength={
+                              articlesActivePagination?.data?.data ? articlesActivePagination.data?.data.length : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className="w-[780px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
+                                    عکس
+                                  </th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-start">
+                                    عنوان
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">کد مقاله</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">جایگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دسته بندی </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {articlesActivePagination?.data?.data &&
+                                  articlesActivePagination?.data?.data.map((article, index) => (
                                     <tr
                                       key={article.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
@@ -592,64 +767,27 @@ const Articles: NextPage = () => {
                                         />
                                       </td>
                                       <td className="text-sm text-gray-600 ">
-                                        <Link
-                                          className="text-sky-500 line-clamp-2 overflow-hidden text-ellipsis"
-                                          href={`/articles/${article.slug}`}
-                                        >
+                                        <Link className="text-sky-500" href={`/articles/${article.slug}`}>
                                           {article.title}
                                         </Link>
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
                                         {digitsEnToFa(article.code)}
                                       </td>
-                                      {/* <td className="text-center text-sm text-gray-600">
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(CheckPlaceArticle(article.place))}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
                                         {article.category === '' ? (
                                           <span className="text-lg">-</span>
                                         ) : (
                                           article.category
                                         )}
-                                      </td> */}
-                                      <td className="tooltip-container text-sm text-gray-600 text-center cursor-pointer">
-                                        {article.parentCategories !== null
-                                          ? article.parentCategories?.category.name
-                                          : '-'}
-                                        {article.parentCategories !== null && (
-                                          <span className="tooltip-text">
-                                            <ProductBreadcrumb
-                                              categoryLevels={article.parentCategories}
-                                              isAdmin
-                                              isAdminTable
-                                            />
-                                          </span>
-                                        )}
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
-                                        {article.numReviews === 0 ? (
-                                          '-'
-                                        ) : (
-                                          <Link className="text-sky-500" href={`/`}>
-                                            {'✓'}
-                                          </Link>
-                                        )}
+                                        {digitsEnToFa(article.numReviews)}
                                       </td>
-                                      <td
-                                        title={
-                                          article.author !== ' ' ||
-                                          article.author !== undefined ||
-                                          article.author !== null
-                                            ? article.author
-                                            : '-'
-                                        }
-                                        className="text-center text-sm text-gray-600 "
-                                      >
-                                        <div className=" line-clamp-1 overflow-hidden text-ellipsis">
-                                          {article.author !== ' ' ||
-                                          article.author !== undefined ||
-                                          article.author !== null
-                                            ? article.author
-                                            : '-'}
-                                        </div>
-                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{article.author}</td>
                                       <td className="text-center">
                                         {article.isActive ? (
                                           <span className="text-sm text-green-500">فعال</span>
@@ -704,431 +842,316 @@ const Articles: NextPage = () => {
                                         </Menu>
                                       </td>
                                     </tr>
-                                  )
-                                })}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                        {articlesPagination &&
-                          articlesPagination.data &&
-                          articlesPagination?.data?.data &&
-                          articlesPagination?.data?.data?.length > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination pagination={articlesPagination?.data} section="_adminArticle" client />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <div id="_adminActiveArticle">
-                        <DataStateDisplay
-                          isError={isActiveArticlesError}
-                          refetch={refetchActiveArticles}
-                          isFetching={isActiveArticlesFetching}
-                          isSuccess={isActiveArticlesSuccess}
-                          dataLength={
-                            articlesActivePagination?.data?.data ? articlesActivePagination.data?.data.length : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className="w-[780px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
-                                  عکس
-                                </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-start">
-                                  عنوان
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">کد مقاله</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">جایگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دسته بندی </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {articlesActivePagination?.data?.data &&
-                                articlesActivePagination?.data?.data.map((article, index) => (
-                                  <tr
-                                    key={article.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td>
-                                      <img
-                                        className="w-[108px] h-[70px] rounded-md my-2 mr-2"
-                                        src={article.image.imageUrl}
-                                        alt="a-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600 ">
-                                      <Link className="text-sky-500" href={`/articles/${article.slug}`}>
-                                        {article.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(article.code)}</td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {digitsEnToFa(CheckPlaceArticle(article.place))}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {article.category === '' ? <span className="text-lg">-</span> : article.category}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {digitsEnToFa(article.numReviews)}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{article.author}</td>
-                                    <td className="text-center">
-                                      {article.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
+                          {articlesActivePagination &&
+                            articlesActivePagination.data &&
+                            articlesActivePagination?.data?.data &&
+                            articlesActivePagination?.data?.data?.length > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={articlesActivePagination?.data}
+                                  section="_adminActiveArticle"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
+                      <Tab.Panel>
+                        <div id="_adminInActiveArticle">
+                          <DataStateDisplay
+                            isError={isInactiveArticlesError}
+                            refetch={refetchInactiveArticles}
+                            isFetching={isInactiveArticlesFetching}
+                            isSuccess={isInactiveArticlesSuccess}
+                            dataLength={
+                              articlesInActivePagination?.data?.data ? articlesInActivePagination.data?.data.length : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className="w-[780px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
+                                    عکس
+                                  </th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-start">
+                                    عنوان
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">کد مقاله</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">جایگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دسته بندی </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {articlesInActivePagination?.data?.data &&
+                                  articlesInActivePagination?.data?.data.map((article, index) => (
+                                    <tr
+                                      key={article.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td>
+                                        <img
+                                          className="w-[108px] h-[70px] rounded-md my-2 mr-2"
+                                          src={article.image.imageUrl}
+                                          alt="a-img"
+                                        />
+                                      </td>
+                                      <td className="text-sm text-gray-600 ">
+                                        <Link className="text-sky-500" href={`/articles/${article.slug}`}>
+                                          {article.title}
+                                        </Link>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(article.code)}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(CheckPlaceArticle(article.place))}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {article.category === '' ? (
+                                          <span className="text-lg">-</span>
+                                        ) : (
+                                          article.category
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(article.numReviews)}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{article.author}</td>
+                                      <td className="text-center">
+                                        {article.isActive ? (
+                                          <span className="text-sm text-green-500">فعال</span>
+                                        ) : (
+                                          <span className="text-sm text-red-500">غیر فعال</span>
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
 
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <Link
-                                                    href={`/admin/articles/edit/${article.id}`}
-                                                    onClick={close}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>ویرایش</span>
-                                                  </Link>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDeleteTrash(article.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>زباله دان</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <Link
+                                                      href={`/admin/articles/edit/${article.id}`}
+                                                      onClick={close}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </Link>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDeleteTrash(article.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>زباله دان</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                        {articlesActivePagination &&
-                          articlesActivePagination.data &&
-                          articlesActivePagination?.data?.data &&
-                          articlesActivePagination?.data?.data?.length > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={articlesActivePagination?.data}
-                                section="_adminActiveArticle"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <div id="_adminInActiveArticle">
-                        <DataStateDisplay
-                          isError={isInactiveArticlesError}
-                          refetch={refetchInactiveArticles}
-                          isFetching={isInactiveArticlesFetching}
-                          isSuccess={isInactiveArticlesSuccess}
-                          dataLength={
-                            articlesInActivePagination?.data?.data ? articlesInActivePagination.data?.data.length : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className="w-[780px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
-                                  عکس
-                                </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-start">
-                                  عنوان
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">کد مقاله</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">جایگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دسته بندی </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {articlesInActivePagination?.data?.data &&
-                                articlesInActivePagination?.data?.data.map((article, index) => (
-                                  <tr
-                                    key={article.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td>
-                                      <img
-                                        className="w-[108px] h-[70px] rounded-md my-2 mr-2"
-                                        src={article.image.imageUrl}
-                                        alt="a-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600 ">
-                                      <Link className="text-sky-500" href={`/articles/${article.slug}`}>
-                                        {article.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(article.code)}</td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {digitsEnToFa(CheckPlaceArticle(article.place))}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {article.category === '' ? <span className="text-lg">-</span> : article.category}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {digitsEnToFa(article.numReviews)}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{article.author}</td>
-                                    <td className="text-center">
-                                      {article.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
+                          {articlesInActivePagination &&
+                            articlesInActivePagination.data &&
+                            articlesInActivePagination?.data?.data &&
+                            articlesInActivePagination?.data?.data?.length > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={articlesInActivePagination?.data}
+                                  section="_adminInActiveArticle"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
+                      <Tab.Panel>
+                        <div id="_adminIsDeletedArticle">
+                          <DataStateDisplay
+                            isError={isDeletedArticlesError}
+                            refetch={refetchDeletedArticles}
+                            isFetching={isDeletedArticlesFetching}
+                            isSuccess={isDeletedArticlesSuccess}
+                            dataLength={
+                              articlesIsDeletedPagination?.data?.data
+                                ? articlesIsDeletedPagination.data?.data.length
+                                : 0
+                            }
+                            loadingComponent={<TableSkeleton count={20} />}
+                          >
+                            <table className="w-[780px] md:w-full mx-auto">
+                              <thead className="bg-sky-300">
+                                <tr>
+                                  <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
+                                    عکس
+                                  </th>
+                                  <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-start">
+                                    عنوان
+                                  </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">کد مقاله</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">جایگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دسته بندی </th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
+                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {articlesIsDeletedPagination?.data?.data &&
+                                  articlesIsDeletedPagination?.data?.data.map((article, index) => (
+                                    <tr
+                                      key={article.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td>
+                                        <img
+                                          className="w-[108px] h-[70px] rounded-md my-2 mr-2"
+                                          src={article.image.imageUrl}
+                                          alt="a-img"
+                                        />
+                                      </td>
+                                      <td className="text-sm text-gray-600 ">
+                                        <Link className="text-sky-500" href={`/articles/${article.slug}`}>
+                                          {article.title}
+                                        </Link>
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(article.code)}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(CheckPlaceArticle(article.place))}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {article.category === '' ? (
+                                          <span className="text-lg">-</span>
+                                        ) : (
+                                          article.category
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        {digitsEnToFa(article.numReviews)}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">{article.author}</td>
+                                      <td className="text-center">
+                                        {article.isActive ? (
+                                          <span className="text-sm text-green-500">فعال</span>
+                                        ) : (
+                                          <span className="text-sm text-red-500">غیر فعال</span>
+                                        )}
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
 
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <Link
-                                                    href={`/admin/articles/edit/${article.id}`}
-                                                    onClick={close}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>ویرایش</span>
-                                                  </Link>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDeleteTrash(article.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>زباله دان</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleRestoreTrash(article.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>بازگردانی</span>
+                                                    </button>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDelete(article.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>حذف</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  ))}
+                              </tbody>
+                            </table>
+                          </DataStateDisplay>
 
-                        {articlesInActivePagination &&
-                          articlesInActivePagination.data &&
-                          articlesInActivePagination?.data?.data &&
-                          articlesInActivePagination?.data?.data?.length > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={articlesInActivePagination?.data}
-                                section="_adminInActiveArticle"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
-                    <Tab.Panel>
-                      <div id="_adminIsDeletedArticle">
-                        <DataStateDisplay
-                          isError={isDeletedArticlesError}
-                          refetch={refetchDeletedArticles}
-                          isFetching={isDeletedArticlesFetching}
-                          isSuccess={isDeletedArticlesSuccess}
-                          dataLength={
-                            articlesIsDeletedPagination?.data?.data ? articlesIsDeletedPagination.data?.data.length : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className="w-[780px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 font-normal w-[130px] text-center text-gray-600 ">
-                                  عکس
-                                </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-start">
-                                  عنوان
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">کد مقاله</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">جایگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دسته بندی </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">نویسنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {articlesIsDeletedPagination?.data?.data &&
-                                articlesIsDeletedPagination?.data?.data.map((article, index) => (
-                                  <tr
-                                    key={article.id}
-                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                  >
-                                    <td>
-                                      <img
-                                        className="w-[108px] h-[70px] rounded-md my-2 mr-2"
-                                        src={article.image.imageUrl}
-                                        alt="a-img"
-                                      />
-                                    </td>
-                                    <td className="text-sm text-gray-600 ">
-                                      <Link className="text-sky-500" href={`/articles/${article.slug}`}>
-                                        {article.title}
-                                      </Link>
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{digitsEnToFa(article.code)}</td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {digitsEnToFa(CheckPlaceArticle(article.place))}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {article.category === '' ? <span className="text-lg">-</span> : article.category}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      {digitsEnToFa(article.numReviews)}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">{article.author}</td>
-                                    <td className="text-center">
-                                      {article.isActive ? (
-                                        <span className="text-sm text-green-500">فعال</span>
-                                      ) : (
-                                        <span className="text-sm text-red-500">غیر فعال</span>
-                                      )}
-                                    </td>
-                                    <td className="text-center text-sm text-gray-600">
-                                      <Menu as="div" className="dropdown">
-                                        <Menu.Button className="">
-                                          <div className="w-full flex justify-center items-center">
-                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer  bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                              :
-                                            </span>
-                                          </div>
-                                        </Menu.Button>
-
-                                        <Transition
-                                          as={Fragment}
-                                          enter="transition ease-out duration-100"
-                                          enterFrom="transform opacity-0 scale-95"
-                                          enterTo="transform opacity-100 scale-100"
-                                          leave="transition ease-in duration-75"
-                                          leaveFrom="transform opacity-100 scale-100"
-                                          leaveTo="transform opacity-0 scale-95"
-                                        >
-                                          <Menu.Items className="dropdown__items w-32 ">
-                                            <Menu.Item>
-                                              {({ close }) => (
-                                                <>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleRestoreTrash(article.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>بازگردانی</span>
-                                                  </button>
-                                                  <button
-                                                    onClick={() => {
-                                                      handleDelete(article.id)
-                                                      close()
-                                                    }}
-                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                  >
-                                                    <span>حذف</span>
-                                                  </button>
-                                                </>
-                                              )}
-                                            </Menu.Item>
-                                          </Menu.Items>
-                                        </Transition>
-                                      </Menu>
-                                    </td>
-                                  </tr>
-                                ))}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
-
-                        {articlesIsDeletedPagination &&
-                          articlesIsDeletedPagination.data &&
-                          articlesIsDeletedPagination?.data?.data &&
-                          articlesIsDeletedPagination?.data?.data?.length > 0 && (
-                            <div className="mx-auto py-4 lg:max-w-5xl">
-                              <Pagination
-                                pagination={articlesIsDeletedPagination?.data}
-                                section="_adminIsDeletedArticle"
-                                client
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </Tab.Panel>
-                  </Tab.Panels>
-                </Tab.Group>
+                          {articlesIsDeletedPagination &&
+                            articlesIsDeletedPagination.data &&
+                            articlesIsDeletedPagination?.data?.data &&
+                            articlesIsDeletedPagination?.data?.data?.length > 0 && (
+                              <div className="mx-auto py-4 lg:max-w-5xl">
+                                <Pagination
+                                  pagination={articlesIsDeletedPagination?.data}
+                                  section="_adminIsDeletedArticle"
+                                  client
+                                />
+                              </div>
+                            )}
+                        </div>
+                      </Tab.Panel>
+                    </Tab.Panels>
+                  </Tab.Group>
+                </div>
               </div>
-            </div>
-          </section>
-        </DashboardLayout>
-      </main>
-    </>
+            </section>
+          </DashboardLayout>
+        </main>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 // ? Local Components

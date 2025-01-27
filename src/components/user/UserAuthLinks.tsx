@@ -42,7 +42,7 @@ const UserAuthLinks = () => {
           {/* <Link href="/profile">
             <User className="icon h-7 w-7" />
           </Link> */}
-          <div className=''>
+          <div className="">
             <User className="icon h-6 w-6 text-gray-500" />
           </div>
           <div
@@ -68,14 +68,14 @@ const UserAuthLinks = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <h2>{userInfo.fullName}</h2>
-                  <span className='text-base'> {digitsEnToFa(userInfo.mobileNumber ?? '')}</span>
+                  <span className="text-base"> {digitsEnToFa(userInfo.mobileNumber ?? '')}</span>
                 </div>
               </div>
               <Disclosure>
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="!mt-0 flex w-full items-center justify-between px-4 py-2 pb-0">
-                      {userInfo.roles.includes('مدیر سایت') && (
+                      {userInfo.userType === 1 && (
                         <div className="transition-colors w-full border-b">
                           <Link
                             href="/admin"
@@ -84,7 +84,7 @@ const UserAuthLinks = () => {
                             <div>
                               <AiOutlineProduct className="h-6 w-6 text-black ml-1.5" />
                             </div>
-                            پیشخوان 
+                            پیشخوان
                           </Link>
                         </div>
                       )}

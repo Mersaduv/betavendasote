@@ -9,12 +9,13 @@ export interface IUser {
   } | null
   mobileNumber: string
   fullName: string
-  roleNames: string[] | null
+  role: string | null
   lastActivity: string | null
   orderCount: number
   city: string | null
   wallet: boolean
   isActive: boolean
+  isDeleted: boolean
   userSpecification: IUserSpecification
   addresses: IAddress[]
   created: string | null

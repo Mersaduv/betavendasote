@@ -15,7 +15,8 @@ export type RegisterUserQuery = {
 }
 
 interface ResultBody {
-  roles: string[]
+  role: string
+  userType: number
   mobileNumber: string
   fullName: string
   token: string
@@ -30,9 +31,10 @@ export type LoginQuery = {
   password: string
 }
 
-
 export type UserResult = ServiceResponse<ResultBody>
 
+interface GetMe {
+  data: IUser
+  userInfo: ResultBody
+}
 export type UserData = ServiceResponse<IUser>
-
-

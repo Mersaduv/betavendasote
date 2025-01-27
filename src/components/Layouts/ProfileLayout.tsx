@@ -5,13 +5,14 @@ import { useAppSelector } from '@/hooks'
 
 interface Props {
   children: React.ReactNode
+  isProfile?:boolean
 }
 
-const ProfileLayout: React.FC<Props> = ({ children }) => {
+const ProfileLayout: React.FC<Props> = ({ children,isProfile }) => {
   const { isActive } = useAppSelector((state) => state.headerTextState)
   return (
     <>
-    <ProtectedRouteWrapper allowedRoles={[roles.ADMIN, roles.SUPERADMIN, roles.USER]}>
+    <ProtectedRouteWrapper isProfile={isProfile}>
       <div className={`lg:container md:flex  md:gap-x-6 md:px-3 pt-6   ${isActive ? 'sm:mt-32' : ''}`}>
         <div className="hidden md:block">
           <UserProfileAside />

@@ -12,7 +12,8 @@ import { clearCredentials } from '@/store'
 
 interface Props {
   userInfo: {
-    roles: string[]
+    role: string
+    userType: number
     mobileNumber: string | null
     fullName: string | null
     expireTime: number | null
@@ -51,7 +52,7 @@ const UserMenuDropdown: React.FC<Props> = (props) => {
         }}
         className={`dropdown__items mt-0 -ml-2 ${hover ? 'block' : 'hidden'}`}
       >
-        {userInfo.roles.includes('مدیر سایت') && (
+        {userInfo.userType === 1 && (
           <div>
             <div className="transition-colors">
               <Link

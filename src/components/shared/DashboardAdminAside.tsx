@@ -32,10 +32,12 @@ import { IoCart } from 'react-icons/io5'
 import { TbPointFilled } from 'react-icons/tb'
 import { RiShoppingBag2Fill } from 'react-icons/ri'
 import { IconType } from 'react-icons'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, use, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { IoMdDocument } from 'react-icons/io'
 import Drawer from './Drawer'
+import { useGetUserInfoMeQuery } from '@/services'
+import { IPermission } from '@/types'
 
 interface ProfilePath {
   id: number
@@ -171,13 +173,13 @@ const profileData: ProfilePath[] = [
         id: 4,
         name: 'همه کاربران',
         Icon: TbPointFilled,
-        path: '/admin/users',
+        path: '/admin/users/personnel',
       },
       {
         id: 4,
         name: 'سمت ها',
         Icon: TbPointFilled,
-        path: '/admin/user/roles',
+        path: '/admin/users/roles',
       },
     ],
   },
@@ -260,8 +262,16 @@ interface Props {
 export default function DashboardAdminAside(props: Props) {
   const { openRight, setOpenRight } = props
   const router = useRouter()
-
+  const { data: userData, isLoading, refetch } = useGetUserInfoMeQuery()
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+
+  const [permissions, setPermissions] = useState<IPermission[]>()
+
+  useEffect(() => {
+    if (userData?.data?.userSpecification.role && userData?.data?.userSpecification.role.permissions) {
+      setPermissions(userData?.data?.userSpecification.role.permissions)
+    }
+  }, [userData])
 
   useEffect(() => {
     profilePaths.forEach((item, index) => {
@@ -284,14 +294,28 @@ export default function DashboardAdminAside(props: Props) {
   const isParentPathActive = (subItems?: { path: string }[]) => {
     return subItems?.some((subItem) => isPathActive(subItem.path))
   }
-
+  if (userData) {
+    console.log(userData, 'userData')
+  }
   return (
     <div className="lg2:w-[265px]">
       <aside className="fixed top-[74px] w-[265px] bg-[#1e1e2d] hidden lg2:block">
         <div className="py-5 flex flex-col justify-between h-screen">
           <div className="overflow-auto">
-            {profilePaths.map((item, index) =>
-              item.path ? (
+            {profilePaths.map((item, index) => {
+              // بررسی اینکه آیا این آیتم در permissions وجود دارد
+              const hasPermission = permissions?.some((permission) => permission.name === item.name)
+
+              // اگر آیتم دارای subItem است، بررسی تطابق با childPermissions
+              const validSubItems = item.subItem?.filter((subItem) => {
+                const parentPermission = permissions?.find((permission) => permission.name === item.name)
+                return parentPermission?.childPermissions?.some((childPerm) => childPerm.name === subItem.name)
+              })
+
+              // اگر permission نداشته باشد، این آیتم را نمایش نده
+              if (!hasPermission) return null
+
+              return item.path ? (
                 <Link href={item.path} key={index}>
                   <div
                     className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
@@ -306,8 +330,8 @@ export default function DashboardAdminAside(props: Props) {
                       <span className={`ml-2 ${router.pathname === item.path ? 'text-white' : ' text-gray-400'}`}>
                         {item.name}
                       </span>
-                    </div>{' '}
-                    {item.subItem && (
+                    </div>
+                    {item.subItem && validSubItems && validSubItems.length > 0 && (
                       <span className="text-white">
                         <ArrowLeft
                           className={`transition-all ease-in-out duration-500 ${
@@ -341,8 +365,8 @@ export default function DashboardAdminAside(props: Props) {
                       >
                         {item.name}
                       </span>
-                    </div>{' '}
-                    {item.subItem && (
+                    </div>
+                    {validSubItems && validSubItems.length > 0 && (
                       <span className="text-white">
                         <ArrowLeft
                           className={`transition-all ease-in-out duration-500 ${
@@ -355,10 +379,10 @@ export default function DashboardAdminAside(props: Props) {
 
                   <div
                     className={`overflow-hidden w-full transition-all ease-in-out duration-500 ${
-                      item.subItem && openIndex === item.id ? 'max-h-screen' : 'max-h-0'
+                      validSubItems && validSubItems.length > 0 && openIndex === item.id ? 'max-h-screen' : 'max-h-0'
                     }`}
                   >
-                    {item.subItem?.map((subItem, subIndex) => (
+                    {validSubItems?.map((subItem, subIndex) => (
                       <Link
                         key={subIndex}
                         href={subItem.path}
@@ -375,7 +399,7 @@ export default function DashboardAdminAside(props: Props) {
                   </div>
                 </div>
               )
-            )}
+            })}
           </div>
           <LogoutButton isShowDrawer />
         </div>

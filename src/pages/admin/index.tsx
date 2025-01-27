@@ -14,7 +14,7 @@ import { useAppSelector } from '@/hooks'
 const AdminPage: NextPage = () => {
   const { generalSetting } = useAppSelector((state) => state.design)
   return (
-    <ProtectedRouteWrapper allowedRoles={[roles.ADMIN, roles.SUPERADMIN]}>
+    <ProtectedRouteWrapper>
       <div className="">
         <Head>
           <title>پیشخوان  </title>

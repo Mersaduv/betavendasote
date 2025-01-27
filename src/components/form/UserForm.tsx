@@ -1,28 +1,18 @@
-import { ChangeEvent, Dispatch, Fragment, SetStateAction, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { SubmitHandler, useForm, Resolver, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { FaArrowDownLong } from 'react-icons/fa6'
-import { Button, CloseIconButton, Combobox, DisplayError, Modal, TextField } from '@/components/ui'
-import dynamic from 'next/dynamic'
-import { IArticle, IArticleForm, ICategory, IColumnFooter, IUser, IUserForm } from '@/types'
-import { articleFormValidationSchema, userFormValidationSchema } from '@/utils'
+import { Button, CloseIconButton, Combobox, DisplayError, TextField } from '@/components/ui'
+import { IUser, IUserForm } from '@/types'
+import { userFormValidationSchema } from '@/utils'
 import {
-  useDeleteTrashArticleMutation,
-  useGetAllCategoriesQuery,
-  useGetCategoriesTreeQuery,
-  useGetColumnFootersQuery,
   useGetRolesQuery,
 } from '@/services'
-import { useAppDispatch, useAppSelector, useDisclosure } from '@/hooks'
-import { setStateStringSlice, showAlert } from '@/store'
+import { useAppDispatch } from '@/hooks'
+import { showAlert } from '@/store'
 import jalaali from 'jalaali-js'
 import { digitsEnToFa } from '@persian-tools/persian-tools'
-import { PiUserDuotone } from 'react-icons/pi'
-import { HandleResponse } from '../shared'
-import { ConfirmDeleteModal } from '../modals'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { FaRegCalendarAlt } from 'react-icons/fa'
 import { Dialog, Transition } from '@headlessui/react'
 const iranCity = require('iran-city')
@@ -72,7 +62,7 @@ const currentDateJalaali = toJalaali(new Date())
 const currentYearJalaali = currentDateJalaali.year
 const years = Array.from({ length: 100 }, (_, i) => digitsEnToFa(String(currentYearJalaali - i)))
 type Props = CreateUserFormProps | EditUserFormProps
-const ArticleForm: React.FC<Props> = (props) => {
+const UserForm: React.FC<Props> = (props) => {
   // ? Props
   const { mode, createHandler, isLoadingCreate, isLoadingUpdate, updateHandler, selectedUser } = props
   // assets
@@ -88,6 +78,7 @@ const ArticleForm: React.FC<Props> = (props) => {
   const [userRole, setUserRole] = useState('0')
   const [cities, setCities] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   // ? Queries
   const { data: roleData } = useGetRolesQuery({ pageSize: 100 })
 
@@ -127,10 +118,8 @@ const ArticleForm: React.FC<Props> = (props) => {
     // formData.append('Title', data.title)
     formData.append('IsActive', isActive.toString())
     formData.append('UserType', userType)
-    if (data.roleIds) {
-      data.roleIds.forEach((id) => {
-        formData.append('RoleIds', id)
-      })
+    if (data.roleId) {
+      formData.append('RoleId', data.roleId)
     }
     if (data.thumbnail) {
       formData.append('Thumbnail', data.thumbnail)
@@ -151,9 +140,9 @@ const ArticleForm: React.FC<Props> = (props) => {
     }
     if (data.city) {
       if (data.city.id) formData.append('City.Id', data.city.id.toString())
-      if (data.city.name) formData.append('City.Name', data.province.name)
+      if (data.city.name) formData.append('City.Name', data.city.name)
       if (data.city.slug) formData.append('City.Slug', data.city.slug)
-      if (data.city.province_id) formData.append('City.Slug', data.city.province_id.toString())
+      if (data.city.province_id) formData.append('City.Province_Id', data.city.province_id.toString())
     }
     if (data.postalCode) formData.append('PostalCode', data.postalCode)
     if (data.firstAddress) formData.append('firstAddress', data.firstAddress)
@@ -307,8 +296,8 @@ const ArticleForm: React.FC<Props> = (props) => {
 
   const handleChangeUserRole = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedRoleId = event.target.value
-    setUserRole(selectedRoleId) // به‌روزرسانی حالت محلی
-    setValue('roleIds', [selectedRoleId]) // تنظیم مقدار roleIds به عنوان یک آرایه
+    setUserRole(selectedRoleId)
+    setValue('roleId', selectedRoleId)
   }
 
   useEffect(() => {
@@ -320,6 +309,84 @@ const ArticleForm: React.FC<Props> = (props) => {
     })
     return () => subscription.unsubscribe()
   }, [watch, setValue])
+
+  // ? Re-render
+  useEffect(() => {
+    const loadData = () => {
+      if (selectedUser && mode === 'edit') {
+        const { id, userSpecification, isActive, mobileNumber, fullName } = selectedUser
+        console.log(selectedUser, 'selectedUser - selectedUser')
+
+        setUserType(userSpecification.userType)
+        if (userSpecification.role) setUserRole(userSpecification.role.id)
+
+        if (userSpecification.province) {
+          setCities(iranCity.citiesOfProvince(userSpecification.province.id))
+        }
+        setIsActive(isActive ? 'true' : 'false')
+        if (userSpecification.commissionType && userSpecification.commissionType !== null)
+          setCommissionType(userSpecification.commissionType.toString())
+        reset({
+          id,
+          userType: parseInt(userSpecification.userType),
+          roleId: userSpecification.role && userSpecification.role.id,
+          isActive: isActive,
+          mobileNumber: mobileNumber,
+          passCode: userSpecification.passCode,
+          firstName: userSpecification.firstName,
+          familyName: userSpecification.familyName,
+          fatherName: userSpecification.fatherName,
+          telePhone: userSpecification.telePhone,
+          city: userSpecification.city !== null ? userSpecification.city : {},
+          province: userSpecification.province !== null ? userSpecification.province : {},
+          postalCode: userSpecification.postalCode,
+          firstAddress: userSpecification.firstAddress,
+          birthDate: userSpecification.birthDate,
+          nationalCode: userSpecification.nationalCode,
+          idNumber: userSpecification.idNumber,
+          bankAccountNumber: userSpecification.bankAccountNumber,
+          shabaNumber: userSpecification.shabaNumber,
+          note: userSpecification.note,
+
+          commissionType: userSpecification.commissionType !== null ? userSpecification.commissionType : null,
+          storeName: userSpecification.storeName,
+          storeTelephone: userSpecification.storeTelephone,
+          storeAddress: userSpecification.storeAddress,
+          bussinessLicenseNumber: userSpecification.bussinessLicenseNumber,
+          isActiveAddProduct: userSpecification.isActiveAddProduct,
+          isPublishProduct: userSpecification.isPublishProduct,
+          isSelectedAsSpecialSeller: userSpecification.isSelectedAsSpecialSeller,
+          percentageValue: userSpecification.percentageValue,
+          sellerPerformance: userSpecification.sellerPerformance,
+          timelySupply: userSpecification.timelySupply,
+          shippingCommitment: userSpecification.shippingCommitment,
+          noReturns: userSpecification.noReturns,
+        })
+      }
+    }
+    const loadMedia = async () => {
+      if (selectedUser && mode === 'edit') {
+        const { imageSrc, userSpecification } = selectedUser
+
+        const mainImageFile = await fetchImageAsFile(imageSrc?.imageUrl ?? '')
+        const idImageFile = await fetchImageAsFile(userSpecification.idCardImageSrc?.imageUrl ?? '')
+        if (mainImageFile) {
+          setSelectedUserFiles([mainImageFile])
+        }
+        if (idImageFile) {
+          setSelectedUserIdFiles([idImageFile])
+        }
+        reset((prevState) => ({
+          ...prevState,
+          thumbnail: mainImageFile,
+          idCardThumbnail: idImageFile,
+        }))
+      }
+    }
+
+    loadData()
+    loadMedia()
+  }, [selectedUser])
 
   if (formErrors) {
     console.log(formErrors, 'formErrors')
@@ -357,7 +424,7 @@ const ArticleForm: React.FC<Props> = (props) => {
                     </select>
                   </div>
 
-                  {userType === '1' && (
+                  {userType == '1' && (
                     <div className="flex px-10 py-0 flex-col xs:flex-row">
                       <label
                         htmlFor="userRole"
@@ -370,7 +437,7 @@ const ArticleForm: React.FC<Props> = (props) => {
                         className={`w-full text-center rounded-md rounded-r-none border border-gray-300`}
                         id="userRole"
                         value={userRole}
-                        onChange={handleChangeUserRole} 
+                        onChange={handleChangeUserRole}
                       >
                         <option value="0">انتخاب کنید</option>
                         {roleData?.data?.data?.map((role) => (
@@ -843,7 +910,7 @@ const ArticleForm: React.FC<Props> = (props) => {
                 />
               </div>
             </div>
-            {userType === '2' && (
+            {userType == '2' && (
               <>
                 <div className="bg-white w-full rounded-md shadow-item mt-4">
                   <h3 className="border-b p-6 text-gray-600">مشخصات فروشگاه </h3>
@@ -1044,7 +1111,6 @@ const ArticleForm: React.FC<Props> = (props) => {
                       control={control}
                       render={({ field }) => (
                         <TextField
-                          type="number"
                           {...field}
                           label="تامین به موقع"
                           control={control}
@@ -1075,7 +1141,6 @@ const ArticleForm: React.FC<Props> = (props) => {
                       control={control}
                       render={({ field }) => (
                         <TextField
-                          type="number"
                           {...field}
                           label="بدون مرجوعی"
                           control={control}
@@ -1094,6 +1159,11 @@ const ArticleForm: React.FC<Props> = (props) => {
           </div>
 
           <div className="flex justify-end w-full">
+            <div className="flex flex-col">
+              <p className={`text-red-500 h-5 px-10 visible `}>
+                {formErrors.thumbnail && formErrors.thumbnail.message}
+              </p>
+            </div>
             <div className=" w-fit">
               {' '}
               <Button
@@ -1111,4 +1181,4 @@ const ArticleForm: React.FC<Props> = (props) => {
   )
 }
 
-export default ArticleForm
+export default UserForm

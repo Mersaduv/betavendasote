@@ -5,6 +5,7 @@ export interface IRole {
   title: string
   isActive: boolean
   permissions: IPermission[]
+  roleUserCount: number
   created: string | null
   lastUpdated: string | null
 }

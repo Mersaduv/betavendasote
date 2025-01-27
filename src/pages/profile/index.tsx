@@ -56,7 +56,7 @@ const ProfilePage: NextPage = () => {
   }
 
   return (
-    <ProtectedRouteWrapper allowedRoles={['مدیر سایت', 'مشتری', 'اپراتور']}>
+    <ProtectedRouteWrapper isProfile>
       <MetaTags
         title={generalSetting?.title + ' | ' + 'پروفایل' || 'فروشگاه اینترنتی'}
         description={generalSetting?.shortIntroduction || 'توضیحاتی فروشگاه اینترنتی'}
@@ -64,7 +64,7 @@ const ProfilePage: NextPage = () => {
       />
       <Header />
       <div className={`lg:container lg:flex  lg:gap-x-4 ${isActive ? '' : ''}`}>
-        <ProfileLayout>
+        <ProfileLayout isProfile>
           <PageContainer title=" ">
             <div className="flex w-full mt-4">
               {' '}

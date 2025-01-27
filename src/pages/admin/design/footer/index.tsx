@@ -3,6 +3,7 @@ import { AdditionalForm, CopyrightForm, DesignItemForm, SloganFooterForm, Suppor
 import { DashboardLayout } from '@/components/Layouts'
 import DesignTabDashboardLayout from '@/components/Layouts/DesignTabDashboardLayout'
 import { Button } from '@/components/ui'
+import { ProtectedRouteWrapper } from '@/components/user'
 import { useAppDispatch } from '@/hooks'
 import {
   useDeleteColumnFooterMutation,
@@ -564,55 +565,57 @@ const Footer: NextPage = () => {
     isUpsertLoadingCopyright
 
   return (
-    <>
-      <DashboardLayout>
-        <DesignTabDashboardLayout>
-          <Head>
-            <title>نمای سایت | فوتر</title>
-          </Head>
-          <FormProvider {...methods}>
-            <form className="space-y-5 mb-2 mx-3" onSubmit={methods.handleSubmit(onSubmit)}>
-              <DesignItemForm
-                type="services"
-                designItems={serviceItems}
-                setDesignItems={setServiceItems}
-                setDeletedDesignItems={setDeletedDesignItems}
-                onAddDesignItem={() => handleAddDesignItem('services')}
-              />
-              <DesignItemForm
-                type="socialMedia"
-                designItems={socialMediaItems}
-                setDesignItems={setSocialMediaItems}
-                setDeletedDesignItems={setDeletedDesignItems}
-                onAddDesignItem={() => handleAddDesignItem('socialMedia')}
-              />
-              <SloganFooterForm />
+    <ProtectedRouteWrapper>
+      <>
+        <DashboardLayout>
+          <DesignTabDashboardLayout>
+            <Head>
+              <title>نمای سایت | فوتر</title>
+            </Head>
+            <FormProvider {...methods}>
+              <form className="space-y-5 mb-2 mx-3" onSubmit={methods.handleSubmit(onSubmit)}>
+                <DesignItemForm
+                  type="services"
+                  designItems={serviceItems}
+                  setDesignItems={setServiceItems}
+                  setDeletedDesignItems={setDeletedDesignItems}
+                  onAddDesignItem={() => handleAddDesignItem('services')}
+                />
+                <DesignItemForm
+                  type="socialMedia"
+                  designItems={socialMediaItems}
+                  setDesignItems={setSocialMediaItems}
+                  setDeletedDesignItems={setDeletedDesignItems}
+                  onAddDesignItem={() => handleAddDesignItem('socialMedia')}
+                />
+                <SloganFooterForm />
 
-              <SupportForm />
+                <SupportForm />
 
-              <AdditionalForm
-                columnFooters={columnFooters}
-                setColumnFooter={setColumnFooters}
-                setDeletedColumnFooter={setDeletedColumnFooter}
-                setDeletedFooterArticle={setDeletedFooterArticle}
-              />
+                <AdditionalForm
+                  columnFooters={columnFooters}
+                  setColumnFooter={setColumnFooters}
+                  setDeletedColumnFooter={setDeletedColumnFooter}
+                  setDeletedFooterArticle={setDeletedFooterArticle}
+                />
 
-              <CopyrightForm />
-              <div className="flex justify-end">
-                <Button
-                  isLoading={isFormSubmitting}
-                  type="submit"
-                  className="bg-[#e90089] px-5 py-2.5 hover:bg-[#e90088bb]"
-                  // disabled={isFormSubmitting}
-                >
-                  {'بروزسانی'}
-                </Button>
-              </div>
-            </form>
-          </FormProvider>
-        </DesignTabDashboardLayout>
-      </DashboardLayout>
-    </>
+                <CopyrightForm />
+                <div className="flex justify-end">
+                  <Button
+                    isLoading={isFormSubmitting}
+                    type="submit"
+                    className="bg-[#e90089] px-5 py-2.5 hover:bg-[#e90088bb]"
+                    // disabled={isFormSubmitting}
+                  >
+                    {'بروزسانی'}
+                  </Button>
+                </div>
+              </form>
+            </FormProvider>
+          </DesignTabDashboardLayout>
+        </DashboardLayout>
+      </>
+    </ProtectedRouteWrapper>
   )
 }
 

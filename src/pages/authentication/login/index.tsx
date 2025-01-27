@@ -14,8 +14,11 @@ import { HandleResponse, MetaTags } from '@/components/shared'
 import type { ILoginForm } from '@/types'
 import Image from 'next/image'
 import { useAppSelector } from '@/hooks'
+import { useState } from 'react'
 
 function LoginPage() {
+  const [step, setStep] = useState(1)
+  const [phoneNumber, setPhoneNumber] = useState('')
   // ? Assets
   const { replace, query } = useRouter()
   const { generalSetting, logoImages } = useAppSelector((state) => state.design)
@@ -28,7 +31,10 @@ function LoginPage() {
   }
 
   const onSuccess = () => replace(query?.redirectTo?.toString() || '/')
-
+if (error) {
+  console.log(error , "error");
+  
+}
   // ? Render(s)
   return (
     <>

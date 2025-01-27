@@ -28,7 +28,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
     return () => clearInterval(interval)
   }, [])
   return (
-    <ProtectedRouteWrapper allowedRoles={[roles.ADMIN, roles.SUPERADMIN]}>
+    <ProtectedRouteWrapper>
       <header className="w-full flex justify-between items-center shadow py-2 fixed top-0 z-[90] bg-white ">
         <div className="flex items-center justify-start gap-3 mr-3">
           <div className="rounded p-2 hover:bg-sky-100   cursor-pointer" onClick={() => setOpenRight(!openRight)}>
