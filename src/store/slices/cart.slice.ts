@@ -58,22 +58,22 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<Omit<ICart, 'itemID'>>) => {
-      const { color, size, productID, features, } = action.payload;
-    
-      const isItemExist = exsitItem(state.cartItems, productID, color, size, features);
-    
+      const { color, size, productID, features } = action.payload
+
+      const isItemExist = exsitItem(state.cartItems, productID, color, size, features)
+
       if (isItemExist) {
-        isItemExist.quantity += 1;
-        state.totalItems = getTotal(state.cartItems, 'quantity');
-        state.totalPrice = getTotal(state.cartItems, 'price');
-        state.totalDiscount = getTotal(state.cartItems, 'discount');
-        setCartItems(state.cartItems);
+        isItemExist.quantity += 1
+        state.totalItems = getTotal(state.cartItems, 'quantity')
+        state.totalPrice = getTotal(state.cartItems, 'price')
+        state.totalDiscount = getTotal(state.cartItems, 'discount')
+        setCartItems(state.cartItems)
       } else {
-        state.cartItems.push({ itemID: nanoid(), ...action.payload });
-        state.totalItems = getTotal(state.cartItems, 'quantity');
-        state.totalPrice = getTotal(state.cartItems, 'price');
-        state.totalDiscount = getTotal(state.cartItems, 'discount');
-        setCartItems(state.cartItems);
+        state.cartItems.push({ itemID: nanoid(), ...action.payload })
+        state.totalItems = getTotal(state.cartItems, 'quantity')
+        state.totalPrice = getTotal(state.cartItems, 'price')
+        state.totalDiscount = getTotal(state.cartItems, 'discount')
+        setCartItems(state.cartItems)
       }
     },
 
@@ -159,7 +159,7 @@ export const {
   setTempSize,
   setTempObjectValue,
   setIsProcessPayment,
-  clearIsProcessPayment
+  clearIsProcessPayment,
 } = cartSlice.actions
 
 export default cartSlice.reducer

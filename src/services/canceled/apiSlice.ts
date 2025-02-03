@@ -1,5 +1,5 @@
-import baseApi from '@/services/baseApi';
-import { generateQueryParams } from '@/utils';
+import baseApi from '@/services/baseApi'
+import { generateQueryParams } from '@/utils'
 import {
   CreateCanceledQuery,
   GetAllCanceledsResult,
@@ -7,9 +7,11 @@ import {
   GetCanceledsResult,
   GetSingleCanceledResult,
   IdQuery,
+  IReturned,
   MsgResult,
   UpdateCanceledQuery,
-} from './types';
+} from './types'
+import { IPagination, QueryParams, ServiceResponse } from '@/types'
 
 export const canceledApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -32,13 +34,24 @@ export const canceledApiSlice = baseApi.injectEndpoints({
 
     getCanceleds: builder.query<GetCanceledsResult, GetCanceledsQuery>({
       query: ({ ...params }) => {
-        const queryParams = generateQueryParams(params);
+        const queryParams = generateQueryParams(params)
         return {
           url: `/api/canceled-orders?${queryParams}`,
           method: 'GET',
-        };
+        }
       },
       providesTags: ['Canceled'],
+    }),
+
+    getReturneds: builder.query<ServiceResponse<IPagination<IReturned[]>>, QueryParams>({
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/returned-orders?${queryParams}`,
+          method: 'GET',
+        }
+      },
+      providesTags: ['Returned'],
     }),
 
     getSingleCanceled: builder.query<GetSingleCanceledResult, IdQuery>({
@@ -75,7 +88,7 @@ export const canceledApiSlice = baseApi.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: 'Canceled', id: arg.id }],
     }),
   }),
-});
+})
 
 export const {
   useGetAllCanceledsQuery,
@@ -84,4 +97,5 @@ export const {
   useCreateCanceledMutation,
   useUpdateCanceledMutation,
   useDeleteCanceledMutation,
-} = canceledApiSlice;
+  useGetReturnedsQuery
+} = canceledApiSlice

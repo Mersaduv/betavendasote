@@ -104,7 +104,7 @@ const Cart: NextPage = () => {
       />
       <Header />
 
-      <main className="mt-[220px]">
+      <main className="mt-[80px]">
         <Head>
           <title>{generalSetting?.title} | سبد خرید</title>
         </Head>

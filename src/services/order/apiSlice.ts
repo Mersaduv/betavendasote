@@ -12,13 +12,13 @@ import type {
   UpdateOrderQuery,
 } from './types'
 import { getToken } from '@/utils'
-import { ServiceResponse } from '@/types'
+import { QueryParams, ServiceResponse } from '@/types'
 
 export const orderApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getOrders: builder.query<GetOrdersResult, GetOrdersQuery>({
+    getOrders: builder.query<GetOrdersResult, QueryParams>({
       query: ({ page, pageSize }) => ({
-        url: `/api/order?page=${page}&pageSize=${pageSize}`,
+        url: `/api/orders?page=${page}&pageSize=${pageSize}`,
         method: 'GET',
         headers: {
           Authorization: `Bearer ${getToken()}`,
@@ -57,6 +57,18 @@ export const orderApiSlice = baseApi.injectEndpoints({
         body,
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Order', id: arg.orderId }],
+    }),
+
+    updateOrderReturned: builder.mutation<ServiceResponse<boolean>, FormData>({
+      query: (body) => ({
+        url: `/api/order/update-returned`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body,
+      }),
+      invalidatesTags: ['Order'],
     }),
 
     updateOrder: builder.mutation<MsgResult, UpdateOrderQuery>({
@@ -103,4 +115,5 @@ export const {
   useCreateOrderMutation,
   useUpdateOrderCanceledMutation,
   usePlaceOrderMutation,
+  useUpdateOrderReturnedMutation
 } = orderApiSlice

@@ -52,10 +52,7 @@ export const authApiSlice = baseApi.injectEndpoints({
     }),
 
     login: builder.mutation<LoginResult, LoginQuery>({
-      query: ({ mobileNumber, password }) => {
-        const mobile = digitsFaToEn(mobileNumber)
-        const passCode = digitsFaToEn(password)
-        const body: LoginQuery = { mobileNumber: mobile, password: passCode }
+      query: (body) => {
         return {
           url: '/api/auth/login',
           method: 'POST',
@@ -65,15 +62,14 @@ export const authApiSlice = baseApi.injectEndpoints({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
-          console.log(data , "datadata");
+          console.log(data, 'datadata')
           if (data && data.data?.token && data.data?.refreshToken) {
-            
             dispatch(
               setCredentials({
                 token: data.data?.token,
                 refreshToken: data.data?.refreshToken,
                 userInfo: {
-                  role: data.data?.role ?? "",
+                  role: data.data?.role ?? '',
                   userType: data.data?.userType,
                   mobileNumber: data.data?.mobileNumber,
                   fullName: data.data?.fullName,
@@ -89,6 +85,45 @@ export const authApiSlice = baseApi.injectEndpoints({
         }
       },
     }),
+
+    verifyUser: builder.mutation<LoginResult, LoginQuery>({
+      query: ({ mobileNumber, password }) => {
+        const mobile = digitsFaToEn(mobileNumber)
+        const passCode = digitsFaToEn(password ?? '')
+        const body: LoginQuery = { mobileNumber: mobile, password: passCode }
+        return {
+          url: '/api/auth/verify-code',
+          method: 'POST',
+          body,
+        }
+      },
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          console.log(data, 'datadata')
+          if (data && data.data?.token && data.data?.refreshToken) {
+            dispatch(
+              setCredentials({
+                token: data.data?.token,
+                refreshToken: data.data?.refreshToken,
+                userInfo: {
+                  role: data.data?.role ?? '',
+                  userType: data.data?.userType,
+                  mobileNumber: data.data?.mobileNumber,
+                  fullName: data.data?.fullName,
+                  expireTime: data.data?.expireTime,
+                  refreshTokenExpireTime: data.data?.refreshTokenExpireTime,
+                },
+                loggedIn: true,
+              })
+            )
+          }
+        } catch (error) {
+          console.error('Failed to login and save tokens:', error)
+        }
+      },
+    }),
+
     logout: builder.mutation<MsgResult, void>({
       query: () => ({
         url: '/api/auth/logout',
@@ -237,4 +272,5 @@ export const {
   useGenerateNewTokenMutation,
   useGetUserInfoQuery,
   useGetUserInfoMeQuery,
+  useVerifyUserMutation,
 } = authApiSlice

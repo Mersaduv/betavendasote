@@ -40,7 +40,7 @@ const ShippingPage: NextPage = () => {
   const dispatch = useAppDispatch()
   const { generalSetting } = useAppSelector((state) => state.design)
   // ? States
-  const [paymentMethod, setPaymentMethod] = useState('پرداخت در محل')
+  const [paymentMethod, setPaymentMethod] = useState('درگاه پرداخت')
   const [orderCreated, setOrderCreated] = useState(false)
   const [orderId, setOrderId] = useState<string>()
   // ? Store
@@ -69,7 +69,7 @@ const ShippingPage: NextPage = () => {
           title: 'لطفا آدرس خود را تکمیل کنید',
         })
       )
-    }else {
+    } else {
       const formData = new FormData()
       formData.append('address', address.id)
       formData.append('status', '1')
@@ -79,16 +79,14 @@ const ShippingPage: NextPage = () => {
       formData.append('totalPrice', totalPrice.toString())
       formData.append('totalDiscount', totalDiscount.toString())
       formData.append('paymentMethod', paymentMethod)
-  
+
       postData(formData)
         .unwrap()
         .then((d) => {
           dispatch(clearCart())
         })
-        .catch((error) => {
-        })
+        .catch((error) => {})
     }
-   
   }
 
   // ? Handlers
@@ -126,11 +124,11 @@ const ShippingPage: NextPage = () => {
       }, 0)
       return () => clearTimeout(timeout)
     }
-  }, [orderCreated , address])
+  }, [orderCreated, address])
 
   // ? Render(s)
   return (
-    <ProtectedRouteWrapper allowedRoles={[roles.ADMIN, roles.SUPERADMIN, roles.USER]}>
+    <ProtectedRouteWrapper>
       {/*  Handle Create Order Response */}
       {(isSuccess || isError) && orderCreated && (
         <HandleResponse
@@ -160,7 +158,7 @@ const ShippingPage: NextPage = () => {
       )}
 
       <Header />
-      <main className="mt-[220px]">
+      <main className="mt-[80px]">
         <MetaTags
           title={generalSetting?.title + ' | ' + 'پرداخت' || 'فروشگاه اینترنتی'}
           description={generalSetting?.shortIntroduction || 'توضیحاتی فروشگاه اینترنتی'}

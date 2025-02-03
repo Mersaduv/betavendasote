@@ -85,9 +85,9 @@ const AddressCart: NextPage = () => {
   }, [addressDb, refetch])
 
   return (
-    <ProtectedRouteWrapper allowedRoles={[roles.ADMIN, roles.SUPERADMIN, roles.USER]}>
+    <ProtectedRouteWrapper>
       <Header />
-      <main className="mt-[220px]">
+      <main className="mt-[80px]">
         <MetaTags
           title={generalSetting?.title + ' | ' + 'ارسال اطلاعات' || 'فروشگاه اینترنتی'}
           description={generalSetting?.shortIntroduction || 'توضیحاتی فروشگاه اینترنتی'}
@@ -178,7 +178,7 @@ const AddressCart: NextPage = () => {
                             <BsTelephoneOutboundFill className="text-lg text-gray-500" />
                             <span className="font-normal text-base">شماره موبایل</span>
                           </div>
-                          <span className="text-gray-400 font-normal">{selectedAddressState?.mobileNumber}</span>
+                          <span className="text-gray-400 font-normal farsi-digits">{selectedAddressState?.mobileNumber}</span>
                         </div>
                         <div className="flex md:items-center w-full flex-col md:flex-row  gap-x-12">
                           <div className="flex items-center md:w-36 gap-1.5">

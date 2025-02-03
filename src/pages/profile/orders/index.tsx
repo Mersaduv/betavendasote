@@ -141,7 +141,15 @@ const OrderPage: NextPage = () => {
                       <div className="space-y-3">
                         {data?.data?.pagination?.data &&
                           data?.data?.pagination?.data
-                            .filter((item) => item.paid === true && item.status === 2)
+                            .filter(
+                              (item) =>
+                                item.paid === true &&
+                                (item.status === 2 ||
+                                  item.status === 21 ||
+                                  item.status === 22 ||
+                                  item.status === 23 ||
+                                  item.status === 24)
+                            )
                             .map((item) => <OrderCard isCurrently key={item.id} order={item} />)}
                       </div>
                     </DataStateDisplay>

@@ -28,7 +28,7 @@ interface ResultBody {
 export type LoginResult = ServiceResponse<ResultBody>
 export type LoginQuery = {
   mobileNumber: string
-  password: string
+  password?: string
 }
 
 export type UserResult = ServiceResponse<ResultBody>

@@ -41,7 +41,12 @@ const UserMenuDropdown: React.FC<Props> = (props) => {
   return (
     <div className="dropdown">
       <button onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)} className="dropdown__button">
-        <span className="text-xs xl:text-sm ml-auto mr-2.5 text-gray-700 font-normal">سلام {firstName} عزیز</span>
+        {firstName !== '' ? (
+          <span className="text-xs xl:text-sm ml-auto mr-2.5 text-gray-700 font-normal">سلام {firstName} عزیز</span>
+        ) : (
+          <span className="text-xs xl:text-sm ml-auto mr-2.5 text-gray-700 font-normal">سلام دوست عزیز</span>
+        )}
+
         <ArrowDown className="icon" />
       </button>
 

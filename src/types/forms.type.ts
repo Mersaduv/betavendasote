@@ -287,11 +287,16 @@ export interface IRoleForm {
   id?: string
   title: string
   isActive: string
-  permissions: Record<string, boolean>;
+  permissions: Record<string, boolean>
 }
 export interface IRoleRequest {
   id?: string
   title: string
   isActive: boolean
-  permissions: string[];
+  permissions: string[]
+}
+
+export interface MobileNumberFormValues {
+  mobileNumber: string
+  password?: string
 }

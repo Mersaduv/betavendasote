@@ -1,9 +1,15 @@
 import moment from 'moment-jalaali'
 
 import { formatNumber } from '@/utils'
-import { useGetCanceledsQuery, useUpdateOrderCanceledMutation, useUpdateOrderMutation } from '@/services'
+import {
+  useGetCanceledsQuery,
+  useGetReturnedsQuery,
+  useUpdateOrderCanceledMutation,
+  useUpdateOrderMutation,
+  useUpdateOrderReturnedMutation,
+} from '@/services'
 
-import { Check, Clock2, More, Toman } from '@/icons'
+import { Check, Clock2, Minus, More, Plus, Toman } from '@/icons'
 import { HandleResponse } from '@/components/shared'
 import { ResponsiveImage } from '@/components/ui'
 
@@ -21,12 +27,19 @@ interface Props {
 }
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { setIsProcessPayment } from '@/store'
+import { setIsProcessPayment, showAlert } from '@/store'
 import { useAppDispatch } from '@/hooks'
 import { IOrderDTO } from '@/services/order/types'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 import { PdfGenerator } from '../builders'
-
+import { MdClose } from 'react-icons/md'
+type ReturnedProduct = {
+  quantity: number
+  selectReturned: string
+  description?: string
+  selectedFiles?: File[]
+}
+type SelectedReturnedProducts = Record<string, ReturnedProduct>
 const OrderCard: React.FC<Props> = (props) => {
   const { push } = useRouter()
 
@@ -35,38 +48,46 @@ const OrderCard: React.FC<Props> = (props) => {
   const { order, singleOrder, isCanceled, isDelivered, isReturned, isCurrently, isProcessPay } = props
 
   // ? Edit Order Query
-  const [editOrder, { data, isSuccess, isError, error }] = useUpdateOrderMutation()
-
   const [
     editOrderCanceled,
     { data: dataCanceled, isSuccess: isSuccessCanceled, isError: isErrorCanceled, error: errorCanceled },
   ] = useUpdateOrderCanceledMutation()
 
+  const [
+    editOrderReturned,
+    { data: dataReturned, isSuccess: isSuccessReturned, isError: isErrorReturned, error: errorReturned },
+  ] = useUpdateOrderReturnedMutation()
+
   // ? Canceled reason
   const { data: canceledData } = useGetCanceledsQuery({ page: 1, pageSize: 99 })
+  const { data: returnedData } = useGetReturnedsQuery({ page: 1, pageSize: 99 })
 
   // ? State for showing order details
   const [showDetails, setShowDetails] = useState(false)
   const [showCancelSubmit, setCancelSubmit] = useState(false)
+  const [showReturnedSubmit, setReturnedSubmit] = useState(false)
   const [isAccordionOpen, setIsAccordionOpen] = useState(false)
   const [isSecondAccordionOpen, setIsSecondAccordionOpen] = useState(false)
   const [selectedProducts, setSelectedProducts] = useState<{ [key: string]: boolean }>({})
+  // const [selectedReturnedProducts, setSelectedReturnedProducts] = useState<{
+  //   [key: string]: { quantity: number }
+  // }>({})
+  const [selectedReturnedProducts, setSelectedReturnedProducts] = useState<SelectedReturnedProducts>({})
+
   const [selectCanceled, setSelectCanceled] = useState<string>()
-
+  const [selectReturned, setSelectReturned] = useState<string>()
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const [description, setDescription] = useState('')
   // ? Handlers
-  const handleChangeToDelivered = () => {
-    editOrder({
-      id: order.id,
-      body: { paid: true, delivered: true },
-    })
+  const handleDescriptionChange = (itemID: string, value: string) => {
+    setSelectedReturnedProducts((prev) => ({
+      ...prev,
+      [itemID]: {
+        ...prev[itemID],
+        description: value,
+      },
+    }))
   }
-  const handleChangeToInProccess = () => {
-    editOrder({
-      id: order.id,
-      body: { paid: false, delivered: false },
-    })
-  }
-
   const handleToggleDetails = () => {
     setShowDetails(!showDetails)
   }
@@ -85,13 +106,102 @@ const OrderCard: React.FC<Props> = (props) => {
   }
 
   const handleToggleReturnedSubmit = () => {
-    
+    setReturnedSubmit(!showReturnedSubmit)
   }
+
+  const handleToggleReturnedContinueSubmit = () => {
+    // بررسی می‌کنیم که برای آیتم‌هایی که تعداد مرجوعی (quantity) بیشتر از 0 دارند،
+    // علت مرجوعی انتخاب شده باشد
+    const invalidReason = Object.values(selectedReturnedProducts).some(
+      (item) => item.quantity > 0 && !item.selectReturned
+    );
+    if (invalidReason) {
+      return dispatch(
+        showAlert({
+          status: 'error',
+          title: 'لطفا علت مرجوعی را برای آیتم(های) انتخاب شده وارد کنید',
+        })
+      );
+    }
+  
+    // بررسی تعداد (در اینجا هم برای آیتم‌هایی که انتخاب شده‌اند)
+    const invalidQuantity = Object.values(selectedReturnedProducts).some(
+      (item) => item.quantity > 0 && !item.quantity
+    );
+    if (invalidQuantity) {
+      return dispatch(
+        showAlert({
+          status: 'error',
+          title: 'لطفا تعداد را برای آیتم(های) انتخاب شده تعیین کنید',
+        })
+      );
+    }
+  
+    // آماده‌سازی فرم دیتا
+    const formData = new FormData();
+  
+    // ساخت آرایه‌ای از آیتم‌های انتخاب‌شده که تعداد مرجوعی بیشتر از 0 دارند
+    const items = Object.entries(selectedReturnedProducts)
+      .filter(([itemId, data]) => data.quantity > 0)
+      .map(([itemId, data]) => ({
+        itemId,
+        quantity: data.quantity,
+        returnedId: data.selectReturned,
+        description: data.description || '',
+        files: data.selectedFiles || [],
+      }));
+  
+    // اضافه کردن اطلاعات هر آیتم به formData
+    items.forEach((item, index) => {
+      formData.append(`Items[${index}].ItemID`, item.itemId);
+      formData.append(`Items[${index}].Quantity`, item.quantity.toString());
+      formData.append(`Items[${index}].ReturnedId`, item.returnedId);
+      formData.append(`Items[${index}].Description`, item.description);
+      if (item.files.length > 0) {
+        item.files.forEach((file) => {
+          formData.append(`Items[${index}].Files`, file);
+        });
+      }
+    });
+  
+    // اضافه کردن اطلاعات عمومی مانند شناسه سفارش و وضعیت (در اینجا به عنوان مثال)
+    formData.append('OrderId', order.id);
+    formData.append('Status', '4');
+  
+    // ارسال فرم دیتا
+    editOrderReturned(formData);
+    setReturnedSubmit(!showReturnedSubmit);
+  };
+  const handleQuantityChange = (itemID: string, newQuantity: number, maxQuantity: number) => {
+    if (newQuantity >= 0 && newQuantity <= maxQuantity) {
+      setSelectedReturnedProducts((prev) => ({
+        ...prev,
+        [itemID]: {
+          ...prev[itemID],
+          quantity: newQuantity,
+        },
+      }))
+    }
+  }
+  const handleFileChange = (itemID: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const validFiles: File[] = Array.from(files)
+      setSelectedReturnedProducts((prev) => ({
+        ...prev,
+        [itemID]: {
+          ...prev[itemID],
+          selectedFiles: [...(prev[itemID]?.selectedFiles || []), ...validFiles],
+        },
+      }))
+    }
+  }
+
   const handleGeneratePdf = (order: IOrderDTO) => {
     return (
       <PDFDownloadLink document={<PdfGenerator order={order} />} fileName="order.pdf">
-      {({ blob, url, loading, error }) => (loading ? 'در حال ساختن PDF...' : 'فاکتور')}
-    </PDFDownloadLink>
+        {({ blob, url, loading, error }) => (loading ? 'در حال ساختن PDF...' : 'فاکتور')}
+      </PDFDownloadLink>
     )
   }
 
@@ -117,11 +227,35 @@ const OrderCard: React.FC<Props> = (props) => {
     setSelectCanceled(e.target.value)
   }
 
+  const handleSelectReturned = (itemID: string, value: string) => {
+    setSelectedReturnedProducts((prev) => ({
+      ...prev,
+      [itemID]: {
+        ...prev[itemID],
+        selectReturned: value,
+      },
+    }))
+  }
+
+  const handleDeleteFile = (itemID: string, fileIndex: number) => {
+    setSelectedReturnedProducts((prev) => {
+      const currentFiles = prev[itemID]?.selectedFiles || []
+      const updatedFiles = currentFiles.filter((_, idx) => idx !== fileIndex)
+      return {
+        ...prev,
+        [itemID]: {
+          ...prev[itemID],
+          selectedFiles: updatedFiles,
+        },
+      }
+    })
+  }
+
   // ? Render(s)
   return (
     <div
       className={`${
-        showCancelSubmit
+        showCancelSubmit || showReturnedSubmit
           ? 'border rounded-lg p-2 border-[#e90089]'
           : showDetails
           ? 'border-blue-600 border rounded-lg'
@@ -129,20 +263,23 @@ const OrderCard: React.FC<Props> = (props) => {
       }`}
     >
       {/* Handle Edit Order Response */}
-      {(isSuccess || isError) && (
+      {(isSuccessReturned || isErrorReturned || isErrorCanceled || isSuccessCanceled) && (
         <HandleResponse
-          isError={isError || isErrorCanceled}
-          isSuccess={isSuccess || isSuccessCanceled}
-          error={error || errorCanceled}
-          message={data?.message}
+          isError={isErrorReturned || isErrorCanceled}
+          isSuccess={isSuccessReturned || isSuccessCanceled}
+          error={errorReturned || errorCanceled}
+          message={dataCanceled?.message || dataReturned?.message}
         />
       )}
+
       <div
-        className={` border-gray-200 ${showCancelSubmit ? ' border-gray-200' : 'border rounded-lg border-gray-200'}`}
+        className={` border-gray-200 ${
+          showCancelSubmit || showReturnedSubmit ? ' border-gray-200' : 'border rounded-lg border-gray-200'
+        }`}
       >
         <>
           <div
-            className={`overflow-hidden transition-all ease-in-out duration-700 ${
+            className={`overflow-auto transition-all ease-in-out duration-700 ${
               showDetails ? 'max-h-screen' : 'max-h-0'
             }`}
           >
@@ -154,7 +291,7 @@ const OrderCard: React.FC<Props> = (props) => {
                     <div className="flex flex-col justify-between py-4">
                       <div>
                         <span>کد محصول : </span>
-                        <span>{'1111111'}</span>
+                        <span className="farsi-digits">{cartItem.productCode}</span>
                       </div>
                       <div>{cartItem.name}</div>
                       <div className="flex items-center gap-5">
@@ -251,7 +388,7 @@ const OrderCard: React.FC<Props> = (props) => {
                   <span className="text-base text-gray-700 font-light">{'در انتظار پرداخت'}</span>
                 </div>
               )}
-              {singleOrder && (
+              {/* {singleOrder && (
                 <div className="group relative h-fit self-end px-1.5">
                   <More className="icon cursor-pointer" />
                   <div className="absolute left-0 top-5 z-10 hidden rounded bg-white px-4 py-3 shadow-3xl group-hover:flex">
@@ -277,7 +414,7 @@ const OrderCard: React.FC<Props> = (props) => {
                     </div>
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
             <div className="flex flex-wrap justify-between py-2 px-3">
               <div className="flex items-center gap-3 flex-wrap">
@@ -325,6 +462,28 @@ const OrderCard: React.FC<Props> = (props) => {
                   </select>
                 </div>
               )}
+              {/* {showReturnedSubmit && (
+                <div className="mt-1 w-full">
+                  <label htmlFor="reason" className="block mb-2 text-base font-medium text-gray-900">
+                    علت مرجوعی
+                  </label>
+                  <select
+                    id="reason"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-2/3 p-2.5"
+                    onChange={handleSelectReturned}
+                    value={selectReturned}
+                  >
+                    <option className="option-selector" value="" selected>
+                      انتخاب مرجوعی خرید
+                    </option>
+                    {returnedData?.data?.data?.map((returned) => (
+                      <option key={returned.id} className="option-selector" value={returned.id}>
+                        {returned.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )} */}
               {!showCancelSubmit &&
                 order.cart.map((cartItem) => (
                   <ResponsiveImage
@@ -336,8 +495,19 @@ const OrderCard: React.FC<Props> = (props) => {
                     imageStyles="object-contain border rounded"
                   />
                 ))}
+              {!showReturnedSubmit &&
+                order.cart.map((cartItem) => (
+                  <ResponsiveImage
+                    key={cartItem.itemID}
+                    dimensions="w-[100px] h-[100px]"
+                    src={cartItem.img.imageUrl}
+                    blurDataURL={cartItem.img.placeholder}
+                    alt={cartItem.name}
+                    imageStyles="object-contain border rounded"
+                  />
+                ))}
               <div
-                className={`overflow-hidden w-full transition-all ease-in-out duration-700 ${
+                className={`overflow-auto w-full transition-all ease-in-out duration-700 ${
                   showCancelSubmit ? 'max-h-screen' : 'max-h-0'
                 }`}
               >
@@ -360,7 +530,7 @@ const OrderCard: React.FC<Props> = (props) => {
                         <div className="flex flex-col justify-between py-4">
                           <div>
                             <span>کد محصول : </span>
-                            <span>{'1111111'}</span>
+                            <span className="farsi-digits">{cartItem.productCode}</span>
                           </div>
                           <div>{cartItem.name}</div>
                           <div className="flex items-center gap-5">
@@ -409,6 +579,165 @@ const OrderCard: React.FC<Props> = (props) => {
                   ))}
                 </div>
               </div>
+
+              <div
+                className={`overflow-auto w-full transition-all ease-in-out duration-700 ${
+                  showReturnedSubmit ? 'max-h-screen' : 'max-h-0'
+                }`}
+              >
+                <div className="py-2 border-t bg-white">
+                  {order.cart.map((cartItem) => (
+                    <div key={cartItem.itemID} className="pb-8 hover:shadow-product">
+                      <div className="flex justify-between w-full">
+                        {/* بخش نمایش تصویر و مشخصات محصول */}
+                        <div className="flex py-2 pr-3 gap-3">
+                          <div className="flex items-center flex-col">
+                            <img className="w-36 h-[150px]" src={cartItem.img.imageUrl} alt="" />
+                          </div>
+                          <div className="flex flex-col justify-between py-4">
+                            <div>
+                              <span>کد محصول : </span>
+                              <span className="farsi-digits">{cartItem.productCode}</span>
+                            </div>
+                            <div>{cartItem.name}</div>
+                            {/* نمایش مشخصات رنگ، سایز و ... */}
+                            {/* ... */}
+                          </div>
+                        </div>
+                        <div className="p-4">
+                          <span className="text-xs xs:text-base font-normal text-gray-700 ml-1">
+                            {digitsEnToFa(formatNumber(cartItem.price))}
+                          </span>
+                          تومان
+                        </div>
+                      </div>
+
+                      <div className="mb-1.5 flex items-start gap-4 px-2 w-full">
+                        {/* بخش تغییر تعداد مرجوعی */}
+                        <div className="flex flex-col justify-between">
+                          <div className="whitespace-nowrap block mb-2 text-base font-medium text-gray-900">
+                            تعداد مرجوعی
+                          </div>
+                          <div className="flex items-center gap-1 border rounded p-0.5 w-fit">
+                            <button
+                              className="w-6 h-6 flex items-center justify-center rounded bg-[#f04d44] hover:bg-[#f06c65]"
+                              onClick={() =>
+                                handleQuantityChange(
+                                  cartItem.itemID,
+                                  (selectedReturnedProducts[cartItem.itemID]?.quantity || 0) - 1,
+                                  cartItem.quantity
+                                )
+                              }
+                            >
+                              <Minus size={16} color="white" />
+                            </button>
+
+                            <span className="w-4 text-center farsi-digits">
+                              {selectedReturnedProducts[cartItem.itemID]?.quantity || 0}
+                            </span>
+
+                            <button
+                              className="w-6 h-6 flex items-center justify-center rounded bg-[#f04d44] hover:bg-[#f06c65]"
+                              onClick={() =>
+                                handleQuantityChange(
+                                  cartItem.itemID,
+                                  (selectedReturnedProducts[cartItem.itemID]?.quantity || 0) + 1,
+                                  cartItem.quantity
+                                )
+                              }
+                            >
+                              <Plus size={16} color="white" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* بخش انتخاب علت مرجوعی */}
+                        <div className="w-full">
+                          <label
+                            htmlFor={`reason-${cartItem.itemID}`}
+                            className="block mb-2 text-base font-medium text-gray-900"
+                          >
+                            علت مرجوعی
+                          </label>
+                          <select
+                            id={`reason-${cartItem.itemID}`}
+                            className="bg-gray-50 border border-gray-300 w-full text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                            onChange={(e) => handleSelectReturned(cartItem.itemID, e.target.value)}
+                            value={selectedReturnedProducts[cartItem.itemID]?.selectReturned || ''}
+                          >
+                            <option value="">انتخاب مرجوعی خرید</option>
+                            {returnedData?.data?.data?.map((returned) => (
+                              <option key={returned.id} value={returned.id}>
+                                {returned.title}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* بخش وارد کردن توضیحات */}
+                      <div className="mb-4">
+                        <label
+                          htmlFor={`description-${cartItem.itemID}`}
+                          className="block text-sm font-normal mb-2 text-gray-700 md:min-w-max lg:text-sm"
+                        >
+                          توضیحات
+                        </label>
+                        <textarea
+                          id={`description-${cartItem.itemID}`}
+                          placeholder="توضیحات خود را وارد کنید"
+                          className="input h-24 resize-none border-[#E3E3E7] rounded-[8px] bg-white placeholder:text-xs pr-2"
+                          value={selectedReturnedProducts[cartItem.itemID]?.description || ''}
+                          onChange={(e) => handleDescriptionChange(cartItem.itemID, e.target.value)}
+                        />
+                      </div>
+
+                      {/* بخش آپلود فایل (تصویر/فیلم) */}
+                      <div className="border border-dashed border-[#009ef7] bg-[#f1faff] rounded text-center mt-4">
+                        <input
+                          type="file"
+                          multiple
+                          className="hidden"
+                          id={`Thumbnail-${cartItem.itemID}`}
+                          onChange={(e) => handleFileChange(cartItem.itemID, e)}
+                        />
+                        <label
+                          htmlFor={`Thumbnail-${cartItem.itemID}`}
+                          className="block cursor-pointer p-6 text-sm font-normal"
+                        >
+                          {selectedReturnedProducts[cartItem.itemID]?.selectedFiles &&
+                          selectedReturnedProducts[cartItem.itemID]?.selectedFiles.length > 0 ? (
+                            <div className="flex flex-wrap gap-5 mt-0 px-8">
+                              {selectedReturnedProducts[cartItem.itemID]?.selectedFiles.map((file, index) => (
+                                <div key={index} className="text-sm text-gray-600 relative cursor-default">
+                                  <img
+                                    src={URL.createObjectURL(file)}
+                                    alt={file.name}
+                                    className="w-[80px] h-[88px] object-cover rounded-lg shadow-product"
+                                  />
+                                  <button
+                                    type="button"
+                                    className="absolute -top-2 -right-2 shadow-product hover:bg-red-500 hover:text-white bg-gray-50 p-0.5 rounded-full text-gray-500"
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      e.preventDefault()
+                                      handleDeleteFile(cartItem.itemID, index)
+                                    }}
+                                  >
+                                    <MdClose className="text-base" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div>برای انتخاب عکس و فیلم کلیک کنید</div>
+                          )}
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </>
           {showCancelSubmit ? (
@@ -428,6 +757,23 @@ const OrderCard: React.FC<Props> = (props) => {
                 </button>
               </div>
             </>
+          ) : showReturnedSubmit ? (
+            <>
+              <div className="border rounded-lg mt-4 gap-6 flex justify-between w-full px-4 py-2">
+                <button
+                  className="border hover:bg-red-600 hover:text-white border-red-600 rounded px-2.5 py-1 text-base font-light text-red-600 transition-colors duration-150 ease-in-out"
+                  onClick={handleToggleReturnedSubmit}
+                >
+                  برگشت
+                </button>
+                <button
+                  onClick={handleToggleReturnedContinueSubmit}
+                  className="border hover:bg-red-700 bg-red-600 border-red-600 hover:border-red-600 rounded px-2.5 py-1 text-base font-light text-white transition-colors duration-150 ease-in-out"
+                >
+                  ادامه
+                </button>
+              </div>
+            </>
           ) : (
             <div className="border-t gap-6 flex justify-end bg-[rgba(0,0,0,.03)] w-full px-4 py-2">
               <button
@@ -436,14 +782,10 @@ const OrderCard: React.FC<Props> = (props) => {
               >
                 {showDetails ? 'برگشت' : 'مشاهده'}
               </button>
-              {}
-
               {isDelivered ? (
                 <>
-                  <button
-                    className="border transition ease duration-500 hover:bg-[#0dcaf0] hover:text-white rounded px-2.5 py-1 text-base font-light text-[#0dcaf0] border-[#0dcaf0]"
-                  >
-                   {handleGeneratePdf(order)}
+                  <button className="border transition ease duration-500 hover:bg-[#0dcaf0] hover:text-white rounded px-2.5 py-1 text-base font-light text-[#0dcaf0] border-[#0dcaf0]">
+                    {handleGeneratePdf(order)}
                   </button>
                   <button
                     onClick={handleToggleReturnedSubmit}

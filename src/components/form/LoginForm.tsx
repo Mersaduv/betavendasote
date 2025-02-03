@@ -3,11 +3,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { BiRightArrowAlt } from 'react-icons/bi'
 
-import { logInSchema } from '@/utils'
+import { mobileNumberSchema } from '@/utils'
 
 import { DisplayError, LoginButton } from '@/components/ui'
 
-import type { ILoginForm } from '@/types'
+import type { MobileNumberFormValues } from '@/types'
 import Link from 'next/link'
 import { digitsEnToFa } from '@persian-tools/persian-tools'
 import React, { forwardRef } from 'react'
@@ -16,7 +16,7 @@ import { useGetRedirectsQuery } from '@/services'
 import { useAppSelector } from '@/hooks'
 
 interface Props {
-  onSubmit: (data: ILoginForm) => void
+  onSubmit: (data: MobileNumberFormValues) => void
   isLoading: boolean
 }
 
@@ -31,7 +31,7 @@ interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const LoginForm: React.FC<Props> = (props) => {
   const { onSubmit, isLoading } = props
   const { generalSetting } = useAppSelector((state) => state.design)
-  const [stage, setStage] = useState<'mobileNumber' | 'password'>('mobileNumber')
+  const [stage, setStage] = useState<'mobileNumber'>('mobileNumber')
   const { data: redirectData, isLoading: isLoadingRedirect, isError: isErrorRedirect } = useGetRedirectsQuery()
 
   const {
@@ -40,66 +40,54 @@ const LoginForm: React.FC<Props> = (props) => {
     formState: { errors: formErrors },
     setFocus,
     trigger,
-  } = useForm<ILoginForm>({
-    resolver: yupResolver(logInSchema),
-    defaultValues: { mobileNumber: '', password: '' },
+  } = useForm<MobileNumberFormValues>({
+    resolver: yupResolver(mobileNumberSchema),
+    defaultValues: { mobileNumber: '' },
   })
 
   const mobileNumberRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
-
-  const handleMobileNumberSubmit = async () => {
-    const isValid = await trigger('mobileNumber')
-    if (isValid) {
-      setStage('password')
-    }
-  }
-
-  const handleBackToMobileNumber = () => {
-    setStage('mobileNumber')
-  }
 
   useEffect(() => {
     if (stage === 'mobileNumber') {
       setFocus('mobileNumber')
       mobileNumberRef.current?.focus()
-    } else if (stage === 'password') {
-      setFocus('password')
-      passwordRef.current?.focus()
     }
   }, [stage, setFocus])
 
   return (
     <form className="space-y-0.5" onSubmit={handleSubmit(onSubmit)}>
-      {stage === 'mobileNumber' && (
-        <>
-          <h2 className="text-gray-300 text-base text-center mb-12">شماره همراه خود را وارد کنید</h2>
-          <TextField
-            id="mobileNumber"
-            control={control}
-            errors={formErrors.mobileNumber}
-            placeholder={digitsEnToFa('09...')}
-            name="mobileNumber"
-            classStyle="rounded-3xl shadow-lg text-center"
-            ref={mobileNumberRef}
-            // type='number'
-          />
-          <LoginButton className="mx-auto w-full rounded-3xl py-2 bg-[#f792ce] border-2 border-[#e90089] hover:bg-[#e90089]" isLoading={isLoading} onClick={handleMobileNumberSubmit}>
-            ادامه
-          </LoginButton>
-          <div className="pt-4 flex items-center w-full ">
-            <div className=" text-gray-800 text-sm flex mt-8">
-              شرایط استفاده از{' '}
-              <Link href={`/articles/${redirectData?.data?.slug}`} className="text-blue-400 text-sm mx-1">
-                قوانین و حریم خصوصی{' '}
-              </Link>{' '}
-              {generalSetting?.title} را میپذیرم
-            </div>
+      <>
+        <h2 className="text-gray-300 text-base text-center mb-12">شماره همراه خود را وارد کنید</h2>
+        <TextField
+          id="mobileNumber"
+          control={control}
+          errors={formErrors.mobileNumber}
+          placeholder={digitsEnToFa('09...')}
+          name="mobileNumber"
+          classStyle="rounded-3xl shadow-lg text-center farsi-digits"
+          ref={mobileNumberRef}
+          inputMode="numeric"
+          pattern="[0-9]*"
+          // type='number'
+        />
+        <LoginButton
+          className="mx-auto w-full rounded-3xl py-2 bg-[#f792ce] border-2 border-[#e90089] hover:bg-[#e90089]"
+          isLoading={isLoading}
+        >
+          ادامه
+        </LoginButton>
+        <div className="pt-4 flex items-center w-full ">
+          <div className=" text-gray-800 text-sm flex mt-8">
+            شرایط استفاده از{' '}
+            <Link href={`/articles/${redirectData?.data?.slug}`} className="text-blue-400 text-sm mx-1">
+              قوانین و حریم خصوصی{' '}
+            </Link>{' '}
+            {generalSetting?.title} را میپذیرم
           </div>
-        </>
-      )}
+        </div>
+      </>
 
-      {stage === 'password' && (
+      {/* {stage === 'password' && (
         <>
           <h2 className="text-gray-300 text-base text-center ">رمز خود را وارد کنید</h2>
           <button type="button" onClick={handleBackToMobileNumber}>
@@ -121,7 +109,7 @@ const LoginForm: React.FC<Props> = (props) => {
             <div className="text-blue-400 text-sm mt-8">فراموشی رمز عبور</div>
           </div>
         </>
-      )}
+      )} */}
     </form>
   )
 }
@@ -132,17 +120,16 @@ const TextField = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
   const { field } = useController({ name, control, rules: { required: true } })
 
   const direction = /^[a-zA-Z0-9]+$/.test(field.value?.[0]) ? 'ltr' : 'ltr'
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value
+ // ? Handlers
+ const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputValue = e.target.value
 
-    // فیلتر کردن کاراکترهای غیر عددی
-    const filteredValue = inputValue.replace(/[^0-9۰-۹]/g, '')
-
-    // تبدیل اعداد انگلیسی به فارسی
-    const faInputValue = digitsEnToFa(filteredValue)
-
-    field.onChange(faInputValue)
+  if (type === 'number' && inputValue.length !== 0) {
+    field.onChange(parseInt(inputValue))
+  } else {
+    field.onChange(inputValue)
   }
+}
 
   return (
     <div>

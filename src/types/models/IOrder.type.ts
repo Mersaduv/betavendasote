@@ -7,6 +7,10 @@ export interface IOrder {
   user: IUser
   address: string
   cart: ICart[]
+  giftWrapped: number
+  deliveryCost: number
+  bankAccountNumber: string
+  trackingNum: string
   totalItems: number
   totalPrice: number
   orgPrice: number
@@ -14,6 +18,7 @@ export interface IOrder {
   paymentMethod: string
   delivered: boolean
   paid: boolean
+  isDeleted: boolean
   purchaseInvoice?: {
     id: string
     imageUrl: string

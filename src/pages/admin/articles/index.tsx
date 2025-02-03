@@ -1154,5 +1154,33 @@ const Articles: NextPage = () => {
     </ProtectedRouteWrapper>
   )
 }
-// ? Local Components
 export default dynamic(() => Promise.resolve(Articles), { ssr: false })
+// import { DashboardLayout } from '@/components/Layouts'
+// import { ProtectedRouteWrapper } from '@/components/user'
+// import { NextPage } from 'next'
+// import dynamic from 'next/dynamic'
+// import Head from 'next/head'
+// import { useRouter } from 'next/router'
+
+// const Articles: NextPage = () => {
+//   // ? Assets
+//   const { query, push } = useRouter()
+
+//   return (
+//     <ProtectedRouteWrapper>
+//       <>
+//         <main>
+//           <Head>
+//             <title>مدیریت سفارشات</title>
+//           </Head>
+//           <DashboardLayout>
+//             <section className="w-full mt-7 flex flex-col">
+
+//             </section>
+//           </DashboardLayout>
+//         </main>
+//       </>
+//     </ProtectedRouteWrapper>
+//   )
+// }
+// export default dynamic(() => Promise.resolve(Articles), { ssr: false })

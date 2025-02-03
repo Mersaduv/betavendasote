@@ -13,7 +13,7 @@ const ProfileLayout: React.FC<Props> = ({ children,isProfile }) => {
   return (
     <>
     <ProtectedRouteWrapper isProfile={isProfile}>
-      <div className={`lg:container md:flex  md:gap-x-6 md:px-3 pt-6   ${isActive ? 'sm:mt-32' : ''}`}>
+      <div className={`lg:container md:flex  md:gap-x-6 md:px-3 pt-6   ${isActive ? 'sm:mt-8' : ''}`}>
         <div className="hidden md:block">
           <UserProfileAside />
         </div>

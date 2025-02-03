@@ -303,8 +303,10 @@ export default function DashboardAdminAside(props: Props) {
         <div className="py-5 flex flex-col justify-between h-screen">
           <div className="overflow-auto">
             {profilePaths.map((item, index) => {
-              // بررسی اینکه آیا این آیتم در permissions وجود دارد
-              const hasPermission = permissions?.some((permission) => permission.name === item.name)
+              const isDashboard = item.name === 'پیشخوان'
+
+              // برای سایر آیتمها بررسی permission
+              const hasPermission = isDashboard || permissions?.some((p) => p.name === item.name)
 
               // اگر آیتم دارای subItem است، بررسی تطابق با childPermissions
               const validSubItems = item.subItem?.filter((subItem) => {
@@ -407,7 +409,7 @@ export default function DashboardAdminAside(props: Props) {
 
       <Drawer open={openRight} side="right" setOpen={setOpenRight}>
         {openRight && (
-          <aside className="fixed top-[74px] w-[265px] bg-[#1e1e2d] hidden lg2:block">
+          <aside className="fixed top-[74px] w-[265px] bg-[#1e1e2d] hidden lg2:block z-50">
             <div className="py-5 flex flex-col justify-between h-screen">
               <div className="overflow-auto">
                 {profilePaths.map((item, index) =>

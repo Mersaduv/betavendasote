@@ -8,7 +8,7 @@ import { SubmitHandler } from 'react-hook-form'
 import { useLoginMutation } from '@/services'
 
 import Logo from '../../../../public/logo/Logo.png'
-import { LoginForm } from '@/components/form'
+import { LoginForm, LoginUserForm } from '@/components/form'
 import { HandleResponse, MetaTags } from '@/components/shared'
 
 import type { ILoginForm, MobileNumberFormValues } from '@/types'
@@ -17,29 +17,27 @@ import { useAppSelector } from '@/hooks'
 import { useState } from 'react'
 import { NextPage } from 'next'
 
-const LoginPage: NextPage = () => {
+const LoginUserPage: NextPage = () => {
   const [step, setStep] = useState(1)
-  const [mobileNumber, setMobileNumber] = useState('')
   // ? Assets
   const { replace, query, push } = useRouter()
+  const mobileNumberQuery = (query.mobileNumber as string) ?? ''
   const { generalSetting, logoImages } = useAppSelector((state) => state.design)
   // ? Login User
   const [login, { data, isSuccess, isError, isLoading, error }] = useLoginMutation()
 
   // ? Handlers
-  const submitHander: SubmitHandler<MobileNumberFormValues> = ({ mobileNumber}) => {
-    setMobileNumber(mobileNumber)
-    login({ mobileNumber })
+  const submitHander: SubmitHandler<ILoginForm> = ({ password, mobileNumber }) => {
+    login({ mobileNumber, password })
   }
 
   const onSuccess = () => {
     console.log(data)
-    if (data?.count === 0) {
-      push(`/authentication/login/verifyUser?mobileNumber=${mobileNumber}`)
-    }
-    else {
-      push(`/authentication/login/user?mobileNumber=${mobileNumber}`)
-    }
+    // if (data?.count === 1) {
+    push(`/`)
+    // } else {
+    //   push(`/authentication/login/user?mobileNumber=${mobileNumberState}`)
+    // }
   }
   if (error) {
     console.log(error, 'error')
@@ -56,7 +54,6 @@ const LoginPage: NextPage = () => {
           message={data?.message}
           onSuccess={onSuccess}
           isLogin
-          isCode
         />
       )}
       <main className="grid min-h-screen items-center">
@@ -70,11 +67,11 @@ const LoginPage: NextPage = () => {
             <img width={280} src={(logoImages?.orgImage && logoImages?.orgImage.imageUrl) || ''} alt="Venda Mode" />
           </Link>
 
-          <LoginForm isLoading={isLoading} onSubmit={submitHander} />
+          <LoginUserForm mobileNumber={mobileNumberQuery} isLoading={isLoading} onSubmit={submitHander} />
         </section>
       </main>
     </>
   )
 }
 
-export default dynamic(() => Promise.resolve(LoginPage), { ssr: false })
+export default dynamic(() => Promise.resolve(LoginUserPage), { ssr: false })

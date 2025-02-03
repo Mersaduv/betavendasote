@@ -1,9 +1,10 @@
-import { SizeDTO } from "@/services/feature/types"
-import { IColorDTO, IObjectValue } from "./models/IProduct.type"
+import { SizeDTO } from '@/services/feature/types'
+import { IColorDTO, IObjectValue } from './models/IProduct.type'
 
 export default interface ICart {
   itemID: string
   productID: string
+  productCode: string
   name: string
   slug: string
   price: number
@@ -23,7 +24,7 @@ export default interface ICart {
 }
 
 interface ICanceled {
-  id:string
-  title:string
+  id: string
+  title: string
   isActive: string
 }

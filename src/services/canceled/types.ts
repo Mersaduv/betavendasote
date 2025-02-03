@@ -7,7 +7,13 @@ export interface ICanceled {
   created: string
   updated: string
 }
-
+export interface IReturned {
+  id: string
+  title: string
+  isActive: boolean
+  created: string
+  updated: string
+}
 export type MsgResult = ServiceResponse<boolean>
 export type IdQuery = { id: string }
 export type GetCanceledsQuery = QueryParams

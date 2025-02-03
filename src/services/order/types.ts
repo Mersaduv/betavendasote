@@ -7,7 +7,6 @@ export type OrdersResult = {
   pagination: IPagination<IOrderDTO[]>
 }
 
-
 export interface IOrderDTO {
   id: string
   orderNum: string
@@ -15,6 +14,10 @@ export interface IOrderDTO {
   user: IUser
   address: IAddress
   cart: ICart[]
+  giftWrapped: number
+  deliveryCost: number
+  bankAccountNumber: string
+  trackingNum: string
   totalItems: number
   totalPrice: number
   orgPrice: number
@@ -22,6 +25,7 @@ export interface IOrderDTO {
   paymentMethod: string
   delivered: boolean
   paid: boolean
+  isDeleted: boolean
   purchaseInvoice?: {
     id: string
     imageUrl: string
@@ -30,7 +34,6 @@ export interface IOrderDTO {
   dateOfPayment: string
   updated: string
 }
-
 
 export type GetOrdersResult = ServiceResponse<OrdersResult>
 

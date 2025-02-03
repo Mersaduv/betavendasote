@@ -189,10 +189,7 @@ const TextFieldPostal = forwardRef<HTMLInputElement, FieldProps>((props, ref) =>
     // فیلتر کردن کاراکترهای غیر عددی
     const filteredValue = inputValue.replace(/[^0-9۰-۹]/g, '')
 
-    // تبدیل اعداد انگلیسی به فارسی
-    const faInputValue = digitsEnToFa(filteredValue)
-
-    field.onChange(faInputValue)
+    field.onChange(filteredValue)
   }
 
   return (
@@ -205,7 +202,7 @@ const TextFieldPostal = forwardRef<HTMLInputElement, FieldProps>((props, ref) =>
       <input
         className={`block appearance-none focus:outline-none outline-none ring-0 focus:ring-0 w-full ${
           classStyle ? classStyle : 'rounded-md bg-zinc-100'
-        } border border-gray-200  px-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
+        } border border-gray-200  px-3 py-1.5 farsi-digits text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
         style={{ direction }}
         id={name}
         type="tel"
@@ -233,10 +230,7 @@ const TextFieldFa = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
     // فیلتر کردن کاراکترهای غیر عددی
     const filteredValue = inputValue.replace(/[^0-9۰-۹]/g, '')
 
-    // تبدیل اعداد انگلیسی به فارسی
-    const faInputValue = digitsEnToFa(filteredValue)
-
-    field.onChange(faInputValue)
+    field.onChange(filteredValue)
   }
 
   return (
@@ -249,7 +243,7 @@ const TextFieldFa = forwardRef<HTMLInputElement, FieldProps>((props, ref) => {
       <input
         className={`block appearance-none focus:outline-none outline-none ring-0 focus:ring-0 w-full ${
           classStyle ? classStyle : 'rounded-md bg-zinc-100'
-        } border border-gray-200  px-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
+        } border border-gray-200 farsi-digits px-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
         style={{ direction }}
         id={name}
         type="tel"

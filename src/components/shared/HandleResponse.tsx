@@ -17,17 +17,29 @@ interface Props {
   onSuccess?: () => void
   onError?: () => void
   isLogin?: boolean
+  isCode?: boolean
 }
 
 const HandleResponse: React.FC<Props> = (props) => {
   // ? Porps
-  const { isSuccess, isError, error, message, onSuccess, onError, isLogin } = props
+  const { isSuccess, isError, error, message, onSuccess, onError, isLogin, isCode } = props
   // ? Assets
   const dispatch = useAppDispatch()
 
   // ? Re-Renders
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && isCode) {
+      onSuccess?.()
+
+      dispatch(
+        showAlert({
+          status: 'success',
+          title: isCode ? `${message}` : message || 'عملیات با موفقیت انجام شد',
+        })
+      )
+    }
+    
+    if (isSuccess && isCode === undefined) {
       onSuccess?.()
 
       dispatch(

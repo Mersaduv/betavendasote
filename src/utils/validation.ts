@@ -79,12 +79,17 @@ export const registerSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'تکرار کلمه عبور صحیح نیست'),
 })
 
-export const logInSchema = Yup.object().shape({
+export const mobileNumberSchema = Yup.object().shape({
   mobileNumber: Yup.string()
     .required('شماره موبایل لازم است وارد شود')
     .min(11, 'شماره موبایل وارد شده باید 11 رقم باشد')
     .max(11, 'شماره موبایل وارد شده باید 11 رقم باشد'),
-  password: Yup.string().required('رمز عبور لازم است وارد شود').min(4, 'رمز عبور نباید کمتر از 4 کارکتر باشد!'),
+})
+
+export const logInSchema = Yup.object().shape({
+  password: Yup.string()
+    .required('شماره موبایل لازم است وارد شود')
+    .min(4, 'شماره موبایل وارد شده باید 11 رقم باشد')
 })
 
 export const nameSchema = Yup.object().shape({

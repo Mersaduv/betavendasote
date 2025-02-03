@@ -17,6 +17,7 @@ const apiSlice = createApi({
     'ArticleReview',
     'Order',
     'Canceled',
+    'Returned',
     'Features',
     'FeatureValues',
     'ProductSize',
