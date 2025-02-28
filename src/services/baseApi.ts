@@ -39,7 +39,12 @@ const apiSlice = createApi({
     'ColumnFooter',
     'StoreBrands',
     'Permissions',
-    'Roles'
+    'Roles',
+    'TicketType',
+    'Tickets',
+    'TicketMessages',
+    'Notification',
+    'SmsMessage'
   ],
   endpoints: (builder) => ({}),
 })

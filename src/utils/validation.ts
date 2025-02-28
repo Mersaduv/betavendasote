@@ -87,9 +87,7 @@ export const mobileNumberSchema = Yup.object().shape({
 })
 
 export const logInSchema = Yup.object().shape({
-  password: Yup.string()
-    .required('شماره موبایل لازم است وارد شود')
-    .min(4, 'شماره موبایل وارد شده باید 11 رقم باشد')
+  password: Yup.string().required('شماره موبایل لازم است وارد شود').min(4, 'شماره موبایل وارد شده باید 11 رقم باشد'),
 })
 
 export const nameSchema = Yup.object().shape({
@@ -121,6 +119,17 @@ export const brandSchema = Yup.object().shape({
   nameEn: Yup.string().required('نام انگلیسی برند نباید خالی باشد'),
   Thumbnail: Yup.mixed().required('تصویر برند الزامی است'),
   description: Yup.string().optional(),
+})
+
+export const ticketTypeSchema = Yup.object().shape({
+  id: Yup.string().optional(),
+  name: Yup.string().required('نام دپارتمان الزامی است'),
+  description: Yup.string().optional(),
+})
+
+export const normalSchema = Yup.object().shape({
+  id: Yup.string().optional(),
+  title: Yup.string().required('نام دپارتمان الزامی است'),
 })
 
 export const sliderSchema = Yup.object().shape({
@@ -200,10 +209,66 @@ export const reviewSchema = Yup.object().shape({
       title: Yup.string(),
     })
   ),
-  comment: Yup.string().required('نظر الزامی است').min(4, 'نظر باید حداقل ۴ کاراکتر باشد'),
+  comment: Yup.string().required('نظر الزامی است').min(2, 'نظر باید حداقل 2 کاراکتر باشد'),
   Thumbnail: Yup.mixed(),
 })
 
+export const ticketMessageSchema = Yup.object().shape({
+  ticketId: Yup.string(),
+  message: Yup.string().required('محتوای تیکت الزامی است').min(1, 'نظر باید حداقل 1 کاراکتر باشد'),
+  thumbnail: Yup.mixed(),
+})
+
+export const ticketFormValidationSchema = Yup.object().shape({
+  ticketTypeId: Yup.string().required('نوع تیکت الزامی است'),
+  message: Yup.string().required('محتوای تیکت الزامی است').min(4, 'نظر باید حداقل ۴ کاراکتر باشد'),
+  subject: Yup.string().required('عنوان تیکت الزامی است'),
+  thumbnail: Yup.mixed(),
+})
+
+export const ticketAdminFormValidationSchema = Yup.object().shape({
+  userType: Yup.string().required('نوع کاربر باید مشخص شود'),
+  ticketTypeId: Yup.string().required('نوع تیکت الزامی است'),
+  message: Yup.string().required('محتوای تیکت الزامی است').min(4, 'نظر باید حداقل ۴ کاراکتر باشد'),
+  subject: Yup.string().required('عنوان تیکت الزامی است'),
+  thumbnail: Yup.mixed(),
+})
+export const notificationFormValidationSchema = (contextData: { sendingTime: number }) =>
+  Yup.object().shape({
+    userType: Yup.string().required('نوع کاربر الزامی است'),
+    roleId: Yup.string().optional(),
+    userCode: Yup.string().optional(),
+    subject: Yup.string().required('عنوان الزامی است'),
+    description: Yup.string().optional(),
+    scheduledDate: Yup.string()
+      .transform((value) => (value === '' ? undefined : value))
+
+      .when('$sendingTime', {
+        is: 2,
+        then: (schema) => schema.required('زمان انتشار الزامی است'),
+        otherwise: (schema) => schema.nullable(),
+      }),
+
+    sendingTime: Yup.number().required('زمان ارسالی الزامی است'),
+  })
+export const smsFormValidationSchema = (contextData: { sendingTime: number }) =>
+  Yup.object().shape({
+    userType: Yup.string().required('نوع کاربر الزامی است'),
+    roleId: Yup.string().optional(),
+    userCode: Yup.string().optional(),
+    subject: Yup.string().required('عنوان الزامی است'),
+    description: Yup.string().required('متن پیامک الزامی است'),
+    scheduledDate: Yup.string()
+      .transform((value) => (value === '' ? undefined : value))
+
+      .when('$sendingTime', {
+        is: 2,
+        then: (schema) => schema.required('زمان انتشار الزامی است'),
+        otherwise: (schema) => schema.nullable(),
+      }),
+
+    sendingTime: Yup.number().required('زمان ارسالی الزامی است'),
+  })
 export const productSchema = Yup.object().shape({
   Title: Yup.string().required('وارد کردن نام محصول الزامی است'),
   IsActive: Yup.boolean(),

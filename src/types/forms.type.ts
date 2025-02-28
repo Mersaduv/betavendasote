@@ -115,7 +115,32 @@ export type IReviewForm = {
     title: string
   }[]
   comment: string
-  Thumbnail: FileList
+  Thumbnail: File[]
+}
+
+export interface ITicketMessageForm {
+  ticketId: string
+  message: string
+  isCreator: boolean
+  isRecipient: boolean
+  thumbnail: File[]
+}
+
+export interface ITicketForm {
+  ticketTypeId: string
+  subject: string
+  message: string
+  thumbnail: File[]
+}
+
+export interface ITicketAdminForm {
+  userType: string
+  roleId?: string
+  userCode?: string
+  ticketTypeId: string
+  subject: string
+  message: string
+  thumbnail: File[]
 }
 
 export type IOrderForm = {
@@ -299,4 +324,50 @@ export interface IRoleRequest {
 export interface MobileNumberFormValues {
   mobileNumber: string
   password?: string
+}
+
+export interface ITicketTypeForm {
+  id?: string
+  name: string
+  description?: string
+  isActive?: boolean
+  userTypes?: number
+}
+export interface IReturnedForm {
+  id?: string
+  title: string
+  isActive?: boolean
+}
+export interface ICanceledForm {
+  id?: string
+  title: string
+  isActive?: boolean
+}
+
+export interface ITicketUpdateStatus {
+  ticketId: string
+  status: number
+}
+
+export interface INotificationForm {
+  userType: number
+  roleId?: string
+  userCode?: string
+  subject: string
+  description: string
+  scheduledDate?: string
+  sendingTime: number
+}
+
+export interface ISmsMessageForm {
+  id?: string
+  userType: number
+  roleId?: string
+  userCode?: string
+  subject: string
+  description: string
+  scheduledDate?: string
+  sendingTime: number
+  allRoles: boolean
+  towards: string
 }

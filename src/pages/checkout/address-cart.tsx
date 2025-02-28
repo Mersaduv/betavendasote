@@ -45,7 +45,7 @@ const AddressCart: NextPage = () => {
   const { userInfo, address } = useAppSelector((state) => state.auth)
   const { cartItems, totalItems, totalPrice, totalDiscount } = useAppSelector((state) => state.cart)
   const [selectedAddressState, setSelectedAddress] = useState<IAddress | null>(null)
-
+  const [note, setNote] = useState('')
   const handleRoute = () => {
     // if (!userInfo) return redirectModalHandlers.open()
 
@@ -83,6 +83,12 @@ const AddressCart: NextPage = () => {
   useEffect(() => {
     handleSelectAddress({} as IAddress, addressDb?.data?.addresses)
   }, [addressDb, refetch])
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value
+    setNote(value)
+    localStorage.setItem('note', value)
+  }
 
   return (
     <ProtectedRouteWrapper>
@@ -178,7 +184,9 @@ const AddressCart: NextPage = () => {
                             <BsTelephoneOutboundFill className="text-lg text-gray-500" />
                             <span className="font-normal text-base">شماره موبایل</span>
                           </div>
-                          <span className="text-gray-400 font-normal farsi-digits">{selectedAddressState?.mobileNumber}</span>
+                          <span className="text-gray-400 font-normal farsi-digits">
+                            {selectedAddressState?.mobileNumber}
+                          </span>
                         </div>
                         <div className="flex md:items-center w-full flex-col md:flex-row  gap-x-12">
                           <div className="flex items-center md:w-36 gap-1.5">
@@ -227,6 +235,8 @@ const AddressCart: NextPage = () => {
                     className="w-full resize-none rounded-md border border-gray-300"
                     name="note"
                     id="note"
+                    value={note}
+                    onChange={handleChange}
                   ></textarea>
                 </div>
               </section>

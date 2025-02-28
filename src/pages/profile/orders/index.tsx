@@ -24,7 +24,7 @@ const OrderPage: NextPage = () => {
   const { generalSetting } = useAppSelector((state) => state.design)
   // ? Get Orders Data
   const { data, ...ordersQueryProps } = useGetOrdersQuery({
-    pageSize: 8,
+    pageSize: 9999,
     page: query.page ? +query.page : 1,
   })
   return (
@@ -123,7 +123,7 @@ const OrderPage: NextPage = () => {
                       <div className="space-y-3">
                         {data?.data?.pagination?.data &&
                           data?.data?.pagination?.data
-                            .filter((item) => item.paid === false && item.status === 1)
+                            .filter((item) => item.status === 1)
                             .map((item) => <OrderCard isProcessPay key={item.id} order={item} />)}
                       </div>
                     </DataStateDisplay>

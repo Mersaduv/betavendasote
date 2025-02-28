@@ -5,7 +5,8 @@ export interface IOrder {
   orderNum: string
   status: number
   user: IUser
-  address: string
+  address: IAddress
+  note: string
   cart: ICart[]
   giftWrapped: number
   deliveryCost: number

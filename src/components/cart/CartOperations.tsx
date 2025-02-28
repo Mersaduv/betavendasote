@@ -98,6 +98,7 @@ const CartOperations: React.FC<Porps> = (props) => {
         inStock: product.inStock,
         sold: product.sold ?? 0,
         productCode: product.code,
+        productCategory: product.parentCategories.category.name,
         color: tempColor,
         size: tempSize,
         features: tempObjectValue,

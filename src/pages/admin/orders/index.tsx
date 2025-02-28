@@ -1,10 +1,11 @@
 import { DashboardLayout, OrderTabDashboardLayout } from '@/components/Layouts'
+import { ConfirmDeleteModal } from '@/components/modals'
 import { Pagination } from '@/components/navigation'
-import { DataStateDisplay } from '@/components/shared'
+import { DataStateDisplay, HandleResponse } from '@/components/shared'
 import { TableSkeleton } from '@/components/skeleton'
 import { ProtectedRouteWrapper } from '@/components/user'
 import { useDisclosure } from '@/hooks'
-import { useGetOrdersQuery } from '@/services'
+import { useDeleteTrashOrderMutation, useGetOrdersQuery } from '@/services'
 import { Menu, Transition } from '@headlessui/react'
 import moment from 'moment-jalaali'
 import { NextPage } from 'next'
@@ -38,6 +39,17 @@ const Orders: NextPage = () => {
     search: searchTerm,
     adminList: true,
   })
+
+  const [
+    deleteTrashOrder,
+    {
+      isSuccess: isSuccessTrashDelete,
+      isError: isErrorTrashDelete,
+      error: errorTrashDelete,
+      data: dataTrashDelete,
+      isLoading: isLoadingTrashDelete,
+    },
+  ] = useDeleteTrashOrderMutation()
   // ? Handlers
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -47,9 +59,45 @@ const Orders: NextPage = () => {
     setDeleteTrashInfo({ id })
     confirmTrashDeleteModalHandlers.open()
   }
+
+  const onConfirmTrashDelete = () => {
+    deleteTrashOrder({ id: deleteTrashInfo.id })
+  }
+  const onCancel = () => {
+    setDeleteTrashInfo({ id: '' })
+    confirmTrashDeleteModalHandlers.close()
+  }
+  const onSuccess = () => {
+    refetch()
+    confirmTrashDeleteModalHandlers.close()
+    setDeleteTrashInfo({ id: '' })
+  }
+  const onError = () => {
+    confirmTrashDeleteModalHandlers.close()
+    setDeleteTrashInfo({ id: '' })
+  }
   return (
     <ProtectedRouteWrapper>
       <>
+        {/* Handle Delete Trash Order Response */}
+        {(isSuccessTrashDelete || isErrorTrashDelete) && (
+          <HandleResponse
+            isError={isErrorTrashDelete}
+            isSuccess={isSuccessTrashDelete}
+            error={errorTrashDelete}
+            message={dataTrashDelete?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
+        <ConfirmDeleteModal
+          title="سفارش در زباله‌دان"
+          isLoading={isLoadingTrashDelete}
+          isShow={isShowConfirmTrashDeleteModal}
+          onClose={confirmTrashDeleteModalHandlers.close}
+          onCancel={onCancel}
+          onConfirm={onConfirmTrashDelete}
+        />
         <main>
           <Head>
             <title>مدیریت سفارشات</title>
@@ -157,7 +205,7 @@ const Orders: NextPage = () => {
                                   >
                                     {(() => {
                                       if (order.isDeleted) {
-                                        return 'رباله دان'
+                                        return 'زباله دان'
                                       }
                                       switch (order.status) {
                                         case 1:
@@ -173,9 +221,9 @@ const Orders: NextPage = () => {
                                         case 3:
                                           return 'تکمیل شده'
                                         case 4:
-                                          return 'لغو شده'
-                                        case 5:
                                           return 'مرجوعی شده'
+                                        case 5:
+                                          return 'لغو شده'
                                         default:
                                           return 'وضعیت نامشخص'
                                       }
@@ -206,11 +254,11 @@ const Orders: NextPage = () => {
                                             {({ close }) => (
                                               <>
                                                 <Link
-                                                  href={`/admin/order/edit/${order.id}`}
+                                                  href={`/admin/orders/edit/${order.id}?status=${order.status}`}
                                                   onClick={close}
                                                   className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
                                                 >
-                                                  <span>ویرایش</span>
+                                                  <span>مشاهده</span>
                                                 </Link>
                                                 <button
                                                   onClick={() => {

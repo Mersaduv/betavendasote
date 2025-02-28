@@ -12,7 +12,7 @@ import { setUpdated } from '@/store'
 import { ProtectedRouteWrapper } from '@/components/user'
 
 interface Props {}
-const Create: NextPage<Props> = () => {
+const NewTickets: NextPage<Props> = () => {
   // ? Assets
   const { push } = useRouter()
   const dispatch = useDispatch()
@@ -57,4 +57,4 @@ const Create: NextPage<Props> = () => {
   )
 }
 
-export default dynamic(() => Promise.resolve(Create), { ssr: false })
+export default dynamic(() => Promise.resolve(NewTickets), { ssr: false })

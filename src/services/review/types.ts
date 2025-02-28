@@ -23,3 +23,4 @@ export type GetProductReviewsResult = ServiceResponse<ProductReviewsResult>
 export type GetProductReviewsQuery = { id: string; page: number }
 export type GetSingleReviewResult = ServiceResponse<IReview>
 export type EditReviewQuery = { id: string; body: Partial<IReview> }
+export type GetReviewsResultPagination = ServiceResponse<IPagination<IReview[]>>

@@ -10,20 +10,24 @@ import type {
   MsgResult,
   PlaceOrderQuery,
   UpdateOrderQuery,
+  UpdateStatus,
 } from './types'
-import { getToken } from '@/utils'
+import { generateQueryParams, getToken } from '@/utils'
 import { QueryParams, ServiceResponse } from '@/types'
 
 export const orderApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOrders: builder.query<GetOrdersResult, QueryParams>({
-      query: ({ page, pageSize }) => ({
-        url: `/api/orders?page=${page}&pageSize=${pageSize}`,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }),
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/orders?${queryParams}`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      },
       providesTags: (result, error, arg) =>
         result?.data?.pagination.data
           ? [
@@ -71,6 +75,18 @@ export const orderApiSlice = baseApi.injectEndpoints({
       invalidatesTags: ['Order'],
     }),
 
+    updateOrderStatus: builder.mutation<ServiceResponse<boolean>, UpdateStatus>({
+      query: (body) => ({
+        url: `/api/order/status`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body,
+      }),
+      invalidatesTags: ['Order'],
+    }),
+
     updateOrder: builder.mutation<MsgResult, UpdateOrderQuery>({
       query: ({ id, body }) => ({
         url: `/api/order/update`,
@@ -105,6 +121,34 @@ export const orderApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Order'],
     }),
+
+    deleteTrashOrder: builder.mutation<ServiceResponse<boolean>, IdQuery>({
+      query: ({ id }) => {
+        return {
+          url: `/api/order/trash/${id}`,
+          method: 'POST',
+        }
+      },
+      invalidatesTags: ['Order'],
+    }),
+
+    restoreOrder: builder.mutation<ServiceResponse<boolean>, IdQuery>({
+      query: ({ id }) => {
+        return {
+          url: `/api/order/restore/${id}`,
+          method: 'POST',
+        }
+      },
+      invalidatesTags: ['Order'],
+    }),
+
+    deleteOrder: builder.mutation<ServiceResponse<boolean>, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/order/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Order'],
+    }),
   }),
 })
 
@@ -115,5 +159,9 @@ export const {
   useCreateOrderMutation,
   useUpdateOrderCanceledMutation,
   usePlaceOrderMutation,
-  useUpdateOrderReturnedMutation
+  useUpdateOrderReturnedMutation,
+  useUpdateOrderStatusMutation,
+  useDeleteTrashOrderMutation,
+  useRestoreOrderMutation,
+  useDeleteOrderMutation,
 } = orderApiSlice

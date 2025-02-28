@@ -6,7 +6,6 @@ export type OrdersResult = {
   ordersLength: number
   pagination: IPagination<IOrderDTO[]>
 }
-
 export interface IOrderDTO {
   id: string
   orderNum: string
@@ -38,7 +37,7 @@ export interface IOrderDTO {
 export type GetOrdersResult = ServiceResponse<OrdersResult>
 
 export type GetOrdersQuery = { page: number; pageSize: number }
-export type GetSingleOrderResult = { order: IOrder }
+export type GetSingleOrderResult = ServiceResponse<IOrder>
 export type UpdateOrderQuery = { id: string; body: Partial<IOrder> }
 export type PlaceOrderQuery = { id: string }
 export type CreateOrderQuery = Partial<IOrder>
@@ -48,4 +47,8 @@ export type IOrderCanceledQuery = {
   orderId: string
   itemID: string[]
   canceledId: string
+}
+export interface UpdateStatus {
+  id: string
+  status: number
 }

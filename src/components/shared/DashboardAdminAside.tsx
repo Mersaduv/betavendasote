@@ -192,13 +192,13 @@ const profileData: ProfilePath[] = [
         id: 5,
         name: 'پیام ها',
         Icon: TbPointFilled,
-        path: '/admin/support',
+        path: '/admin/support/messages/ticket',
       },
       {
         id: 5,
         name: 'دیدگاه',
         Icon: TbPointFilled,
-        path: '/admin/support',
+        path: '/admin/support/review',
       },
     ],
   },
@@ -248,7 +248,7 @@ const profileData: ProfilePath[] = [
         id: 8,
         name: 'دپارتمان',
         Icon: TbPointFilled,
-        path: '/admin/setting',
+        path: '/admin/department/department-ticket',
       },
     ],
   },
@@ -294,9 +294,9 @@ export default function DashboardAdminAside(props: Props) {
   const isParentPathActive = (subItems?: { path: string }[]) => {
     return subItems?.some((subItem) => isPathActive(subItem.path))
   }
-  if (userData) {
-    console.log(userData, 'userData')
-  }
+  // if (userData) {
+  //   console.log(userData, 'userData')
+  // }
   return (
     <div className="lg2:w-[265px]">
       <aside className="fixed top-[74px] w-[265px] bg-[#1e1e2d] hidden lg2:block">

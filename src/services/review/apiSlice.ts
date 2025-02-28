@@ -13,12 +13,12 @@ import type {
   IdQuery,
   MsgResult,
 } from './types'
-import { IArticleReview, IPagination, QueryParams, ServiceResponse } from '@/types'
+import { IArticleReview, IPagination, IReview, QueryParams, ServiceResponse } from '@/types'
 import { generateQueryParams, getToken } from '@/utils'
 
 export const reviewApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getReviews: builder.query<GetReviewsResult, GetReviewsQuery>({
+    getReviews: builder.query<ServiceResponse<IPagination<IReview[]>>, QueryParams>({
       query: ({ page }) => ({
         url: `/api/reviews?page=${page}`,
         method: 'GET',
@@ -27,9 +27,9 @@ export const reviewApiSlice = baseApi.injectEndpoints({
         },
       }),
       providesTags: (result) =>
-        result?.data?.pagination.data
+        result?.data?.data
           ? [
-              ...result.data?.pagination?.data.map(({ id }) => ({
+              ...result.data?.data?.map(({ id }) => ({
                 type: 'Review' as const,
                 id: id,
               })),

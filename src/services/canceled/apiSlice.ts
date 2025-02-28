@@ -11,7 +11,7 @@ import {
   MsgResult,
   UpdateCanceledQuery,
 } from './types'
-import { IPagination, QueryParams, ServiceResponse } from '@/types'
+import { ICanceledForm, IPagination, IReturnedForm, QueryParams, ServiceResponse } from '@/types'
 
 export const canceledApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -62,13 +62,22 @@ export const canceledApiSlice = baseApi.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'Canceled', id: arg.id }],
     }),
 
-    createCanceled: builder.mutation<MsgResult, CreateCanceledQuery>({
-      query: (data) => ({
+    upsertCanceled: builder.mutation<MsgResult, ICanceledForm>({
+      query: (body) => ({
         url: '/api/canceled-orders',
         method: 'POST',
-        data,
+        body,
       }),
       invalidatesTags: ['Canceled'],
+    }),
+
+    upsertReturned: builder.mutation<MsgResult, IReturnedForm>({
+      query: (body) => ({
+        url: `/api/returned-orders`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Returned'],
     }),
 
     updateCanceled: builder.mutation<MsgResult, UpdateCanceledQuery>({
@@ -87,6 +96,13 @@ export const canceledApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: 'Canceled', id: arg.id }],
     }),
+    deleteReturned: builder.mutation<MsgResult, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/returned-orders/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Returned'],
+    }),
   }),
 })
 
@@ -94,8 +110,10 @@ export const {
   useGetAllCanceledsQuery,
   useGetCanceledsQuery,
   useGetSingleCanceledQuery,
-  useCreateCanceledMutation,
   useUpdateCanceledMutation,
   useDeleteCanceledMutation,
-  useGetReturnedsQuery
+  useGetReturnedsQuery,
+  useUpsertReturnedMutation,
+  useDeleteReturnedMutation,
+  useUpsertCanceledMutation
 } = canceledApiSlice

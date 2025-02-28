@@ -23,6 +23,7 @@ const VerifyPage: NextPage = () => {
   // ? Assets
   const { replace, query } = useRouter()
   const mobileNumberQuery = (query.mobileNumber as string) ?? ''
+  const [isResend, setIsResend] = useState(false)
   const { generalSetting, logoImages } = useAppSelector((state) => state.design)
   // ? Login User
   const [verify, { data, isSuccess, isError, isLoading, error }] = useVerifyUserMutation()
@@ -36,6 +37,7 @@ const VerifyPage: NextPage = () => {
   }
 
   const resendHandler = (data: MobileNumberFormValues) => {
+    setIsResend(true)
     login(data)
   }
 
@@ -52,8 +54,10 @@ const VerifyPage: NextPage = () => {
           isError={isErrorLogin}
           isSuccess={isSuccessLogin}
           error={errorLogin}
-          // message={dataLogin?.message}
-          //   onSuccess={onSuccess}
+          message={isResend ? 'کد مجدد ارسال شد' : ''}
+          onSuccess={() => {
+            setIsResend(false)
+          }}
           isLogin
           isCode
         />

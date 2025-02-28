@@ -237,6 +237,16 @@ const Customer = () => {
           onConfirm={onConfirmTrashDelete}
         />
 
+        <ConfirmDeleteModal
+          deleted
+          title="حذف کاربر"
+          isLoading={isLoadingDelete}
+          isShow={isShowConfirmDeleteModal}
+          onClose={confirmDeleteModalHandlers.close}
+          onCancel={onCancel}
+          onConfirm={onConfirmDelete}
+        />
+
         <ConfirmUpdateModal
           title="کاربر"
           isLoading={isLoadingRestore}
@@ -264,6 +274,17 @@ const Customer = () => {
             isSuccess={isSuccessTrashDelete}
             error={errorTrashDelete}
             message={dataTrashDelete?.message}
+            onSuccess={onSuccess}
+            onError={onError}
+          />
+        )}
+
+        {(isSuccessDelete || isErrorDelete) && (
+          <HandleResponse
+            isError={isErrorDelete}
+            isSuccess={isSuccessDelete}
+            error={errorDelete}
+            message={dataDelete?.message}
             onSuccess={onSuccess}
             onError={onError}
           />

@@ -50,6 +50,7 @@ const VerifyCodeForm: React.FC<Props> = ({ onSubmit, isLoading, resendHandler, m
       }
     }
   }, [])
+  
   const handleChange = (value: string, index: number) => {
     const sanitizedValue = value.slice(0, 1)
     setValue(`code.${index}`, sanitizedValue)

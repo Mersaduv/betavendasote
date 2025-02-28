@@ -27,7 +27,8 @@ interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 const AddressModal: React.FC<Props> = (props) => {
   const { isShow, onClose, address, refetch, openIsAddressList, mode } = props
-  const AllProvinces = iranCity.allProvinces()
+  const 
+  AllProvinces = iranCity.allProvinces()
   const { data: userInfo } = useGetUserAddressInfoQuery({ page: 1 })
 
   const [cities, setCities] = useState([])

@@ -62,6 +62,7 @@ const ShippingPage: NextPage = () => {
   ] = usePlaceOrderMutation()
 
   const saveIncompleteOrder = () => {
+    const note = localStorage.getItem('note')
     if (!address?.city && !address?.province && !address?.fullAddress && !address?.postalCode) {
       return dispatch(
         showAlert({
@@ -72,6 +73,7 @@ const ShippingPage: NextPage = () => {
     } else {
       const formData = new FormData()
       formData.append('address', address.id)
+      formData.append('note', note || '')
       formData.append('status', '1')
       formData.append('cart', JSON.stringify(cartItems))
       formData.append('totalItems', totalItems.toString())
@@ -83,6 +85,7 @@ const ShippingPage: NextPage = () => {
       postData(formData)
         .unwrap()
         .then((d) => {
+          localStorage.removeItem('note')
           dispatch(clearCart())
         })
         .catch((error) => {})

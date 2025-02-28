@@ -16,6 +16,7 @@ import { Modal, TextField, DisplayError, SubmitModalButton, Button, ResponsiveIm
 
 import type { IReviewForm } from '@/types'
 import { FaStar } from 'react-icons/fa'
+import { MdClose } from 'react-icons/md'
 
 interface Props {
   productTitle: string
@@ -40,6 +41,9 @@ const ReviewModal: React.FC<Props> = (props) => {
   const [hoverRating, setHoverRating] = useState(0)
   const [isShowReviewModal, reviewModalHandlers] = useDisclosure()
 
+  // ? Create Review Query
+  const [createReview, { isSuccess, isLoading, data, isError, error }] = useCreateReviewMutation()
+  const [selectedFiles, setSelectedFiles] = useState<any[]>([])
   // ? Form Hook
   const {
     handleSubmit,
@@ -48,6 +52,8 @@ const ReviewModal: React.FC<Props> = (props) => {
     reset,
     control,
     setFocus,
+    getValues,
+    setValue,
   } = useForm<IReviewForm>({
     resolver: yupResolver(reviewSchema) as unknown as Resolver<IReviewForm>,
     defaultValues: {
@@ -57,7 +63,6 @@ const ReviewModal: React.FC<Props> = (props) => {
       positivePoints: [],
       negativePoints: [],
       comment: '',
-      Thumbnail: {} as FileList,
     },
   })
 
@@ -79,13 +84,30 @@ const ReviewModal: React.FC<Props> = (props) => {
     control,
   })
 
-  // ? Create Review Query
-  const [createReview, { isSuccess, isLoading, data, isError, error }] = useCreateReviewMutation()
-  const [selectedFiles, setSelectedFiles] = useState<any[]>([])
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setSelectedFiles([...Array.from(e.target.files)])
+    const files = e.target.files
+    if (files) {
+      const validFiles: any[] = []
+
+      Array.from(files).forEach((file) => {
+        const img = new Image()
+        img.src = URL.createObjectURL(file)
+
+        img.onload = () => {
+          URL.revokeObjectURL(img.src)
+
+          validFiles.push(file)
+          if (validFiles.length === Array.from(files).length) {
+            setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles])
+            if (validFiles.length > 0) {
+              setValue('Thumbnail', ((getValues('Thumbnail') as File[]) || []).concat(validFiles))
+            } else {
+              setValue('Thumbnail', [])
+            }
+          }
+        }
+      })
     }
   }
 
@@ -121,6 +143,19 @@ const ReviewModal: React.FC<Props> = (props) => {
     }
     createReview(formData)
   }
+
+  const handleDelete = (index: number) => {
+    setSelectedFiles((prevFiles) => {
+      const updatedFiles = [...prevFiles]
+      updatedFiles.splice(index, 1)
+      return updatedFiles
+    })
+
+    setValue(
+      'Thumbnail',
+      ((getValues('Thumbnail') as File[]) || []).filter((_, i) => i !== index)
+    )
+  }
   // ? Re-Renders
   //*    Use useEffect to set focus after a delay when the modal is shown
   useEffect(() => {
@@ -147,11 +182,13 @@ const ReviewModal: React.FC<Props> = (props) => {
             reviewModalHandlers.close()
             reset()
             setRating(1)
+            setSelectedFiles([])
           }}
           onError={() => {
             reviewModalHandlers.close()
             reset()
             setRating(1)
+            setSelectedFiles([])
           }}
         />
       )}
@@ -299,32 +336,36 @@ const ReviewModal: React.FC<Props> = (props) => {
 
               {/* Thumbnail upload */}
               <div className="border border-dashed border-[#009ef7] bg-[#f1faff] rounded text-center">
-                <input
-                  {...register('Thumbnail')}
-                  type="file"
-                  multiple
-                  className="hidden"
-                  id="Thumbnail"
-                  onChange={handleFileChange}
-                />
-                <label htmlFor="Thumbnail" className="block cursor-pointer p-8  text-base font-normal">
-                  برای انتخاب عکس کلیک کنید{' '}
+                <input type="file" multiple className="hidden" id="Thumbnail" onChange={handleFileChange} />
+                <label htmlFor="Thumbnail" className="block cursor-pointer p-6 text-sm font-normal">
+                  {selectedFiles.length > 0 ? (
+                    <div className="flex flex-wrap gap-5 mt-0 px-8">
+                      {selectedFiles.map((file, index) => (
+                        <div key={index} className="text-sm text-gray-600 relative cursor-default">
+                          <img
+                            src={URL.createObjectURL(file)}
+                            alt={file.name}
+                            className="w-[80px] h-[88px] object-cover rounded-lg shadow-product"
+                          />
+                          <button
+                            type="button"
+                            className="absolute -top-2 -right-2 shadow-product hover:bg-red-500 hover:text-white bg-gray-50 p-0.5 rounded-full text-gray-500"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                              handleDelete(index)
+                            }}
+                          >
+                            <MdClose className="text-base" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div>برای انتخاب عکس کلیک کنید </div>
+                  )}
                 </label>
               </div>
-              {selectedFiles.length > 0 && (
-                <div className="flex gap-2">
-                  {selectedFiles.map((file, index) => (
-                    <div key={index} className="text-sm text-gray-600">
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={file.name}
-                        className="w-16 h-16 object-cover  rounded-lg shadow-product"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-
               <div className="border-t-2 border- py-3 pb-0  ">
                 <SubmitModalButton isLoading={isLoading}>ثبت دیدگاه</SubmitModalButton>
               </div>

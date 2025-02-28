@@ -1,4 +1,15 @@
-import type { AddressFormBody, IAddress, IPagination, IRole, IUser, ProfileForm, ServiceResponse } from '@/types'
+import type {
+  AddressFormBody,
+  IAddress,
+  INotification,
+  IPagination,
+  IRole,
+  ISmsMessage,
+  ITicket,
+  IUser,
+  ProfileForm,
+  ServiceResponse,
+} from '@/types'
 
 interface ResultBody {
   guid: string
@@ -6,7 +17,7 @@ interface ResultBody {
 export type MsgResult = ServiceResponse<ResultBody>
 export type MsgResultSecond = ServiceResponse<boolean>
 export interface IdQuery {
-  id:string
+  id: string
 }
 
 export type GetQuery = {
@@ -23,6 +34,9 @@ export type AddUserAddressQuery = {
   body: Omit<IAddress, 'id' | 'userId'>
 }
 
-export type GetUserAddressResult =ServiceResponse<IAddress>
+export type GetUserAddressResult = ServiceResponse<IAddress>
 export type GetUsersResult = ServiceResponse<IPagination<IUser[]>>
 export type GetRolesResult = ServiceResponse<IPagination<IRole[]>>
+export type GetTicketsResult = ServiceResponse<IPagination<ITicket[]>>
+export type GetNotificationsResult = ServiceResponse<IPagination<INotification[]>>
+export type GetSmsMessageResult = ServiceResponse<IPagination<ISmsMessage[]>>

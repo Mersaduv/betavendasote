@@ -5,17 +5,26 @@ import {
   useGetCanceledsQuery,
   useGetReturnedsQuery,
   useUpdateOrderCanceledMutation,
-  useUpdateOrderMutation,
   useUpdateOrderReturnedMutation,
 } from '@/services'
 
-import { Check, Clock2, Minus, More, Plus, Toman } from '@/icons'
+import { Minus, Plus } from '@/icons'
 import { HandleResponse } from '@/components/shared'
 import { ResponsiveImage } from '@/components/ui'
 
-import type { IOrder } from '@/types'
 import { digitsEnToFa } from '@persian-tools/persian-tools'
-
+import pdfMake from 'pdfmake/build/pdfmake'
+import html2canvas from 'html2canvas'
+import vfs from '../../../public/fonts/Nim/vfs_fonts'
+pdfMake.vfs = vfs
+pdfMake.fonts = {
+  NimbusSans: {
+    normal: 'NimbusSanL-Reg.otf',
+    bold: 'NimbusSanL-Bol.otf',
+    italics: 'NimbusSanL-RegIta.otf',
+    bolditalics: 'NimbusSanL-BolIta.otf',
+  },
+}
 interface Props {
   order: IOrderDTO
   singleOrder?: boolean
@@ -25,13 +34,11 @@ interface Props {
   isCurrently?: boolean
   isProcessPay?: boolean
 }
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { setIsProcessPayment, showAlert } from '@/store'
 import { useAppDispatch } from '@/hooks'
 import { IOrderDTO } from '@/services/order/types'
-import { PDFDownloadLink } from '@react-pdf/renderer'
-import { PdfGenerator } from '../builders'
 import { MdClose } from 'react-icons/md'
 type ReturnedProduct = {
   quantity: number
@@ -45,7 +52,127 @@ const OrderCard: React.FC<Props> = (props) => {
 
   const dispatch = useAppDispatch()
   // ? Props
-  const { order, singleOrder, isCanceled, isDelivered, isReturned, isCurrently, isProcessPay } = props
+  const { order, isCanceled, isDelivered, isReturned, isCurrently, isProcessPay } = props
+
+  // ? STates
+  const [url, setUrl] = useState(null)
+  useEffect(() => {
+    return () => {
+      if (url !== null) {
+        URL.revokeObjectURL(url)
+      }
+    }
+  }, [url])
+
+  // useEffect(() => {
+  //   const parsed = parseLookAheadData(lookAheadData)
+  //   const pdfData = parseToPdfData(parsed)
+  //   setPdfData(pdfData)
+  //   setData(parsed)
+  // }, [])
+
+  // useEffect(() => {
+  //   setTableBodyData()
+  // }, [data])
+
+  // const create = () => {
+  //   const pdfDocGenerator = pdfMake.createPdf(docDefinition)
+  //   pdfDocGenerator.download()
+  // }
+
+  const genPdf = () => {
+    const headers2 = ['ردیف', 'کد کالا', 'نام کالا', 'تعداد', 'مبلغ واحد', 'مبلغ کل', 'تخفیف', 'جمع کل پس از تخفیف']
+
+    // const tableBody = order.cart;
+
+    // ایجاد یک عنصر div موقت برای نگهداری جدول
+    const tempDiv = document.createElement('div')
+    console.log(order, 'order.cart')
+
+    tempDiv.innerHTML = `
+    <div >
+      <div style="background-color: #f1f5f9; padding: 20px; margin:10px 0; display: flex; flex-direction: column; height: 130px;">
+        <h1 style="font-weight: bold;">خریدار</h1>
+        <div style="display: flex; gap: 50px; padding-top:20px;">
+          <div>
+            <span>نام :</span>
+            <span>${order.address.fullName}</span>
+          </div>
+          <div>
+            <span>شناسه ملی :</span>
+            <span>${order.user.userSpecification.nationalCode}</span>
+          </div>
+          <div>
+            <span>کد پستی :</span>
+            <span>${order.address.postalCode}</span>
+          </div>
+          <div>
+            <span>تلفن :</span>
+            <span>${order.address.mobileNumber}</span>
+          </div>
+        </div>
+      </div>
+      <table style="width: 100%; border-collapse: collapse; font-family: 'NimbusSans', sans-serif;">
+        <thead>
+          <tr style="background-color: #737373; height: 50px;">
+            ${headers2
+              .map(
+                (header) =>
+                  `<th style="padding: 8px; border: 1px solid #ddd; text-align: center; vertical-align: middle; color: white;">${header}</th>`
+              )
+              .join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${order.cart
+            .map(
+              (row, index) => `
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${index + 1}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.productCode}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.name}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.quantity}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.price}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${order.totalPrice}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${row.discount}</td>
+                <td style="padding: 8px; border: 1px solid #ddd; text-align: center;">${order.orgPrice}</td>
+              </tr>
+            `
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </div>
+  `
+
+    // اضافه کردن عنصر div به بدنه صفحه به طور موقت
+    document.body.appendChild(tempDiv)
+
+    // تبدیل جدول به تصویر
+    html2canvas(tempDiv).then(function (canvas) {
+      // حذف عنصر div از بدنه صفحه
+      document.body.removeChild(tempDiv)
+
+      const imgObj = {
+        image: canvas.toDataURL(),
+        width: 800,
+        style: {
+          alignment: 'center',
+        },
+      }
+      const documentDefinition = {
+        content: [imgObj],
+        defaultStyle: {
+          font: 'NimbusSans',
+        },
+        pageSize: 'A4',
+        pageOrientation: 'landscape',
+        pageMargins: [40, 60, 40, 60],
+      }
+      const pdfDocGenerator = pdfMake.createPdf(documentDefinition as any)
+      pdfDocGenerator.download()
+    })
+  }
 
   // ? Edit Order Query
   const [
@@ -114,64 +241,62 @@ const OrderCard: React.FC<Props> = (props) => {
     // علت مرجوعی انتخاب شده باشد
     const invalidReason = Object.values(selectedReturnedProducts).some(
       (item) => item.quantity > 0 && !item.selectReturned
-    );
+    )
     if (invalidReason) {
       return dispatch(
         showAlert({
           status: 'error',
           title: 'لطفا علت مرجوعی را برای آیتم(های) انتخاب شده وارد کنید',
         })
-      );
+      )
     }
-  
+
     // بررسی تعداد (در اینجا هم برای آیتم‌هایی که انتخاب شده‌اند)
-    const invalidQuantity = Object.values(selectedReturnedProducts).some(
-      (item) => item.quantity > 0 && !item.quantity
-    );
+    const invalidQuantity = Object.values(selectedReturnedProducts).some((item) => item.quantity > 0 && !item.quantity)
     if (invalidQuantity) {
       return dispatch(
         showAlert({
           status: 'error',
           title: 'لطفا تعداد را برای آیتم(های) انتخاب شده تعیین کنید',
         })
-      );
+      )
     }
-  
+
     // آماده‌سازی فرم دیتا
-    const formData = new FormData();
-  
+    const formData = new FormData()
+
     // ساخت آرایه‌ای از آیتم‌های انتخاب‌شده که تعداد مرجوعی بیشتر از 0 دارند
     const items = Object.entries(selectedReturnedProducts)
-      .filter(([itemId, data]) => data.quantity > 0)
+      .filter(([, data]) => data.quantity > 0)
       .map(([itemId, data]) => ({
         itemId,
         quantity: data.quantity,
         returnedId: data.selectReturned,
         description: data.description || '',
         files: data.selectedFiles || [],
-      }));
-  
+      }))
+
     // اضافه کردن اطلاعات هر آیتم به formData
     items.forEach((item, index) => {
-      formData.append(`Items[${index}].ItemID`, item.itemId);
-      formData.append(`Items[${index}].Quantity`, item.quantity.toString());
-      formData.append(`Items[${index}].ReturnedId`, item.returnedId);
-      formData.append(`Items[${index}].Description`, item.description);
+      formData.append(`Items[${index}].ItemID`, item.itemId)
+      formData.append(`Items[${index}].Quantity`, item.quantity.toString())
+      formData.append(`Items[${index}].ReturnedId`, item.returnedId)
+      formData.append(`Items[${index}].Description`, item.description)
       if (item.files.length > 0) {
         item.files.forEach((file) => {
-          formData.append(`Items[${index}].Files`, file);
-        });
+          formData.append(`Items[${index}].Files`, file)
+        })
       }
-    });
-  
+    })
+
     // اضافه کردن اطلاعات عمومی مانند شناسه سفارش و وضعیت (در اینجا به عنوان مثال)
-    formData.append('OrderId', order.id);
-    formData.append('Status', '4');
-  
+    formData.append('OrderId', order.id)
+    formData.append('Status', '4')
+
     // ارسال فرم دیتا
-    editOrderReturned(formData);
-    setReturnedSubmit(!showReturnedSubmit);
-  };
+    editOrderReturned(formData)
+    setReturnedSubmit(!showReturnedSubmit)
+  }
   const handleQuantityChange = (itemID: string, newQuantity: number, maxQuantity: number) => {
     if (newQuantity >= 0 && newQuantity <= maxQuantity) {
       setSelectedReturnedProducts((prev) => ({
@@ -197,23 +322,13 @@ const OrderCard: React.FC<Props> = (props) => {
     }
   }
 
-  const handleGeneratePdf = (order: IOrderDTO) => {
-    return (
-      <PDFDownloadLink document={<PdfGenerator order={order} />} fileName="order.pdf">
-        {({ blob, url, loading, error }) => (loading ? 'در حال ساختن PDF...' : 'فاکتور')}
-      </PDFDownloadLink>
-    )
-  }
-
-  const handleAccordionToggle = () => {
-    setIsAccordionOpen(!isAccordionOpen)
-    setIsSecondAccordionOpen(false)
-  }
-
-  const handleSecondAccordionToggle = () => {
-    setIsSecondAccordionOpen(!isSecondAccordionOpen)
-    setIsAccordionOpen(false)
-  }
+  // const handleGeneratePdf = (order: IOrderDTO) => {
+  //   return (
+  //     <PDFDownloadLink document={<PdfGenerator order={order} />} fileName="order.pdf">
+  //       {({ blob, url, loading, error }) => (loading ? 'در حال ساختن PDF...' : 'فاکتور')}
+  //     </PDFDownloadLink>
+  //   )
+  // }
 
   const handleSelectProductOrderChange = (e: React.ChangeEvent<HTMLInputElement>, itemID: string) => {
     const { checked } = e.target
@@ -250,7 +365,6 @@ const OrderCard: React.FC<Props> = (props) => {
       }
     })
   }
-
   // ? Render(s)
   return (
     <div
@@ -484,7 +598,7 @@ const OrderCard: React.FC<Props> = (props) => {
                   </select>
                 </div>
               )} */}
-              {!showCancelSubmit &&
+              {(!showCancelSubmit || !showReturnedSubmit) &&
                 order.cart.map((cartItem) => (
                   <ResponsiveImage
                     key={cartItem.itemID}
@@ -495,17 +609,17 @@ const OrderCard: React.FC<Props> = (props) => {
                     imageStyles="object-contain border rounded"
                   />
                 ))}
-              {!showReturnedSubmit &&
-                order.cart.map((cartItem) => (
-                  <ResponsiveImage
-                    key={cartItem.itemID}
-                    dimensions="w-[100px] h-[100px]"
-                    src={cartItem.img.imageUrl}
-                    blurDataURL={cartItem.img.placeholder}
-                    alt={cartItem.name}
-                    imageStyles="object-contain border rounded"
-                  />
-                ))}
+              {/* {!showReturnedSubmit && */}
+              {/* // order.cart.map((cartItem) => ( */}
+              {/* // <ResponsiveImage */}
+              {/* // key={cartItem.itemID} */}
+              {/* // dimensions="w-[100px] h-[100px]" */}
+              {/* // src={cartItem.img.imageUrl} */}
+              {/* // blurDataURL={cartItem.img.placeholder} */}
+              {/* // alt={cartItem.name} */}
+              {/* // imageStyles="object-contain border rounded" */}
+              {/* // /> */}
+              {/* // ))} */}
               <div
                 className={`overflow-auto w-full transition-all ease-in-out duration-700 ${
                   showCancelSubmit ? 'max-h-screen' : 'max-h-0'
@@ -600,6 +714,40 @@ const OrderCard: React.FC<Props> = (props) => {
                               <span className="farsi-digits">{cartItem.productCode}</span>
                             </div>
                             <div>{cartItem.name}</div>
+                            <div className="flex items-center gap-5">
+                              {cartItem.color != null && (
+                                <div className="flex items-center gap-2">
+                                  <span>رنگ:</span> {cartItem.color?.name}
+                                  <div
+                                    className="inline-block mb-1 w-5 h-5 rounded-md shadow-3xl"
+                                    style={{ background: cartItem.color?.hexCode }}
+                                  ></div>
+                                </div>
+                              )}
+
+                              {cartItem.size != null && (
+                                <div className="flex gap-2">
+                                  <div>سایز :</div>
+                                  <div
+                                    className={`border cursor-pointer  font-semibold flex pt-0.5 items-center justify-center rounded-md text-gray-500  border-gray-400 w-7 h-6 }`}
+                                  >
+                                    {cartItem.size.name}
+                                  </div>
+                                </div>
+                              )}
+
+                              {cartItem.features != null && (
+                                <div className="flex gap-2">
+                                  {' '}
+                                  <div>{cartItem.features.title} : </div>{' '}
+                                  <div>
+                                    {cartItem.features.value?.map((item) => (
+                                      <div>{item.name}</div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                             {/* نمایش مشخصات رنگ، سایز و ... */}
                             {/* ... */}
                           </div>
@@ -705,10 +853,10 @@ const OrderCard: React.FC<Props> = (props) => {
                           htmlFor={`Thumbnail-${cartItem.itemID}`}
                           className="block cursor-pointer p-6 text-sm font-normal"
                         >
-                          {selectedReturnedProducts[cartItem.itemID]?.selectedFiles &&
-                          selectedReturnedProducts[cartItem.itemID]?.selectedFiles.length > 0 ? (
+                          {selectedReturnedProducts && cartItem && cartItem.itemID && selectedReturnedProducts[cartItem.itemID] && selectedReturnedProducts[cartItem.itemID].selectedFiles &&
+                          selectedReturnedProducts[cartItem.itemID]!.selectedFiles!.length > 0 ? (
                             <div className="flex flex-wrap gap-5 mt-0 px-8">
-                              {selectedReturnedProducts[cartItem.itemID]?.selectedFiles.map((file, index) => (
+                              {selectedReturnedProducts[cartItem.itemID]?.selectedFiles!.map((file, index) => (
                                 <div key={index} className="text-sm text-gray-600 relative cursor-default">
                                   <img
                                     src={URL.createObjectURL(file)}
@@ -785,7 +933,27 @@ const OrderCard: React.FC<Props> = (props) => {
               {isDelivered ? (
                 <>
                   <button className="border transition ease duration-500 hover:bg-[#0dcaf0] hover:text-white rounded px-2.5 py-1 text-base font-light text-[#0dcaf0] border-[#0dcaf0]">
-                    {handleGeneratePdf(order)}
+                    {/* {handleGeneratePdf(order)} */}
+                    <div className="App">
+                      {/* <button onClick={create}>Generate PDF using PDF Make</button> */}
+                      <div>{url}</div>
+                      {url && (
+                        <div>
+                          <object
+                            style={{
+                              width: '100%',
+                              height: '50vh',
+                            }}
+                            data={url}
+                            type="application/pdf"
+                          >
+                            <embed src={url} type="application/pdf" />
+                          </object>
+                        </div>
+                      )}
+                      departman
+                      <button onClick={genPdf}>فاکتور</button>
+                    </div>
                   </button>
                   <button
                     onClick={handleToggleReturnedSubmit}

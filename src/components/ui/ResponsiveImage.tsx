@@ -10,7 +10,7 @@ interface Props extends Omit<ImageProps, 'placeholder' | 'quality' | 'layout'> {
 const ResponsiveImage: React.FC<Props> = (props) => {
   // ? Props
   const { dimensions, className, src, alt, imageStyles, blurDataURL, ...restProps } = props
-  console.log('data:image/png;base64,' + blurDataURL, 'png;base64')
+  // console.log('data:image/png;base64,' + blurDataURL, 'png;base64')
 
   // ? Render(s)
   return (

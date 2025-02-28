@@ -5,6 +5,7 @@ export default interface ICart {
   itemID: string
   productID: string
   productCode: string
+  productCategory: string
   name: string
   slug: string
   price: number

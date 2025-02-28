@@ -8,6 +8,7 @@ export interface IReview {
   userName: string
   rating: number
   comment: string
+  mobileNumber: string
   status: number
   positivePoints: {
     id: string
@@ -17,6 +18,7 @@ export interface IReview {
     id: string
     title: string
   }[]
+  product: IProduct
   created: string
   lastUpdated: string
 }
