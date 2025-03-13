@@ -78,20 +78,6 @@ const profileData: ProfilePath[] = [
     name: 'نمای سایت',
     Icon: MdOutlinePreview,
     path: '/admin/ads/main',
-    // subItem: [
-    //   {
-    //     id: 7,
-    //     name: 'دیزاین',
-    //     Icon: TbPointFilled,
-    //     path: '/admin/design/siteItems',
-    //   },
-    //   {
-    //     id: 7,
-    //     name: 'صفحه اصلی',
-    //     Icon: TbPointFilled,
-    //     path: '/admin/ads/main',
-    //   },
-    // ],
   },
   { id: 1, name: 'سفارشات', Icon: IoCart, path: '/admin/orders' },
   {
@@ -106,13 +92,12 @@ const profileData: ProfilePath[] = [
         path: '/admin/products/create',
       },
       {
-        id: 1,
+        id: 12,
         name: 'همه محصولات',
         Icon: TbPointFilled,
         path: '/admin/products',
       },
     ],
-    pathName: '/admin/products/create' || '/admin/products',
   },
   {
     id: 2,
@@ -120,22 +105,22 @@ const profileData: ProfilePath[] = [
     Icon: MdOutlineAdsClick,
     subItem: [
       {
-        id: 2,
+        id: 21,
         name: 'پیشنهاد شگفت انگیز',
         Icon: TbPointFilled,
-        path: '/admin/sub',
+        path: '/admin/ads/suggestion',
       },
       {
-        id: 2,
+        id: 22,
         name: 'هدایا',
         Icon: TbPointFilled,
-        path: '/admin/sub',
+        path: '/admin/ads/gift',
       },
       {
-        id: 2,
+        id: 23,
         name: 'کوپن تخفیف',
         Icon: TbPointFilled,
-        path: '/admin/sub',
+        path: '/admin/ads/coupon',
       },
     ],
   },
@@ -198,7 +183,7 @@ const profileData: ProfilePath[] = [
         id: 5,
         name: 'دیدگاه',
         Icon: TbPointFilled,
-        path: '/admin/support/review',
+        path: '/admin/support/review/product',
       },
     ],
   },
@@ -242,7 +227,7 @@ const profileData: ProfilePath[] = [
         id: 8,
         name: 'مبالغ و هزینه ها',
         Icon: TbPointFilled,
-        path: '/admin/setting',
+        path: '/admin/amount-and-cost/edit-price',
       },
       {
         id: 8,
@@ -266,6 +251,7 @@ export default function DashboardAdminAside(props: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   const [permissions, setPermissions] = useState<IPermission[]>()
+  console.log(userData, 'userData')
 
   useEffect(() => {
     if (userData?.data?.userSpecification.role && userData?.data?.userSpecification.role.permissions) {

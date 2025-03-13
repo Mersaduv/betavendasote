@@ -148,7 +148,9 @@ const NewSms: NextPage<Props> = () => {
                             htmlFor="subject"
                             className="flex items-center xs:py-0 pt-2 justify-center px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                           >
-                            <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" />
+                            <div className="w-5 h-5">
+                              <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" />
+                            </div>
                             <span className="whitespace-nowrap text-center w-[113px]">عنوان</span>
                           </label>
                           <input
@@ -216,7 +218,7 @@ const NewSms: NextPage<Props> = () => {
                           </div>
                         )}
 
-                        {(towards === '2' && userType !== '0') && (
+                        {towards === '2' && userType !== '0' && (
                           <div className="flex px-10 py-6 flex-col xs:flex-row">
                             <label
                               htmlFor="userRole"
@@ -305,11 +307,13 @@ const NewSms: NextPage<Props> = () => {
                                 htmlFor="date"
                                 className="flex items-center cursor-pointer justify-center  py px-3  mdx:rounded-l-none rounded-t-md mdx:rounded-md bg-[#abd7ff]  gap-1 mdx:w-[160px]"
                               >
-                                <img
-                                  className="w-5 h-5  opacity-50"
-                                  src="/assets/svgs/duotone/calendar-days.svg"
-                                  alt=""
-                                />
+                                <div className="w-5 h-5">
+                                  <img
+                                    className="w-5 h-5  opacity-50"
+                                    src="/assets/svgs/duotone/calendar-days.svg"
+                                    alt=""
+                                  />
+                                </div>
                                 <span className="whitespace-nowrap text-center w-[113px]">زمان انتشار</span>
                               </label>
 

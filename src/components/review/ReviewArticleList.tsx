@@ -28,6 +28,7 @@ const ReviewArticleList: React.FC<Props> = (props) => {
     {
       id: article.id,
       page,
+      status: '2',
     },
     { skip: !(numReviews > 0) }
   )
@@ -43,7 +44,11 @@ const ReviewArticleList: React.FC<Props> = (props) => {
 
           <DataStateDisplay
             {...articlesReviewQueryProps}
-            dataLength={(articleReviewData && articleReviewData?.data && articleReviewData?.data?.totalCount) || 0}
+            dataLength={
+              articleReviewData && articleReviewData?.data && articleReviewData?.data?.totalCount
+                ? articleReviewData?.data?.totalCount
+                : 0
+            }
             emptyComponent={<EmptyComment />}
             loadingComponent={<ReveiwSkeleton />}
           >
@@ -54,6 +59,9 @@ const ReviewArticleList: React.FC<Props> = (props) => {
             </div>
           </DataStateDisplay>
 
+          {(articleReviewData === undefined || articleReviewData && articleReviewData?.data && articleReviewData?.data?.totalCount === 0) && (
+            <p className="mt-6 text-red-800">اولین نفری باشید که دیدگاه خود را میگذارد.</p>
+          )}
           {articleReviewData &&
             articleReviewData?.data &&
             articleReviewData?.data?.totalCount > 2 &&

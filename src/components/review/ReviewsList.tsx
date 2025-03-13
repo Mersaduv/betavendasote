@@ -28,6 +28,7 @@ const ReviewsList: React.FC<Props> = (props) => {
     {
       id: product.id,
       page,
+      status: '2',
     },
     { skip: !(numReviews > 0) }
   )

@@ -1,7 +1,6 @@
 import baseApi from '@/services/baseApi'
 
 import type {
-  CreateArticleReview,
   CreateReviewQuery,
   EditReviewQuery,
   GetArticleReviewsQuery,
@@ -10,8 +9,10 @@ import type {
   GetReviewsQuery,
   GetReviewsResult,
   GetSingleReviewResult,
+  IClientReview,
   IdQuery,
   MsgResult,
+  UpsertArticleReview,
 } from './types'
 import { IArticleReview, IPagination, IReview, QueryParams, ServiceResponse } from '@/types'
 import { generateQueryParams, getToken } from '@/utils'
@@ -19,13 +20,16 @@ import { generateQueryParams, getToken } from '@/utils'
 export const reviewApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getReviews: builder.query<ServiceResponse<IPagination<IReview[]>>, QueryParams>({
-      query: ({ page }) => ({
-        url: `/api/reviews?page=${page}`,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      }),
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/reviews?${queryParams}`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      },
       providesTags: (result) =>
         result?.data?.data
           ? [
@@ -50,32 +54,35 @@ export const reviewApiSlice = baseApi.injectEndpoints({
         }
       },
       providesTags: (result) =>
-        result?.data?.pagination.data
+        result?.data?.data
           ? [
-              ...result.data?.pagination?.data.map(({ id }) => ({
-                type: 'ArticleReview' as const,
+              ...result.data?.data.map(({ id }) => ({
+                type: 'Review' as const,
                 id: id,
               })),
-              'ArticleReview',
+              'Review',
             ]
-          : ['ArticleReview'],
+          : ['Review'],
     }),
 
-    getArticleReviews: builder.query<ServiceResponse<IPagination<IArticleReview[]>>, GetProductReviewsQuery>({
-      query: ({ id, page }) => ({
-        url: `/api/articleReviews/${id}?page=${page}&pageSize=5`,
+    getArticleReviews: builder.query<ServiceResponse<IPagination<IArticleReview[]>>, GetArticleReviewsQuery>({
+      query: ({ id, page, status }) => ({
+        url: `/api/articleReviews/${id}?page=${page}&status=${status}`,
         method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
       }),
       providesTags: (result) =>
         result?.data?.data
           ? [
               ...result.data.data.map(({ id }) => ({
-                type: 'ArticleReview' as const,
+                type: 'Review' as const,
                 id: id,
               })),
-              'ArticleReview',
+              'Review',
             ]
-          : ['ArticleReview'],
+          : ['Review'],
     }),
 
     createReview: builder.mutation<ServiceResponse<boolean>, FormData>({
@@ -90,7 +97,7 @@ export const reviewApiSlice = baseApi.injectEndpoints({
       invalidatesTags: ['Review'],
     }),
 
-    createArticleReviews: builder.mutation<ServiceResponse<boolean>, CreateArticleReview>({
+    upsertArticleReviews: builder.mutation<ServiceResponse<boolean>, UpsertArticleReview>({
       query: (body) => ({
         url: `/api/articleReviews`,
         method: 'POST',
@@ -99,12 +106,12 @@ export const reviewApiSlice = baseApi.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ['ArticleReview'],
+      invalidatesTags: ['Review'],
     }),
 
     getProductReviews: builder.query<GetProductReviewsResult, GetProductReviewsQuery>({
-      query: ({ id, page }) => ({
-        url: `/api/reviews/${id}?page=${page}&pageSize=5`,
+      query: ({ id, page, status }) => ({
+        url: `/api/reviews/${id}?page=${page}&pageSize=5&status=${status}`,
         method: 'GET',
       }),
       providesTags: (result) =>
@@ -135,6 +142,14 @@ export const reviewApiSlice = baseApi.injectEndpoints({
       invalidatesTags: ['Review'],
     }),
 
+    deleteArticleReview: builder.mutation<MsgResult, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/articleReviews/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Review'],
+    }),
+
     editReview: builder.mutation<MsgResult, EditReviewQuery>({
       query: ({ id, body }) => ({
         url: `/api/reviews/${id}`,
@@ -146,6 +161,29 @@ export const reviewApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: (result, err, arg) => [{ type: 'Review', id: arg.id }],
     }),
+
+    getClientReviews: builder.query<ServiceResponse<IPagination<IClientReview[]>>, QueryParams>({
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/reviews/client-reviews?${queryParams}`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      },
+      providesTags: (result) =>
+        result?.data?.data
+          ? [
+              ...result.data?.data.map(({ id }) => ({
+                type: 'Review' as const,
+                id: id,
+              })),
+              'Review',
+            ]
+          : ['Review'],
+    }),
   }),
 })
 
@@ -156,7 +194,9 @@ export const {
   useGetProductReviewsQuery,
   useEditReviewMutation,
   useCreateReviewMutation,
-  useCreateArticleReviewsMutation,
+  useUpsertArticleReviewsMutation,
   useGetAllArticleReviewsQuery,
   useGetArticleReviewsQuery,
+  useGetClientReviewsQuery,
+  useDeleteArticleReviewMutation,
 } = reviewApiSlice

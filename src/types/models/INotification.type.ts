@@ -5,7 +5,11 @@ import { IUser } from './IUser.type'
 export interface INotification {
   id: string
   notificationCode: string
-  user: IUser
+  sender: IUser
+  towards: string
+  recipients: IUser[]
+  allRoles: boolean
+  isPublic: boolean
   subject: string
   description: string
   sendingTime: number

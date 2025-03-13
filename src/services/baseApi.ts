@@ -44,7 +44,9 @@ const apiSlice = createApi({
     'Tickets',
     'TicketMessages',
     'Notification',
-    'SmsMessage'
+    'SmsMessage',
+    'Suggestion',
+    'EditPrice',
   ],
   endpoints: (builder) => ({}),
 })

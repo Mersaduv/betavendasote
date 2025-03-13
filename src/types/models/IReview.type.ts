@@ -18,6 +18,16 @@ export interface IReview {
     id: string
     title: string
   }[]
+  productImageUrl: {
+    id: string
+    imageUrl: string
+    placeholder: string
+  }
+  imageUrls: {
+    id: string
+    imageUrl: string
+    placeholder: string
+  }[]
   product: IProduct
   created: string
   lastUpdated: string

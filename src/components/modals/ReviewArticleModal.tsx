@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 
 import { nanoid } from '@reduxjs/toolkit'
-import { useCreateArticleReviewsMutation, useCreateReviewMutation } from '@/services'
 
-import { ratingStatus, reviewSchema } from '@/utils'
+import { articleReviewSchema, ratingStatus, reviewSchema } from '@/utils'
 
 import { SubmitHandler, useFieldArray, useForm, Resolver } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -14,8 +13,9 @@ import { ArrowLeft, Comment, Delete, Minus, Plus } from '@/icons'
 import { HandleResponse } from '@/components/shared'
 import { Modal, TextField, DisplayError, SubmitModalButton, Button, ResponsiveImage } from '@/components/ui'
 
-import type { IReviewForm } from '@/types'
+import type { IArticleReviewForm, IReviewForm } from '@/types'
 import { FaStar } from 'react-icons/fa'
+import { useUpsertArticleReviewsMutation } from '@/services'
 
 interface Props {
   articleTitle: string
@@ -42,24 +42,19 @@ const ReviewArticleModal: React.FC<Props> = (props) => {
     reset,
     control,
     setFocus,
-  } = useForm<IReviewForm>({
-    resolver: yupResolver(reviewSchema) as unknown as Resolver<IReviewForm>,
+  } = useForm<IArticleReviewForm>({
+    resolver: yupResolver(articleReviewSchema) as unknown as Resolver<IArticleReviewForm>,
     defaultValues: {
-      userId: '',
-      productId: '',
-      rating: 1,
-      positivePoints: [],
-      negativePoints: [],
+      articleId: articleID,
       comment: '',
-      Thumbnail: {} as FileList,
     },
   })
 
   // ? Create Review Query
-  const [createReview, { isSuccess, isLoading, data, isError, error }] = useCreateArticleReviewsMutation()
+  const [createReview, { isSuccess, isLoading, data, isError, error }] = useUpsertArticleReviewsMutation()
 
   // ? Handlers
-  const submitHander: SubmitHandler<IReviewForm> = (data) => {
+  const submitHander: SubmitHandler<IArticleReviewForm> = (data) => {
     createReview({ articleId: articleID, comment: data.comment })
   }
   // ? Re-Renders

@@ -1,0 +1,467 @@
+"filename", "language", "JavaScript", "JSON", "TypeScript", "JSON with Comments", "Markdown", "CSS", "TypeScript JSX", "XML", "comment", "blank", "total"
+"d:\Venda_Full\front-end\Venda-front2\vendamode\.eslintrc.json", "JSON", 0, 10, 0, 0, 0, 0, 0, 0, 0, 1, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\.prettierrc.js", "JavaScript", 23, 0, 0, 0, 0, 0, 0, 0, 0, 1, 24
+"d:\Venda_Full\front-end\Venda-front2\vendamode\README.md", "Markdown", 0, 0, 0, 0, 25, 0, 0, 0, 0, 16, 41
+"d:\Venda_Full\front-end\Venda-front2\vendamode\custom.d.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\declarations.d.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 7
+"d:\Venda_Full\front-end\Venda-front2\vendamode\liara.json", "JSON", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\next.config.js", "JavaScript", 27, 0, 0, 0, 0, 0, 0, 0, 3, 2, 32
+"d:\Venda_Full\front-end\Venda-front2\vendamode\package-lock.json", "JSON", 0, 12266, 0, 0, 0, 0, 0, 0, 0, 1, 12267
+"d:\Venda_Full\front-end\Venda-front2\vendamode\package.json", "JSON", 0, 84, 0, 0, 0, 0, 0, 0, 0, 1, 85
+"d:\Venda_Full\front-end\Venda-front2\vendamode\postcss.config.js", "JavaScript", 7, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\barcode.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\bars.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\calendar-days.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\eye.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\text.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\trash.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\fonts\Nim\vfs_fonts.js", "JavaScript", 10, 0, 0, 0, 0, 0, 0, 0, 0, 1, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\error.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 3
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\exclamation.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\nothing.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\question.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\status-delivered.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 31, 0, 1, 32
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\status-processing.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 35, 0, 1, 36
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\status-returned.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 27, 0, 1, 28
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\success.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 5
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\images\icons\enter.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 9, 0, 1, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\images\icons\search.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 9, 0, 1, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\images\icons\shopping-cart.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 9, 0, 1, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\next.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\public\vercel.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\ClientLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 17, 0, 0, 4, 21
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\DashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 72, 0, 0, 5, 77
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\DepartmentTabDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 88, 0, 0, 14, 102
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\DesignTabDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 81, 0, 7, 14, 102
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\OrderTabDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 209, 0, 31, 38, 278
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\ProfileLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 26, 0, 0, 3, 29
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\ReviewTabDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 86, 0, 0, 14, 100
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\SupportTabDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 87, 0, 0, 14, 101
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\TabDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 92, 0, 7, 13, 112
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\UserTabDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 91, 0, 3, 13, 107
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\index.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\ArticlesAdsForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 76, 0, 1, 13, 90
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\BannerForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 278, 0, 11, 22, 311
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\FooterBannerForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 239, 0, 10, 18, 267
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\GeneralSettingForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 89, 0, 0, 7, 96
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\LogoImagesForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 149, 0, 37, 17, 203
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\SliderForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 283, 0, 19, 20, 322
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\TextMarqueeForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 42, 0, 0, 4, 46
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\index.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\articles\ArticleCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 39, 0, 3, 7, 49
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\articles\index.ts", "TypeScript", 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\ArticleBanners.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 58, 0, 0, 9, 67
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\FooterBanner.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 41, 0, 0, 8, 49
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\LargeBanner.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 51, 0, 0, 10, 61
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\index.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\builders\PdfGenerator.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 114, 0, 0, 3, 117
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\builders\index.ts", "TypeScript", 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\AddToCartButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 60, 0, 5, 16, 81
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartDiscountItem.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 26, 0, 4, 6, 36
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartDisplay.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 14, 0, 1, 4, 19
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartDropdownMenu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 77, 0, 8, 14, 99
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartIconBadge.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 17, 0, 3, 6, 26
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartItemActions.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 30, 0, 3, 11, 44
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartItemDisplay.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 67, 0, 5, 13, 85
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartOperations.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 107, 0, 7, 24, 138
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartSummary.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 48, 0, 4, 9, 61
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\FreeShippingIndicator.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 13, 0, 1, 2, 16
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\index.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 0, 1, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\CategoryList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 63, 0, 2, 7, 72
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\CategorySelector.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 126, 0, 80, 25, 231
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\ParentSubCategoriesTree.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 259, 0, 7, 21, 287
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\index.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 3
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\AdditionalForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 257, 0, 5, 31, 293
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\CopyrightForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 49, 0, 0, 4, 53
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\DesignItemForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 244, 0, 4, 20, 268
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\RedirectForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 73, 0, 1, 6, 80
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\SloganFooterForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 1, 4, 64
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\StoreBrandForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 140, 0, 10, 10, 160
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\StoreCategoryForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 152, 0, 10, 11, 173
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\SupportForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 85, 0, 0, 6, 91
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\index.ts", "TypeScript", 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyComment.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyCommentsList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 9, 0, 0, 3, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyCustomList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyOrdersList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 9, 0, 0, 3, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptySearchList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 16, 0, 0, 3, 19
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyTicketList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 9, 0, 0, 3, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyUsersList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 9, 0, 0, 2, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\index.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\feature\index.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ArticleForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 573, 0, 76, 40, 689
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\DesignForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 556, 58, 614
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\LoginForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 118, 0, 25, 18, 161
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\LoginUserForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 106, 0, 2, 19, 127
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\MainPageAdsForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 822, 0, 44, 62, 928
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ProductForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 1821, 0, 56, 130, 2007
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ProductFormEdit.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 2337, 0, 228, 186, 2751
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ProfileForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 353, 0, 4, 14, 371
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\RoleForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 240, 0, 14, 18, 272
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\TextEditor.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 356, 0, 701, 39, 1096
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\TicketForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 570, 0, 76, 40, 686
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\UserForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 1078, 0, 51, 58, 1187
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\UserTicketForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 573, 0, 35, 39, 647
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\VerifyCodeForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 143, 0, 13, 16, 172
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\index.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 1, 1, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\AddressListModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 106, 0, 1, 5, 112
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\AddressModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 233, 0, 3, 27, 263
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\AdminReviewModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 168, 0, 2, 11, 181
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\BirthdateModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 49, 0, 0, 8, 57
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\BrandModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 358, 0, 10, 24, 392
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\BrandUpdateModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 272, 0, 2, 24, 298
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\CanceledModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 181, 0, 4, 11, 196
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\CategoryModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 256, 0, 14, 25, 295
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\CategoryUpdateModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 302, 0, 28, 29, 359
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ConfirmDeleteModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 2, 8, 69
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ConfirmUpdateModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 37, 0, 21, 7, 65
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FeatureModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 169, 0, 2, 11, 182
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FeatureValueModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 212, 0, 0, 14, 226
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FeaturesModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 165, 0, 4, 11, 180
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FilterModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 34, 0, 3, 9, 46
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ProductScaleModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 70, 0, 9, 5, 84
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\RedirectToLogin.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 33, 0, 4, 8, 45
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReturnedModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 181, 0, 4, 11, 196
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewArticleModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 117, 0, 10, 20, 147
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewEditModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 375, 0, 14, 37, 426
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 330, 0, 14, 37, 381
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SearchModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 127, 0, 13, 15, 155
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SizeModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 188, 0, 4, 12, 204
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SizesModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 113, 0, 4, 11, 128
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategoryModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 323, 0, 14, 25, 362
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategorySizesModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 337, 0, 15, 34, 386
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategorySizesUpdateModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 348, 0, 23, 37, 408
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategoryUpdateModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 337, 0, 15, 30, 382
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\TicketMessageModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 193, 0, 17, 25, 235
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\TicketTypeModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 201, 0, 4, 12, 217
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\UsersDetailModal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 107, 0, 7, 15, 129
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\index.ts", "TypeScript", 0, 0, 28, 0, 0, 0, 0, 0, 0, 1, 29
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\navigation\Pagination.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 118, 0, 4, 15, 137
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\navigation\index.ts", "TypeScript", 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\OrderCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 828, 0, 113, 53, 994
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\Orders.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 78, 0, 5, 14, 97
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\OrdersTable.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 50, 0, 2, 7, 59
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\index.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\PriceRange.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 87, 0, 3, 7, 97
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductBreadcrumb.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 108, 0, 1, 8, 117
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 74, 0, 76, 18, 168
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductDescription.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 20, 0, 16, 7, 43
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductDiscountTag.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 31, 0, 0, 2, 33
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductFilterControls.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 243, 0, 56, 30, 329
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductGallery.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 135, 0, 6, 10, 151
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductInfo.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 20, 0, 2, 4, 26
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductPriceDisplay.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 38, 0, 3, 5, 46
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSort.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 69, 0, 3, 13, 85
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSpecialOffer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 14, 0, 2, 5, 21
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSpecificationList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 39, 0, 3, 7, 49
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSubCategoriesList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 56, 0, 1, 9, 66
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductVariants\ProductColorSelector.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 29, 0, 4, 11, 44
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductVariants\ProductObjectValueSelector.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 42, 0, 0, 6, 48
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductVariants\ProductSizeSelector.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 29, 0, 4, 9, 42
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\StockInfo\ProductOutOfStockMessage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 14, 0, 0, 1, 15
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\StockInfo\ProductStockIndicator.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 19, 0, 1, 4, 24
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\index.ts", "TypeScript", 0, 0, 18, 0, 0, 0, 0, 0, 0, 3, 21
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewArticleCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 24, 0, 2, 7, 33
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewArticleList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 55, 0, 4, 11, 70
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 150, 0, 17, 16, 183
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewProductCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 50, 0, 2, 6, 58
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewsList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 4, 10, 73
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewsTable.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 9, 8, 76
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\index.ts", "TypeScript", 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\AddFeatureCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 74, 0, 0, 7, 81
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\ArticleCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 88, 0, 0, 9, 97
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\BrandCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 72, 0, 0, 7, 79
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\CategoryCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 76, 0, 0, 7, 83
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\FeatureCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 240, 0, 0, 18, 258
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\IsFakeCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 71, 0, 0, 9, 80
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\ProductFeatureCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 124, 0, 0, 10, 134
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\ProductTypeCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 71, 0, 0, 9, 80
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\SelectParentCategoryCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 98, 0, 2, 9, 109
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\SizesCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 104, 0, 0, 9, 113
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\StatusCombobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 71, 0, 0, 9, 80
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\index.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\services\ServiceList.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 32, 0, 1, 3, 36
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\services\index.ts", "TypeScript", 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 2
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\DashboardAdminAside.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 470, 0, 20, 23, 513
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\DataStateDisplay.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 49, 0, 2, 7, 58
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Drawer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 74, 0, 0, 5, 79
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Footer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 216, 0, 4, 12, 232
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\HandleResponse.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 51, 0, 3, 15, 69
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 123, 0, 3, 9, 135
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\JalaliDatePicker.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 27, 0, 0, 3, 30
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\MetaTags.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 18, 0, 0, 4, 22
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Navbar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 105, 0, 118, 17, 240
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\SideBar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 116, 0, 7, 10, 133
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\UserProfileAside.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 82, 0, 4, 7, 93
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\index.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 4, 2, 16
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\AddressSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 30, 0, 0, 3, 33
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\NavbarSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 11, 0, 0, 2, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\OrderSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 17, 0, 0, 2, 19
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\ProductSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 26, 0, 0, 2, 28
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\ReveiwSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 15, 0, 0, 2, 17
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\SidebarSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 11, 0, 0, 2, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\SubCategoriesSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 21, 0, 0, 2, 23
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\TableSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 10, 0, 0, 2, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\index.ts", "TypeScript", 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\BestSeller.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 191, 0, 1, 12, 204
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\BrandSlider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 95, 0, 0, 6, 101
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\DiscountSlider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 190, 0, 191, 19, 400
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\LastSeenSlider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 168, 0, 11, 9, 188
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\MainSlider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 65, 0, 4, 9, 78
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\NewSlider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 197, 0, 19, 14, 230
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\ReadableArticlePlace.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 101, 0, 0, 6, 107
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\RecentVisitedSlider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 205, 0, 19, 14, 238
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\SimilarProductsSlider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 213, 0, 19, 14, 246
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\index.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Alert.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 53, 0, 4, 7, 64
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\ArrowLink.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 16, 0, 2, 6, 24
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\BoxLink.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 43, 0, 3, 7, 53
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Buttons.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 31, 0, 2, 8, 41
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Checkbox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 47, 0, 0, 7, 54
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Combobox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 89, 0, 7, 11, 107
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\DisplayError.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 28, 0, 2, 6, 36
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\IconBtns.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 76, 0, 5, 14, 95
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Modal.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 122, 0, 10, 19, 151
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\PageContainer.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 52, 0, 3, 4, 59
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\ResponsiveImage.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 23, 0, 3, 6, 32
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\SelectBox.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 56, 0, 3, 6, 65
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Skeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 63, 0, 4, 13, 80
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\TextField.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 145, 0, 17, 15, 177
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\TextMarquee.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 25, 0, 0, 3, 28
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\index.ts", "TypeScript", 0, 0, 18, 0, 0, 0, 0, 0, 4, 3, 25
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\FullInlineLoading.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 68, 0, 1, 3, 72
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\FullScreenLoading.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 12, 0, 1, 2, 15
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\InlineLoading.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 68, 0, 1, 0, 69
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\PageTransitionLoading.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 29, 0, 3, 7, 39
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\LogoutButton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 42, 0, 1, 5, 48
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\ProtectedRouteWrapper.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 35, 0, 5, 10, 50
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\UserAuthLinks.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 148, 0, 6, 9, 163
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\UserMenuDropdown.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 105, 0, 4, 13, 122
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\index.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 1, 5
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\configs\index.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 2, 6
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\checkTokenValidity.ts", "TypeScript", 0, 0, 52, 0, 0, 0, 0, 0, 0, 6, 58
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\index.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 1, 2, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useChangeRoute.ts", "TypeScript", 0, 0, 14, 0, 0, 0, 0, 0, 0, 7, 21
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useDebounce.ts", "TypeScript", 0, 0, 12, 0, 0, 0, 0, 0, 0, 6, 18
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useDisclosure.ts", "TypeScript", 0, 0, 14, 0, 0, 0, 0, 0, 0, 6, 20
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useDisclosureWithData.ts", "TypeScript", 0, 0, 25, 0, 0, 0, 0, 0, 0, 6, 31
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useMediaQuery.ts", "TypeScript", 0, 0, 15, 0, 0, 0, 0, 0, 0, 5, 20
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useRedux.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 2, 6
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useUserInfo.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 10, 3, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\index.ts", "TypeScript", 0, 0, 121, 0, 0, 0, 0, 0, 1, 5, 127
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\address.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 70, 0, 1, 71
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\amazing-typo.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 19, 0, 1, 20
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-coffe-bazzar.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 29, 0, 1, 30
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-google-play.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 34, 0, 1, 35
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-myket.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 25, 0, 1, 26
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-sib.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 35, 0, 1, 36
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\cash-on-delivery.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 7, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\days-return.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 6, 0, 1, 7
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\empty-cart.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 128, 0, 1, 129
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\empty-search.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 140, 0, 1, 141
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\express-delivery.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 10, 0, 1, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\favorites-list-empty.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 55, 0, 1, 56
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\freeShipping.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 85, 0, 1, 86
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\logo.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 11, 0, 1, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\logoPersian.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 3, 0, 1, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\order-empty.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 76, 0, 1, 77
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\original-products.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 8, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\person.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 12, 1, 0, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\specialSell.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 12, 0, 1, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\support.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 10, 0, 1, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\toman-red.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 47, 0, 2, 49
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\toman.svg", "XML", 0, 0, 0, 0, 0, 0, 0, 49, 0, 3, 52
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\middlewares\withUser.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 25, 9, 34
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\404\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 24, 0, 1, 4, 29
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\_app.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 95, 0, 1, 12, 108
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\_document.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 99, 0, 1, 2, 102
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\ads\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 19, 0, 14, 11, 44
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\ads\main\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 31, 0, 14, 8, 53
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\articles\create\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 50, 0, 4, 7, 61
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\articles\edit\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 74, 0, 5, 10, 89
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\articles\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 1095, 0, 51, 40, 1186
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\authentication\login\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 66, 0, 5, 10, 81
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\authentication\login\user\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 9, 10, 78
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\authentication\login\verifyUser\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 87, 0, 5, 9, 101
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\categories\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 19, 0, 0, 2, 21
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-canceled\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 200, 0, 21, 8, 229
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-returned\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 203, 0, 21, 9, 233
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-ticket\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 187, 0, 4, 8, 199
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-ticket\list\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 206, 0, 21, 6, 233
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\design\footer\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 541, 0, 28, 54, 623
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\design\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 25, 0, 14, 8, 47
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\design\siteItems\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 242, 0, 11, 26, 279
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 32, 0, 0, 5, 37
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\canceled\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 280, 0, 7, 16, 303
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\completed\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 280, 0, 7, 16, 303
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\deleted\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 378, 0, 7, 20, 405
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\edit\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 254, 0, 6, 26, 286
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 279, 0, 7, 16, 302
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\new-order\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 280, 0, 7, 16, 303
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\packing\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 280, 0, 7, 16, 303
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\processing\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 280, 0, 7, 16, 303
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\returned\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 280, 0, 7, 16, 303
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\sending\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 280, 0, 7, 16, 303
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\brands\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 714, 0, 16, 43, 773
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\categories\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 344, 0, 24, 26, 394
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\categories\subCategories.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 357, 0, 17, 24, 398
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\features\featureValues.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 281, 0, 7, 23, 311
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\features\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 347, 0, 7, 26, 380
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\features\sizes.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 257, 0, 7, 22, 286
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 17, 0, 0, 1, 18
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\jewelry\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 25, 0, 0, 3, 28
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\products\create\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 51, 0, 4, 7, 62
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\products\edit\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 82, 0, 7, 15, 104
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\products\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 1501, 0, 54, 64, 1619
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\notifications\edit\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 418, 0, 33, 25, 476
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\notifications\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 449, 0, 22, 22, 493
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\notifications\new\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 355, 0, 34, 23, 412
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\sms-list\edit\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 416, 0, 34, 24, 474
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\sms-list\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 680, 0, 43, 26, 749
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\sms-list\new\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 344, 0, 34, 22, 400
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\ticket\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 141, 0, 16, 9, 166
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\ticket\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 741, 0, 49, 31, 821
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\ticket\new\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 350, 0, 24, 21, 395
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\review\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 755, 0, 5, 41, 801
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\create\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 48, 0, 3, 7, 58
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\customer\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 864, 0, 9, 58, 931
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\edit\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 80, 0, 5, 10, 95
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 43, 0, 2, 6, 51
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\personnel\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 844, 0, 11, 56, 911
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\roles\edit\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 81, 0, 5, 9, 95
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\roles\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 601, 0, 8, 32, 641
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\roles\new\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 55, 0, 3, 7, 65
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\supplier\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 823, 0, 9, 55, 887
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\api\hello.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 1, 3, 14
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\articles\[slug].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 355, 0, 9, 24, 388
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\articles\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 307, 0, 11, 20, 338
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\authentication\login\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 66, 0, 5, 10, 81
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\authentication\login\user\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 9, 10, 78
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\authentication\login\verifyUser\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 87, 0, 5, 9, 101
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\checkout\address-cart.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 246, 0, 10, 18, 274
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\checkout\cart.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 177, 0, 12, 22, 211
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\checkout\shipping.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 197, 0, 12, 19, 228
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 294, 0, 72, 20, 386
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\products\[slug].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 549, 0, 62, 42, 653
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\products\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 223, 0, 18, 19, 260
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\address\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 156, 0, 4, 10, 170
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 90, 0, 0, 6, 96
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\lists\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 35, 0, 1, 6, 42
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\orders\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 213, 0, 9, 8, 230
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\reviews\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 116, 0, 10, 20, 146
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\tickets\[id].tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 121, 0, 2, 6, 129
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\tickets\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 96, 0, 2, 8, 106
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\tickets\new\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 212, 0, 4, 17, 233
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\user-history\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 42, 0, 20, 7, 69
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\auth\apiSlice.ts", "TypeScript", 0, 0, 252, 0, 0, 0, 0, 0, 10, 15, 277
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\auth\types.ts", "TypeScript", 0, 0, 34, 0, 0, 0, 0, 0, 0, 7, 41
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\axiosConfig.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 2, 2, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\baseApi.ts", "TypeScript", 0, 0, 48, 0, 0, 0, 0, 0, 1, 4, 53
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\brand\apiSlice.ts", "TypeScript", 0, 0, 92, 0, 0, 0, 0, 0, 0, 8, 100
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\brand\types.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 4, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\canceled\apiSlice.ts", "TypeScript", 0, 0, 110, 0, 0, 0, 0, 0, 0, 10, 120
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\canceled\types.ts", "TypeScript", 0, 0, 30, 0, 0, 0, 0, 0, 0, 5, 35
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\category\apiSlice.ts", "TypeScript", 0, 0, 174, 0, 0, 0, 0, 0, 0, 14, 188
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\category\categoryServices.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 1, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\category\types.ts", "TypeScript", 0, 0, 32, 0, 0, 0, 0, 0, 0, 5, 37
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\apiSlice.ts", "TypeScript", 0, 0, 533, 0, 0, 0, 0, 0, 0, 43, 576
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\articleServices.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 3, 22
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\getAllBanners.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 2, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\getFooterBanner.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 2, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\getHeaderText.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 2, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\types.ts", "TypeScript", 0, 0, 26, 0, 0, 0, 0, 0, 0, 4, 30
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\feature\apiSlice.ts", "TypeScript", 0, 0, 142, 0, 0, 0, 0, 0, 0, 13, 155
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\feature\types.ts", "TypeScript", 0, 0, 73, 0, 0, 0, 0, 0, 0, 11, 84
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\index.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 1, 20
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\order\apiSlice.ts", "TypeScript", 0, 0, 154, 0, 0, 0, 0, 0, 0, 14, 168
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\order\types.ts", "TypeScript", 0, 0, 50, 0, 0, 0, 0, 0, 0, 5, 55
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\apiSlice.ts", "TypeScript", 0, 0, 106, 0, 0, 0, 0, 0, 0, 11, 117
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\productServices.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 3, 22
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\types.ts", "TypeScript", 0, 0, 18, 0, 0, 0, 0, 0, 2, 4, 24
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\review\apiSlice.ts", "TypeScript", 0, 0, 154, 0, 0, 0, 0, 0, 0, 12, 166
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\review\types.ts", "TypeScript", 0, 0, 21, 0, 0, 0, 0, 0, 0, 5, 26
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\size\apiSlice.ts", "TypeScript", 0, 0, 133, 0, 0, 0, 0, 0, 1, 11, 145
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\size\types.ts", "TypeScript", 0, 0, 34, 0, 0, 0, 0, 0, 1, 7, 42
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\slider\apiSlice.ts", "TypeScript", 0, 0, 41, 0, 0, 0, 0, 0, 0, 3, 44
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\slider\sliderService.ts", "TypeScript", 0, 0, 12, 0, 0, 0, 0, 0, 0, 1, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\slider\types.ts", "TypeScript", 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\user\apiSlice.ts", "TypeScript", 0, 0, 503, 0, 0, 0, 0, 0, 11, 40, 554
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\user\types.ts", "TypeScript", 0, 0, 37, 0, 0, 0, 0, 0, 1, 5, 43
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\index.ts", "TypeScript", 0, 0, 43, 0, 0, 0, 0, 0, 2, 6, 51
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\alert.slice.ts", "TypeScript", 0, 0, 26, 0, 0, 0, 0, 0, 0, 7, 33
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\auth.slice.ts", "TypeScript", 0, 0, 99, 0, 0, 0, 0, 0, 0, 7, 106
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\cart.slice.ts", "TypeScript", 0, 0, 143, 0, 0, 0, 0, 0, 0, 23, 166
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\design.slice.ts", "TypeScript", 0, 0, 28, 0, 0, 0, 0, 0, 0, 5, 33
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\featureValues.slice.ts", "TypeScript", 0, 0, 24, 0, 0, 0, 0, 0, 0, 5, 29
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\headerText.slice.ts", "TypeScript", 0, 0, 21, 0, 0, 0, 0, 0, 0, 4, 25
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\lastSeen.slice.ts", "TypeScript", 0, 0, 34, 0, 0, 0, 0, 0, 0, 10, 44
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\objectValue.slice.ts", "TypeScript", 0, 0, 24, 0, 0, 0, 0, 0, 6, 6, 36
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\productUpdate.slice.ts", "TypeScript", 0, 0, 18, 0, 0, 0, 0, 0, 0, 5, 23
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\sizes.slice.ts", "TypeScript", 0, 0, 22, 0, 0, 0, 0, 0, 0, 4, 26
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\stateString.slice.ts", "TypeScript", 0, 0, 21, 0, 0, 0, 0, 0, 0, 5, 26
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\abstracts\base.css", "CSS", 0, 0, 0, 0, 0, 30, 0, 0, 0, 1, 31
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\abstracts\global.css", "CSS", 0, 0, 0, 0, 0, 21, 0, 0, 0, 6, 27
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\abstracts\index.css", "CSS", 0, 0, 0, 0, 0, 2, 0, 0, 0, 1, 3
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\browser-styles.css", "CSS", 0, 0, 0, 0, 0, 31, 0, 0, 9, 10, 50
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\components.css", "CSS", 0, 0, 0, 0, 0, 32, 0, 0, 5, 9, 46
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\fonts\iransans.css", "CSS", 0, 0, 0, 0, 0, 68, 0, 0, 0, 6, 74
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\fonts\iranyekan.css", "CSS", 0, 0, 0, 0, 0, 51, 0, 0, 0, 1, 52
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\main.css", "CSS", 0, 0, 0, 0, 0, 543, 0, 0, 140, 85, 768
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\swiper.css", "CSS", 0, 0, 0, 0, 0, 97, 0, 0, 0, 17, 114
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\AddressForm.type.ts", "TypeScript", 0, 0, 18, 0, 0, 0, 0, 0, 0, 1, 19
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ApiError.type.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 1, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\IAddress.type.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 1, 20
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ICart.type.ts", "TypeScript", 0, 0, 29, 0, 0, 0, 0, 0, 0, 3, 32
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ICategoriesList.type.ts", "TypeScript", 0, 0, 4, 0, 0, 0, 0, 0, 0, 2, 6
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\IHeaderText.type.ts", "TypeScript", 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\IPagination.type.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 0, 1, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ProfileForm.type.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 1, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\QueryParams.type.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ServiceResponse.type.ts", "TypeScript", 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\UserTypes.type.ts", "TypeScript", 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\WithAddressModalProps.type.ts", "TypeScript", 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\forms.type.ts", "TypeScript", 0, 0, 340, 0, 0, 0, 0, 0, 3, 34, 377
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\index.ts", "TypeScript", 0, 0, 43, 0, 0, 0, 0, 0, 0, 3, 46
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IArticle.type.ts", "TypeScript", 0, 0, 23, 0, 0, 0, 0, 0, 0, 2, 25
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IArticleBanner.type.ts", "TypeScript", 0, 0, 14, 0, 0, 0, 0, 0, 0, 1, 15
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IArticleReview.type.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IBanner.type.ts", "TypeScript", 0, 0, 12, 0, 0, 0, 0, 0, 0, 1, 13
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IBrand.type.ts", "TypeScript", 0, 0, 17, 0, 0, 0, 0, 0, 0, 1, 18
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ICategory.type.ts", "TypeScript", 0, 0, 33, 0, 0, 0, 0, 0, 0, 2, 35
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IColumnFooter.type.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ICopyright.type.ts", "TypeScript", 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IDesignItem.type.ts", "TypeScript", 0, 0, 15, 0, 0, 0, 0, 0, 0, 1, 16
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IFooterArticleColumn.type.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IGeneralSetting.type.ts", "TypeScript", 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ILogoImages.type.ts", "TypeScript", 0, 0, 13, 0, 0, 0, 0, 0, 0, 1, 14
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\INotification.type.ts", "TypeScript", 0, 0, 19, 0, 0, 0, 0, 0, 0, 2, 21
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IOrder.type.ts", "TypeScript", 0, 0, 29, 0, 0, 0, 0, 0, 0, 2, 31
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IPermission.type.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 0, 1, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IProduct.type.ts", "TypeScript", 0, 0, 116, 0, 0, 0, 0, 0, 1, 10, 127
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IRedirects.type.ts", "TypeScript", 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IReview.type.ts", "TypeScript", 0, 0, 33, 0, 0, 0, 0, 0, 0, 2, 35
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IRole.type.ts", "TypeScript", 0, 0, 10, 0, 0, 0, 0, 0, 0, 2, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISlider.type.ts", "TypeScript", 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 11
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISloganFooter.type.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISmsMessage.type.ts", "TypeScript", 0, 0, 15, 0, 0, 0, 0, 0, 0, 2, 17
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IStoreBrand.type.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IStoreCategory.type.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISupport.type.ts", "TypeScript", 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ITicket.type.ts", "TypeScript", 0, 0, 14, 0, 0, 0, 0, 0, 0, 2, 16
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ITicketMessage.type.ts", "TypeScript", 0, 0, 15, 0, 0, 0, 0, 0, 0, 1, 16
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ITicketType.type.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IUser.type.ts", "TypeScript", 0, 0, 22, 0, 0, 0, 0, 0, 0, 2, 24
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IUserSpecification.type.ts", "TypeScript", 0, 0, 60, 0, 0, 0, 0, 0, 2, 4, 66
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\UserInfo.type.ts", "TypeScript", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\addDaysToCurrentTime.ts", "TypeScript", 0, 0, 6, 0, 0, 0, 0, 0, 0, 2, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\constants.ts", "TypeScript", 0, 0, 33, 0, 0, 0, 0, 0, 0, 7, 40
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\dataManipulation.ts", "TypeScript", 0, 0, 36, 0, 0, 0, 0, 0, 0, 4, 40
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\generateQueryParams.ts", "TypeScript", 0, 0, 9, 0, 0, 0, 0, 0, 0, 3, 12
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\getErrorMessage.ts", "TypeScript", 0, 0, 16, 0, 0, 0, 0, 0, 0, 3, 19
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\getToken.ts", "TypeScript", 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\index.ts", "TypeScript", 0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\stringFormatting.ts", "TypeScript", 0, 0, 28, 0, 0, 0, 0, 0, 5, 4, 37
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\validation.ts", "TypeScript", 0, 0, 313, 0, 0, 0, 0, 0, 25, 30, 368
+"d:\Venda_Full\front-end\Venda-front2\vendamode\tailwind.config.js", "JavaScript", 36, 0, 0, 0, 0, 0, 0, 0, 0, 1, 37
+"d:\Venda_Full\front-end\Venda-front2\vendamode\tsconfig.json", "JSON with Comments", 0, 0, 0, 24, 0, 0, 0, 0, 0, 1, 25
+"Total", "-", 103, 12364, 5439, 24, 25, 875, 49265, 1010, 4642, 4920, 78667

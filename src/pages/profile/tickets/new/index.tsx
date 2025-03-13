@@ -45,6 +45,7 @@ const NewTickets: NextPage = () => {
     formData.append('TicketTypeId', data.ticketTypeId)
     formData.append('Message', data.message)
     formData.append('Subject', data.subject)
+    formData.append('UserType', '1')
     formData.append('IsCreator', JSON.stringify(true))
     if (data.thumbnail && data.thumbnail.length > 0) {
       Array.from(data.thumbnail).forEach((file) => {

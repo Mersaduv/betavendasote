@@ -1,4 +1,5 @@
 import type { IPagination, IProduct, QueryParams, ServiceResponse } from '@/types'
+import { ISuggestion } from '@/types/models/ISuggestion.type'
 
 export type MsgResult = ServiceResponse<boolean>
 export type IdQuery = { id: string }
@@ -11,7 +12,7 @@ export type ProductsResult = {
 
 export type GetProductsResult = ServiceResponse<ProductsResult>
 export type GetProductsQuery = QueryParams
-
+export type GetSuggestionsResult = ServiceResponse<IPagination<ISuggestion[]>>
 export type GetProductResult = ServiceResponse<IProduct>
 export type GetSimilarProductResult = ServiceResponse<IProduct[]>
 export type GetSingleProductResult = IProduct
@@ -20,4 +21,9 @@ export type GetSingleProductResult = IProduct
 export type BulkRequest = {
   productIds: string[]
   action: string
+}
+
+export interface SuggestionsResults {
+  dataLength: number
+  result: IPagination<ISuggestion[]>
 }

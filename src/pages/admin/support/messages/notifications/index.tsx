@@ -17,7 +17,7 @@ import { Button } from '@/components/ui'
 import { ProtectedRouteWrapper } from '@/components/user'
 import { GetNotificationsResult, GetTicketsResult } from '@/services/user/types'
 import moment from 'moment-jalaali'
-import { ConfirmDeleteModal } from '@/components/modals'
+import { ConfirmDeleteModal, UsersDetailModal } from '@/components/modals'
 const Notification: NextPage = () => {
   // States
   const [isShowConfirmDeleteModal, confirmDeleteModalHandlers] = useDisclosure()
@@ -314,14 +314,14 @@ const Notification: NextPage = () => {
                                 <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
                                   ارسال به
                                 </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">سمت</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کاربران</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
                               </tr>
                             </thead>
                             <tbody>
                               {notificationsPagination?.data?.data &&
-                                notificationsPagination?.data?.data.map((notification, index) => {
+                                notificationsPagination?.data?.data.map((notification, index) => {                                  
                                   return (
                                     <tr
                                       key={notification.id}
@@ -332,22 +332,26 @@ const Notification: NextPage = () => {
                                       </td>
                                       <td className="text-sm text-center farsi-digits">{notification.subject}</td>
                                       <td className="text-sm text-center farsi-digits">
-                                        {moment(notification.created).format('jYYYY/jMM/jDD HH:mm')}
-                                      </td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {' '}
-                                        {notification.user.fullName === ' '
-                                          ? notification.user.mobileNumber
-                                          : notification.user.fullName}
+                                        {moment(
+                                          notification.sendingTime == 2
+                                            ? notification.scheduledDate
+                                            : notification.created
+                                        ).format('jYYYY/jMM/jDD HH:mm')}
                                       </td>
                                       <td className="text-sm text-center">
-                                        {notification.user.userSpecification.userType.toString() === '0'
+                                        {notification.allRoles
+                                          ? 'همه سمت ها'
+                                          : notification.recipients[0].userSpecification.role &&
+                                            notification.towards !== '0' &&
+                                            !notification.allRoles
+                                          ? notification.recipients[0].userSpecification.role.title
+                                          : notification.recipients[0].userSpecification.userType.toString() === '0'
                                           ? 'مشتری'
-                                          : notification.user.userSpecification.userType.toString() === '1'
-                                          ? `پرسنل - ${notification.user.fullName}`
-                                          : notification.user.userSpecification.userType.toString() === '2'
+                                          : notification.recipients[0].userSpecification.userType.toString() === '1'
+                                          ? `پرسنل`
+                                          : notification.recipients[0].userSpecification.userType.toString() === '2'
                                           ? 'مشتری'
-                                          : '-'}{' '}
+                                          : '-'}
                                       </td>
                                       {/* 
                                       <td className="text-sm text-center">
@@ -367,6 +371,7 @@ const Notification: NextPage = () => {
                                           <div className="">فوری</div>
                                         )}
                                       </td>
+                                      <td className="text-sm text-center"><UsersDetailModal users={notification.recipients} /></td>
                                       <td className="text-center text-sm text-gray-600">
                                         <Menu as="div" className="dropdown">
                                           <Menu.Button className="">
@@ -391,8 +396,14 @@ const Notification: NextPage = () => {
                                                 {({ close }) => (
                                                   <>
                                                     <button
+                                                      disabled={
+                                                        notification.sendingTime == 1 ||
+                                                        new Date(notification.scheduledDate) <= new Date()
+                                                      }
                                                       onClick={() => {
-                                                        push(`/admin/support/messages/notification/${notification.id}`)
+                                                        if (new Date(notification.scheduledDate) > new Date()) {
+                                                          push(`/admin/support/messages/notifications/edit/${notification.id}`)
+                                                        }
                                                         close()
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
@@ -438,135 +449,6 @@ const Notification: NextPage = () => {
 
                     <Tab.Panel>
                       <div id="_adminEventNotification">
-                        <DataStateDisplay
-                          isError={isEventNotificationsError}
-                          refetch={refetchEventNotifications}
-                          isFetching={isEventNotificationsFetching}
-                          isSuccess={isEventNotificationsSuccess}
-                          dataLength={
-                            notificationsEventPagination?.data?.data
-                              ? notificationsEventPagination.data?.data.length
-                              : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className="w-[700px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد اعلان</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عنوان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
-                                  ارسال به
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">سمت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {notificationsEventPagination?.data?.data &&
-                                notificationsEventPagination?.data?.data.map((notification, index) => {
-                                  return (
-                                    <tr
-                                      key={notification.id}
-                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                    >
-                                      <td className="text-sm text-center farsi-digits">
-                                        {notification.notificationCode}
-                                      </td>
-                                      <td className="text-sm text-center farsi-digits">{notification.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {moment(notification.created).format('jYYYY/jMM/jDD HH:mm')}
-                                      </td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {' '}
-                                        {notification.user.fullName === ' '
-                                          ? notification.user.mobileNumber
-                                          : notification.user.fullName}
-                                      </td>
-                                      <td className="text-sm text-center">
-                                        {notification.user.userSpecification.userType.toString() === '0'
-                                          ? 'مشتری'
-                                          : notification.user.userSpecification.userType.toString() === '1'
-                                          ? `پرسنل - ${notification.user.fullName}`
-                                          : notification.user.userSpecification.userType.toString() === '2'
-                                          ? 'مشتری'
-                                          : '-'}{' '}
-                                      </td>
-                                      {/* 
-                                      <td className="text-sm text-center">
-                                        <div className="text-sm text-sm  px-2">{ticket.nameEn}</div>
-                                      </td>
-
-                                      <td className="text-sm text-center">
-                                        <div className="">{ticket.description !== '' ? '✓' : '-'}</div>
-                                      </td>
-                                      */}
-                                      <td className="text-sm text-center">
-                                        {notification.sendingTime == 1 ? (
-                                          <div className="">فوری</div>
-                                        ) : notification.sendingTime == 2 ? (
-                                          <div className="">مناسبتی</div>
-                                        ) : (
-                                          <div className="">فوری</div>
-                                        )}
-                                      </td>
-                                      <td className="text-center text-sm text-gray-600">
-                                        <Menu as="div" className="dropdown">
-                                          <Menu.Button className="">
-                                            <div className="w-full flex justify-center items-center">
-                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                                :
-                                              </span>
-                                            </div>
-                                          </Menu.Button>
-
-                                          <Transition
-                                            as={Fragment}
-                                            enter="transition ease-out duration-100"
-                                            enterFrom="transform opacity-0 scale-95"
-                                            enterTo="transform opacity-100 scale-100"
-                                            leave="transition ease-in duration-75"
-                                            leaveFrom="transform opacity-100 scale-100"
-                                            leaveTo="transform opacity-0 scale-95"
-                                          >
-                                            <Menu.Items className="dropdown__items w-32 ">
-                                              <Menu.Item>
-                                                {({ close }) => (
-                                                  <>
-                                                    <button
-                                                      onClick={() => {
-                                                        push(`/admin/support/messages/notification/${notification.id}`)
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>ویرایش</span>
-                                                    </button>
-                                                    <button
-                                                      onClick={() => {
-                                                        handleDelete(notification.id)
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>حذف</span>
-                                                    </button>
-                                                  </>
-                                                )}
-                                              </Menu.Item>
-                                            </Menu.Items>
-                                          </Transition>
-                                        </Menu>
-                                      </td>
-                                    </tr>
-                                  )
-                                })}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
-
                         {notificationsEventPagination?.data?.data &&
                           notificationsEventPagination?.data?.data?.length > 0 &&
                           notificationsEventPagination.data?.data && (
@@ -583,135 +465,6 @@ const Notification: NextPage = () => {
 
                     <Tab.Panel>
                       <div id="_adminUrgentNotification">
-                        <DataStateDisplay
-                          isError={isUrgentNotificationsError}
-                          refetch={refetchUrgentNotifications}
-                          isFetching={isUrgentNotificationsFetching}
-                          isSuccess={isUrgentNotificationsSuccess}
-                          dataLength={
-                            notificationsUrgentPagination?.data?.data
-                              ? notificationsUrgentPagination.data?.data.length
-                              : 0
-                          }
-                          loadingComponent={<TableSkeleton count={20} />}
-                        >
-                          <table className="w-[700px] md:w-full mx-auto">
-                            <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد اعلان</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عنوان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
-                                  ارسال به
-                                </th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">سمت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {notificationsUrgentPagination?.data?.data &&
-                                notificationsUrgentPagination?.data?.data.map((notification, index) => {
-                                  return (
-                                    <tr
-                                      key={notification.id}
-                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                    >
-                                      <td className="text-sm text-center farsi-digits">
-                                        {notification.notificationCode}
-                                      </td>
-                                      <td className="text-sm text-center farsi-digits">{notification.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {moment(notification.created).format('jYYYY/jMM/jDD HH:mm')}
-                                      </td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {' '}
-                                        {notification.user.fullName === ' '
-                                          ? notification.user.mobileNumber
-                                          : notification.user.fullName}
-                                      </td>
-                                      <td className="text-sm text-center">
-                                        {notification.user.userSpecification.userType.toString() === '0'
-                                          ? 'مشتری'
-                                          : notification.user.userSpecification.userType.toString() === '1'
-                                          ? `پرسنل - ${notification.user.fullName}`
-                                          : notification.user.userSpecification.userType.toString() === '2'
-                                          ? 'مشتری'
-                                          : '-'}{' '}
-                                      </td>
-                                      {/* 
-                                      <td className="text-sm text-center">
-                                        <div className="text-sm text-sm  px-2">{ticket.nameEn}</div>
-                                      </td>
-
-                                      <td className="text-sm text-center">
-                                        <div className="">{ticket.description !== '' ? '✓' : '-'}</div>
-                                      </td>
-                                      */}
-                                      <td className="text-sm text-center">
-                                        {notification.sendingTime == 1 ? (
-                                          <div className="">فوری</div>
-                                        ) : notification.sendingTime == 2 ? (
-                                          <div className="">مناسبتی</div>
-                                        ) : (
-                                          <div className="">فوری</div>
-                                        )}
-                                      </td>
-                                      <td className="text-center text-sm text-gray-600">
-                                        <Menu as="div" className="dropdown">
-                                          <Menu.Button className="">
-                                            <div className="w-full flex justify-center items-center">
-                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                                :
-                                              </span>
-                                            </div>
-                                          </Menu.Button>
-
-                                          <Transition
-                                            as={Fragment}
-                                            enter="transition ease-out duration-100"
-                                            enterFrom="transform opacity-0 scale-95"
-                                            enterTo="transform opacity-100 scale-100"
-                                            leave="transition ease-in duration-75"
-                                            leaveFrom="transform opacity-100 scale-100"
-                                            leaveTo="transform opacity-0 scale-95"
-                                          >
-                                            <Menu.Items className="dropdown__items w-32 ">
-                                              <Menu.Item>
-                                                {({ close }) => (
-                                                  <>
-                                                    <button
-                                                      onClick={() => {
-                                                        push(`/admin/support/messages/notification/${notification.id}`)
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>ویرایش</span>
-                                                    </button>
-                                                    <button
-                                                      onClick={() => {
-                                                        handleDelete(notification.id)
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>حذف</span>
-                                                    </button>
-                                                  </>
-                                                )}
-                                              </Menu.Item>
-                                            </Menu.Items>
-                                          </Transition>
-                                        </Menu>
-                                      </td>
-                                    </tr>
-                                  )
-                                })}
-                            </tbody>
-                          </table>
-                        </DataStateDisplay>
-
                         {notificationsUrgentPagination?.data?.data &&
                           notificationsUrgentPagination?.data?.data?.length > 0 &&
                           notificationsUrgentPagination.data?.data && (

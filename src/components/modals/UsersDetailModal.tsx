@@ -70,7 +70,7 @@ const UsersDetailModal: React.FC<Props> = (props) => {
           onClose={searchModalHanlders.close}
           className="flex h-screen flex-col gap-y-3 bg-white py-3 pl-2 pr-4 md:rounded-lg lg:h-fit"
         >
-          <Modal.Header onClose={searchModalHanlders.close}>جستسجو</Modal.Header>
+          <Modal.Header onClose={searchModalHanlders.close}>جزئیات کاربران</Modal.Header>
           <Modal.Body>
             <div className="w-full">
               <div className="my-3 flex rounded-md bg-zinc-200/80">

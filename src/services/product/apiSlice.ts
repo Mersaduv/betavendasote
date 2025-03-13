@@ -1,7 +1,17 @@
 import baseApi from '@/services/baseApi'
 import { generateQueryParams, getToken } from '@/utils'
-import type { BulkRequest, GetProductResult, GetProductsQuery, GetProductsResult, IdQuery, MsgResult } from './types'
-import { ICategory, ServiceResponse } from '@/types'
+import type {
+  BulkRequest,
+  GetProductResult,
+  GetProductsQuery,
+  GetProductsResult,
+  IdQuery,
+  MsgResult,
+  SuggestionsResults,
+} from './types'
+import { ICategory, IEditPriceForm, IPagination, ISuggestionForm, QueryParams, ServiceResponse } from '@/types'
+import { ISuggestion } from '@/types/models/ISuggestion.type'
+import { IEditPrice } from '@/types/models/IEditPrice.type'
 
 export const productApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -100,6 +110,91 @@ export const productApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Product'],
     }),
+
+    getSuggestions: builder.query<ServiceResponse<SuggestionsResults>, QueryParams>({
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/suggestions?${queryParams}`,
+          method: 'GET',
+        }
+      },
+      providesTags: (result) =>
+        result && result.data && result.data.result && result.data.result.data
+          ? [
+              ...result.data?.result?.data?.map(({ id }) => ({
+                type: 'Suggestion' as const,
+                id: id,
+              })),
+              'Suggestion',
+            ]
+          : ['Suggestion'],
+    }),
+
+    upsertSuggestion: builder.mutation<ServiceResponse<string>, ISuggestionForm>({
+      query: (body) => ({
+        url: `/api/suggestion`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Suggestion'],
+    }),
+
+    deleteSuggestion: builder.mutation<MsgResult, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/suggestions/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Suggestion'],
+    }),
+
+    upsertEditPrice: builder.mutation<ServiceResponse<string>, IEditPriceForm>({
+      query: (body) => ({
+        url: `/api/products/edit-price`,
+        method: 'POST',
+        body,
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['EditPrice'],
+    }),
+
+    getEditPrices: builder.query<ServiceResponse<IPagination<IEditPrice[]>>, QueryParams>({
+      query: ({ ...params }) => {
+        const queryParams = generateQueryParams(params)
+        return {
+          url: `/api/products/edit-prices?${queryParams}`,
+          method: 'GET',
+        }
+      },
+      providesTags: (result) =>
+        result && result.data && result.data.data
+          ? [
+              ...result.data?.data?.map(({ id }) => ({
+                type: 'EditPrice' as const,
+                id: id,
+              })),
+              'EditPrice',
+            ]
+          : ['EditPrice'],
+    }),
+
+    deleteEditPrice: builder.mutation<MsgResult, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/products/edit-price/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['EditPrice'],
+    }),
+
+    getEditPriceById: builder.query<ServiceResponse<IEditPrice>, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/product/edit-price/${id}`,
+        method: 'GET',
+      }),
+      providesTags: (result) => [{ type: 'EditPrice', id: result?.data?.id }],
+    }),
   }),
 })
 
@@ -113,4 +208,11 @@ export const {
   useGetProductByCategoryQuery,
   useDeleteTrashProductMutation,
   useRestoreProductMutation,
+  useGetSuggestionsQuery,
+  useUpsertSuggestionMutation,
+  useDeleteSuggestionMutation,
+  useUpsertEditPriceMutation,
+  useGetEditPricesQuery,
+  useDeleteEditPriceMutation,
+  useGetEditPriceByIdQuery,
 } = productApiSlice

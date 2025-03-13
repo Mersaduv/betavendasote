@@ -9,8 +9,8 @@ interface ReviewTabDashboardLayoutProps {
 }
 
 const tabs = [
-  { paths: ['/admin/support/review'], label: 'محصول' },
-  { paths: ['/admin/support/articles-review'], label: 'مقالات' },
+  { paths: ['/admin/support/review/product'], label: 'محصول' },
+  { paths: ['/admin/support/review/article'], label: 'مقالات' },
 ]
 
 

@@ -301,6 +301,8 @@ const Ticket: NextPage = () => {
                             <tbody>
                               {ticketsPagination?.data?.data &&
                                 ticketsPagination?.data?.data.map((ticket, index) => {
+                                  console.log(ticket , "ticket");
+                                  
                                   return (
                                     <tr
                                       key={ticket.id}
@@ -321,7 +323,7 @@ const Ticket: NextPage = () => {
                                         {ticket.user.userSpecification.userType.toString() === '0'
                                           ? 'مشتری'
                                           : ticket.user.userSpecification.userType.toString() === '1'
-                                          ? `پرسنل - ${ticket.user.fullName}`
+                                          ? `پرسنل`
                                           : ticket.user.userSpecification.userType.toString() === '2'
                                           ? 'مشتری'
                                           : '-'}{' '}

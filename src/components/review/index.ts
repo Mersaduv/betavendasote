@@ -1,6 +1,7 @@
-export { default as ReveiwCard } from './ReveiwCard'
+export { default as ReviewCard } from './ReviewCard'
 export { default as ReviewsList } from './ReviewsList'
 export { default as ReviewProductCard } from './ReviewProductCard'
 export { default as ReviewsTable } from './ReviewsTable'
 export { default as ReviewArticleList } from './ReviewArticleList'
 export { default as ReviewArticleCard } from './ReviewArticleCard'
+export { default as ClientReviewCard } from './ClientReviewCard'

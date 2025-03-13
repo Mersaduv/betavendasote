@@ -269,16 +269,6 @@ const NewTicket: NextPage<Props> = () => {
                       </div>
                     </div>
                   </div>
-
-                  <div className="flex flex-1">
-                    <div className="bg-white w-full rounded-md shadow-item">
-                      <h3 className="border-b p-6 text-gray-600 flex gap-2">تنظیمات ارسال</h3>
-                      {/* 
-                      <div className="flex flex-col">
-                        <div className="bg-gray-50 bottom-0 w-full  rounded-b-lg px-8 flex flex-col pb-2"></div>
-                      </div> */}
-                    </div>
-                  </div>
                 </div>
                 <div className="flex flex-1">
                   <div className="bg-white w-full rounded-md shadow-item">

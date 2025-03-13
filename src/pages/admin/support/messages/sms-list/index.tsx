@@ -326,20 +326,35 @@ const SmsMessages: NextPage = () => {
                                       <td className="text-sm text-center farsi-digits">{smsItem.smsCode}</td>
                                       <td className="text-sm text-center farsi-digits">{smsItem.subject}</td>
                                       <td className="text-sm text-center farsi-digits">
-                                        {moment(smsItem.created).format('jYYYY/jMM/jDD HH:mm')}
+                                        {moment(
+                                          smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                        ).format('jYYYY/jMM/jDD HH:mm')}
                                       </td>
                                       <td className="text-sm text-center farsi-digits">
                                         {' '}
                                         {/* {smsItem.user.fullName === ' '
                                           ? smsItem.user.mobileNumber
                                           : smsItem.user.fullName} */}
-                                        {smsItem.recipients[0].userSpecification.userType.toString() === '0'
+                                        {/* {smsItem.recipients[0].userSpecification.userType.toString() === '0'
                                           ? 'مشتری'
                                           : smsItem.recipients[0].userSpecification.userType.toString() === '1'
                                           ? `پرسنل`
                                           : smsItem.recipients[0].userSpecification.userType.toString() === '2'
                                           ? 'مشتری'
-                                          : '-'}{' '}
+                                          : '-'} */}
+                                        {smsItem.allRoles
+                                          ? 'همه سمت ها'
+                                          : smsItem.recipients[0].userSpecification.role &&
+                                            smsItem.towards !== '0' &&
+                                            !smsItem.allRoles
+                                          ? smsItem.recipients[0].userSpecification.role.title
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '0'
+                                          ? 'مشتری'
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '1'
+                                          ? `پرسنل`
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '2'
+                                          ? 'مشتری'
+                                          : '-'}
                                       </td>
                                       <td className="text-sm text-center">
                                         {smsItem.sendingTime == 1 ? (
@@ -377,8 +392,14 @@ const SmsMessages: NextPage = () => {
                                                 {({ close }) => (
                                                   <>
                                                     <button
+                                                      disabled={
+                                                        smsItem.sendingTime == 1 ||
+                                                        new Date(smsItem.scheduledDate) <= new Date()
+                                                      }
                                                       onClick={() => {
-                                                        push(`/admin/support/messages/sms-list/edit/${smsItem.id}`)
+                                                        if (new Date(smsItem.scheduledDate) > new Date()) {
+                                                          push(`/admin/support/messages/sms-list/edit/${smsItem.id}`)
+                                                        }
                                                         close()
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
@@ -419,11 +440,299 @@ const SmsMessages: NextPage = () => {
                     </Tab.Panel>
 
                     <Tab.Panel>
-                      <div id="_adminEventNotification"></div>
+                      <div id="_adminEventNotification">
+                        <DataStateDisplay
+                          isError={isEventSmsError}
+                          refetch={refetchEventSms}
+                          isFetching={isEventSmsFetching}
+                          isSuccess={isEventSmsSuccess}
+                          dataLength={smsEventPagination?.data?.data ? smsEventPagination.data?.data.length : 0}
+                          loadingComponent={<TableSkeleton count={20} />}
+                        >
+                          <table className="w-[700px] md:w-full mx-auto">
+                            <thead className="bg-sky-300">
+                              <tr>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد پیامک</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عنوان</th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
+                                  ارسال به
+                                </th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کاربران</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {smsEventPagination?.data?.data &&
+                                smsEventPagination?.data?.data.map((smsItem, index) => {
+                                  return (
+                                    <tr
+                                      key={smsItem.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td className="text-sm text-center farsi-digits">{smsItem.smsCode}</td>
+                                      <td className="text-sm text-center farsi-digits">{smsItem.subject}</td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        {moment(
+                                          smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                        ).format('jYYYY/jMM/jDD HH:mm')}
+                                      </td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        {' '}
+                                        {/* {smsItem.user.fullName === ' '
+                                          ? smsItem.user.mobileNumber
+                                          : smsItem.user.fullName} */}
+                                        {/* {smsItem.recipients[0].userSpecification.userType.toString() === '0'
+                                          ? 'مشتری'
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '1'
+                                          ? `پرسنل`
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '2'
+                                          ? 'مشتری'
+                                          : '-'} */}
+                                        {smsItem.allRoles
+                                          ? 'همه سمت ها'
+                                          : smsItem.recipients[0].userSpecification.role &&
+                                            smsItem.towards !== '0' &&
+                                            !smsItem.allRoles
+                                          ? smsItem.recipients[0].userSpecification.role.title
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '0'
+                                          ? 'مشتری'
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '1'
+                                          ? `پرسنل`
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '2'
+                                          ? 'مشتری'
+                                          : '-'}
+                                      </td>
+                                      <td className="text-sm text-center">
+                                        {smsItem.sendingTime == 1 ? (
+                                          <div className="">فوری</div>
+                                        ) : smsItem.sendingTime == 2 ? (
+                                          <div className="">مناسبتی</div>
+                                        ) : (
+                                          <div className="">فوری</div>
+                                        )}
+                                      </td>
+                                      <td className="text-sm text-center">
+                                        <UsersDetailModal users={smsItem.recipients} />
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
+
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <button
+                                                      disabled={
+                                                        smsItem.sendingTime == 1 ||
+                                                        new Date(smsItem.scheduledDate) <= new Date()
+                                                      }
+                                                      onClick={() => {
+                                                        if (new Date(smsItem.scheduledDate) > new Date()) {
+                                                          push(`/admin/support/messages/sms-list/edit/${smsItem.id}`)
+                                                        }
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </button>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDelete(smsItem.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>حذف</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  )
+                                })}
+                            </tbody>
+                          </table>
+                        </DataStateDisplay>
+
+                        {smsEventPagination?.data?.data &&
+                          smsEventPagination?.data?.data?.length > 0 &&
+                          smsEventPagination.data?.data && (
+                            <div className="mx-auto py-4 lg:max-w-5xl">
+                              <Pagination pagination={smsEventPagination?.data} section="_adminNotification" client />
+                            </div>
+                          )}
+                      </div>
                     </Tab.Panel>
 
                     <Tab.Panel>
-                      <div id="_adminUrgentNotification"></div>
+                      <div id="_adminUrgentNotification">
+                        <DataStateDisplay
+                          isError={isUrgentSmsError}
+                          refetch={refetchUrgentSms}
+                          isFetching={isUrgentSmsFetching}
+                          isSuccess={isUrgentSmsSuccess}
+                          dataLength={smsUrgentPagination?.data?.data ? smsUrgentPagination.data?.data.length : 0}
+                          loadingComponent={<TableSkeleton count={20} />}
+                        >
+                          <table className="w-[700px] md:w-full mx-auto">
+                            <thead className="bg-sky-300">
+                              <tr>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد پیامک</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عنوان</th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
+                                  ارسال به
+                                </th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کاربران</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {smsUrgentPagination?.data?.data &&
+                                smsUrgentPagination?.data?.data.map((smsItem, index) => {
+                                  return (
+                                    <tr
+                                      key={smsItem.id}
+                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                    >
+                                      <td className="text-sm text-center farsi-digits">{smsItem.smsCode}</td>
+                                      <td className="text-sm text-center farsi-digits">{smsItem.subject}</td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        {moment(
+                                          smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                        ).format('jYYYY/jMM/jDD HH:mm')}
+                                      </td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        {' '}
+                                        {/* {smsItem.user.fullName === ' '
+                                          ? smsItem.user.mobileNumber
+                                          : smsItem.user.fullName} */}
+                                        {/* {smsItem.recipients[0].userSpecification.userType.toString() === '0'
+                                          ? 'مشتری'
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '1'
+                                          ? `پرسنل`
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '2'
+                                          ? 'مشتری'
+                                          : '-'} */}
+                                        {smsItem.allRoles
+                                          ? 'همه سمت ها'
+                                          : smsItem.recipients[0].userSpecification.role &&
+                                            smsItem.towards !== '0' &&
+                                            !smsItem.allRoles
+                                          ? smsItem.recipients[0].userSpecification.role.title
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '0'
+                                          ? 'مشتری'
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '1'
+                                          ? `پرسنل`
+                                          : smsItem.recipients[0].userSpecification.userType.toString() === '2'
+                                          ? 'مشتری'
+                                          : '-'}
+                                      </td>
+                                      <td className="text-sm text-center">
+                                        {smsItem.sendingTime == 1 ? (
+                                          <div className="">فوری</div>
+                                        ) : smsItem.sendingTime == 2 ? (
+                                          <div className="">مناسبتی</div>
+                                        ) : (
+                                          <div className="">فوری</div>
+                                        )}
+                                      </td>
+                                      <td className="text-sm text-center">
+                                        <UsersDetailModal users={smsItem.recipients} />
+                                      </td>
+                                      <td className="text-center text-sm text-gray-600">
+                                        <Menu as="div" className="dropdown">
+                                          <Menu.Button className="">
+                                            <div className="w-full flex justify-center items-center">
+                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                                :
+                                              </span>
+                                            </div>
+                                          </Menu.Button>
+
+                                          <Transition
+                                            as={Fragment}
+                                            enter="transition ease-out duration-100"
+                                            enterFrom="transform opacity-0 scale-95"
+                                            enterTo="transform opacity-100 scale-100"
+                                            leave="transition ease-in duration-75"
+                                            leaveFrom="transform opacity-100 scale-100"
+                                            leaveTo="transform opacity-0 scale-95"
+                                          >
+                                            <Menu.Items className="dropdown__items w-32 ">
+                                              <Menu.Item>
+                                                {({ close }) => (
+                                                  <>
+                                                    <button
+                                                      disabled={
+                                                        smsItem.sendingTime == 1 ||
+                                                        new Date(smsItem.scheduledDate) <= new Date()
+                                                      }
+                                                      onClick={() => {
+                                                        if (new Date(smsItem.scheduledDate) > new Date()) {
+                                                          push(`/admin/support/messages/sms-list/edit/${smsItem.id}`)
+                                                        }
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </button>
+                                                    <button
+                                                      onClick={() => {
+                                                        handleDelete(smsItem.id)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>حذف</span>
+                                                    </button>
+                                                  </>
+                                                )}
+                                              </Menu.Item>
+                                            </Menu.Items>
+                                          </Transition>
+                                        </Menu>
+                                      </td>
+                                    </tr>
+                                  )
+                                })}
+                            </tbody>
+                          </table>
+                        </DataStateDisplay>
+
+                        {smsUrgentPagination?.data?.data &&
+                          smsUrgentPagination?.data?.data?.length > 0 &&
+                          smsUrgentPagination.data?.data && (
+                            <div className="mx-auto py-4 lg:max-w-5xl">
+                              <Pagination pagination={smsUrgentPagination?.data} section="_adminNotification" client />
+                            </div>
+                          )}
+                      </div>
                     </Tab.Panel>
                   </Tab.Panels>
                 </Tab.Group>

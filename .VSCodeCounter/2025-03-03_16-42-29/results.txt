@@ -1,0 +1,661 @@
+Date : 2025-03-03 16:42:29
+Directory : d:\Venda_Full\front-end\Venda-front2\vendamode
+Total : 465 files,  69105 codes, 4642 comments, 4920 blanks, all 78667 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| TypeScript JSX     |        266 |     49,265 |      4,364 |      4,115 |     57,744 |
+| JSON               |          4 |     12,364 |          0 |          3 |     12,367 |
+| TypeScript         |        138 |      5,439 |        120 |        613 |      6,172 |
+| XML                |         41 |      1,010 |          1 |         30 |      1,041 |
+| CSS                |          9 |        875 |        154 |        136 |      1,165 |
+| JavaScript         |          5 |        103 |          3 |          6 |        112 |
+| Markdown           |          1 |         25 |          0 |         16 |         41 |
+| JSON with Comments |          1 |         24 |          0 |          1 |         25 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                 | files      | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                    |        465 |     69,105 |      4,642 |      4,920 |     78,667 |
+| . (Files)                                                                                                            |         12 |     12,520 |          3 |         27 |     12,550 |
+| public                                                                                                               |         20 |        149 |          0 |          7 |        156 |
+| public (Files)                                                                                                       |          2 |          2 |          0 |          0 |          2 |
+| public\assets                                                                                                        |          6 |          6 |          0 |          0 |          6 |
+| public\assets\svgs                                                                                                   |          6 |          6 |          0 |          0 |          6 |
+| public\assets\svgs\duotone                                                                                           |          6 |          6 |          0 |          0 |          6 |
+| public\fonts                                                                                                         |          1 |         10 |          0 |          1 |         11 |
+| public\fonts\Nim                                                                                                     |          1 |         10 |          0 |          1 |         11 |
+| public\icons                                                                                                         |          8 |        104 |          0 |          3 |        107 |
+| public\images                                                                                                        |          3 |         27 |          0 |          3 |         30 |
+| public\images\icons                                                                                                  |          3 |         27 |          0 |          3 |         30 |
+| src                                                                                                                  |        433 |     56,436 |      4,639 |      4,886 |     65,961 |
+| src\components                                                                                                       |        209 |     27,510 |      3,305 |      2,678 |     33,493 |
+| src\components\Layouts                                                                                               |         11 |        858 |         48 |        133 |      1,039 |
+| src\components\ads                                                                                                   |          8 |      1,163 |         78 |        102 |      1,343 |
+| src\components\articles                                                                                              |          2 |         40 |          3 |          8 |         51 |
+| src\components\banners                                                                                               |          4 |        153 |          0 |         28 |        181 |
+| src\components\builders                                                                                              |          2 |        115 |          0 |          4 |        119 |
+| src\components\cart                                                                                                  |         11 |        469 |         41 |        106 |        616 |
+| src\components\categories                                                                                            |          4 |        451 |         89 |         53 |        593 |
+| src\components\designs                                                                                               |          9 |      1,067 |         31 |         93 |      1,191 |
+| src\components\emptyList                                                                                             |          8 |         65 |          0 |         17 |         82 |
+| src\components\feature                                                                                               |          1 |          0 |          0 |          1 |          1 |
+| src\components\form                                                                                                  |         15 |      9,100 |      1,882 |        738 |     11,720 |
+| src\components\modals                                                                                                |         32 |      6,009 |        267 |        559 |      6,835 |
+| src\components\navigation                                                                                            |          2 |        119 |          4 |         16 |        139 |
+| src\components\order                                                                                                 |          4 |        959 |        120 |         75 |      1,154 |
+| src\components\product                                                                                               |         19 |      1,085 |        181 |        159 |      1,425 |
+| src\components\product (Files)                                                                                       |         14 |        952 |        172 |        128 |      1,252 |
+| src\components\product\ProductVariants                                                                               |          3 |        100 |          8 |         26 |        134 |
+| src\components\product\StockInfo                                                                                     |          2 |         33 |          1 |          5 |         39 |
+| src\components\review                                                                                                |          7 |        403 |         38 |         59 |        500 |
+| src\components\selectorCombobox                                                                                      |         12 |      1,099 |          2 |        103 |      1,204 |
+| src\components\services                                                                                              |          2 |         33 |          1 |          4 |         38 |
+| src\components\shared                                                                                                |         12 |      1,341 |        165 |        114 |      1,620 |
+| src\components\skeleton                                                                                              |          9 |        149 |          0 |         17 |        166 |
+| src\components\sliders                                                                                               |         10 |      1,434 |        264 |        104 |      1,802 |
+| src\components\ui                                                                                                    |         20 |      1,064 |         75 |        147 |      1,286 |
+| src\components\ui (Files)                                                                                            |         16 |        887 |         69 |        135 |      1,091 |
+| src\components\ui\loading                                                                                            |          4 |        177 |          6 |         12 |        195 |
+| src\components\user                                                                                                  |          5 |        334 |         16 |         38 |        388 |
+| src\configs                                                                                                          |          1 |          4 |          0 |          2 |          6 |
+| src\hooks                                                                                                            |          9 |        143 |         11 |         43 |        197 |
+| src\icons                                                                                                            |         23 |        992 |          2 |         29 |      1,023 |
+| src\icons (Files)                                                                                                    |          1 |        121 |          1 |          5 |        127 |
+| src\icons\svgs                                                                                                       |         22 |        871 |          1 |         24 |        896 |
+| src\middlewares                                                                                                      |          1 |          0 |         25 |          9 |         34 |
+| src\pages                                                                                                            |         81 |     21,940 |      1,069 |      1,465 |     24,474 |
+| src\pages (Files)                                                                                                    |          3 |        488 |         74 |         34 |        596 |
+| src\pages\404                                                                                                        |          1 |         24 |          1 |          4 |         29 |
+| src\pages\admin                                                                                                      |         57 |     18,071 |        788 |      1,143 |     20,002 |
+| src\pages\admin (Files)                                                                                              |          1 |         32 |          0 |          5 |         37 |
+| src\pages\admin\ads                                                                                                  |          2 |         50 |         28 |         19 |         97 |
+| src\pages\admin\ads (Files)                                                                                          |          1 |         19 |         14 |         11 |         44 |
+| src\pages\admin\ads\main                                                                                             |          1 |         31 |         14 |          8 |         53 |
+| src\pages\admin\articles                                                                                             |          3 |      1,219 |         60 |         57 |      1,336 |
+| src\pages\admin\articles (Files)                                                                                     |          1 |      1,095 |         51 |         40 |      1,186 |
+| src\pages\admin\articles\create                                                                                      |          1 |         50 |          4 |          7 |         61 |
+| src\pages\admin\articles\edit                                                                                        |          1 |         74 |          5 |         10 |         89 |
+| src\pages\admin\authentication                                                                                       |          3 |        212 |         19 |         29 |        260 |
+| src\pages\admin\authentication\login                                                                                 |          3 |        212 |         19 |         29 |        260 |
+| src\pages\admin\authentication\login (Files)                                                                         |          1 |         66 |          5 |         10 |         81 |
+| src\pages\admin\authentication\login\user                                                                            |          1 |         59 |          9 |         10 |         78 |
+| src\pages\admin\authentication\login\verifyUser                                                                      |          1 |         87 |          5 |          9 |        101 |
+| src\pages\admin\categories                                                                                           |          1 |         19 |          0 |          2 |         21 |
+| src\pages\admin\department                                                                                           |          4 |        796 |         67 |         31 |        894 |
+| src\pages\admin\department\department-canceled                                                                       |          1 |        200 |         21 |          8 |        229 |
+| src\pages\admin\department\department-returned                                                                       |          1 |        203 |         21 |          9 |        233 |
+| src\pages\admin\department\department-ticket                                                                         |          2 |        393 |         25 |         14 |        432 |
+| src\pages\admin\department\department-ticket (Files)                                                                 |          1 |        187 |          4 |          8 |        199 |
+| src\pages\admin\department\department-ticket\list                                                                    |          1 |        206 |         21 |          6 |        233 |
+| src\pages\admin\design                                                                                               |          3 |        808 |         53 |         88 |        949 |
+| src\pages\admin\design (Files)                                                                                       |          1 |         25 |         14 |          8 |         47 |
+| src\pages\admin\design\footer                                                                                        |          1 |        541 |         28 |         54 |        623 |
+| src\pages\admin\design\siteItems                                                                                     |          1 |        242 |         11 |         26 |        279 |
+| src\pages\admin\orders                                                                                               |         10 |      2,871 |         69 |        174 |      3,114 |
+| src\pages\admin\orders (Files)                                                                                       |          1 |        279 |          7 |         16 |        302 |
+| src\pages\admin\orders\canceled                                                                                      |          1 |        280 |          7 |         16 |        303 |
+| src\pages\admin\orders\completed                                                                                     |          1 |        280 |          7 |         16 |        303 |
+| src\pages\admin\orders\deleted                                                                                       |          1 |        378 |          7 |         20 |        405 |
+| src\pages\admin\orders\edit                                                                                          |          1 |        254 |          6 |         26 |        286 |
+| src\pages\admin\orders\new-order                                                                                     |          1 |        280 |          7 |         16 |        303 |
+| src\pages\admin\orders\packing                                                                                       |          1 |        280 |          7 |         16 |        303 |
+| src\pages\admin\orders\processing                                                                                    |          1 |        280 |          7 |         16 |        303 |
+| src\pages\admin\orders\returned                                                                                      |          1 |        280 |          7 |         16 |        303 |
+| src\pages\admin\orders\sending                                                                                       |          1 |        280 |          7 |         16 |        303 |
+| src\pages\admin\product-configuration                                                                                |          8 |      2,342 |         78 |        168 |      2,588 |
+| src\pages\admin\product-configuration (Files)                                                                        |          1 |         17 |          0 |          1 |         18 |
+| src\pages\admin\product-configuration\brands                                                                         |          1 |        714 |         16 |         43 |        773 |
+| src\pages\admin\product-configuration\categories                                                                     |          2 |        701 |         41 |         50 |        792 |
+| src\pages\admin\product-configuration\features                                                                       |          3 |        885 |         21 |         71 |        977 |
+| src\pages\admin\product-configuration\jewelry                                                                        |          1 |         25 |          0 |          3 |         28 |
+| src\pages\admin\products                                                                                             |          3 |      1,634 |         65 |         86 |      1,785 |
+| src\pages\admin\products (Files)                                                                                     |          1 |      1,501 |         54 |         64 |      1,619 |
+| src\pages\admin\products\create                                                                                      |          1 |         51 |          4 |          7 |         62 |
+| src\pages\admin\products\edit                                                                                        |          1 |         82 |          7 |         15 |        104 |
+| src\pages\admin\support                                                                                              |         10 |      4,649 |        294 |        244 |      5,187 |
+| src\pages\admin\support\messages                                                                                     |          9 |      3,894 |        289 |        203 |      4,386 |
+| src\pages\admin\support\messages\notifications                                                                       |          3 |      1,222 |         89 |         70 |      1,381 |
+| src\pages\admin\support\messages\notifications (Files)                                                               |          1 |        449 |         22 |         22 |        493 |
+| src\pages\admin\support\messages\notifications\edit                                                                  |          1 |        418 |         33 |         25 |        476 |
+| src\pages\admin\support\messages\notifications\new                                                                   |          1 |        355 |         34 |         23 |        412 |
+| src\pages\admin\support\messages\sms-list                                                                            |          3 |      1,440 |        111 |         72 |      1,623 |
+| src\pages\admin\support\messages\sms-list (Files)                                                                    |          1 |        680 |         43 |         26 |        749 |
+| src\pages\admin\support\messages\sms-list\edit                                                                       |          1 |        416 |         34 |         24 |        474 |
+| src\pages\admin\support\messages\sms-list\new                                                                        |          1 |        344 |         34 |         22 |        400 |
+| src\pages\admin\support\messages\ticket                                                                              |          3 |      1,232 |         89 |         61 |      1,382 |
+| src\pages\admin\support\messages\ticket (Files)                                                                      |          2 |        882 |         65 |         40 |        987 |
+| src\pages\admin\support\messages\ticket\new                                                                          |          1 |        350 |         24 |         21 |        395 |
+| src\pages\admin\support\review                                                                                       |          1 |        755 |          5 |         41 |        801 |
+| src\pages\admin\users                                                                                                |          9 |      3,439 |         55 |        240 |      3,734 |
+| src\pages\admin\users (Files)                                                                                        |          1 |         43 |          2 |          6 |         51 |
+| src\pages\admin\users\create                                                                                         |          1 |         48 |          3 |          7 |         58 |
+| src\pages\admin\users\customer                                                                                       |          1 |        864 |          9 |         58 |        931 |
+| src\pages\admin\users\edit                                                                                           |          1 |         80 |          5 |         10 |         95 |
+| src\pages\admin\users\personnel                                                                                      |          1 |        844 |         11 |         56 |        911 |
+| src\pages\admin\users\roles                                                                                          |          3 |        737 |         16 |         48 |        801 |
+| src\pages\admin\users\roles (Files)                                                                                  |          1 |        601 |          8 |         32 |        641 |
+| src\pages\admin\users\roles\edit                                                                                     |          1 |         81 |          5 |          9 |         95 |
+| src\pages\admin\users\roles\new                                                                                      |          1 |         55 |          3 |          7 |         65 |
+| src\pages\admin\users\supplier                                                                                       |          1 |        823 |          9 |         55 |        887 |
+| src\pages\api                                                                                                        |          1 |         10 |          1 |          3 |         14 |
+| src\pages\articles                                                                                                   |          2 |        662 |         20 |         44 |        726 |
+| src\pages\authentication                                                                                             |          3 |        212 |         19 |         29 |        260 |
+| src\pages\authentication\login                                                                                       |          3 |        212 |         19 |         29 |        260 |
+| src\pages\authentication\login (Files)                                                                               |          1 |         66 |          5 |         10 |         81 |
+| src\pages\authentication\login\user                                                                                  |          1 |         59 |          9 |         10 |         78 |
+| src\pages\authentication\login\verifyUser                                                                            |          1 |         87 |          5 |          9 |        101 |
+| src\pages\checkout                                                                                                   |          3 |        620 |         34 |         59 |        713 |
+| src\pages\products                                                                                                   |          2 |        772 |         80 |         61 |        913 |
+| src\pages\profile                                                                                                    |          9 |      1,081 |         52 |         88 |      1,221 |
+| src\pages\profile (Files)                                                                                            |          1 |         90 |          0 |          6 |         96 |
+| src\pages\profile\address                                                                                            |          1 |        156 |          4 |         10 |        170 |
+| src\pages\profile\lists                                                                                              |          1 |         35 |          1 |          6 |         42 |
+| src\pages\profile\orders                                                                                             |          1 |        213 |          9 |          8 |        230 |
+| src\pages\profile\reviews                                                                                            |          1 |        116 |         10 |         20 |        146 |
+| src\pages\profile\tickets                                                                                            |          3 |        429 |          8 |         31 |        468 |
+| src\pages\profile\tickets (Files)                                                                                    |          2 |        217 |          4 |         14 |        235 |
+| src\pages\profile\tickets\new                                                                                        |          1 |        212 |          4 |         17 |        233 |
+| src\pages\profile\user-history                                                                                       |          1 |         42 |         20 |          7 |         69 |
+| src\services                                                                                                         |         34 |      2,930 |         29 |        278 |      3,237 |
+| src\services (Files)                                                                                                 |          3 |         76 |          3 |          7 |         86 |
+| src\services\auth                                                                                                    |          2 |        286 |         10 |         22 |        318 |
+| src\services\brand                                                                                                   |          2 |        101 |          0 |         12 |        113 |
+| src\services\canceled                                                                                                |          2 |        140 |          0 |         15 |        155 |
+| src\services\category                                                                                                |          3 |        217 |          0 |         20 |        237 |
+| src\services\design                                                                                                  |          6 |        611 |          0 |         56 |        667 |
+| src\services\feature                                                                                                 |          2 |        215 |          0 |         24 |        239 |
+| src\services\order                                                                                                   |          2 |        204 |          0 |         19 |        223 |
+| src\services\product                                                                                                 |          3 |        143 |          2 |         18 |        163 |
+| src\services\review                                                                                                  |          2 |        175 |          0 |         17 |        192 |
+| src\services\size                                                                                                    |          2 |        167 |          2 |         18 |        187 |
+| src\services\slider                                                                                                  |          3 |         55 |          0 |          5 |         60 |
+| src\services\user                                                                                                    |          2 |        540 |         12 |         45 |        597 |
+| src\store                                                                                                            |         12 |        503 |          8 |         87 |        598 |
+| src\store (Files)                                                                                                    |          1 |         43 |          2 |          6 |         51 |
+| src\store\slices                                                                                                     |         11 |        460 |          6 |         81 |        547 |
+| src\styles                                                                                                           |          9 |        875 |        154 |        136 |      1,165 |
+| src\styles (Files)                                                                                                   |          4 |        703 |        154 |        121 |        978 |
+| src\styles\abstracts                                                                                                 |          3 |         53 |          0 |          8 |         61 |
+| src\styles\fonts                                                                                                     |          2 |        119 |          0 |          7 |        126 |
+| src\types                                                                                                            |         45 |      1,085 |          6 |        104 |      1,195 |
+| src\types (Files)                                                                                                    |         14 |        512 |          3 |         52 |        567 |
+| src\types\models                                                                                                     |         31 |        573 |          3 |         52 |        628 |
+| src\utils                                                                                                            |          9 |        454 |         30 |         55 |        539 |
++----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++----------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                             | language           | code       | comment    | blank      | total      |
++----------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| d:\Venda_Full\front-end\Venda-front2\vendamode\.eslintrc.json                                                        | JSON               |         10 |          0 |          1 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\.prettierrc.js                                                        | JavaScript         |         23 |          0 |          1 |         24 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\README.md                                                             | Markdown           |         25 |          0 |         16 |         41 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\custom.d.ts                                                           | TypeScript         |          7 |          0 |          2 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\declarations.d.ts                                                     | TypeScript         |          7 |          0 |          0 |          7 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\liara.json                                                            | JSON               |          4 |          0 |          0 |          4 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\next.config.js                                                        | JavaScript         |         27 |          3 |          2 |         32 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\package-lock.json                                                     | JSON               |     12,266 |          0 |          1 |     12,267 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\package.json                                                          | JSON               |         84 |          0 |          1 |         85 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\postcss.config.js                                                     | JavaScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\barcode.svg                                | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\bars.svg                                   | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\calendar-days.svg                          | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\eye.svg                                    | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\text.svg                                   | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\assets\svgs\duotone\trash.svg                                  | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\fonts\Nim\vfs_fonts.js                                         | JavaScript         |         10 |          0 |          1 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\error.svg                                                | XML                |          3 |          0 |          0 |          3 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\exclamation.svg                                          | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\nothing.svg                                              | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\question.svg                                             | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\status-delivered.svg                                     | XML                |         31 |          0 |          1 |         32 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\status-processing.svg                                    | XML                |         35 |          0 |          1 |         36 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\status-returned.svg                                      | XML                |         27 |          0 |          1 |         28 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\icons\success.svg                                              | XML                |          5 |          0 |          0 |          5 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\images\icons\enter.svg                                         | XML                |          9 |          0 |          1 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\images\icons\search.svg                                        | XML                |          9 |          0 |          1 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\images\icons\shopping-cart.svg                                 | XML                |          9 |          0 |          1 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\next.svg                                                       | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\public\vercel.svg                                                     | XML                |          1 |          0 |          0 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\ClientLayout.tsx                               | TypeScript JSX     |         17 |          0 |          4 |         21 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\DashboardLayout.tsx                            | TypeScript JSX     |         72 |          0 |          5 |         77 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\DepartmentTabDashboardLayout.tsx               | TypeScript JSX     |         88 |          0 |         14 |        102 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\DesignTabDashboardLayout.tsx                   | TypeScript JSX     |         81 |          7 |         14 |        102 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\OrderTabDashboardLayout.tsx                    | TypeScript JSX     |        209 |         31 |         38 |        278 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\ProfileLayout.tsx                              | TypeScript JSX     |         26 |          0 |          3 |         29 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\ReviewTabDashboardLayout.tsx                   | TypeScript JSX     |         86 |          0 |         14 |        100 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\SupportTabDashboardLayout.tsx                  | TypeScript JSX     |         87 |          0 |         14 |        101 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\TabDashboardLayout.tsx                         | TypeScript JSX     |         92 |          7 |         13 |        112 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\UserTabDashboardLayout.tsx                     | TypeScript JSX     |         91 |          3 |         13 |        107 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\index.ts                                       | TypeScript         |          9 |          0 |          1 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\ArticlesAdsForm.tsx                                | TypeScript JSX     |         76 |          1 |         13 |         90 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\BannerForm.tsx                                     | TypeScript JSX     |        278 |         11 |         22 |        311 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\FooterBannerForm.tsx                               | TypeScript JSX     |        239 |         10 |         18 |        267 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\GeneralSettingForm.tsx                             | TypeScript JSX     |         89 |          0 |          7 |         96 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\LogoImagesForm.tsx                                 | TypeScript JSX     |        149 |         37 |         17 |        203 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\SliderForm.tsx                                     | TypeScript JSX     |        283 |         19 |         20 |        322 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\TextMarqueeForm.tsx                                | TypeScript JSX     |         42 |          0 |          4 |         46 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ads\index.ts                                           | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\articles\ArticleCard.tsx                               | TypeScript JSX     |         39 |          3 |          7 |         49 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\articles\index.ts                                      | TypeScript         |          1 |          0 |          1 |          2 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\ArticleBanners.tsx                             | TypeScript JSX     |         58 |          0 |          9 |         67 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\FooterBanner.tsx                               | TypeScript JSX     |         41 |          0 |          8 |         49 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\LargeBanner.tsx                                | TypeScript JSX     |         51 |          0 |         10 |         61 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\banners\index.ts                                       | TypeScript         |          3 |          0 |          1 |          4 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\builders\PdfGenerator.tsx                              | TypeScript JSX     |        114 |          0 |          3 |        117 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\builders\index.ts                                      | TypeScript         |          1 |          0 |          1 |          2 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\AddToCartButton.tsx                               | TypeScript JSX     |         60 |          5 |         16 |         81 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartDiscountItem.tsx                              | TypeScript JSX     |         26 |          4 |          6 |         36 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartDisplay.tsx                                   | TypeScript JSX     |         14 |          1 |          4 |         19 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartDropdownMenu.tsx                              | TypeScript JSX     |         77 |          8 |         14 |         99 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartIconBadge.tsx                                 | TypeScript JSX     |         17 |          3 |          6 |         26 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartItemActions.tsx                               | TypeScript JSX     |         30 |          3 |         11 |         44 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartItemDisplay.tsx                               | TypeScript JSX     |         67 |          5 |         13 |         85 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartOperations.tsx                                | TypeScript JSX     |        107 |          7 |         24 |        138 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\CartSummary.tsx                                   | TypeScript JSX     |         48 |          4 |          9 |         61 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\FreeShippingIndicator.tsx                         | TypeScript JSX     |         13 |          1 |          2 |         16 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\cart\index.ts                                          | TypeScript         |         10 |          0 |          1 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\CategoryList.tsx                            | TypeScript JSX     |         63 |          2 |          7 |         72 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\CategorySelector.tsx                        | TypeScript JSX     |        126 |         80 |         25 |        231 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\ParentSubCategoriesTree.tsx                 | TypeScript JSX     |        259 |          7 |         21 |        287 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\categories\index.ts                                    | TypeScript         |          3 |          0 |          0 |          3 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\AdditionalForm.tsx                             | TypeScript JSX     |        257 |          5 |         31 |        293 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\CopyrightForm.tsx                              | TypeScript JSX     |         49 |          0 |          4 |         53 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\DesignItemForm.tsx                             | TypeScript JSX     |        244 |          4 |         20 |        268 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\RedirectForm.tsx                               | TypeScript JSX     |         73 |          1 |          6 |         80 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\SloganFooterForm.tsx                           | TypeScript JSX     |         59 |          1 |          4 |         64 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\StoreBrandForm.tsx                             | TypeScript JSX     |        140 |         10 |         10 |        160 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\StoreCategoryForm.tsx                          | TypeScript JSX     |        152 |         10 |         11 |        173 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\SupportForm.tsx                                | TypeScript JSX     |         85 |          0 |          6 |         91 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\designs\index.ts                                       | TypeScript         |          8 |          0 |          1 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyComment.tsx                             | TypeScript JSX     |          3 |          0 |          1 |          4 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyCommentsList.tsx                        | TypeScript JSX     |          9 |          0 |          3 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyCustomList.tsx                          | TypeScript JSX     |          3 |          0 |          1 |          4 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyOrdersList.tsx                          | TypeScript JSX     |          9 |          0 |          3 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptySearchList.tsx                          | TypeScript JSX     |         16 |          0 |          3 |         19 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyTicketList.tsx                          | TypeScript JSX     |          9 |          0 |          3 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\EmptyUsersList.tsx                           | TypeScript JSX     |          9 |          0 |          2 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\emptyList\index.ts                                     | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\feature\index.ts                                       | TypeScript         |          0 |          0 |          1 |          1 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ArticleForm.tsx                                   | TypeScript JSX     |        573 |         76 |         40 |        689 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\DesignForm.tsx                                    | TypeScript JSX     |          0 |        556 |         58 |        614 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\LoginForm.tsx                                     | TypeScript JSX     |        118 |         25 |         18 |        161 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\LoginUserForm.tsx                                 | TypeScript JSX     |        106 |          2 |         19 |        127 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\MainPageAdsForm.tsx                               | TypeScript JSX     |        822 |         44 |         62 |        928 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ProductForm.tsx                                   | TypeScript JSX     |      1,821 |         56 |        130 |      2,007 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ProductFormEdit.tsx                               | TypeScript JSX     |      2,337 |        228 |        186 |      2,751 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\ProfileForm.tsx                                   | TypeScript JSX     |        353 |          4 |         14 |        371 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\RoleForm.tsx                                      | TypeScript JSX     |        240 |         14 |         18 |        272 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\TextEditor.tsx                                    | TypeScript JSX     |        356 |        701 |         39 |      1,096 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\TicketForm.tsx                                    | TypeScript JSX     |        570 |         76 |         40 |        686 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\UserForm.tsx                                      | TypeScript JSX     |      1,078 |         51 |         58 |      1,187 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\UserTicketForm.tsx                                | TypeScript JSX     |        573 |         35 |         39 |        647 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\VerifyCodeForm.tsx                                | TypeScript JSX     |        143 |         13 |         16 |        172 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\form\index.ts                                          | TypeScript         |         10 |          1 |          1 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\AddressListModal.tsx                            | TypeScript JSX     |        106 |          1 |          5 |        112 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\AddressModal.tsx                                | TypeScript JSX     |        233 |          3 |         27 |        263 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\AdminReviewModal.tsx                            | TypeScript JSX     |        168 |          2 |         11 |        181 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\BirthdateModal.tsx                              | TypeScript JSX     |         49 |          0 |          8 |         57 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\BrandModal.tsx                                  | TypeScript JSX     |        358 |         10 |         24 |        392 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\BrandUpdateModal.tsx                            | TypeScript JSX     |        272 |          2 |         24 |        298 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\CanceledModal.tsx                               | TypeScript JSX     |        181 |          4 |         11 |        196 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\CategoryModal.tsx                               | TypeScript JSX     |        256 |         14 |         25 |        295 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\CategoryUpdateModal.tsx                         | TypeScript JSX     |        302 |         28 |         29 |        359 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ConfirmDeleteModal.tsx                          | TypeScript JSX     |         59 |          2 |          8 |         69 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ConfirmUpdateModal.tsx                          | TypeScript JSX     |         37 |         21 |          7 |         65 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FeatureModal.tsx                                | TypeScript JSX     |        169 |          2 |         11 |        182 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FeatureValueModal.tsx                           | TypeScript JSX     |        212 |          0 |         14 |        226 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FeaturesModal.tsx                               | TypeScript JSX     |        165 |          4 |         11 |        180 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\FilterModal.tsx                                 | TypeScript JSX     |         34 |          3 |          9 |         46 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ProductScaleModal.tsx                           | TypeScript JSX     |         70 |          9 |          5 |         84 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\RedirectToLogin.tsx                             | TypeScript JSX     |         33 |          4 |          8 |         45 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReturnedModal.tsx                               | TypeScript JSX     |        181 |          4 |         11 |        196 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewArticleModal.tsx                          | TypeScript JSX     |        117 |         10 |         20 |        147 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewEditModal.tsx                             | TypeScript JSX     |        375 |         14 |         37 |        426 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewModal.tsx                                 | TypeScript JSX     |        330 |         14 |         37 |        381 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SearchModal.tsx                                 | TypeScript JSX     |        127 |         13 |         15 |        155 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SizeModal.tsx                                   | TypeScript JSX     |        188 |          4 |         12 |        204 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SizesModal.tsx                                  | TypeScript JSX     |        113 |          4 |         11 |        128 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategoryModal.tsx                            | TypeScript JSX     |        323 |         14 |         25 |        362 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategorySizesModal.tsx                       | TypeScript JSX     |        337 |         15 |         34 |        386 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategorySizesUpdateModal.tsx                 | TypeScript JSX     |        348 |         23 |         37 |        408 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SubCategoryUpdateModal.tsx                      | TypeScript JSX     |        337 |         15 |         30 |        382 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\TicketMessageModal.tsx                          | TypeScript JSX     |        193 |         17 |         25 |        235 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\TicketTypeModal.tsx                             | TypeScript JSX     |        201 |          4 |         12 |        217 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\UsersDetailModal.tsx                            | TypeScript JSX     |        107 |          7 |         15 |        129 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\index.ts                                        | TypeScript         |         28 |          0 |          1 |         29 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\navigation\Pagination.tsx                              | TypeScript JSX     |        118 |          4 |         15 |        137 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\navigation\index.ts                                    | TypeScript         |          1 |          0 |          1 |          2 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\OrderCard.tsx                                    | TypeScript JSX     |        828 |        113 |         53 |        994 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\Orders.tsx                                       | TypeScript JSX     |         78 |          5 |         14 |         97 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\OrdersTable.tsx                                  | TypeScript JSX     |         50 |          2 |          7 |         59 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\order\index.ts                                         | TypeScript         |          3 |          0 |          1 |          4 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\PriceRange.tsx                                 | TypeScript JSX     |         87 |          3 |          7 |         97 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductBreadcrumb.tsx                          | TypeScript JSX     |        108 |          1 |          8 |        117 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductCard.tsx                                | TypeScript JSX     |         74 |         76 |         18 |        168 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductDescription.tsx                         | TypeScript JSX     |         20 |         16 |          7 |         43 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductDiscountTag.tsx                         | TypeScript JSX     |         31 |          0 |          2 |         33 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductFilterControls.tsx                      | TypeScript JSX     |        243 |         56 |         30 |        329 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductGallery.tsx                             | TypeScript JSX     |        135 |          6 |         10 |        151 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductInfo.tsx                                | TypeScript JSX     |         20 |          2 |          4 |         26 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductPriceDisplay.tsx                        | TypeScript JSX     |         38 |          3 |          5 |         46 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSort.tsx                                | TypeScript JSX     |         69 |          3 |         13 |         85 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSpecialOffer.tsx                        | TypeScript JSX     |         14 |          2 |          5 |         21 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSpecificationList.tsx                   | TypeScript JSX     |         39 |          3 |          7 |         49 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductSubCategoriesList.tsx                   | TypeScript JSX     |         56 |          1 |          9 |         66 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductVariants\ProductColorSelector.tsx       | TypeScript JSX     |         29 |          4 |         11 |         44 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductVariants\ProductObjectValueSelector.tsx | TypeScript JSX     |         42 |          0 |          6 |         48 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\ProductVariants\ProductSizeSelector.tsx        | TypeScript JSX     |         29 |          4 |          9 |         42 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\StockInfo\ProductOutOfStockMessage.tsx         | TypeScript JSX     |         14 |          0 |          1 |         15 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\StockInfo\ProductStockIndicator.tsx            | TypeScript JSX     |         19 |          1 |          4 |         24 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\product\index.ts                                       | TypeScript         |         18 |          0 |          3 |         21 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewArticleCard.tsx                           | TypeScript JSX     |         24 |          2 |          7 |         33 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewArticleList.tsx                           | TypeScript JSX     |         55 |          4 |         11 |         70 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewCard.tsx                                  | TypeScript JSX     |        150 |         17 |         16 |        183 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewProductCard.tsx                           | TypeScript JSX     |         50 |          2 |          6 |         58 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewsList.tsx                                 | TypeScript JSX     |         59 |          4 |         10 |         73 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewsTable.tsx                                | TypeScript JSX     |         59 |          9 |          8 |         76 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\index.ts                                        | TypeScript         |          6 |          0 |          1 |          7 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\AddFeatureCombobox.tsx                | TypeScript JSX     |         74 |          0 |          7 |         81 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\ArticleCombobox.tsx                   | TypeScript JSX     |         88 |          0 |          9 |         97 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\BrandCombobox.tsx                     | TypeScript JSX     |         72 |          0 |          7 |         79 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\CategoryCombobox.tsx                  | TypeScript JSX     |         76 |          0 |          7 |         83 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\FeatureCombobox.tsx                   | TypeScript JSX     |        240 |          0 |         18 |        258 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\IsFakeCombobox.tsx                    | TypeScript JSX     |         71 |          0 |          9 |         80 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\ProductFeatureCombobox.tsx            | TypeScript JSX     |        124 |          0 |         10 |        134 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\ProductTypeCombobox.tsx               | TypeScript JSX     |         71 |          0 |          9 |         80 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\SelectParentCategoryCombobox.tsx      | TypeScript JSX     |         98 |          2 |          9 |        109 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\SizesCombobox.tsx                     | TypeScript JSX     |        104 |          0 |          9 |        113 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\StatusCombobox.tsx                    | TypeScript JSX     |         71 |          0 |          9 |         80 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\index.ts                              | TypeScript         |         10 |          0 |          0 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\services\ServiceList.tsx                               | TypeScript JSX     |         32 |          1 |          3 |         36 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\services\index.ts                                      | TypeScript         |          1 |          0 |          1 |          2 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\DashboardAdminAside.tsx                         | TypeScript JSX     |        470 |         20 |         23 |        513 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\DataStateDisplay.tsx                            | TypeScript JSX     |         49 |          2 |          7 |         58 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Drawer.tsx                                      | TypeScript JSX     |         74 |          0 |          5 |         79 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Footer.tsx                                      | TypeScript JSX     |        216 |          4 |         12 |        232 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\HandleResponse.tsx                              | TypeScript JSX     |         51 |          3 |         15 |         69 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Header.tsx                                      | TypeScript JSX     |        123 |          3 |          9 |        135 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\JalaliDatePicker.tsx                            | TypeScript JSX     |         27 |          0 |          3 |         30 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\MetaTags.tsx                                    | TypeScript JSX     |         18 |          0 |          4 |         22 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\Navbar.tsx                                      | TypeScript JSX     |        105 |        118 |         17 |        240 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\SideBar.tsx                                     | TypeScript JSX     |        116 |          7 |         10 |        133 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\UserProfileAside.tsx                            | TypeScript JSX     |         82 |          4 |          7 |         93 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\index.ts                                        | TypeScript         |         10 |          4 |          2 |         16 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\AddressSkeleton.tsx                           | TypeScript JSX     |         30 |          0 |          3 |         33 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\NavbarSkeleton.tsx                            | TypeScript JSX     |         11 |          0 |          2 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\OrderSkeleton.tsx                             | TypeScript JSX     |         17 |          0 |          2 |         19 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\ProductSkeleton.tsx                           | TypeScript JSX     |         26 |          0 |          2 |         28 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\ReveiwSkeleton.tsx                            | TypeScript JSX     |         15 |          0 |          2 |         17 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\SidebarSkeleton.tsx                           | TypeScript JSX     |         11 |          0 |          2 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\SubCategoriesSkeleton.tsx                     | TypeScript JSX     |         21 |          0 |          2 |         23 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\TableSkeleton.tsx                             | TypeScript JSX     |         10 |          0 |          2 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\skeleton\index.ts                                      | TypeScript         |          8 |          0 |          0 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\BestSeller.tsx                                 | TypeScript JSX     |        191 |          1 |         12 |        204 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\BrandSlider.tsx                                | TypeScript JSX     |         95 |          0 |          6 |        101 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\DiscountSlider.tsx                             | TypeScript JSX     |        190 |        191 |         19 |        400 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\LastSeenSlider.tsx                             | TypeScript JSX     |        168 |         11 |          9 |        188 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\MainSlider.tsx                                 | TypeScript JSX     |         65 |          4 |          9 |         78 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\NewSlider.tsx                                  | TypeScript JSX     |        197 |         19 |         14 |        230 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\ReadableArticlePlace.tsx                       | TypeScript JSX     |        101 |          0 |          6 |        107 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\RecentVisitedSlider.tsx                        | TypeScript JSX     |        205 |         19 |         14 |        238 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\SimilarProductsSlider.tsx                      | TypeScript JSX     |        213 |         19 |         14 |        246 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\sliders\index.ts                                       | TypeScript         |          9 |          0 |          1 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Alert.tsx                                           | TypeScript JSX     |         53 |          4 |          7 |         64 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\ArrowLink.tsx                                       | TypeScript JSX     |         16 |          2 |          6 |         24 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\BoxLink.tsx                                         | TypeScript JSX     |         43 |          3 |          7 |         53 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Buttons.tsx                                         | TypeScript JSX     |         31 |          2 |          8 |         41 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Checkbox.tsx                                        | TypeScript JSX     |         47 |          0 |          7 |         54 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Combobox.tsx                                        | TypeScript JSX     |         89 |          7 |         11 |        107 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\DisplayError.tsx                                    | TypeScript JSX     |         28 |          2 |          6 |         36 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\IconBtns.tsx                                        | TypeScript JSX     |         76 |          5 |         14 |         95 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Modal.tsx                                           | TypeScript JSX     |        122 |         10 |         19 |        151 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\PageContainer.tsx                                   | TypeScript JSX     |         52 |          3 |          4 |         59 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\ResponsiveImage.tsx                                 | TypeScript JSX     |         23 |          3 |          6 |         32 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\SelectBox.tsx                                       | TypeScript JSX     |         56 |          3 |          6 |         65 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\Skeleton.tsx                                        | TypeScript JSX     |         63 |          4 |         13 |         80 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\TextField.tsx                                       | TypeScript JSX     |        145 |         17 |         15 |        177 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\TextMarquee.tsx                                     | TypeScript JSX     |         25 |          0 |          3 |         28 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\index.ts                                            | TypeScript         |         18 |          4 |          3 |         25 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\FullInlineLoading.tsx                       | TypeScript JSX     |         68 |          1 |          3 |         72 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\FullScreenLoading.tsx                       | TypeScript JSX     |         12 |          1 |          2 |         15 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\InlineLoading.tsx                           | TypeScript JSX     |         68 |          1 |          0 |         69 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\ui\loading\PageTransitionLoading.tsx                   | TypeScript JSX     |         29 |          3 |          7 |         39 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\LogoutButton.tsx                                  | TypeScript JSX     |         42 |          1 |          5 |         48 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\ProtectedRouteWrapper.tsx                         | TypeScript JSX     |         35 |          5 |         10 |         50 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\UserAuthLinks.tsx                                 | TypeScript JSX     |        148 |          6 |          9 |        163 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\UserMenuDropdown.tsx                              | TypeScript JSX     |        105 |          4 |         13 |        122 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\user\index.ts                                          | TypeScript         |          4 |          0 |          1 |          5 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\configs\index.ts                                                  | TypeScript         |          4 |          0 |          2 |          6 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\checkTokenValidity.ts                                       | TypeScript         |         52 |          0 |          6 |         58 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\index.ts                                                    | TypeScript         |          7 |          1 |          2 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useChangeRoute.ts                                           | TypeScript         |         14 |          0 |          7 |         21 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useDebounce.ts                                              | TypeScript         |         12 |          0 |          6 |         18 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useDisclosure.ts                                            | TypeScript         |         14 |          0 |          6 |         20 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useDisclosureWithData.ts                                    | TypeScript         |         25 |          0 |          6 |         31 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useMediaQuery.ts                                            | TypeScript         |         15 |          0 |          5 |         20 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useRedux.ts                                                 | TypeScript         |          4 |          0 |          2 |          6 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\hooks\useUserInfo.ts                                              | TypeScript         |          0 |         10 |          3 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\index.ts                                                    | TypeScript         |        121 |          1 |          5 |        127 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\address.svg                                            | XML                |         70 |          0 |          1 |         71 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\amazing-typo.svg                                       | XML                |         19 |          0 |          1 |         20 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-coffe-bazzar.svg                                   | XML                |         29 |          0 |          1 |         30 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-google-play.svg                                    | XML                |         34 |          0 |          1 |         35 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-myket.svg                                          | XML                |         25 |          0 |          1 |         26 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\app-sib.svg                                            | XML                |         35 |          0 |          1 |         36 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\cash-on-delivery.svg                                   | XML                |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\days-return.svg                                        | XML                |          6 |          0 |          1 |          7 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\empty-cart.svg                                         | XML                |        128 |          0 |          1 |        129 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\empty-search.svg                                       | XML                |        140 |          0 |          1 |        141 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\express-delivery.svg                                   | XML                |         10 |          0 |          1 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\favorites-list-empty.svg                               | XML                |         55 |          0 |          1 |         56 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\freeShipping.svg                                       | XML                |         85 |          0 |          1 |         86 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\logo.svg                                               | XML                |         11 |          0 |          1 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\logoPersian.svg                                        | XML                |          3 |          0 |          1 |          4 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\order-empty.svg                                        | XML                |         76 |          0 |          1 |         77 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\original-products.svg                                  | XML                |          8 |          0 |          1 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\person.svg                                             | XML                |         12 |          1 |          0 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\specialSell.svg                                        | XML                |         12 |          0 |          1 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\support.svg                                            | XML                |         10 |          0 |          1 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\toman-red.svg                                          | XML                |         47 |          0 |          2 |         49 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\icons\svgs\toman.svg                                              | XML                |         49 |          0 |          3 |         52 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\middlewares\withUser.ts                                           | TypeScript         |          0 |         25 |          9 |         34 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\404\index.tsx                                               | TypeScript JSX     |         24 |          1 |          4 |         29 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\_app.tsx                                                    | TypeScript JSX     |         95 |          1 |         12 |        108 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\_document.tsx                                               | TypeScript JSX     |         99 |          1 |          2 |        102 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\ads\index.tsx                                         | TypeScript JSX     |         19 |         14 |         11 |         44 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\ads\main\index.tsx                                    | TypeScript JSX     |         31 |         14 |          8 |         53 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\articles\create\index.tsx                             | TypeScript JSX     |         50 |          4 |          7 |         61 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\articles\edit\[id].tsx                                | TypeScript JSX     |         74 |          5 |         10 |         89 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\articles\index.tsx                                    | TypeScript JSX     |      1,095 |         51 |         40 |      1,186 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\authentication\login\index.tsx                        | TypeScript JSX     |         66 |          5 |         10 |         81 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\authentication\login\user\index.tsx                   | TypeScript JSX     |         59 |          9 |         10 |         78 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\authentication\login\verifyUser\index.tsx             | TypeScript JSX     |         87 |          5 |          9 |        101 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\categories\index.tsx                                  | TypeScript JSX     |         19 |          0 |          2 |         21 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-canceled\index.tsx              | TypeScript JSX     |        200 |         21 |          8 |        229 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-returned\index.tsx              | TypeScript JSX     |        203 |         21 |          9 |        233 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-ticket\index.tsx                | TypeScript JSX     |        187 |          4 |          8 |        199 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\department\department-ticket\list\index.tsx           | TypeScript JSX     |        206 |         21 |          6 |        233 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\design\footer\index.tsx                               | TypeScript JSX     |        541 |         28 |         54 |        623 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\design\index.tsx                                      | TypeScript JSX     |         25 |         14 |          8 |         47 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\design\siteItems\index.tsx                            | TypeScript JSX     |        242 |         11 |         26 |        279 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\index.tsx                                             | TypeScript JSX     |         32 |          0 |          5 |         37 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\canceled\index.tsx                             | TypeScript JSX     |        280 |          7 |         16 |        303 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\completed\index.tsx                            | TypeScript JSX     |        280 |          7 |         16 |        303 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\deleted\index.tsx                              | TypeScript JSX     |        378 |          7 |         20 |        405 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\edit\[id].tsx                                  | TypeScript JSX     |        254 |          6 |         26 |        286 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\index.tsx                                      | TypeScript JSX     |        279 |          7 |         16 |        302 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\new-order\index.tsx                            | TypeScript JSX     |        280 |          7 |         16 |        303 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\packing\index.tsx                              | TypeScript JSX     |        280 |          7 |         16 |        303 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\processing\index.tsx                           | TypeScript JSX     |        280 |          7 |         16 |        303 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\returned\index.tsx                             | TypeScript JSX     |        280 |          7 |         16 |        303 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\orders\sending\index.tsx                              | TypeScript JSX     |        280 |          7 |         16 |        303 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\brands\index.tsx                | TypeScript JSX     |        714 |         16 |         43 |        773 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\categories\index.tsx            | TypeScript JSX     |        344 |         24 |         26 |        394 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\categories\subCategories.tsx    | TypeScript JSX     |        357 |         17 |         24 |        398 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\features\featureValues.tsx      | TypeScript JSX     |        281 |          7 |         23 |        311 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\features\index.tsx              | TypeScript JSX     |        347 |          7 |         26 |        380 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\features\sizes.tsx              | TypeScript JSX     |        257 |          7 |         22 |        286 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\index.tsx                       | TypeScript JSX     |         17 |          0 |          1 |         18 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\product-configuration\jewelry\index.tsx               | TypeScript JSX     |         25 |          0 |          3 |         28 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\products\create\index.tsx                             | TypeScript JSX     |         51 |          4 |          7 |         62 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\products\edit\[id].tsx                                | TypeScript JSX     |         82 |          7 |         15 |        104 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\products\index.tsx                                    | TypeScript JSX     |      1,501 |         54 |         64 |      1,619 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\notifications\edit\[id].tsx          | TypeScript JSX     |        418 |         33 |         25 |        476 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\notifications\index.tsx              | TypeScript JSX     |        449 |         22 |         22 |        493 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\notifications\new\index.tsx          | TypeScript JSX     |        355 |         34 |         23 |        412 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\sms-list\edit\[id].tsx               | TypeScript JSX     |        416 |         34 |         24 |        474 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\sms-list\index.tsx                   | TypeScript JSX     |        680 |         43 |         26 |        749 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\sms-list\new\index.tsx               | TypeScript JSX     |        344 |         34 |         22 |        400 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\ticket\[id].tsx                      | TypeScript JSX     |        141 |         16 |          9 |        166 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\ticket\index.tsx                     | TypeScript JSX     |        741 |         49 |         31 |        821 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\messages\ticket\new\index.tsx                 | TypeScript JSX     |        350 |         24 |         21 |        395 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\review\index.tsx                              | TypeScript JSX     |        755 |          5 |         41 |        801 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\create\index.tsx                                | TypeScript JSX     |         48 |          3 |          7 |         58 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\customer\index.tsx                              | TypeScript JSX     |        864 |          9 |         58 |        931 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\edit\[id].tsx                                   | TypeScript JSX     |         80 |          5 |         10 |         95 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\index.tsx                                       | TypeScript JSX     |         43 |          2 |          6 |         51 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\personnel\index.tsx                             | TypeScript JSX     |        844 |         11 |         56 |        911 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\roles\edit\[id].tsx                             | TypeScript JSX     |         81 |          5 |          9 |         95 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\roles\index.tsx                                 | TypeScript JSX     |        601 |          8 |         32 |        641 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\roles\new\index.tsx                             | TypeScript JSX     |         55 |          3 |          7 |         65 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\users\supplier\index.tsx                              | TypeScript JSX     |        823 |          9 |         55 |        887 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\api\hello.ts                                                | TypeScript         |         10 |          1 |          3 |         14 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\articles\[slug].tsx                                         | TypeScript JSX     |        355 |          9 |         24 |        388 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\articles\index.tsx                                          | TypeScript JSX     |        307 |         11 |         20 |        338 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\authentication\login\index.tsx                              | TypeScript JSX     |         66 |          5 |         10 |         81 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\authentication\login\user\index.tsx                         | TypeScript JSX     |         59 |          9 |         10 |         78 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\authentication\login\verifyUser\index.tsx                   | TypeScript JSX     |         87 |          5 |          9 |        101 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\checkout\address-cart.tsx                                   | TypeScript JSX     |        246 |         10 |         18 |        274 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\checkout\cart.tsx                                           | TypeScript JSX     |        177 |         12 |         22 |        211 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\checkout\shipping.tsx                                       | TypeScript JSX     |        197 |         12 |         19 |        228 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\index.tsx                                                   | TypeScript JSX     |        294 |         72 |         20 |        386 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\products\[slug].tsx                                         | TypeScript JSX     |        549 |         62 |         42 |        653 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\products\index.tsx                                          | TypeScript JSX     |        223 |         18 |         19 |        260 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\address\index.tsx                                   | TypeScript JSX     |        156 |          4 |         10 |        170 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\index.tsx                                           | TypeScript JSX     |         90 |          0 |          6 |         96 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\lists\index.tsx                                     | TypeScript JSX     |         35 |          1 |          6 |         42 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\orders\index.tsx                                    | TypeScript JSX     |        213 |          9 |          8 |        230 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\reviews\index.tsx                                   | TypeScript JSX     |        116 |         10 |         20 |        146 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\tickets\[id].tsx                                    | TypeScript JSX     |        121 |          2 |          6 |        129 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\tickets\index.tsx                                   | TypeScript JSX     |         96 |          2 |          8 |        106 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\tickets\new\index.tsx                               | TypeScript JSX     |        212 |          4 |         17 |        233 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\user-history\index.tsx                              | TypeScript JSX     |         42 |         20 |          7 |         69 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\auth\apiSlice.ts                                         | TypeScript         |        252 |         10 |         15 |        277 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\auth\types.ts                                            | TypeScript         |         34 |          0 |          7 |         41 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\axiosConfig.ts                                           | TypeScript         |          9 |          2 |          2 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\baseApi.ts                                               | TypeScript         |         48 |          1 |          4 |         53 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\brand\apiSlice.ts                                        | TypeScript         |         92 |          0 |          8 |        100 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\brand\types.ts                                           | TypeScript         |          9 |          0 |          4 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\canceled\apiSlice.ts                                     | TypeScript         |        110 |          0 |         10 |        120 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\canceled\types.ts                                        | TypeScript         |         30 |          0 |          5 |         35 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\category\apiSlice.ts                                     | TypeScript         |        174 |          0 |         14 |        188 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\category\categoryServices.ts                             | TypeScript         |         11 |          0 |          1 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\category\types.ts                                        | TypeScript         |         32 |          0 |          5 |         37 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\apiSlice.ts                                       | TypeScript         |        533 |          0 |         43 |        576 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\articleServices.ts                                | TypeScript         |         19 |          0 |          3 |         22 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\getAllBanners.ts                                  | TypeScript         |         11 |          0 |          2 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\getFooterBanner.ts                                | TypeScript         |         11 |          0 |          2 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\getHeaderText.ts                                  | TypeScript         |         11 |          0 |          2 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\design\types.ts                                          | TypeScript         |         26 |          0 |          4 |         30 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\feature\apiSlice.ts                                      | TypeScript         |        142 |          0 |         13 |        155 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\feature\types.ts                                         | TypeScript         |         73 |          0 |         11 |         84 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\index.ts                                                 | TypeScript         |         19 |          0 |          1 |         20 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\order\apiSlice.ts                                        | TypeScript         |        154 |          0 |         14 |        168 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\order\types.ts                                           | TypeScript         |         50 |          0 |          5 |         55 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\apiSlice.ts                                      | TypeScript         |        106 |          0 |         11 |        117 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\productServices.ts                               | TypeScript         |         19 |          0 |          3 |         22 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\types.ts                                         | TypeScript         |         18 |          2 |          4 |         24 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\review\apiSlice.ts                                       | TypeScript         |        154 |          0 |         12 |        166 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\review\types.ts                                          | TypeScript         |         21 |          0 |          5 |         26 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\size\apiSlice.ts                                         | TypeScript         |        133 |          1 |         11 |        145 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\size\types.ts                                            | TypeScript         |         34 |          1 |          7 |         42 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\slider\apiSlice.ts                                       | TypeScript         |         41 |          0 |          3 |         44 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\slider\sliderService.ts                                  | TypeScript         |         12 |          0 |          1 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\slider\types.ts                                          | TypeScript         |          2 |          0 |          1 |          3 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\user\apiSlice.ts                                         | TypeScript         |        503 |         11 |         40 |        554 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\user\types.ts                                            | TypeScript         |         37 |          1 |          5 |         43 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\index.ts                                                    | TypeScript         |         43 |          2 |          6 |         51 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\alert.slice.ts                                       | TypeScript         |         26 |          0 |          7 |         33 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\auth.slice.ts                                        | TypeScript         |         99 |          0 |          7 |        106 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\cart.slice.ts                                        | TypeScript         |        143 |          0 |         23 |        166 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\design.slice.ts                                      | TypeScript         |         28 |          0 |          5 |         33 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\featureValues.slice.ts                               | TypeScript         |         24 |          0 |          5 |         29 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\headerText.slice.ts                                  | TypeScript         |         21 |          0 |          4 |         25 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\lastSeen.slice.ts                                    | TypeScript         |         34 |          0 |         10 |         44 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\objectValue.slice.ts                                 | TypeScript         |         24 |          6 |          6 |         36 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\productUpdate.slice.ts                               | TypeScript         |         18 |          0 |          5 |         23 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\sizes.slice.ts                                       | TypeScript         |         22 |          0 |          4 |         26 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\store\slices\stateString.slice.ts                                 | TypeScript         |         21 |          0 |          5 |         26 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\abstracts\base.css                                         | CSS                |         30 |          0 |          1 |         31 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\abstracts\global.css                                       | CSS                |         21 |          0 |          6 |         27 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\abstracts\index.css                                        | CSS                |          2 |          0 |          1 |          3 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\browser-styles.css                                         | CSS                |         31 |          9 |         10 |         50 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\components.css                                             | CSS                |         32 |          5 |          9 |         46 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\fonts\iransans.css                                         | CSS                |         68 |          0 |          6 |         74 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\fonts\iranyekan.css                                        | CSS                |         51 |          0 |          1 |         52 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\main.css                                                   | CSS                |        543 |        140 |         85 |        768 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\styles\swiper.css                                                 | CSS                |         97 |          0 |         17 |        114 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\AddressForm.type.ts                                         | TypeScript         |         18 |          0 |          1 |         19 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ApiError.type.ts                                            | TypeScript         |         11 |          0 |          1 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\IAddress.type.ts                                            | TypeScript         |         19 |          0 |          1 |         20 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ICart.type.ts                                               | TypeScript         |         29 |          0 |          3 |         32 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ICategoriesList.type.ts                                     | TypeScript         |          4 |          0 |          2 |          6 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\IHeaderText.type.ts                                         | TypeScript         |          5 |          0 |          1 |          6 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\IPagination.type.ts                                         | TypeScript         |         10 |          0 |          1 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ProfileForm.type.ts                                         | TypeScript         |         11 |          0 |          1 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\QueryParams.type.ts                                         | TypeScript         |          3 |          0 |          1 |          4 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\ServiceResponse.type.ts                                     | TypeScript         |          6 |          0 |          1 |          7 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\UserTypes.type.ts                                           | TypeScript         |          5 |          0 |          1 |          6 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\WithAddressModalProps.type.ts                               | TypeScript         |          8 |          0 |          1 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\forms.type.ts                                               | TypeScript         |        340 |          3 |         34 |        377 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\index.ts                                                    | TypeScript         |         43 |          0 |          3 |         46 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IArticle.type.ts                                     | TypeScript         |         23 |          0 |          2 |         25 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IArticleBanner.type.ts                               | TypeScript         |         14 |          0 |          1 |         15 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IArticleReview.type.ts                               | TypeScript         |          9 |          0 |          1 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IBanner.type.ts                                      | TypeScript         |         12 |          0 |          1 |         13 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IBrand.type.ts                                       | TypeScript         |         17 |          0 |          1 |         18 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ICategory.type.ts                                    | TypeScript         |         33 |          0 |          2 |         35 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IColumnFooter.type.ts                                | TypeScript         |          9 |          0 |          2 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ICopyright.type.ts                                   | TypeScript         |          6 |          0 |          1 |          7 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IDesignItem.type.ts                                  | TypeScript         |         15 |          0 |          1 |         16 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IFooterArticleColumn.type.ts                         | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IGeneralSetting.type.ts                              | TypeScript         |          8 |          0 |          1 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ILogoImages.type.ts                                  | TypeScript         |         13 |          0 |          1 |         14 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\INotification.type.ts                                | TypeScript         |         19 |          0 |          2 |         21 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IOrder.type.ts                                       | TypeScript         |         29 |          0 |          2 |         31 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IPermission.type.ts                                  | TypeScript         |         10 |          0 |          1 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IProduct.type.ts                                     | TypeScript         |        116 |          1 |         10 |        127 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IRedirects.type.ts                                   | TypeScript         |          8 |          0 |          1 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IReview.type.ts                                      | TypeScript         |         33 |          0 |          2 |         35 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IRole.type.ts                                        | TypeScript         |         10 |          0 |          2 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISlider.type.ts                                      | TypeScript         |         11 |          0 |          0 |         11 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISloganFooter.type.ts                                | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISmsMessage.type.ts                                  | TypeScript         |         15 |          0 |          2 |         17 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IStoreBrand.type.ts                                  | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IStoreCategory.type.ts                               | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISupport.type.ts                                     | TypeScript         |          8 |          0 |          1 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ITicket.type.ts                                      | TypeScript         |         14 |          0 |          2 |         16 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ITicketMessage.type.ts                               | TypeScript         |         15 |          0 |          1 |         16 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ITicketType.type.ts                                  | TypeScript         |          9 |          0 |          1 |         10 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IUser.type.ts                                        | TypeScript         |         22 |          0 |          2 |         24 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IUserSpecification.type.ts                           | TypeScript         |         60 |          2 |          4 |         66 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\UserInfo.type.ts                                     | TypeScript         |          7 |          0 |          1 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\addDaysToCurrentTime.ts                                     | TypeScript         |          6 |          0 |          2 |          8 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\constants.ts                                                | TypeScript         |         33 |          0 |          7 |         40 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\dataManipulation.ts                                         | TypeScript         |         36 |          0 |          4 |         40 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\generateQueryParams.ts                                      | TypeScript         |          9 |          0 |          3 |         12 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\getErrorMessage.ts                                          | TypeScript         |         16 |          0 |          3 |         19 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\getToken.ts                                                 | TypeScript         |          5 |          0 |          1 |          6 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\index.ts                                                    | TypeScript         |          8 |          0 |          1 |          9 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\stringFormatting.ts                                         | TypeScript         |         28 |          5 |          4 |         37 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\validation.ts                                               | TypeScript         |        313 |         25 |         30 |        368 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\tailwind.config.js                                                    | JavaScript         |         36 |          0 |          1 |         37 |
+| d:\Venda_Full\front-end\Venda-front2\vendamode\tsconfig.json                                                         | JSON with Comments |         24 |          0 |          1 |         25 |
+| Total                                                                                                                |                    |     69,105 |      4,642 |      4,920 |     78,667 |
++----------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -106,6 +106,7 @@ export type IReviewForm = {
   userId: string
   productId: string
   rating: number
+  status?: number
   positivePoints: {
     id: string
     title: string
@@ -116,6 +117,20 @@ export type IReviewForm = {
   }[]
   comment: string
   Thumbnail: File[]
+}
+
+export interface ISuggestionForm {
+  id?: string
+  productCode: string
+  expireTime: number
+}
+
+export interface IArticleReviewForm {
+  id?: string
+  userId: string
+  status?: number
+  comment: string
+  articleId: string
 }
 
 export interface ITicketMessageForm {
@@ -350,6 +365,7 @@ export interface ITicketUpdateStatus {
 }
 
 export interface INotificationForm {
+  id?: string
   userType: number
   roleId?: string
   userCode?: string
@@ -357,6 +373,8 @@ export interface INotificationForm {
   description: string
   scheduledDate?: string
   sendingTime: number
+  allRoles: boolean
+  towards: string
 }
 
 export interface ISmsMessageForm {
@@ -370,4 +388,14 @@ export interface ISmsMessageForm {
   sendingTime: number
   allRoles: boolean
   towards: string
+}
+
+export interface IEditPriceForm {
+  id?: string
+  categoryIds: string[]
+  isActive: boolean
+  productType: number
+  action: number
+  percentageValue: number
+  priceValue: number
 }

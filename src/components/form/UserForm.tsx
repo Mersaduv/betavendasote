@@ -348,7 +348,7 @@ const UserForm: React.FC<Props> = (props) => {
           shabaNumber: userSpecification.shabaNumber,
           note: userSpecification.note,
 
-          commissionType: userSpecification.commissionType !== null ? userSpecification.commissionType : null,
+          commissionType: userSpecification.commissionType !== null ? userSpecification.commissionType : 0,
           storeName: userSpecification.storeName,
           storeTelephone: userSpecification.storeTelephone,
           storeAddress: userSpecification.storeAddress,
@@ -370,16 +370,18 @@ const UserForm: React.FC<Props> = (props) => {
 
         const mainImageFile = await fetchImageAsFile(imageSrc?.imageUrl ?? '')
         const idImageFile = await fetchImageAsFile(userSpecification.idCardImageSrc?.imageUrl ?? '')
-        if (mainImageFile) {
+        console.log(idImageFile , "idImageFile");
+        console.log(userSpecification , "userSpecification");
+        if (imageSrc) {
           setSelectedUserFiles([mainImageFile])
         }
-        if (idImageFile) {
+        if (userSpecification.idCardImageSrc) {
           setSelectedUserIdFiles([idImageFile])
         }
         reset((prevState) => ({
           ...prevState,
           thumbnail: mainImageFile,
-          idCardThumbnail: idImageFile,
+          idCardThumbnail: userSpecification.idCardImageSrc ? idImageFile : null,
         }))
       }
     }

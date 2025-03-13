@@ -130,6 +130,7 @@ const EditSms: NextPage<Props> = () => {
     const selectedUserType = event.target.value
     setValue('userType', Number(selectedUserType))
     setUserType(selectedUserType)
+    setTowards('0')
   }
 
   const handleTowardsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -205,7 +206,7 @@ const EditSms: NextPage<Props> = () => {
 
         <main>
           <Head>
-            <title>پیامک جدید</title>
+            <title>ویرایش پیامک</title>
           </Head>
           <DashboardLayout>
             <section className="bg-[#f5f8fa] w-full h-screen">
@@ -213,7 +214,7 @@ const EditSms: NextPage<Props> = () => {
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex flex-1">
                     <div className="bg-white w-full rounded-md shadow-item">
-                      <h3 className="border-b p-6 text-gray-600 flex gap-2">پیامک جدید</h3>
+                      <h3 className="border-b p-6 text-gray-600 flex gap-2">ویرایش پیامک</h3>
 
                       <div className="flex flex-col">
                         <div className="flex px-10 py-6 pt-6 pb-0 flex-col xs:flex-row">
@@ -221,7 +222,9 @@ const EditSms: NextPage<Props> = () => {
                             htmlFor="subject"
                             className="flex items-center xs:py-0 pt-2 justify-center px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                           >
-                            <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" />
+                            <div className="w-5 h-5">
+                              <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" />
+                            </div>
                             <span className="whitespace-nowrap text-center w-[113px]">عنوان</span>
                           </label>
                           <input
@@ -378,11 +381,13 @@ const EditSms: NextPage<Props> = () => {
                                 htmlFor="date"
                                 className="flex items-center cursor-pointer justify-center  py px-3  mdx:rounded-l-none rounded-t-md mdx:rounded-md bg-[#abd7ff]  gap-1 mdx:w-[160px]"
                               >
-                                <img
-                                  className="w-5 h-5  opacity-50"
-                                  src="/assets/svgs/duotone/calendar-days.svg"
-                                  alt=""
-                                />
+                                <div className="w-5 h-5">
+                                  <img
+                                    className="w-5 h-5  opacity-50"
+                                    src="/assets/svgs/duotone/calendar-days.svg"
+                                    alt=""
+                                  />
+                                </div>
                                 <span className="whitespace-nowrap text-center w-[113px]">زمان انتشار</span>
                               </label>
 

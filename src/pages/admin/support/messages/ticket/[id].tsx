@@ -132,7 +132,7 @@ const SingleAdminTickets: NextPage = () => {
                       <div
                         className={`flex ${!message.isRecipient && 'flex-row-reverse'} justify-between items-center`}
                       >
-                        <div className="text-gray-500 text-sm">{message.user.fullName}</div>
+                        <div className="text-gray-500 text-sm farsi-digits">{message.user.fullName === ' ' ? message.user.mobileNumber : message.user.fullName }</div>
                         <div className="farsi-digits text-sm text-gray-700">
                           {moment(message.created).format('jYYYY/jMM/jDD HH:mm')}
                         </div>

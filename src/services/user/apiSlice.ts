@@ -346,6 +346,26 @@ export const userApiSlice = baseApi.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: 'SmsMessage', id: arg.id }],
     }),
 
+    getSingleNotification: builder.query<ServiceResponse<INotification>, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/user/notification/${id}`,
+        method: 'GET',
+      }),
+      providesTags: (result, error, arg) => [{ type: 'Notification', id: arg.id }],
+    }),
+
+    updateNotification: builder.mutation<ServiceResponse<string>, INotificationForm>({
+      query: (body) => ({
+        url: `/api/user/update-notification`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+        body,
+      }),
+      invalidatesTags: ['Notification'],
+    }),
+
     createSmsMessage: builder.mutation<ServiceResponse<string>, ISmsMessageForm>({
       query: (body) => ({
         url: '/api/user/sms-message',
@@ -528,4 +548,6 @@ export const {
   useDeleteSmsMessageMutation,
   useGetSingleSmsMessageQuery,
   useUpdateSmsMessageMutation,
+  useGetSingleNotificationQuery,
+  useUpdateNotificationMutation,
 } = userApiSlice

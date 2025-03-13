@@ -37,9 +37,7 @@ export const userFormValidationSchema = Yup.object().shape({
   secondAddress: Yup.string().optional(),
   birthDate: Yup.string().optional(),
   idNumber: Yup.string().optional(),
-  nationalCode: Yup.string()
-    .optional()
-    .matches(/^[0-9]{10}$/, 'کد ملی معتبر نیست'),
+  nationalCode: Yup.string().optional(),
   bankAccountNumber: Yup.string().optional(),
   shabaNumber: Yup.string().optional(),
   note: Yup.string().optional(),
@@ -111,6 +109,14 @@ export const categorySchema = Yup.object().shape({
 
 export const singleSchema = Yup.object().shape({
   name: Yup.string().required('مقدار نباید خالی باشد'),
+})
+
+export const suggestionSchema = Yup.object().shape({
+  id: Yup.string().optional(),
+  productCode: Yup.string().required('کد محصول الزامی است'),
+  expireTime: Yup.number()
+    .typeError('مدت زمان الزامی است')
+    .required('مدت زمان الزامی است'),
 })
 
 export const brandSchema = Yup.object().shape({
@@ -209,8 +215,14 @@ export const reviewSchema = Yup.object().shape({
       title: Yup.string(),
     })
   ),
-  comment: Yup.string().required('نظر الزامی است').min(2, 'نظر باید حداقل 2 کاراکتر باشد'),
+  comment: Yup.string().required('نظر الزامی است'),
   Thumbnail: Yup.mixed(),
+})
+
+export const articleReviewSchema = Yup.object().shape({
+  id: Yup.string(),
+  comment: Yup.string().required('نظر الزامی است'),
+  articleId: Yup.string(),
 })
 
 export const ticketMessageSchema = Yup.object().shape({
@@ -366,4 +378,29 @@ export const profileFormSchema = Yup.object().shape({
 export const textMarqueeSchema = Yup.object().shape({
   name: Yup.string().optional(),
   isActive: Yup.boolean().required(),
+})
+
+
+export const editPriceFormValidationSchema = Yup.object().shape({
+  categoryIds: Yup.array().of(Yup.string()).required('دسته بندی الزامی است'),
+  productType: Yup.number()
+    .required('نوع محصول الزامی است')
+    .test('not-zero', 'نوع محصول الزامی است', (value) => value !== 0),
+  action: Yup.number()
+    .required('عملیات الزامی است')
+    .test('not-zero', 'نوع محصول الزامی است', (value) => value !== 0),
+  percentageValue: Yup.number()
+    .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+    .when('action', {
+      is: (action: number) => action === 1 || action === 3,
+      then: (schema) => schema.required('درصد الزامی است'),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  priceValue: Yup.number()
+    .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+    .when('action', {
+      is: (action: number) => action === 2 || action === 4,
+      then: (schema) => schema.required('قیمت الزامی است'),
+      otherwise: (schema) => schema.notRequired(),
+    }),
 })
