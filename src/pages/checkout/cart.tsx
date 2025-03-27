@@ -143,7 +143,7 @@ const Cart: NextPage = () => {
                 </div>
               </button>
 
-              <button className=" bg-white w-[93px] ring-0 border-none outline-none">
+              <button className="bg-white w-[93px] ring-0 border-none outline-none">
                 <div className="flex flex-col items-center  ring-0 border-none outline-none">
                   <div
                     className={classNames(

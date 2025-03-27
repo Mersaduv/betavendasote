@@ -399,3 +399,36 @@ export interface IEditPriceForm {
   percentageValue: number
   priceValue: number
 }
+
+export interface ICostsForm {
+  id?:string
+  giftWrapped:number
+  deliveryCost:number
+}
+
+export interface IJewelryForm {
+  id?: string
+  percentageTax?: number
+  categoryId?: string
+  gold18KPrice?: number
+  gold24KPrice?: number
+  priceUpdateSchedule?: string
+}
+
+export interface ICouponForm {
+  id?: string
+  couponCode?: string
+  limit?: number
+  startDate?: string
+  endDate?: string
+  description?: string
+  discountRate?: number
+  minOrderAmount?: number
+  maxDiscountAmount?: number
+  discountType?: string
+  isPublic?: boolean
+  isFreeShipping?: boolean
+  isActive?: boolean
+  excludeDiscountedProducts?: boolean
+  notUsableWithOtherCoupons?: boolean
+}

@@ -6,6 +6,7 @@ import { IPermission } from '@/types'
 
 interface TabDashboardLayoutProps {
   children: ReactNode
+  jewelry?: boolean
 }
 
 const tabs = [
@@ -15,7 +16,7 @@ const tabs = [
   { path: '/admin/product-configuration/jewelry', label: 'زیورالات' },
 ]
 
-const TabDashboardLayout: React.FC<TabDashboardLayoutProps> = ({ children }) => {
+const TabDashboardLayout: React.FC<TabDashboardLayoutProps> = ({ children, jewelry }) => {
   const router = useRouter()
   const { pathname } = router
   const [permissions, setPermissions] = useState<IPermission[] | undefined>()
@@ -102,7 +103,7 @@ const TabDashboardLayout: React.FC<TabDashboardLayoutProps> = ({ children }) => 
         </div>
       </nav>
       {/* Page Content */}
-      <div className="mt-[88px] mb-4 overflow-auto rounded-lg shadow-item mx-3 bg-white">
+      <div className={`mt-[88px] mb-4 rounded-lg shadow-item mx-3 bg-white ${jewelry ? '' : 'overflow-auto'}`}>
         {children}
       </div>
     </div>

@@ -98,7 +98,6 @@ const CategorySelector: React.FC<Props> = (props) => {
                   type="checkbox"
                   checked={selectedCategories.categorySelected?.id === category.id}
                   onChange={() => handleCheckboxChange(category)}
-                  // disabled={category.childCategories && category.childCategories.length > 0}
                   disabled={!category.isActiveProduct}
                 />
                 {category.name}

@@ -6,6 +6,7 @@ import { IPermission } from '@/types'
 
 interface AmountAndCostTabsDashboardLayoutProps {
   children: ReactNode
+  isEditPrice?: boolean
 }
 
 const tabs = [
@@ -13,32 +14,34 @@ const tabs = [
   { paths: ['/admin/amount-and-cost/costs'], label: 'هزینه ها' },
 ]
 
+const AmountAndCostTabsDashboardLayout: React.FC<AmountAndCostTabsDashboardLayoutProps> = ({
+  children,
+  isEditPrice,
+}) => {
+  const router = useRouter()
+  const { pathname } = router
+  const [permissions, setPermissions] = useState<IPermission[] | undefined>()
 
-const AmountAndCostTabsDashboardLayout: React.FC<AmountAndCostTabsDashboardLayoutProps> = ({ children }) => {
-  const router = useRouter();
-  const { pathname } = router;
-  const [permissions, setPermissions] = useState<IPermission[] | undefined>();
-
-  const { data: userData } = useGetUserInfoMeQuery();
+  const { data: userData } = useGetUserInfoMeQuery()
 
   useEffect(() => {
     if (userData?.data?.userSpecification?.role?.permissions) {
-      setPermissions(userData.data.userSpecification.role.permissions);
+      setPermissions(userData.data.userSpecification.role.permissions)
     }
-  }, [userData]);
+  }, [userData])
 
   const handleTabClick = useCallback(
     (path: string) => {
       router.push(path).catch((error) => {
-        console.error('Failed to navigate:', error);
-      });
+        console.error('Failed to navigate:', error)
+      })
     },
     [router]
-  );
+  )
 
   const filteredTabs = useMemo(() => {
-    return tabs.filter((tab) => permissions?.some((permission) => permission.name === tab.label));
-  }, [permissions]);
+    return tabs.filter((tab) => permissions?.some((permission) => permission.name === tab.label))
+  }, [permissions])
 
   const renderedTabs = useMemo(
     () =>
@@ -47,8 +50,8 @@ const AmountAndCostTabsDashboardLayout: React.FC<AmountAndCostTabsDashboardLayou
           key={tab.paths[0]}
           href={tab.paths[0]}
           onClick={(e) => {
-            e.preventDefault();
-            handleTabClick(tab.paths[0]);
+            e.preventDefault()
+            handleTabClick(tab.paths[0])
           }}
           role="button"
           tabIndex={0}
@@ -65,24 +68,22 @@ const AmountAndCostTabsDashboardLayout: React.FC<AmountAndCostTabsDashboardLayou
         </a>
       )),
     [handleTabClick, pathname, filteredTabs]
-  );
+  )
 
   useEffect(() => {
-    const currentTabHasPermission = filteredTabs.some((tab) =>
-      tab.paths.some((p) => pathname.startsWith(p))
-    );
+    const currentTabHasPermission = filteredTabs.some((tab) => tab.paths.some((p) => pathname.startsWith(p)))
 
     if (!currentTabHasPermission && filteredTabs.length > 0) {
-      router.push(filteredTabs[0].paths[0]);
+      router.push(filteredTabs[0].paths[0])
     }
-  }, [pathname, filteredTabs, router]);
+  }, [pathname, filteredTabs, router])
 
   if (filteredTabs.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-gray-500">شما دسترسی به این بخش را ندارید</p>
       </div>
-    );
+    )
   }
 
   return (
@@ -92,9 +93,9 @@ const AmountAndCostTabsDashboardLayout: React.FC<AmountAndCostTabsDashboardLayou
           {renderedTabs}
         </div>
       </nav>
-      <div className="mt-[88px] mb-4 rounded-lg shadow-item mx-3 bg-white">{children}</div>
+      <div className={`mt-[88px] mb-4 mx-3 ${isEditPrice ? 'rounded-lg shadow-item bg-white' : ''}`}>{children}</div>
     </div>
-  );
-};
+  )
+}
 
-export default AmountAndCostTabsDashboardLayout;
+export default AmountAndCostTabsDashboardLayout

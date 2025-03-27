@@ -7,6 +7,7 @@ import { BoxLink } from '@/components/ui'
 import { LogoutButton } from '@/components/user'
 import { useGetUserInfoMeQuery, useGetUserInfoQuery } from '@/services'
 import { user2, user3 } from '@/icons'
+import { IoNotificationsOutline } from 'react-icons/io5'
 export const profilePaths = [
   {
     name: 'حساب کاربری',
@@ -22,6 +23,11 @@ export const profilePaths = [
     name: 'آدرس‌ها',
     Icon: Location,
     path: '/profile/address',
+  },
+  {
+    name: 'اعلانات',
+    Icon: IoNotificationsOutline,
+    path: '/profile/notifications',
   },
   {
     name: 'علاقه مندی ها',
@@ -49,7 +55,7 @@ function UserProfileAside() {
   // ? Get UserInfo
   // const { userInfo, isLoading } = useUserInfo()
   const { data, isLoading } = useGetUserInfoMeQuery()
-  
+
   // ? Render(s)
   return (
     <aside className="sticky mt-6 md:rounded-md md:pt-4 md:top-[136px] w-[300px]">

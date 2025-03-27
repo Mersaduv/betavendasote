@@ -3,8 +3,10 @@ import { formatNumber } from '@/utils'
 import { Button } from '@/components/ui'
 import { Toman, TomanRed } from '@/icons'
 
-import { useAppSelector } from '@/hooks'
+import { useAppDispatch, useAppSelector } from '@/hooks'
 import { digitsEnToFa } from '@persian-tools/persian-tools'
+import { useGetCostsQuery } from '@/services'
+import { setGiftWrapped } from '@/store'
 
 interface Props {
   address?: boolean
@@ -15,9 +17,17 @@ interface Props {
 const CartSummary: React.FC<Props> = (props) => {
   // ? Porps
   const { handleRoute, cart, address } = props
-
+  const dispatch = useAppDispatch()
   // ? Store
-  const { totalItems, totalPrice, totalDiscount } = useAppSelector((state) => state.cart)
+  const { totalItems, totalPrice, totalDiscount, isGiftWrapped } = useAppSelector((state) => state.cart)
+
+  // ? Queries
+  const { data: costsData } = useGetCostsQuery()
+
+  // ? Handlers
+  const handleIsGiftWrapped = () => {
+    dispatch(setGiftWrapped({ isGiftWrapped: !isGiftWrapped }))
+  }
 
   // ? Render(s)
   return (
@@ -36,20 +46,38 @@ const CartSummary: React.FC<Props> = (props) => {
           <div className="flex-center">وابسته به آدرس </div>
         </div>
       )}
+      {address && (
+        <div className="flex justify-between">
+          <div>
+            <span className="text-sm text-gray-500 font-normal">هزینه کادوپیچ</span>
+            <input
+              className="appearance-none mr-2 checked:bg-sky-500 border focus:ring-offset-0 focus:outline-offset-0 focus:outline-0 focus:ring-0 rounded text-xl w-4 h-4"
+              type="checkbox"
+              checked={isGiftWrapped}
+              onChange={handleIsGiftWrapped}
+            />
+          </div>
+          {isGiftWrapped && (
+            <div className="flex-center farsi-digits">{formatNumber(costsData?.data?.giftWrapped || 0)} تومان</div>
+          )}
+        </div>
+      )}
       <div className="flex justify-between">
         <span className="text-sm text-gray-500 font-normal">جمع مبلغ سبد خرید</span>
         <div className="flex-center gap-1">
-          <span className="farsi-digits text-sm">{digitsEnToFa(formatNumber(totalPrice - totalDiscount))}</span>
+          <span className="farsi-digits text-sm font-medium">
+            {digitsEnToFa(formatNumber(totalPrice - totalDiscount))}
+          </span>
           تومان{' '}
         </div>
       </div>
       {address && (
-        <Button onClick={handleRoute} className="hidden w-full md:block hover:text-gray-800">
+        <Button onClick={handleRoute} className="hidden w-full md:block">
           تایید اطلاعات و ادامه
         </Button>
       )}
       {cart && (
-        <Button onClick={handleRoute} className="hidden w-full md:block hover:text-gray-800">
+        <Button onClick={handleRoute} className="hidden w-full md:block">
           ثبت و ادامه
         </Button>
       )}

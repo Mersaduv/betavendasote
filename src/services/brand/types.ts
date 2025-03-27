@@ -1,4 +1,4 @@
-import { IBrand, IBrandForm, IPagination, QueryParams, ServiceResponse } from '@/types'
+import { IBrand, IBrandForm, ICoupon, IPagination, QueryParams, ServiceResponse } from '@/types'
 
 export type MsgResult = ServiceResponse<boolean>
 export type IdQuery = { id: string }

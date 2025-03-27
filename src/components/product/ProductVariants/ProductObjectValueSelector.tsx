@@ -31,7 +31,7 @@ const ProductObjectValueSelector: React.FC<Props> = (props) => {
       {objectValues.map((val) => (
         <button
           type="button"
-          onClick={() => handleClicked({ id: val.id, name: val.title }, feature?.id, feature?.title)}
+          onClick={() => feature?.id && feature?.title && handleClicked({ id: val.id, name: val.title }, feature.id, feature.title)}
           key={val.id}
           className={`border cursor-pointer text-sm whitespace-nowrap font-normal flex pt-0.5 items-center justify-center px-4 rounded-md text-gray-500 border-gray-400 h-8 ${
             selectedValue === val.id ? 'bg-[#686868] text-white' : ''

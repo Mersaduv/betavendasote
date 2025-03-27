@@ -135,14 +135,14 @@ const SingleProduct: NextPage<Props> = (props) => {
     }
     if (product?.productFeatureInfo?.featureValueInfos?.length! > 0) {
       product?.productFeatureInfo?.featureValueInfos?.forEach((feature) => {
-        if (feature?.value?.length! > 0) {
+        if (feature?.value && feature.value.length > 0) {
           const val = feature.value[0] // اولین مقدار موجود برای
           dispatch(
             setTempObjectValue2({
               id: feature.id,
               title: feature.title,
-              value: [val],
-            } as IObjectValue)
+              value: [{ id: val.id, name: val.name }],
+            })
           )
         }
       })

@@ -100,6 +100,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
       inStock: '1',
       pageSize: 15,
       discount: true,
+      suggestion: true,
       isActive: true,
       // sortBy: 'LastUpdated',
       // sort: "desc",

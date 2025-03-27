@@ -272,7 +272,11 @@ const ProductForm: React.FC<Props> = (props) => {
 
   // ? Queries
   //*   Get Brands
-  const { data: brandData, refetch: refetchBrandData } = useGetBrandsQuery({ page: 1, pageSize: 200 })
+  const { data: brandData, refetch: refetchBrandData } = useGetBrandsQuery({
+    page: 1,
+    pageSize: 200,
+    categoryId: selectedCategories?.categorySelected?.id,
+  })
 
   // ? Re-Renders
   //*   Select Category To Fetch Details
@@ -691,7 +695,7 @@ const ProductForm: React.FC<Props> = (props) => {
               <h3 className="border-b p-6 text-gray-600">محصول جدید</h3>
               <div className="flex px-10 py-6 pb-4 flex-col xs:flex-row">
                 <label
-                  htmlFor="title"
+                  htmlFor="productType"
                   className="flex items-center justify-center xs:py-0 py-2  rounded-l-none rounded-md bg-[#f5f8fa]  gap-1 w-[160px]"
                 >
                   {/* <img className="w-5 h-5" src="/assets/svgs/duotone/barcode.svg" alt="" /> */}
@@ -749,7 +753,7 @@ const ProductForm: React.FC<Props> = (props) => {
               </div>
               <div className="flex px-10 py-10 pt-6 flex-col xs:flex-row">
                 <label
-                  htmlFor="title"
+                  htmlFor="isActive"
                   className="flex items-center justify-center xs:py-0 py-2 px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                 >
                   <img className="w-5 h-5" src="/assets/svgs/duotone/eye.svg" alt="" />

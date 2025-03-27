@@ -92,7 +92,7 @@ const ProductBreadcrumb: React.FC<Props> = ({
                   >
                     {category.name}
                   </Link>
-                  {index < categoryLevelProductList?.parentCategories?.length - 1 && '>'}
+                  {categoryLevelProductList?.parentCategories && index < categoryLevelProductList?.parentCategories?.length - 1 && '>'}
                 </div>
               ))}
               {categoryLevels?.parentCategories?.length !== 0 && '>'}

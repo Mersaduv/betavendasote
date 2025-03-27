@@ -118,7 +118,7 @@ const profileData: ProfilePath[] = [
       },
       {
         id: 23,
-        name: 'کوپن تخفیف',
+        name: 'تخفیفات',
         Icon: TbPointFilled,
         path: '/admin/ads/coupon',
       },
@@ -251,7 +251,6 @@ export default function DashboardAdminAside(props: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   const [permissions, setPermissions] = useState<IPermission[]>()
-  console.log(userData, 'userData')
 
   useEffect(() => {
     if (userData?.data?.userSpecification.role && userData?.data?.userSpecification.role.permissions) {

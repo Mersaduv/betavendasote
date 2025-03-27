@@ -13,6 +13,7 @@ import type {
   IdAndQuery,
   IdQuery,
   MsgResult,
+  UpdateCategoryBrands,
   UpdateCategoryFeature,
   UpdateCategoryQuery,
 } from './types'
@@ -168,7 +169,21 @@ export const categoryApiSlice = baseApi.injectEndpoints({
         url: `/api/category/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Category',"Article"],
+      invalidatesTags: ['Category', 'Article'],
+    }),
+
+    updateCategoryBrands: builder.mutation<MsgResult, UpdateCategoryBrands>({
+      query: (data) => {
+        return {
+          url: '/api/category/category-brands',
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      },
+      invalidatesTags: ['Category'],
     }),
   }),
 })
@@ -184,4 +199,5 @@ export const {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
+  useUpdateCategoryBrandsMutation,
 } = categoryApiSlice

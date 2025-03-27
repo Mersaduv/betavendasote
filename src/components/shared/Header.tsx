@@ -9,10 +9,11 @@ import { Sidebar, Navbar } from '@/components/shared'
 import { useEffect, useState } from 'react'
 import TextMarquee from '../ui/TextMarquee'
 import { useAppSelector } from '@/hooks'
-import { useGetDesignItemsQuery, useGetStoreCategoriesQuery } from '@/services'
+import { useGetDesignItemsQuery, useGetNotificationsQuery, useGetStoreCategoriesQuery } from '@/services'
+import { IoNotificationsOutline } from 'react-icons/io5'
 const Header = () => {
   const [isShowSearch, setIsShowSearch] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false) // state برای وضعیت اسکرول
+  const [isScrolled, setIsScrolled] = useState(false)
   const { logoImages } = useAppSelector((state) => state.design)
 
   const {
@@ -21,10 +22,15 @@ const Header = () => {
     isError: isErrorDesignItems,
   } = useGetDesignItemsQuery()
 
+  const { data: notificationData } = useGetNotificationsQuery({
+    pageSize: 9999,
+    isRead: 'false',
+  })
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      setIsScrolled(scrollTop > 0) // اگر اسکرول بیشتر از صفر باشد، حالت اسکرول فعال می‌شود
+      setIsScrolled(scrollTop > 0)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -57,7 +63,18 @@ const Header = () => {
                 <SearchModal />
               </div>
               <div className="inline-flex items-center gap-x-4">
-                <CartDisplay />
+                <div className="flex gap-4 items-center">
+                  <Link href={`/profile/notifications`} className="relative dropdown__button cursor-pointer">
+                    {notificationData?.data?.totalCount === 0 ? null : (
+                      <span className="farsi-digits absolute bottom-[22px] left-5 h-5 w-5 rounded-md bg-[#e90089] p-0.5 text-center text-xs text-white outline outline-2">
+                        {notificationData?.data?.totalCount}
+                      </span>
+                    )}
+
+                    <IoNotificationsOutline className="icon h-6 w-6 text-gray-500" />
+                  </Link>
+                  <CartDisplay />
+                </div>
                 <span className="hidden h-8 w-0.5 bg-gray-300 lg:block" />
                 <UserAuthLinks />
               </div>

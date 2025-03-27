@@ -16,6 +16,8 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   isCenter?: boolean
   isRequire?: boolean
   isPercentageValue?:boolean
+  isDark?:boolean
+  isRequireStar?:boolean
 }
 interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   classStyle?: string | null
@@ -40,7 +42,9 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
     isPercentageValue,
     type = 'text',
     control,
+    isDark,
     disabled,
+    isRequireStar,
     ...restProps
   } = props
 
@@ -109,17 +113,18 @@ const TextField = forwardRef<HTMLInputElement, Props>((props, ref) => {
         <div className={`${isPercentageValue && "flex-1"}`}>
           {label && (
             <label className={`${isUserForm ? 'mb-1.5' : 'mb-3'} block text-gray-700 md:min-w-max`} htmlFor={name}>
-              {label} {isRequire && <span className="text-red-600 font-bold">*</span>}
+              {label} {isRequireStar && <span className="text-red-600 font-bold">*</span>}
             </label>
           )}
+          {/* {isRequireStar && <span className="text-red-600 font-bold">*</span>} */}
           <input
             className={`block ${
               isBirthDay && 'border-l-0 rounded-l-none  text-center'
-            } appearance-none focus:outline-none outline-none ring-0 focus:ring-0 w-full ${
-              classStyle ? classStyle : 'rounded-md bg-zinc-100'
+            } appearance-none  focus:outline-none outline-none ring-0 focus:ring-0 w-full ${
+              classStyle ? classStyle : `rounded-md ${isDark ? 'bg-white' : 'bg-zinc-100'}`
             } border border-gray-200 ${isUserForm && ' farsi-digits'} ${(isUserForm && disabled) ? "bg-zinc-100" :""} ${
               isCenter && 'text-center'
-            }  px-3 py-1.5 text-base outline-none transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
+            }  px-3 py-1.5 text-base outline-none farsi-digits transition-colors placeholder:text-center focus:border-[#ffb9e2] lg:text-lg`}
             style={{ direction }}
             id={name}
             type={type}

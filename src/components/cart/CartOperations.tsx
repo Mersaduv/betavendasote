@@ -28,8 +28,9 @@ const CartOperations: React.FC<Porps> = (props) => {
 
   // ? State
   const [currentItemInCart, setCurrentItemInCart] = useState<ICart | undefined>(undefined)
-  const [currentPrice, setCurrentPrice] = useState(product.stockItems[0]?.price ?? 0)
-  const [currentDiscount, setCurrentDiscount] = useState(product.stockItems[0]?.discount ?? 0)
+  const firstStockItemWithPriceOrDiscount = product.stockItems.find(item => item.price > 0 || item.discount > 0) || product.stockItems[0];
+  const [currentPrice, setCurrentPrice] = useState(firstStockItemWithPriceOrDiscount?.price ?? 0)
+  const [currentDiscount, setCurrentDiscount] = useState(firstStockItemWithPriceOrDiscount?.discount ?? 0)
 
   // ? Re-Renders
   useEffect(() => {

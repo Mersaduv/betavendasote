@@ -39,6 +39,15 @@ export interface ProductFeature extends BaseClass<string> {
   categoryId: string | null
 }
 
+export interface ProductFeatureSize extends BaseClass<string> {
+  name: string
+  count: number
+  values: SizeDTO[] | null
+  valueCount: number
+  isDeleted: boolean
+  productId: string | null
+}
+
 export interface FeatureValue extends BaseClass<string> {
   name: string
   hexCode: string | null
@@ -52,6 +61,11 @@ export interface GetCategoryFeaturesByCategory {
   productFeatures: ProductFeature[] | null
   productSizes: ProductSizeDTO[] | null
   sizeDTOs: SizeDTO[] | null
+}
+
+export interface GetCategoryFeaturesByCategoryOrAll {
+  productFeatureSizes: ProductFeatureSize[] | null
+  productFeatures: ProductFeature[] | null
 }
 
 export interface ProductFeatureUpdateDTO {

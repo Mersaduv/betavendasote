@@ -510,6 +510,17 @@ export const userApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Tickets'],
     }),
+
+    updateNotificationStatus: builder.mutation<ServiceResponse<boolean>, IdQuery>({
+      query: ({ id }) => ({
+        url: `/api/user/seen-notification?id=${id}`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      invalidatesTags: ['Notification'],
+    }),
   }),
 })
 
@@ -550,4 +561,5 @@ export const {
   useUpdateSmsMessageMutation,
   useGetSingleNotificationQuery,
   useUpdateNotificationMutation,
+  useUpdateNotificationStatusMutation,
 } = userApiSlice

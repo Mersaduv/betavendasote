@@ -13,7 +13,7 @@ import type {
   UpdateStatus,
 } from './types'
 import { generateQueryParams, getToken } from '@/utils'
-import { QueryParams, ServiceResponse } from '@/types'
+import { ICosts, ICostsForm, QueryParams, ServiceResponse } from '@/types'
 
 export const orderApiSlice = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -149,6 +149,26 @@ export const orderApiSlice = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Order'],
     }),
+
+    upsertCosts: builder.mutation<ServiceResponse<boolean>, ICostsForm>({
+      query: (body) => ({
+        url: '/api/order/costs',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Costs'],
+    }),
+
+    getCosts: builder.query<ServiceResponse<ICosts>, void>({
+      query: () => ({
+        url: '/api/order/costs',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }),
+      providesTags: ['Costs'],
+    }),
   }),
 })
 
@@ -164,4 +184,6 @@ export const {
   useDeleteTrashOrderMutation,
   useRestoreOrderMutation,
   useDeleteOrderMutation,
+  useUpsertCostsMutation,
+  useGetCostsQuery,
 } = orderApiSlice

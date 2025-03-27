@@ -5,7 +5,7 @@ import { DataStateDisplay, HandleResponse } from '@/components/shared'
 import { TableSkeleton } from '@/components/skeleton'
 import { ProtectedRouteWrapper } from '@/components/user'
 import { useDisclosure } from '@/hooks'
-import { useDeleteTrashOrderMutation, useGetOrdersQuery } from '@/services'
+import { useDeleteTrashOrderMutation, useGetCostsQuery, useGetOrdersQuery } from '@/services'
 import { Menu, Transition } from '@headlessui/react'
 import moment from 'moment-jalaali'
 import { NextPage } from 'next'
@@ -40,6 +40,7 @@ const NewOrders: NextPage = () => {
     search: searchTerm,
     adminList: true,
   })
+  const { data: costsData } = useGetCostsQuery()
 
   const [
     deleteTrashOrder,

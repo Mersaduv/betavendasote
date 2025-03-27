@@ -44,9 +44,8 @@ const ShippingPage: NextPage = () => {
   const [orderCreated, setOrderCreated] = useState(false)
   const [orderId, setOrderId] = useState<string>()
   // ? Store
-  const { cartItems, totalItems, totalDiscount, totalPrice, isProcessPayment, placeOrderId } = useAppSelector(
-    (state) => state.cart
-  )
+  const { cartItems, totalItems, totalDiscount, totalPrice, isProcessPayment, placeOrderId, isGiftWrapped } =
+    useAppSelector((state) => state.cart)
   // ? Handlers
   // ? Create Order Query
   const [postData, { data, isSuccess, isError, isLoading, error }] = useCreateOrderMutation()
@@ -81,6 +80,7 @@ const ShippingPage: NextPage = () => {
       formData.append('totalPrice', totalPrice.toString())
       formData.append('totalDiscount', totalDiscount.toString())
       formData.append('paymentMethod', paymentMethod)
+      formData.append('isGiftWrapped', isGiftWrapped.toString())
 
       postData(formData)
         .unwrap()

@@ -7,6 +7,7 @@ import { HandleResponse } from '@/components/shared'
 import { IProductForm } from '@/types'
 import {
   useCreateProductMutation,
+  useGetCostsQuery,
   useGetSingleArticleQuery,
   useGetSingleOrderQuery,
   useUpdateOrderStatusMutation,
@@ -16,10 +17,11 @@ import { ArticleForm, ProductForm } from '@/components/form'
 import { useDispatch } from 'react-redux'
 import { setUpdated } from '@/store'
 import { Button, FullScreenLoading } from '@/components/ui'
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import { ProtectedRouteWrapper } from '@/components/user'
 import moment from 'moment-jalaali'
 import { useAppSelector } from '@/hooks'
+import { formatNumber } from '@/utils'
 
 interface Props {}
 const Edit: NextPage<Props> = () => {
@@ -32,6 +34,7 @@ const Edit: NextPage<Props> = () => {
 
   const dispatch = useDispatch()
   // ? Queries
+  const { data: dataCosts } = useGetCostsQuery()
   //*    Get Order
   const { refetch, data: selectedOrder, isLoading: isLoadingGetSelectedOrder } = useGetSingleOrderQuery({ id })
   const [
@@ -199,11 +202,13 @@ const Edit: NextPage<Props> = () => {
 
                             <td className="text-center text-sm text-gray-600 farsi-digits">{generalSetting?.title}</td>
 
-                            <td className={`text-center text-sm farsi-digits`}>{orderItem.price} تومان</td>
+                            <td className={`text-center text-sm farsi-digits`}>
+                              {formatNumber(orderItem.price)} تومان
+                            </td>
 
                             <td className="text-center text-sm text-gray-600 farsi-digits">{orderItem.quantity}</td>
                             <td className="text-center text-sm text-gray-600 farsi-digits">
-                              {orderItem.price * orderItem.quantity} تومان
+                              {formatNumber(orderItem.price * orderItem.quantity)} تومان
                             </td>
                           </tr>
                         )
@@ -217,17 +222,23 @@ const Edit: NextPage<Props> = () => {
                 <div className="p-4">
                   <div className="flex items-center">
                     <span className="text-[#a1a5b7] pl-2">جمع کل</span>{' '}
-                    <span className="farsi-digits">{selectedOrder?.data?.totalPrice} تومان</span>
+                    <span className="farsi-digits">{formatNumber(selectedOrder?.data?.totalPrice || 0)} تومان</span>
                     <span className="text-[#a1a5b7] mx-2">•</span>
                     <span className="text-[#a1a5b7] pl-2">حمل و نقل</span>{' '}
-                    <span className="farsi-digits">50000 تومان</span>
+                    <span className="farsi-digits">{formatNumber(dataCosts?.data?.deliveryCost || 0)} تومان</span>
                     <span className="text-[#a1a5b7] mx-2">•</span>
                     <span className="text-[#a1a5b7] pl-2"> کادوپیج</span>{' '}
-                    <span className="farsi-digits">50000 تومان</span>
+                    <span className="farsi-digits">{formatNumber(dataCosts?.data?.giftWrapped || 0)} تومان</span>
                     <span className="text-[#a1a5b7] mx-2">•</span>
                     <span className="text-[#a1a5b7] pl-2">مبلغ قابل پرداخت</span>{' '}
                     <span className="farsi-digits">
-                      {selectedOrder?.data?.totalPrice && selectedOrder?.data?.totalPrice + 100000} تومان
+                      {selectedOrder?.data?.totalPrice &&
+                        formatNumber(
+                          selectedOrder?.data?.totalPrice +
+                            (dataCosts?.data?.deliveryCost || 0) +
+                            (dataCosts?.data?.giftWrapped || 0)
+                        )}{' '}
+                      تومان
                     </span>
                   </div>
                 </div>

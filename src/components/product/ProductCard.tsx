@@ -108,11 +108,19 @@ const ProductCard: React.FC<Props> = (props) => {
   })
 
   const getStockStatus = (stockItems: GetStockItems[]) => {
+    console.log(
+      stockItems,
+      'stockItems',
+      stockItems.every((item) => item.quantity !== 0)
+    )
+
     if (stockItems.every((item) => item.quantity !== 0)) {
       return true
     }
     return false
   }
+  const availableItems = product.stockItems.filter((item) => item.price > 0 && item.quantity > 0)
+  const isInStock = product.stockItems.some((item) => item.quantity > 0)
 
   // ? Render(s)
   return (
@@ -134,22 +142,21 @@ const ProductCard: React.FC<Props> = (props) => {
             </h2>
             <div className="mt-1.5 flex justify-center gap-x-2 px-2 relative ">
               <div className="">
-                {!getStockStatus(product.stockItems) ? (
+                {!isInStock ? (
                   <div className="text-gray-400 font-semibold mb-1">ناموجود</div>
-                ) : filteredItems.length > 0 ? (
+                ) : availableItems.length > 0 ? (
                   <>
-                    {filteredItems[0].discount > 0 && (
+                    {availableItems[0].discount > 0 && (
                       <ProductDiscountTag
-                        price={filteredItems[0].price}
-                        discount={filteredItems[0].discount}
+                        price={availableItems[0].price}
+                        discount={availableItems[0].discount}
                         isSlider
                       />
                     )}
-
                     <ProductPriceDisplay
                       inStock={product.inStock}
-                      discount={filteredItems[0].discount}
-                      price={filteredItems[0].price}
+                      discount={availableItems[0].discount}
+                      price={availableItems[0].price}
                     />
                   </>
                 ) : (

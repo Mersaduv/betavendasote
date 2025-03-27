@@ -34,3 +34,7 @@ export type CreateCategoryQuery = ICategoryForm
 export type UpdateCategoryFeature = CategoryFeatureForm
 export type GetSubCategoriesQuery = { id?: string; slug?: string }
 export type GetSubCategoriesResult = ServiceResponse<SubCategoryResult>
+export type UpdateCategoryBrands = {
+  categoryId: string
+  brandIds?: string[] | null
+}

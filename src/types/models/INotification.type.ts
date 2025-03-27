@@ -15,6 +15,7 @@ export interface INotification {
   sendingTime: number
   scheduledDate: string
   isPublish: boolean
+  isRead: boolean
   created: string
   lastUpdated: string
 }

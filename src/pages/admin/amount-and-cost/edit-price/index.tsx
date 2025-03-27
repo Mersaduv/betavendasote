@@ -94,7 +94,7 @@ const AmountAndCost: NextPage = () => {
           />
         )}
         <DashboardLayout>
-          <AmountAndCostTabsDashboardLayout>
+          <AmountAndCostTabsDashboardLayout isEditPrice>
             <Head>
               <title>تیکت ها</title>
             </Head>

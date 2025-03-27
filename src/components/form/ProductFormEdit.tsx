@@ -372,7 +372,7 @@ const ProductFormEdit: React.FC<Props> = (props) => {
 
   // ? Queries
   //*   Get Brands
-  const { data: brandData, refetch: refetchBrandData } = useGetBrandsQuery({ page: 1, pageSize: 200 })
+  const { data: brandData, refetch: refetchBrandData } = useGetBrandsQuery({ page: 1, pageSize: 200 , categoryId: selectedCategories?.categorySelected?.id })
 
   // Queries
   //* Get Feature

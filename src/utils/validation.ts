@@ -388,7 +388,7 @@ export const editPriceFormValidationSchema = Yup.object().shape({
     .test('not-zero', 'نوع محصول الزامی است', (value) => value !== 0),
   action: Yup.number()
     .required('عملیات الزامی است')
-    .test('not-zero', 'نوع محصول الزامی است', (value) => value !== 0),
+    .test('not-zero', 'عملیات الزامی است', (value) => value !== 0),
   percentageValue: Yup.number()
     .transform((value, originalValue) => (originalValue === '' ? undefined : value))
     .when('action', {
@@ -403,4 +403,30 @@ export const editPriceFormValidationSchema = Yup.object().shape({
       then: (schema) => schema.required('قیمت الزامی است'),
       otherwise: (schema) => schema.notRequired(),
     }),
+})
+
+
+export const costsFormValidationSchema = Yup.object().shape({
+  giftWrapped: Yup.number().required('مبلغ کادوپیچ الزامی است'),
+  deliveryCost: Yup.number().required('مبلغ ارسال الزامی است'),
+})
+
+export const jewelryFormValidationSchema = Yup.object().shape({
+  percentageTax: Yup.number(),
+  categoryId: Yup.string(),
+  gold18KPrice: Yup.number(),
+  gold24KPrice: Yup.number(),
+  priceUpdateSchedule: Yup.string(),
+})
+
+export const couponFormValidationSchema = Yup.object().shape({
+  couponCode: Yup.string(),
+  limit: Yup.number(),
+  startDate: Yup.string(),
+  endDate: Yup.string(),
+  description: Yup.string(),
+  discountRate: Yup.number(),
+  minOrderAmount: Yup.number(),
+  maxDiscountAmount: Yup.number(),
+  discountType: Yup.string(),
 })

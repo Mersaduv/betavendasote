@@ -1,4 +1,5 @@
 import { CategorySizeDTO } from '@/services/category/types'
+import { IBrand } from './IBrand.type'
 
 export interface ICategory {
   id: string
@@ -24,6 +25,7 @@ export interface ICategory {
   isActiveProduct: boolean
   isDeleted: boolean
   hasSizeProperty: boolean
+  brands: IBrand[]
   parentCategory?: ICategory
   parentCategories?: ICategory[]
   parentCategoriesTree?: ICategory[]

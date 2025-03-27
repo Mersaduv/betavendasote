@@ -275,7 +275,7 @@ const Suggestions: NextPage = () => {
                             refetch={refetchAllSuggestions}
                             isFetching={isAllSuggestionsFetching}
                             isSuccess={isAllSuggestionsSuccess}
-                            dataLength={suggestionsPagination?.data?.data ? suggestionsPagination.data?.data.length : 0}
+                            dataLength={suggestionsPagination?.data ? suggestionsPagination.data.length : 0}
                             loadingComponent={<TableSkeleton count={20} />}
                           >
                             <table className="w-[780px] md:w-full mx-auto">
@@ -298,8 +298,8 @@ const Suggestions: NextPage = () => {
                                 </tr>
                               </thead>
                               <tbody>
-                                {suggestionsPagination?.data?.data &&
-                                  suggestionsPagination?.data?.data.map((suggestion, index) => {
+                                {suggestionsPagination?.data &&
+                                  suggestionsPagination?.data.map((suggestion, index) => {
                                     return (
                                       <tr
                                         key={suggestion.id}
@@ -383,11 +383,10 @@ const Suggestions: NextPage = () => {
 
                           {suggestionsPagination &&
                             suggestionsPagination.data &&
-                            suggestionsPagination?.data?.data &&
-                            suggestionsPagination?.data?.data?.length > 0 && (
+                            suggestionsPagination?.data?.length > 0 && (
                               <div className="mx-auto py-4 lg:max-w-5xl">
                                 <Pagination
-                                  pagination={suggestionsPagination?.data}
+                                  pagination={suggestionsPagination}
                                   section="_adminSuggestion"
                                   client
                                 />

@@ -15,6 +15,7 @@ interface CartState {
   tempObjectValue: IObjectValue | null
   isProcessPayment: boolean
   placeOrderId: string
+  isGiftWrapped: boolean
 }
 
 const getCartItems = (): ICart[] => {
@@ -51,6 +52,7 @@ const initialState: CartState = {
   tempColor: null,
   isProcessPayment: getIsProcessPayment(),
   placeOrderId: getPlaceOrderId(),
+  isGiftWrapped: false,
 }
 
 const cartSlice = createSlice({
@@ -146,6 +148,10 @@ const cartSlice = createSlice({
         localStorage.removeItem('isProcessPayment')
       }
     },
+
+    setGiftWrapped: (state, action: PayloadAction<{ isGiftWrapped: boolean }>) => {
+      state.isGiftWrapped = action.payload.isGiftWrapped
+    },
   },
 })
 
@@ -160,6 +166,7 @@ export const {
   setTempObjectValue,
   setIsProcessPayment,
   clearIsProcessPayment,
+  setGiftWrapped,
 } = cartSlice.actions
 
 export default cartSlice.reducer

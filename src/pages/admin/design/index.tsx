@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 
 import type { NextPage } from 'next'
 import { DashboardLayout } from '@/components/Layouts'
-import { DesignForm, MainPageAdsForm } from '@/components/form'
 
 const Design: NextPage = () => {
   // ? Assets
@@ -35,7 +34,6 @@ const Design: NextPage = () => {
         </Head>
         <DashboardLayout>
           <section className="bg-[#f5f8fa] w-full pt-[65px]">
-            <DesignForm />
           </section>
         </DashboardLayout>
       </main>

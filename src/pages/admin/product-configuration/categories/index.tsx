@@ -17,7 +17,7 @@ import { useAppDispatch, useDisclosure } from '@/hooks'
 import { ProductFeature } from '@/services/feature/types'
 import { useDeleteCategoryMutation, useGetAllCategoriesQuery, useGetParenSubCategoriesQuery } from '@/services'
 import { useRouter } from 'next/router'
-import { CategoryModal, CategoryUpdateModal, ConfirmDeleteModal, SizesModal } from '@/components/modals'
+import { CategoryModal, CategoryUpdateModal, ConfirmDeleteModal, SizesModal, CategoryBrandsModal } from '@/components/modals'
 import { showAlert } from '@/store'
 import { ProtectedRouteWrapper } from '@/components/user'
 
@@ -37,6 +37,8 @@ const Categories: NextPage = () => {
   const [categoryParent, setCategoryParent] = useState<ICategory | undefined>(undefined)
   const [stateSubCategories, setStateSubCategories] = useState<ICategory[]>([])
   const [subCategorySearchTerm, setSubCategorySearchTerm] = useState('')
+  const [isShowBrandsModal, brandsModalHandlers] = useDisclosure()
+  const [stateCategoryBrands, setStateCategoryBrands] = useState<ICategory>()
   // ? Assets
   const dispatch = useAppDispatch()
   const { query, push } = useRouter()
@@ -157,6 +159,11 @@ const Categories: NextPage = () => {
     setIsShowSubCategories(true)
     setCategoryParent(categoryParent)
   }
+
+  const handlerEditBrandsModal = (category: ICategory) => {
+      setStateCategoryBrands(category)
+      brandsModalHandlers.open()
+    }
   return (
     <ProtectedRouteWrapper>
       <>
@@ -208,6 +215,14 @@ const Categories: NextPage = () => {
           category={stateCategorySize ?? undefined}
           isShow={isShowSizesModal}
           onClose={sizesModalHandlers.close}
+        />
+
+        <CategoryBrandsModal
+          brands={stateCategoryBrands?.brands ?? undefined}
+          refetch={refetch}
+          category={stateCategoryBrands ?? undefined}
+          isShow={isShowBrandsModal}
+          onClose={brandsModalHandlers.close}
         />
 
         <DashboardLayout>
@@ -263,6 +278,7 @@ const Categories: NextPage = () => {
                               نام
                             </th>
                             <th className="text-sm py-3 px-2 text-gray-600 font-normal">زیردسته</th>
+                            <th className="text-sm py-3 px-2 text-gray-600 font-normal">برند</th>
                             <th className="text-sm py-3 px-2 text-gray-600 font-normal">محصولات مرتبط</th>
                             <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
                             <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
@@ -289,6 +305,9 @@ const Categories: NextPage = () => {
                                 </td>
                                 <td className="text-center text-sm text-gray-600">
                                   {digitsEnToFa(countAllChildCategories(category))}
+                                </td>
+                                <td onClick={() => handlerEditBrandsModal(category)} className="text-center text-sm text-sky-500 cursor-pointer farsi-digits">
+                                  {category.brands.length}
                                 </td>
                                 <td className="text-center text-sm text-gray-600">
                                   <div

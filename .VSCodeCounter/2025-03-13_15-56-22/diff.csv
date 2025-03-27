@@ -1,0 +1,44 @@
+"filename", "language", "JavaScript", "JSON", "TypeScript", "TypeScript JSX", "comment", "blank", "total"
+"d:\Venda_Full\front-end\Venda-front2\vendamode\package-lock.json", "JSON", 0, 10, 0, 0, 0, 0, 10
+"d:\Venda_Full\front-end\Venda-front2\vendamode\package.json", "JSON", 0, 1, 0, 0, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\AmountAndCostTabsDashboardLayout.tsx", "TypeScript JSX", 0, 0, 0, 86, 0, 14, 100
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\Layouts\index.ts", "TypeScript", 0, 0, 1, 0, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ArticleReviewEditModal.tsx", "TypeScript JSX", 0, 0, 0, 138, 10, 17, 165
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\CategoryDetailModal.tsx", "TypeScript JSX", 0, 0, 0, 105, 7, 15, 127
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewArticleModal.tsx", "TypeScript JSX", 0, 0, 0, -5, 0, 0, -5
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\ReviewEditModal.tsx", "TypeScript JSX", 0, 0, 0, 19, 0, -1, 18
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\SuggestionModal.tsx", "TypeScript JSX", 0, 0, 0, 166, 5, 11, 182
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\modals\index.ts", "TypeScript", 0, 0, 3, 0, 0, -1, 2
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ClientReviewCard.tsx", "TypeScript JSX", 0, 0, 0, 150, 8, 13, 171
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewArticleCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, -1, -1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewArticleList.tsx", "TypeScript JSX", 0, 0, 0, 8, 0, 0, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewCard.tsx", "TypeScript JSX", 0, 0, 0, -3, -10, -5, -18
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\ReviewProductCard.tsx", "TypeScript JSX", 0, 0, 0, -1, 0, 0, -1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\review\index.ts", "TypeScript", 0, 0, 1, 0, 0, -1, 0
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\CategorySelectedCombobox.tsx", "TypeScript JSX", 0, 0, 0, 109, 0, 8, 117
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\selectorCombobox\index.ts", "TypeScript", 0, 0, 1, 0, 0, 0, 1
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\components\shared\DashboardAdminAside.tsx", "TypeScript JSX", 0, 0, 0, -1, -14, 0, -15
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\ads\suggestion\index.tsx", "TypeScript JSX", 0, 0, 0, 377, 12, 21, 410
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\amount-and-cost\costs\index.tsx", "TypeScript JSX", 0, 0, 0, 107, 2, 13, 122
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\amount-and-cost\edit-price\index.tsx", "TypeScript JSX", 0, 0, 0, 258, 12, 15, 285
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\amount-and-cost\edit-price\new\index.tsx", "TypeScript JSX", 0, 0, 0, 288, 17, 18, 323
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\products\index.tsx", "TypeScript JSX", 0, 0, 0, -684, 16, -8, -676
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\review\article\index.tsx", "TypeScript JSX", 0, 0, 0, 781, 5, 38, 824
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\review\index.tsx", "TypeScript JSX", 0, 0, 0, -755, -5, -40, -800
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\admin\support\review\product\index.tsx", "TypeScript JSX", 0, 0, 0, 771, 5, 41, 817
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\pages\profile\reviews\index.tsx", "TypeScript JSX", 0, 0, 0, 61, 0, 4, 65
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\baseApi.ts", "TypeScript", 0, 0, 3, 0, 0, 0, 3
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\order\apiSlice.ts", "TypeScript", 0, 0, 16, 0, 0, 2, 18
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\apiSlice.ts", "TypeScript", 0, 0, 95, 0, 0, 7, 102
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\product\types.ts", "TypeScript", 0, 0, 6, 0, 0, 0, 6
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\review\apiSlice.ts", "TypeScript", 0, 0, 35, 0, 0, 2, 37
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\services\review\types.ts", "TypeScript", 0, 0, 20, 0, 0, 2, 22
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\forms.type.ts", "TypeScript", 0, 0, 27, 0, 0, 3, 30
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\index.ts", "TypeScript", 0, 0, 3, 0, 0, -1, 2
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IArticleReview.type.ts", "TypeScript", 0, 0, 3, 0, 0, 1, 4
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ICosts.type.ts", "TypeScript", 0, 0, 7, 0, 0, 1, 8
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\IEditPrice.type.ts", "TypeScript", 0, 0, 12, 0, 0, 2, 14
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\types\models\ISuggestion.type.ts", "TypeScript", 0, 0, 8, 0, 0, 1, 9
+"d:\Venda_Full\front-end\Venda-front2\vendamode\src\utils\validation.ts", "TypeScript", 0, 0, 35, 0, 0, 3, 38
+"d:\Venda_Full\front-end\Venda-front2\vendamode\tailwind.config.js", "JavaScript", 1, 0, 0, 0, 0, 0, 1
+"Total", "-", 1, 11, 276, 1975, 70, 194, 2527
