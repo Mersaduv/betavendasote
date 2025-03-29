@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://103.75.199.190',
+    // baseUrl: 'https://localhost:7004',
+    baseUrl: 'http://45.159.150.230',
     // baseUrl: 'https://apivendamode.liara.run',
     timeout: 60000,
   }),
