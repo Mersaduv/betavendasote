@@ -4,7 +4,7 @@ const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     // baseUrl: 'https://localhost:7004',
-    baseUrl: 'http://45.159.150.230',
+    baseUrl: 'https://45.159.150.230',
     // baseUrl: 'https://apivendamode.liara.run',
     timeout: 60000,
   }),
