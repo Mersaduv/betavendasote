@@ -1,12 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
+import https from 'https';
 const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     // baseUrl: 'https://localhost:7004',
-    baseUrl: 'http://45.159.150.230',
+    baseUrl: 'https://45.159.150.230',
     // baseUrl: 'https://apivendamode.liara.run',
     timeout: 60000,
+    fetchFn: (input, init) => {
+      const customInit = { ...init, agent: new https.Agent({ rejectUnauthorized: false }) };
+      return fetch(input, customInit);
+    },
   }),
 
   tagTypes: [
