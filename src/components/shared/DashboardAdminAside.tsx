@@ -284,6 +284,7 @@ export default function DashboardAdminAside(props: Props) {
   // }
   return (
     <div className="lg2:w-[265px]">
+      {/* Desktop aside  */}
       <aside className="fixed top-[74px] w-[265px] bg-[#1e1e2d] hidden lg2:block">
         <div className="py-5 flex flex-col justify-between h-screen">
           <div className="overflow-auto">
@@ -393,103 +394,114 @@ export default function DashboardAdminAside(props: Props) {
       </aside>
 
       <Drawer open={openRight} side="right" setOpen={setOpenRight}>
-        {openRight && (
-          <aside className="fixed top-[74px] w-[265px] bg-[#1e1e2d] hidden lg2:block z-50">
-            <div className="py-5 flex flex-col justify-between h-screen">
-              <div className="overflow-auto">
-                {profilePaths.map((item, index) =>
-                  item.path ? (
-                    <Link href={item.path} key={index}>
-                      <div
-                        className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
-                          router.pathname === item.path ? 'text-[#e90089] bg-[#1b1b28]' : ' text-gray-700'
-                        }`}
-                        onClick={() => handleToggle(item.id)}
-                      >
-                        <div className="flex gap-3 items-center">
-                          <item.Icon
-                            className={`text-xl ${router.pathname === item.path ? 'text-[#e90089]' : 'text-[#5a6080]'}`}
-                          />
-                          <span className={`ml-2 ${router.pathname === item.path ? 'text-white' : ' text-gray-400'}`}>
-                            {item.name}
-                          </span>
-                        </div>{' '}
-                        {item.subItem && (
-                          <span className="text-white">
-                            <ArrowLeft
-                              className={`transition-all ease-in-out duration-500 ${
-                                openIndex == item.id ? '-rotate-90' : ''
-                              } text-3xl hover:shadow-xl rounded-full text-[#e90089]`}
-                            />
-                          </span>
-                        )}
-                      </div>
-                    </Link>
-                  ) : (
-                    <div key={index}>
-                      <div
-                        className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
-                          router.pathname === item.pathName
-                            ? 'text-[#e90089] bg-[#1b1b28]'
-                            : openIndex === item.id
-                            ? 'bg-[#1b1b28]'
-                            : 'text-gray-700'
-                        }`}
-                        onClick={() => handleToggle(item.id)}
-                      >
-                        <div className="flex gap-3 items-center">
-                          <item.Icon className="text-xl text-[#5a6080]" />
-                          <span
-                            className={`ml-2 ${
-                              isPathActive(item.pathName || '') || isParentPathActive(item.subItem)
-                                ? 'text-white'
-                                : 'text-gray-400'
-                            }`}
-                          >
-                            {item.name}
-                          </span>
-                        </div>{' '}
-                        {item.subItem && (
-                          <span className="text-white">
-                            <ArrowLeft
-                              className={`transition-all ease-in-out duration-500 ${
-                                openIndex == item.id ? '-rotate-90' : ''
-                              } text-3xl hover:shadow-xl rounded-full text-[#e90089]`}
-                            />
-                          </span>
-                        )}
-                      </div>
+        <aside
+          className={`fixed top-[74px] w-[265px] bg-[#1e1e2d] z-50 h-screen transition-transform duration-300 ease-in-out ${
+            openRight ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="py-5 flex flex-col justify-between h-full">
+            <div className="overflow-auto">
+              {profilePaths.map((item, index) => {
+                const isDashboard = item.name === 'پیشخوان'
+                const hasPermission = isDashboard || permissions?.some((p) => p.name === item.name)
+                const validSubItems = item.subItem?.filter((subItem) => {
+                  const parentPermission = permissions?.find((permission) => permission.name === item.name)
+                  return parentPermission?.childPermissions?.some((childPerm) => childPerm.name === subItem.name)
+                })
 
-                      <div
-                        className={`overflow-hidden w-full transition-all ease-in-out duration-500 ${
-                          item.subItem && openIndex === item.id ? 'max-h-screen' : 'max-h-0'
-                        }`}
-                      >
-                        {item.subItem?.map((subItem, subIndex) => (
-                          <Link
-                            key={subIndex}
-                            href={subItem.path}
-                            className="flex items-center hover:bg-[#1b1b28] py-2.5 text-sm px-6 w-full gap-3 text-[#9899ac]"
-                          >
-                            <subItem.Icon
-                              className={`mr-4 text-sm ${
-                                isPathActive(subItem.path) ? 'text-[#e90089]' : 'text-[#5a6080]'
-                              }`}
-                            />
-                            <span className={`${isPathActive(subItem.path) ? 'text-white' : 'text-gray-400'}`}>
-                              {subItem.name}
-                            </span>
-                          </Link>
-                        ))}
+                if (!hasPermission) return null
+
+                return item.path ? (
+                  <Link href={item.path} key={index}>
+                    <div
+                      className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
+                        router.pathname === item.path ? 'text-[#e90089] bg-[#1b1b28]' : 'text-gray-700'
+                      }`}
+                      onClick={() => handleToggle(item.id)}
+                    >
+                      <div className="flex gap-3 items-center">
+                        <item.Icon
+                          className={`text-xl ${router.pathname === item.path ? 'text-[#e90089]' : 'text-[#5a6080]'}`}
+                        />
+                        <span className={`ml-2 ${router.pathname === item.path ? 'text-white' : 'text-gray-400'}`}>
+                          {item.name}
+                        </span>
                       </div>
+                      {validSubItems && validSubItems.length > 0 && (
+                        <span className="text-white">
+                          <ArrowLeft
+                            className={`transition-all ease-in-out duration-500 ${
+                              openIndex == item.id ? '-rotate-90' : ''
+                            } text-3xl hover:shadow-xl rounded-full text-[#e90089]`}
+                          />
+                        </span>
+                      )}
                     </div>
-                  )
-                )}
-                <LogoutButton isShowDrawer />
-              </div>
+                  </Link>
+                ) : (
+                  <div key={index}>
+                    <div
+                      className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
+                        router.pathname === item.pathName
+                          ? 'text-[#e90089] bg-[#1b1b28]'
+                          : openIndex === item.id
+                          ? 'bg-[#1b1b28]'
+                          : 'text-gray-700'
+                      }`}
+                      onClick={() => handleToggle(item.id)}
+                    >
+                      <div className="flex gap-3 items-center">
+                        <item.Icon className="text-xl text-[#5a6080]" />
+                        <span
+                          className={`ml-2 ${
+                            isPathActive(item.pathName || '') || isParentPathActive(item.subItem)
+                              ? 'text-white'
+                              : 'text-gray-400'
+                          }`}
+                        >
+                          {item.name}
+                        </span>
+                      </div>
+                      {validSubItems && validSubItems.length > 0 && (
+                        <span className="text-white">
+                          <ArrowLeft
+                            className={`transition-all ease-in-out duration-500 ${
+                              openIndex == item.id ? '-rotate-90' : ''
+                            } text-3xl hover:shadow-xl rounded-full text-[#e90089]`}
+                          />
+                        </span>
+                      )}
+                    </div>
+
+                    <div
+                      className={`overflow-hidden w-full transition-all ease-in-out duration-500 ${
+                        validSubItems && validSubItems.length > 0 && openIndex === item.id ? 'max-h-screen' : 'max-h-0'
+                      }`}
+                    >
+                      {validSubItems?.map((subItem, subIndex) => (
+                        <Link
+                          key={subIndex}
+                          href={subItem.path}
+                          className="flex items-center hover:bg-[#1b1b28] py-2.5 text-sm px-6 w-full gap-3 text-[#9899ac]"
+                        >
+                          <subItem.Icon
+                            className={`mr-4 text-sm ${
+                              isPathActive(subItem.path) ? 'text-[#e90089]' : 'text-[#5a6080]'
+                            }`}
+                          />
+                          <span className={`${isPathActive(subItem.path) ? 'text-white' : 'text-gray-400'}`}>
+                            {subItem.name}
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
+              <LogoutButton isShowDrawer />
             </div>
-          </aside>
-        )}
+          </div>
+        </aside>
       </Drawer>
     </div>
   )
