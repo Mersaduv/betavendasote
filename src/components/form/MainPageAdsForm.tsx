@@ -360,7 +360,7 @@ const MainPageAdsForm: React.FC = () => {
     if (footerBanner.length === 0) {
       setFooterBanner([{ id: '', thumbnail: null, link: '', category: '', type: 'link', isActive: false }])
     }
-  }, [sliders])
+  }, [footerBanner])
 
   // load data
   useEffect(() => {

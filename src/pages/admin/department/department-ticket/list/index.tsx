@@ -146,7 +146,8 @@ const DepartmentTicketList: NextPage = () => {
                   </div>
                 </div>
                 <hr className="mt-5 mb-6" />
-                <table className="w-[700px] md:w-full mx-auto">
+               <div className='p-3'>
+               <table className="w-[700px] md:w-full mx-auto">
                   <thead className="bg-sky-300">
                     <tr className="">
                       <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[25%]">عنوان</th>
@@ -198,7 +199,7 @@ const DepartmentTicketList: NextPage = () => {
                                           }}
                                           className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
                                         >
-                                          <span>پیکربندی</span>
+                                          <span>ویرایش</span>
                                         </button>
                                         <button
                                           onClick={() => {
@@ -221,6 +222,7 @@ const DepartmentTicketList: NextPage = () => {
                     })}
                   </tbody>
                 </table>
+               </div>
               </div>
             </div>
           </DepartmentTabDashboardLayout>

@@ -9,6 +9,7 @@ import {
   getFooterBanner,
   getHeaderText,
   getSliders,
+  useGetAllSlidersQuery,
   useGetArticlesQuery,
   useGetBrandsQuery,
   useGetProductsQuery,
@@ -58,7 +59,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   const categoriesData = dataCategory?.data?.categoryList ?? []
 
   return {
-    // revalidate: config.revalidate,
+    revalidate: config.revalidate,
     props: {
       sliders: slidersData,
       banners: bannersData,
@@ -74,15 +75,17 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
 const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) => {
   // ? Props
-  const { sliders, banners, headerText, childCategories, footerBanners } = props
+  const { banners, headerText, childCategories, footerBanners } = props
   const { generalSetting } = useAppSelector((state) => state.design)
   const { lastSeen } = useAppSelector((state) => state.lastSeen)
 
   // ? queries
+  const { data: sliders, isLoading: isLoadingSliders, isFetching: isFetchingSliders } = useGetAllSlidersQuery()
+
   const { products: newProductsData, isFetching: isFetchingNew } = useGetProductsQuery(
     {
       sortBy: 'LastUpdated',
-      sort: "desc",
+      sort: 'desc',
       inStock: '1',
       pageSize: 30,
       isActive: true,
@@ -169,7 +172,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
           keywords={generalSetting?.googleTags || ' اینترنتی, فروشگاه'}
         />
         <div className="mx-auto py-4">
-          <MainSlider data={sliders} />
+          <MainSlider data={sliders?.data ?? []} />
 
           {/* //  newest slider */}
           {newProductsData &&
@@ -278,7 +281,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
           {bestSellingProductsData && bestSellingProductsData.length > 0 && (
             <div className="pt-28 sm:pt-0 relative">
               <div className="w-full block text-center px-3 line-clamp-2 overflow-hidden text-ellipsis  sm:hidden whitespace-nowrap -mt-20 text-lg text-gray-400 ">
-                پرفروش های  {generalSetting?.title}
+                پرفروش های {generalSetting?.title}
               </div>
               <div className="flex w-full bg-slate-300 relative h-[340px] sm:h-[275px] mt-16">
                 <div className="hidden w-[38%] sm:block md:w-[20%]">

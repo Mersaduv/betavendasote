@@ -40,7 +40,8 @@ const DepartmentTicket: NextPage = () => {
                   <h3>دپارتمان تیکت</h3>
                 </div>
                 <hr className="mt-5 mb-6" />
-                <table className="w-[700px] md:w-full mx-auto">
+               <div className='p-3'>
+               <table className="w-[700px] md:w-full mx-auto ">
                   <thead className="bg-sky-300">
                     <tr className="">
                       <th className="text-sm py-3 px-2 text-gray-600 font-normal ">مرتبط به</th>
@@ -188,6 +189,7 @@ const DepartmentTicket: NextPage = () => {
                     </tr>
                   </tbody>
                 </table>
+               </div>
               </div>
             </div>
           </DepartmentTabDashboardLayout>

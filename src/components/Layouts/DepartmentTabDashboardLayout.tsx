@@ -12,7 +12,6 @@ const tabs = [
   { paths: ['/admin/department/department-ticket', '/admin/department/department-ticket/list'], label: 'دپارتمان تیکت' },
   { paths: ['/admin/department/department-returned'], label: 'دپارتمان مرجوعی' },
   { paths: ['/admin/department/department-canceled'], label: 'دپارتمان لغوخرید' },
-  { paths: ['/admin/department/department-message'], label: 'دپارتمان پیامک' },
 ]
 
 

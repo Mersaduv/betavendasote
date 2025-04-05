@@ -25,12 +25,14 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
   const { userInfo } = useAppSelector((state) => state.auth)
   useEffect(() => {
     const updateDate = () => {
-      const formattedDate = dayjs().tz().calendar('jalali').locale('fa').format('dddd, D MMMM YYYY')
-      setCurrentDate(formattedDate)
+      const baseDate = dayjs().subtract(1, 'day') 
+      const dayName = baseDate.add(1, 'day').calendar('jalali').locale('fa').format('dddd') 
+      const fullDate = baseDate.calendar('jalali').locale('fa').format('D MMMM YYYY') 
+      setCurrentDate(`${dayName}, ${fullDate}`)
     }
-
+    
     updateDate()
-    const interval = setInterval(updateDate, 60000) // به‌روزرسانی هر دقیقه
+    const interval = setInterval(updateDate, 60000)
 
     return () => clearInterval(interval)
   }, [])
