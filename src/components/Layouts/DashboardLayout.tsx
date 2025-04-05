@@ -6,19 +6,26 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import jalaliday from 'jalaliday'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 import { digitsEnToFa } from '@persian-tools/persian-tools'
 import { useAppSelector } from '@/hooks'
 interface Props {
   children: React.ReactNode
 }
+dayjs.extend(utc)
+dayjs.extend(timezone)
 dayjs.extend(jalaliday)
+
+dayjs.tz.setDefault('Asia/Tehran')
 const DashboardLayout: React.FC<Props> = ({ children }) => {
   const [openRight, setOpenRight] = useState(false)
   const [currentDate, setCurrentDate] = useState('')
   const { logoImages } = useAppSelector((state) => state.design)
+  const { userInfo } = useAppSelector((state) => state.auth)
   useEffect(() => {
     const updateDate = () => {
-      const formattedDate = dayjs().calendar('jalali').locale('fa').format('dddd, D MMMM YYYY')
+      const formattedDate = dayjs().tz().calendar('jalali').locale('fa').format('dddd, D MMMM YYYY')
       setCurrentDate(formattedDate)
     }
 
@@ -53,7 +60,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
               </svg>
             </span>
           </div>
-          <Link className="" passHref href="/">
+          <Link className="w-[245px]" passHref href="/">
             <img
               width={175}
               src={(logoImages && logoImages?.orgImage && logoImages?.orgImage.imageUrl) || ''}
@@ -61,7 +68,13 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
             />
           </Link>
         </div>
-        <div className="pl-2 sm:pl-4 md:pl-6">{digitsEnToFa(currentDate)}</div>
+        <div className="flex justify-between w-full items-center">
+          <div className="flex items-center gap-2">
+            <img className="w-10 h-10 object-cover rounded-lg" src={userInfo?.imageScr?.imageUrl} alt="" />
+            <div>{userInfo?.fullName == ' ' ? 'مدیر' : userInfo?.fullName}</div>
+          </div>
+          <div className="pl-2 sm:pl-4 md:pl-6">{digitsEnToFa(currentDate)}</div>
+        </div>
       </header>
       <div className="flex mt-[75px] bg-[#f5f8fa] h-screen w-full">
         <div className="">

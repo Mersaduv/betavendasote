@@ -19,6 +19,16 @@ interface ResultBody {
   userType: number
   mobileNumber: string
   fullName: string
+  imageScr: {
+    id: string
+    imageUrl: string
+    placeholder: string
+  }
+  idCardImageSrc: {
+    id: string
+    imageUrl: string
+    placeholder: string
+  }
   token: string
   refreshToken: string
   refreshTokenExpireTime: number

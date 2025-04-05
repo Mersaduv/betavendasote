@@ -9,6 +9,16 @@ interface AuthState {
     userType: number
     mobileNumber: string | null
     fullName: string | null
+    imageScr: {
+      id: string
+      imageUrl: string
+      placeholder: string
+    } | null
+    idCardImageSrc: {
+      id: string
+      imageUrl: string
+      placeholder: string
+    } | null
     expireTime: number | null
     refreshTokenExpireTime: number | null
   } | null

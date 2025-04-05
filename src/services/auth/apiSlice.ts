@@ -38,6 +38,8 @@ export const authApiSlice = baseApi.injectEndpoints({
                   userType: data.data?.userType,
                   mobileNumber: data.data?.mobileNumber,
                   fullName: data.data?.fullName,
+                  imageScr: data.data?.imageScr,
+                  idCardImageSrc: data.data?.idCardImageSrc,
                   expireTime: data.data?.expireTime,
                   refreshTokenExpireTime: data.data?.refreshTokenExpireTime,
                 },
@@ -73,6 +75,8 @@ export const authApiSlice = baseApi.injectEndpoints({
                   userType: data.data?.userType,
                   mobileNumber: data.data?.mobileNumber,
                   fullName: data.data?.fullName,
+                  imageScr: data.data?.imageScr,
+                  idCardImageSrc: data.data?.idCardImageSrc,
                   expireTime: data.data?.expireTime,
                   refreshTokenExpireTime: data.data?.refreshTokenExpireTime,
                 },
@@ -111,6 +115,8 @@ export const authApiSlice = baseApi.injectEndpoints({
                   userType: data.data?.userType,
                   mobileNumber: data.data?.mobileNumber,
                   fullName: data.data?.fullName,
+                  imageScr: data.data?.imageScr,
+                  idCardImageSrc: data.data?.idCardImageSrc,
                   expireTime: data.data?.expireTime,
                   refreshTokenExpireTime: data.data?.refreshTokenExpireTime,
                 },
@@ -134,7 +140,6 @@ export const authApiSlice = baseApi.injectEndpoints({
           await queryFulfilled
           // Clear credentials in redux store
           dispatch(clearCredentials())
-          
         } catch (error) {
           console.error('Failed to logout:', error)
         }
