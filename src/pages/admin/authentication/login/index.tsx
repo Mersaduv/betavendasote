@@ -59,7 +59,7 @@ const LoginPage: NextPage = () => {
           isCode
         />
       )}
-      <main className="grid min-h-screen items-center">
+      <main className="h-screen">
         <MetaTags
           title={generalSetting?.title + ' | ' + 'ورود' || 'فروشگاه اینترنتی'}
           description={generalSetting?.shortIntroduction || 'توضیحاتی فروشگاه اینترنتی'}

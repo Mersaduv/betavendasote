@@ -55,7 +55,7 @@ const LoginForm: React.FC<Props> = (props) => {
   }, [stage, setFocus])
 
   return (
-    <form className="space-y-0.5" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col justify-between h-full" onSubmit={handleSubmit(onSubmit)}>
       <>
         <h2 className="text-gray-300 text-base text-center mb-12">شماره همراه خود را وارد کنید</h2>
         <TextField
