@@ -17,7 +17,11 @@ const BrandCombobox: React.FC<Props> = ({ brands, onBrandSelect, selectedBrand, 
   const [query, setQuery] = useState('')
 
   const filteredCategories =
-    query === '' ? brands : brands.filter((brand) => brand.nameFa.toLowerCase().includes(query.toLowerCase()))
+    query === ''
+      ? [...brands].sort((a, b) => a.nameFa.localeCompare(b.nameFa, 'fa'))
+      : brands
+          .filter((brand) => brand.nameFa.toLowerCase().includes(query.toLowerCase()))
+          .sort((a, b) => a.nameFa.localeCompare(b.nameFa, 'fa'))
 
   const handleSelect = (brand: IBrand) => {
     setSelectedBrand(brand)
@@ -29,7 +33,7 @@ const BrandCombobox: React.FC<Props> = ({ brands, onBrandSelect, selectedBrand, 
       <Combobox value={selectedBrand} onChange={handleSelect}>
         <div className="relative">
           <Combobox.Button className="absolute w-full top-1 -left-1 flex items-center justify-end pr-2">
-            <ArrowRight2 className="text-4xl text-gray-400  rotate-90 ml-1 -mt-0.5" />
+            <ArrowRight2 className="text-4xl text-gray-400 rotate-90 ml-1 -mt-0.5" />
           </Combobox.Button>
           <Combobox.Input
             className="w-full rounded-md border border-gray-300 py-1.5 pr-8 pl-3 text-gray-900"
@@ -38,7 +42,7 @@ const BrandCombobox: React.FC<Props> = ({ brands, onBrandSelect, selectedBrand, 
             placeholder="انتخاب کنید"
           />
         </div>
-        <Combobox.Options className="absolute z-[60] mt-1 max-h-60 w-full overflow-auto  rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <Combobox.Options className="absolute z-[60] mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           {filteredCategories.length === 0 && query !== '' ? (
             <div className="relative cursor-default select-none py-2 px-4 text-gray-700">هیچ برندی یافت نشد.</div>
           ) : (
@@ -54,7 +58,9 @@ const BrandCombobox: React.FC<Props> = ({ brands, onBrandSelect, selectedBrand, 
               >
                 {({ selected, active }) => (
                   <>
-                    <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>{brand.nameFa}</span>
+                    <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
+                      {brand.nameFa + ' ' + '-' + ' ' + brand.nameEn}
+                    </span>
                     {selected ? (
                       <span
                         className={`absolute inset-y-0 left-0 flex items-center pl-3 ${

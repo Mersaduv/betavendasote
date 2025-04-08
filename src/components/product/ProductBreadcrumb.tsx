@@ -33,7 +33,7 @@ const ProductBreadcrumb: React.FC<Props> = ({
                 >
                   {category.name}
                 </Link>
-                {index < categoryLevels.parentCategories.length - 1 && '>'}
+                {index < categoryLevels.parentCategories.length - 1 && <div className='text-gray-500'>{'>'}</div>}
               </div>
             ))}
 
@@ -54,7 +54,7 @@ const ProductBreadcrumb: React.FC<Props> = ({
               <Link href="/" className="inline-block font-light p-1 text-sm text-[#00c3e1]">
                 {generalSetting?.title}
               </Link>
-              {'>'}
+              <div className='text-gray-500'>{'>'}</div>
             </>
           )}
 
@@ -68,10 +68,10 @@ const ProductBreadcrumb: React.FC<Props> = ({
                   >
                     {category.name}
                   </Link>
-                  {index < categoryLevels?.parentCategories?.length - 1 && '>'}
+                  {index < categoryLevels?.parentCategories?.length - 1 && <div className='text-gray-500'>{'>'}</div>}
                 </div>
               ))}
-              {categoryLevels?.parentCategories?.length !== 0 && '>'}
+              {categoryLevels?.parentCategories?.length !== 0 && <div className='text-gray-500'>{'>'}</div>}
 
               <div>
                 <Link

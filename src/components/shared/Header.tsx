@@ -75,7 +75,6 @@ const Header = () => {
                   </Link>
                   <CartDisplay />
                 </div>
-                <span className="hidden h-8 w-0.5 bg-gray-300 lg:block" />
                 <UserAuthLinks />
               </div>
             </div>

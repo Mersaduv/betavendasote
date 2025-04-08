@@ -200,7 +200,7 @@ const AdditionalForm: React.FC<Props> = ({
           </div>
           <div className="flex flex-col sm:flex-row py-6 pt-10  gap-4">
             {columnFooters.length === 0 ? (
-              <div className="text-center w-full">ستون موزد نظر را اضافه کنید</div>
+              <div className="text-center w-full">ستون مورد نظر را اضافه کنید</div>
             ) : (
               <div className="flex flex-col items-center md:flex-row w-full">
                 {columnFooters.map((columnFooter, index) => {
@@ -280,9 +280,6 @@ const AdditionalForm: React.FC<Props> = ({
               </div>
             )}
           </div>
-        </div>
-        <div className="bg-gray-50 h-[56px] w-full rounded-b-lg px-8 flex flex-col pb-2">
-          <span className="font-normal text-[11px] pt-2">.....</span>
         </div>
       </div>
     </div>

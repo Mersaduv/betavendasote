@@ -76,13 +76,13 @@ const LoginForm: React.FC<Props> = (props) => {
         >
           ادامه
         </LoginButton>
-        <div className="pt-4 flex items-center w-full ">
+        <div className="pt-4 flex items-center justify-center w-full ">
           <div className=" text-gray-800 text-sm flex mt-8">
             شرایط استفاده از{' '}
             <Link href={`/articles/${redirectData?.data?.slug}`} className="text-blue-400 text-sm mx-1">
               قوانین و حریم خصوصی{' '}
             </Link>{' '}
-            {generalSetting?.title} را میپذیرم
+            {generalSetting?.title} را می پذیرم
           </div>
         </div>
       </>

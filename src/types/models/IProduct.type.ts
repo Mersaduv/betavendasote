@@ -36,6 +36,8 @@ export interface IProduct {
   productFeatureInfo?: IProductFeatureInfo
   // productScale?:
   description: string
+  guideDescription: string
+  inventoryLocation: string
   discount: number
   categoryList?: string[]
   categoryLevels?: ICategoryLevel[]

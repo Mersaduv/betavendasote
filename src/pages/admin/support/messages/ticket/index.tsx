@@ -9,7 +9,7 @@ import { Menu, Tab, Transition } from '@headlessui/react'
 import { useGetTicketsQuery } from '@/services'
 import { useRouter } from 'next/router'
 import { ITicket, UserTypes } from '@/types'
-import { useAppDispatch, useDisclosure } from '@/hooks'
+import { useAppDispatch, useAppSelector, useDisclosure } from '@/hooks'
 import { Fragment, useEffect, useState } from 'react'
 import { Pagination } from '@/components/navigation'
 import { LuSearch } from 'react-icons/lu'
@@ -31,6 +31,7 @@ const Ticket: NextPage = () => {
   const [ticketTabKey, setTicketTabKey] = useState('allTickets')
   const [userType, setUserType] = useState('')
   const [selectUserTypeState, setSelectUserTypeState] = useState<string | undefined>(undefined)
+  const { generalSetting } = useAppSelector((state) => state.design)
   // ? Assets
   const { query, push } = useRouter()
   const ticketPage = query.page ? +query.page : 1
@@ -242,8 +243,8 @@ const Ticket: NextPage = () => {
                             <option className="appearance-none text-sm" value="">
                               همه
                             </option>
+                            <option value="1">{generalSetting?.title}</option>
                             <option value="0">مشتری</option>
-                            <option value="1">پرسنل</option>
                             <option value="2">فروشنده</option>
                           </select>
                           <div
@@ -287,39 +288,49 @@ const Ticket: NextPage = () => {
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد تیکت</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
-                                  ایجاد کننده
+                                <th className="text-sm py-3 px-2 pr-6 text-gray-600 font-normal text-start w-[15%]">
+                                  کد تیکت
                                 </th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">عنوان</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">تاریخ ایجاد</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">گیرنده</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">وضعیت</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  فرستنده
+                                </th>
+                                <th className="text-sm py-3 text-gray-600 font-normal text-start ">گیرنده</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  عنوان
+                                </th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center w-[15%]">
+                                  زمان ارسال
+                                </th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center ">وضعیت</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center ">عملیات</th>
                               </tr>
                             </thead>
                             <tbody>
                               {ticketsPagination?.data?.data &&
                                 ticketsPagination?.data?.data.map((ticket, index) => {
-                                  console.log(ticket , "ticket");
-                                  
+                                  console.log(ticket, 'ticket')
+
                                   return (
                                     <tr
                                       key={ticket.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="text-sm text-center farsi-digits">{ticket.ticketCode}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {ticket.ticketMessages[0].user.fullName === ' '
-                                          ? ticket.ticketMessages[0].user.mobileNumber
-                                          : ticket.ticketMessages[0].user.fullName}
+                                      <td className="text-sm text-start px-2 farsi-digits">{ticket.ticketCode}</td>
+                                      <td className="text-sm text-start farsi-digits relative group">
+                                        <div>{generalSetting?.title}</div>
+                                        <div className="absolute hidden group-hover:flex flex-col bg-white border border-gray-300 shadow-lg p-2 rounded-md z-10">
+                                          <div className="text-center mb-1">
+                                            {ticket.ticketMessages[0].user.fullName}
+                                          </div>
+                                          <div className="text-center">
+                                            {ticket.ticketMessages[0].user.mobileNumber}
+                                          </div>
+                                          <div className="text-center">
+                                            {ticket.ticketMessages[0].user.userSpecification.role.title}
+                                          </div>
+                                        </div>
                                       </td>
-                                      <td className="text-sm text-center">{ticket.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {' '}
-                                        {moment(ticket.created).format('jYYYY/jMM/jDD HH:mm')}
-                                      </td>
-                                      <td className="text-sm text-center">
+                                      <td className="text-sm text-start">
                                         {ticket.user.userSpecification.userType.toString() === '0'
                                           ? 'مشتری'
                                           : ticket.user.userSpecification.userType.toString() === '1'
@@ -327,6 +338,11 @@ const Ticket: NextPage = () => {
                                           : ticket.user.userSpecification.userType.toString() === '2'
                                           ? 'مشتری'
                                           : '-'}{' '}
+                                      </td>
+                                      <td className="text-sm text-start">{ticket.subject}</td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        <div>{moment(ticket.created).format('jYYYY/jMM/jDD')}</div>
+                                        <div>{moment(ticket.created).format('HH:mm')}</div>
                                       </td>
                                       {/* 
                                       <td className="text-sm text-center">
@@ -382,7 +398,7 @@ const Ticket: NextPage = () => {
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
                                                     >
-                                                      <span>بررسی</span>
+                                                      <span>مشاهده</span>
                                                     </button>
                                                   </>
                                                 )}
@@ -437,92 +453,102 @@ const Ticket: NextPage = () => {
                                 ticketsOpenPagination?.data?.data.map((ticket, index) => {
                                   return (
                                     <tr
-                                      key={ticket.id}
-                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                    >
-                                      <td className="text-sm text-center farsi-digits">{ticket.ticketCode}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {ticket.ticketMessages[0].user.fullName === ' '
-                                          ? ticket.ticketMessages[0].user.mobileNumber
-                                          : ticket.ticketMessages[0].user.fullName}
-                                      </td>
-                                      <td className="text-sm text-center">{ticket.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {' '}
-                                        {moment(ticket.created).format('jYYYY/jMM/jDD HH:mm')}
-                                      </td>
-                                      <td className="text-sm text-center">
-                                        {ticket.user.userSpecification.userType.toString() === '0'
-                                          ? 'مشتری'
-                                          : ticket.user.userSpecification.userType.toString() === '1'
-                                          ? `پرسنل - ${ticket.user.fullName}`
-                                          : ticket.user.userSpecification.userType.toString() === '2'
-                                          ? 'مشتری'
-                                          : '-'}{' '}
-                                      </td>
-                                      {/* 
-                                      <td className="text-sm text-center">
-                                        <div className="text-sm text-sm  px-2">{ticket.nameEn}</div>
-                                      </td>
+                                    key={ticket.id}
+                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                  >
+                                    <td className="text-sm text-start px-2 farsi-digits">{ticket.ticketCode}</td>
+                                    <td className="text-sm text-start farsi-digits relative group">
+                                      <div>{generalSetting?.title}</div>
+                                      <div className="absolute hidden group-hover:flex flex-col bg-white border border-gray-300 shadow-lg p-2 rounded-md z-10">
+                                        <div className="text-center mb-1">
+                                          {ticket.ticketMessages[0].user.fullName}
+                                        </div>
+                                        <div className="text-center">
+                                          {ticket.ticketMessages[0].user.mobileNumber}
+                                        </div>
+                                        <div className="text-center">
+                                          {ticket.ticketMessages[0].user.userSpecification.role.title}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="text-sm text-start">
+                                      {ticket.user.userSpecification.userType.toString() === '0'
+                                        ? 'مشتری'
+                                        : ticket.user.userSpecification.userType.toString() === '1'
+                                        ? `پرسنل`
+                                        : ticket.user.userSpecification.userType.toString() === '2'
+                                        ? 'مشتری'
+                                        : '-'}{' '}
+                                    </td>
+                                    <td className="text-sm text-start">{ticket.subject}</td>
+                                    <td className="text-sm text-center farsi-digits">
+                                      <div>{moment(ticket.created).format('jYYYY/jMM/jDD')}</div>
+                                      <div>{moment(ticket.created).format('HH:mm')}</div>
+                                    </td>
+                                    {/* 
+                                    <td className="text-sm text-center">
+                                      <div className="text-sm text-sm  px-2">{ticket.nameEn}</div>
+                                    </td>
 
-                                      <td className="text-sm text-center">
-                                        <div className="">{ticket.description !== '' ? '✓' : '-'}</div>
-                                      </td>
-                                      */}
-                                      <td className="text-sm text-center">
-                                        {ticket.status == 1 ? (
-                                          <div className="text-green-500 bg-[#e8fff3] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
-                                            باز
+                                    <td className="text-sm text-center">
+                                      <div className="">{ticket.description !== '' ? '✓' : '-'}</div>
+                                    </td>
+                                    */}
+                                    <td className="text-sm text-center">
+                                      {ticket.status == 1 ? (
+                                        <div className="text-green-500 bg-[#e8fff3] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
+                                          باز
+                                        </div>
+                                      ) : ticket.status == 3 ? (
+                                        <div className="text-[#f1416c] bg-[#fff5f8] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
+                                          بسته
+                                        </div>
+                                      ) : (
+                                        <div className="text-[#ffc700] bg-[#fff8dd] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
+                                          پاسخ داده شده
+                                        </div>
+                                      )}
+                                    </td>
+                                    <td className="text-center text-sm text-gray-600">
+                                      <Menu as="div" className="dropdown">
+                                        <Menu.Button className="">
+                                          <div className="w-full flex justify-center items-center">
+                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                              :
+                                            </span>
                                           </div>
-                                        ) : ticket.status == 3 ? (
-                                          <div className="text-[#f1416c] bg-[#fff5f8] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
-                                            بسته
-                                          </div>
-                                        ) : (
-                                          <div className="text-[#ffc700] bg-[#fff8dd] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
-                                            پاسخ داده شده
-                                          </div>
-                                        )}
-                                      </td>
-                                      <td className="text-center text-sm text-gray-600">
-                                        <Menu as="div" className="dropdown">
-                                          <Menu.Button className="">
-                                            <div className="w-full flex justify-center items-center">
-                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                                :
-                                              </span>
-                                            </div>
-                                          </Menu.Button>
+                                        </Menu.Button>
 
-                                          <Transition
-                                            as={Fragment}
-                                            enter="transition ease-out duration-100"
-                                            enterFrom="transform opacity-0 scale-95"
-                                            enterTo="transform opacity-100 scale-100"
-                                            leave="transition ease-in duration-75"
-                                            leaveFrom="transform opacity-100 scale-100"
-                                            leaveTo="transform opacity-0 scale-95"
-                                          >
-                                            <Menu.Items className="dropdown__items w-32 ">
-                                              <Menu.Item>
-                                                {({ close }) => (
-                                                  <>
-                                                    <button
-                                                      onClick={() => {
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>بررسی</span>
-                                                    </button>
-                                                  </>
-                                                )}
-                                              </Menu.Item>
-                                            </Menu.Items>
-                                          </Transition>
-                                        </Menu>
-                                      </td>
-                                    </tr>
+                                        <Transition
+                                          as={Fragment}
+                                          enter="transition ease-out duration-100"
+                                          enterFrom="transform opacity-0 scale-95"
+                                          enterTo="transform opacity-100 scale-100"
+                                          leave="transition ease-in duration-75"
+                                          leaveFrom="transform opacity-100 scale-100"
+                                          leaveTo="transform opacity-0 scale-95"
+                                        >
+                                          <Menu.Items className="dropdown__items w-32 ">
+                                            <Menu.Item>
+                                              {({ close }) => (
+                                                <>
+                                                  <button
+                                                    onClick={() => {
+                                                      push(`/admin/support/messages/ticket/${ticket.id}`)
+                                                      close()
+                                                    }}
+                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                  >
+                                                    <span>مشاهده</span>
+                                                  </button>
+                                                </>
+                                              )}
+                                            </Menu.Item>
+                                          </Menu.Items>
+                                        </Transition>
+                                      </Menu>
+                                    </td>
+                                  </tr>
                                   )
                                 })}
                             </tbody>
@@ -573,25 +599,34 @@ const Ticket: NextPage = () => {
                                       key={ticket.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="text-sm text-center farsi-digits">{ticket.ticketCode}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {ticket.ticketMessages[0].user.fullName === ' '
-                                          ? ticket.ticketMessages[0].user.mobileNumber
-                                          : ticket.ticketMessages[0].user.fullName}
+                                      <td className="text-sm text-start px-2 farsi-digits">{ticket.ticketCode}</td>
+                                      <td className="text-sm text-start farsi-digits relative group">
+                                        <div>{generalSetting?.title}</div>
+                                        <div className="absolute hidden group-hover:flex flex-col bg-white border border-gray-300 shadow-lg p-2 rounded-md z-10">
+                                          <div className="text-center mb-1">
+                                            {ticket.ticketMessages[0].user.fullName}
+                                          </div>
+                                          <div className="text-center">
+                                            {ticket.ticketMessages[0].user.mobileNumber}
+                                          </div>
+                                          <div className="text-center">
+                                            {ticket.ticketMessages[0].user.userSpecification.role.title}
+                                          </div>
+                                        </div>
                                       </td>
-                                      <td className="text-sm text-center">{ticket.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {' '}
-                                        {moment(ticket.created).format('jYYYY/jMM/jDD HH:mm')}
-                                      </td>
-                                      <td className="text-sm text-center">
+                                      <td className="text-sm text-start">
                                         {ticket.user.userSpecification.userType.toString() === '0'
                                           ? 'مشتری'
                                           : ticket.user.userSpecification.userType.toString() === '1'
-                                          ? `پرسنل - ${ticket.user.fullName}`
+                                          ? `پرسنل`
                                           : ticket.user.userSpecification.userType.toString() === '2'
                                           ? 'مشتری'
                                           : '-'}{' '}
+                                      </td>
+                                      <td className="text-sm text-start">{ticket.subject}</td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        <div>{moment(ticket.created).format('jYYYY/jMM/jDD')}</div>
+                                        <div>{moment(ticket.created).format('HH:mm')}</div>
                                       </td>
                                       {/* 
                                       <td className="text-sm text-center">
@@ -642,11 +677,12 @@ const Ticket: NextPage = () => {
                                                   <>
                                                     <button
                                                       onClick={() => {
+                                                        push(`/admin/support/messages/ticket/${ticket.id}`)
                                                         close()
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
                                                     >
-                                                      <span>بررسی</span>
+                                                      <span>مشاهده</span>
                                                     </button>
                                                   </>
                                                 )}
@@ -705,92 +741,102 @@ const Ticket: NextPage = () => {
                                 ticketsClosePagination?.data?.data.map((ticket, index) => {
                                   return (
                                     <tr
-                                      key={ticket.id}
-                                      className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
-                                    >
-                                      <td className="text-sm text-center farsi-digits">{ticket.ticketCode}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {ticket.ticketMessages[0].user.fullName === ' '
-                                          ? ticket.ticketMessages[0].user.mobileNumber
-                                          : ticket.ticketMessages[0].user.fullName}
-                                      </td>
-                                      <td className="text-sm text-center">{ticket.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {' '}
-                                        {moment(ticket.created).format('jYYYY/jMM/jDD HH:mm')}
-                                      </td>
-                                      <td className="text-sm text-center">
-                                        {ticket.user.userSpecification.userType.toString() === '0'
-                                          ? 'مشتری'
-                                          : ticket.user.userSpecification.userType.toString() === '1'
-                                          ? `پرسنل - ${ticket.user.fullName}`
-                                          : ticket.user.userSpecification.userType.toString() === '2'
-                                          ? 'مشتری'
-                                          : '-'}{' '}
-                                      </td>
-                                      {/* 
-                                      <td className="text-sm text-center">
-                                        <div className="text-sm text-sm  px-2">{ticket.nameEn}</div>
-                                      </td>
+                                    key={ticket.id}
+                                    className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
+                                  >
+                                    <td className="text-sm text-start px-2 farsi-digits">{ticket.ticketCode}</td>
+                                    <td className="text-sm text-start farsi-digits relative group">
+                                      <div>{generalSetting?.title}</div>
+                                      <div className="absolute hidden group-hover:flex flex-col bg-white border border-gray-300 shadow-lg p-2 rounded-md z-10">
+                                        <div className="text-center mb-1">
+                                          {ticket.ticketMessages[0].user.fullName}
+                                        </div>
+                                        <div className="text-center">
+                                          {ticket.ticketMessages[0].user.mobileNumber}
+                                        </div>
+                                        <div className="text-center">
+                                          {ticket.ticketMessages[0].user.userSpecification.role.title}
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="text-sm text-start">
+                                      {ticket.user.userSpecification.userType.toString() === '0'
+                                        ? 'مشتری'
+                                        : ticket.user.userSpecification.userType.toString() === '1'
+                                        ? `پرسنل`
+                                        : ticket.user.userSpecification.userType.toString() === '2'
+                                        ? 'مشتری'
+                                        : '-'}{' '}
+                                    </td>
+                                    <td className="text-sm text-start">{ticket.subject}</td>
+                                    <td className="text-sm text-center farsi-digits">
+                                      <div>{moment(ticket.created).format('jYYYY/jMM/jDD')}</div>
+                                      <div>{moment(ticket.created).format('HH:mm')}</div>
+                                    </td>
+                                    {/* 
+                                    <td className="text-sm text-center">
+                                      <div className="text-sm text-sm  px-2">{ticket.nameEn}</div>
+                                    </td>
 
-                                      <td className="text-sm text-center">
-                                        <div className="">{ticket.description !== '' ? '✓' : '-'}</div>
-                                      </td>
-                                      */}
-                                      <td className="text-sm text-center">
-                                        {ticket.status == 1 ? (
-                                          <div className="text-green-500 bg-[#e8fff3] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
-                                            باز
+                                    <td className="text-sm text-center">
+                                      <div className="">{ticket.description !== '' ? '✓' : '-'}</div>
+                                    </td>
+                                    */}
+                                    <td className="text-sm text-center">
+                                      {ticket.status == 1 ? (
+                                        <div className="text-green-500 bg-[#e8fff3] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
+                                          باز
+                                        </div>
+                                      ) : ticket.status == 3 ? (
+                                        <div className="text-[#f1416c] bg-[#fff5f8] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
+                                          بسته
+                                        </div>
+                                      ) : (
+                                        <div className="text-[#ffc700] bg-[#fff8dd] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
+                                          پاسخ داده شده
+                                        </div>
+                                      )}
+                                    </td>
+                                    <td className="text-center text-sm text-gray-600">
+                                      <Menu as="div" className="dropdown">
+                                        <Menu.Button className="">
+                                          <div className="w-full flex justify-center items-center">
+                                            <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                              :
+                                            </span>
                                           </div>
-                                        ) : ticket.status == 3 ? (
-                                          <div className="text-[#f1416c] bg-[#fff5f8] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
-                                            بسته
-                                          </div>
-                                        ) : (
-                                          <div className="text-[#ffc700] bg-[#fff8dd] w-fit flex mx-auto px-2 rounded-md text-sm font-medium">
-                                            پاسخ داده شده
-                                          </div>
-                                        )}
-                                      </td>
-                                      <td className="text-center text-sm text-gray-600">
-                                        <Menu as="div" className="dropdown">
-                                          <Menu.Button className="">
-                                            <div className="w-full flex justify-center items-center">
-                                              <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
-                                                :
-                                              </span>
-                                            </div>
-                                          </Menu.Button>
+                                        </Menu.Button>
 
-                                          <Transition
-                                            as={Fragment}
-                                            enter="transition ease-out duration-100"
-                                            enterFrom="transform opacity-0 scale-95"
-                                            enterTo="transform opacity-100 scale-100"
-                                            leave="transition ease-in duration-75"
-                                            leaveFrom="transform opacity-100 scale-100"
-                                            leaveTo="transform opacity-0 scale-95"
-                                          >
-                                            <Menu.Items className="dropdown__items w-32 ">
-                                              <Menu.Item>
-                                                {({ close }) => (
-                                                  <>
-                                                    <button
-                                                      onClick={() => {
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>بررسی</span>
-                                                    </button>
-                                                  </>
-                                                )}
-                                              </Menu.Item>
-                                            </Menu.Items>
-                                          </Transition>
-                                        </Menu>
-                                      </td>
-                                    </tr>
+                                        <Transition
+                                          as={Fragment}
+                                          enter="transition ease-out duration-100"
+                                          enterFrom="transform opacity-0 scale-95"
+                                          enterTo="transform opacity-100 scale-100"
+                                          leave="transition ease-in duration-75"
+                                          leaveFrom="transform opacity-100 scale-100"
+                                          leaveTo="transform opacity-0 scale-95"
+                                        >
+                                          <Menu.Items className="dropdown__items w-32 ">
+                                            <Menu.Item>
+                                              {({ close }) => (
+                                                <>
+                                                  <button
+                                                    onClick={() => {
+                                                      push(`/admin/support/messages/ticket/${ticket.id}`)
+                                                      close()
+                                                    }}
+                                                    className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                  >
+                                                    <span>مشاهده</span>
+                                                  </button>
+                                                </>
+                                              )}
+                                            </Menu.Item>
+                                          </Menu.Items>
+                                        </Transition>
+                                      </Menu>
+                                    </td>
+                                  </tr>
                                   )
                                 })}
                             </tbody>

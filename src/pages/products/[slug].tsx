@@ -32,6 +32,7 @@ import { RiMenu5Fill } from 'react-icons/ri'
 import { digitsEnToFa } from '@persian-tools/persian-tools'
 import { MetaTags } from '@/components/shared'
 import Link from 'next/link'
+import { GrHelpBook } from 'react-icons/gr'
 
 interface Props {
   product: IProduct
@@ -93,7 +94,7 @@ const SingleProduct: NextPage<Props> = (props) => {
       }),
     }
   )
- 
+
   useEffect(() => {
     if (productDataLastSeen) {
       const updatedLastSeenData = productDataLastSeen.map((item) => {
@@ -199,6 +200,179 @@ const SingleProduct: NextPage<Props> = (props) => {
   }
   const updatedImagesSrcList = addMainImageToList(product.mainImageSrc, product.imagesSrc ?? [])
 
+  const hasFeature =
+    product.inStock > 0 &&
+    ((product.productFeatureInfo?.colorDTOs?.length || 0) > 0 ||
+      (product.productFeatureInfo?.featureValueInfos?.length || 0) > 0)
+
+  const hasDescription = product.description && product.description.trim().length > 0
+
+  const hasGuide = product.guideDescription && product.guideDescription.trim().length > 0
+
+  const hasSizeInfo = product.productSizeInfo?.columns && product.productSizeInfo.columns.length > 0
+
+  // آرایه‌ای از تب‌های معتبر با ساختار داده‌ای دلخواه:
+  const tabsData = []
+
+  // تب ویژگی محصول:
+  if (hasFeature) {
+    tabsData.push({
+      label: (
+        <>
+          <TfiMenuAlt className="-mr-2 ml-1" />
+          ویژگی محصول
+        </>
+      ),
+      renderPanel: (
+        <div className="text-gray-700">
+          <div className="w-full flex mb-6">
+            {product.productSizeInfo?.columns && product.productSizeInfo.columns.length > 0 && (
+              <div className="text-[#9e9e9e]  sm:text-base w-[150px]">سایزبندی</div>
+            )}
+            <div className="flex items-center">
+              {product.productSizeInfo?.columns?.map((size, index) => (
+                <div key={size.id} className="flex items-center">
+                  <div className="text-sm">{size.name}</div>
+                  {product?.productSizeInfo?.columns && index <  product?.productSizeInfo?.columns.length - 1 && <div className="text-red-600 mx-1">|</div>}
+                </div>
+              ))}
+            </div>
+          </div>
+          {product.inStock > 0 &&product.productFeatureInfo?.colorDTOs&& product.productFeatureInfo?.colorDTOs?.length > 0 && (
+            <div className="w-full flex">
+              <div className="text-[#9e9e9e]  sm:text-base w-[150px]">رنگ</div>
+              {product.productFeatureInfo.colorDTOs.map((color, index) => (
+                <div key={color.id} className="flex items-center">
+                  <div className="whitespace-nowrap text-sm">{color.name}</div>
+                  {product.productFeatureInfo?.colorDTOs && index < product.productFeatureInfo.colorDTOs.length - 1 && (
+                    <div className="text-red-600 mx-1">|</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          {product.inStock > 0 && product.productFeatureInfo?.featureValueInfos&&
+            product.productFeatureInfo?.featureValueInfos?.length > 0 &&
+            product.productFeatureInfo.featureValueInfos.map((item) => (
+              <div key={item.id} className="w-full flex mt-6">
+                <div className="text-[#9e9e9e]  sm:text-base w-[150px]">{item.title}</div>
+                {item.value?.map((itemValue, index) => (
+                  <div key={itemValue.id} className="flex items-center">
+                    <div className="whitespace-nowrap text-sm">{itemValue.name}</div>
+                    {item.value && index < item.value.length - 1 && <div className="text-red-600 mx-1">|</div>}
+                  </div>
+                ))}
+              </div>
+            ))}
+        </div>
+      ),
+    })
+  }
+
+  // تب توضیحات:
+  if (hasDescription) {
+    tabsData.push({
+      label: (
+        <>
+          <RiMenu5Fill className="-mr-2 ml-1" />
+          توضیحات
+        </>
+      ),
+      renderPanel: (
+        <div className="border rounded-lg">
+          <div
+            className="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred max-h-[500px]"
+            dangerouslySetInnerHTML={{ __html: product.description }}
+          />
+        </div>
+      ),
+    })
+  }
+
+  // تب راهنمای استفاده:
+  if (hasGuide) {
+    tabsData.push({
+      label: (
+        <>
+          <GrHelpBook className="-mr-2 ml-1" />
+          راهنمای استفاده
+        </>
+      ),
+      renderPanel: (
+        <div className="border rounded-lg">
+          <div
+            className="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred max-h-[500px]"
+            dangerouslySetInnerHTML={{ __html: product.guideDescription }}
+          />
+        </div>
+      ),
+    })
+  }
+
+  // تب راهنمای سایز:
+  if (hasSizeInfo) {
+    tabsData.push({
+      label: (
+        <>
+          <TfiRulerAlt2 className="-mr-2 ml-1" />
+          راهنمای سایز
+        </>
+      ),
+      renderPanel: (
+        <>
+          {product.productSizeInfo?.columns && product.productSizeInfo.columns.length > 0 && (
+            <div className="flex flex-col-reverse items-center sm:flex-row gap-x-6 pb-4 px-5">
+              <div className="flex flex-col flex-1">
+                <div className="text-center sm:text-start">
+                  <span className="font-normal">
+                    - تلورانس اندازه گیری تا {digitsEnToFa('5%')} طبیعی است <br /> - اعداد بر حسب{' '}
+                    <span className="text-red-600">
+                      {product.productSizeInfo.sizeType === '0' ? 'سانتیمتر' : 'میلیمتر'}
+                    </span>{' '}
+                    میباشد
+                  </span>
+                </div>
+                <table className="table-auto mt-4 border-collapse w-full">
+                  <thead className="bg-[#8fdcff]">
+                    <tr>
+                      <th className="px-4 py-2 text-start">اندازه</th>
+                      {product.productSizeInfo.columns.map((column) => (
+                        <th key={column.id} className="px-4 py-2 w-[135px] font-normal">
+                          {column.name}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {product.productSizeInfo.rows?.map((row, rowIndex) => (
+                      <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-gray-100' : ''}>
+                        <td className="px-4 py-2">{row.productSizeValue}</td>
+                        {product.productSizeInfo?.columns?.map((column, colIndex) => (
+                          <td key={colIndex} className="px-4 py-2 font-normal">
+                            <div className="border h-9 w-full flex justify-center farsi-digits items-center pr-1 rounded-md bg-white">
+                              {row.scaleValues?.[colIndex] || ''}
+                            </div>
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="rounded-lg shadow-product w-[400px] h-[400px]">
+                <img
+                  className="w-full h-full rounded-lg"
+                  src={product.productSizeInfo.imagesSrc?.imageUrl}
+                  alt="عکس اندازه محصول"
+                />
+              </div>
+            </div>
+          )}
+        </>
+      ),
+    })
+  }
+
   // ? Render(s)
   return (
     <>
@@ -238,7 +412,7 @@ const SingleProduct: NextPage<Props> = (props) => {
             />
 
             <div className="flex px-3 flex-col w-full ml-8 mr-10">
-              <div className="border-b-2 py-2 flex justify-between items-center h-[52px]">
+              <div className="border-b-2 py-2 flex justify-between items-center sm:min-h-[52px]">
                 <div className="flex">
                   <div className="text-gray-400 text-sm md:text-base">نام محصول :</div>
                   <div className="mr-1  text-sm md:text-base">{product.title}</div>
@@ -255,34 +429,36 @@ const SingleProduct: NextPage<Props> = (props) => {
                 <div className="border-b-2 py-2 flex justify-between items-center h-[52px]">
                   <div className="flex">
                     <div className="text-gray-400 text-sm md:text-base">برند محصول :</div>
-                    <div className="mr-1  text-sm md:text-base">{product.brandName}</div>
+                    <div className="mr-1 text-sm md:text-base flex gap-1">
+                      {product.brandData.nameFa + ' - '}
+                      <div className="text-gray-400">{product.brandData.nameEn}</div>
+                    </div>
                   </div>
                   {product.isFake && <div className="bg-[#f7d439] text-xs px-1.5 p-1 rounded-3xl">غیر اصل</div>}
                 </div>
               )}
 
               {product.productSizeInfo?.columns?.length! > 0 && (
-                <div className="border-b-2 py-2 flex items-center justify-between sm:h-[52px] relative">
-                  <div className="flex flex-col  sm:flex-row gap-2 sm:gap-0   w-full">
-                    <div className="flex w-1/3">
+                <div className="border-b-2 py-2 flex items-center  sm:min-h-[52px] relative">
+                  <div className="flex flex-col flex-wrap sm:flex-row gap-2 sm:gap-0  w-1/3">
+                    <div className="flex ">
                       <div className="text-gray-400 text-sm md:text-base whitespace-nowrap">سایزبندی :</div>
                       <div className="mr-1  text-sm  md:text-base">{tempSize?.name}</div>
                     </div>
+                  </div>
+                  <div className="flex items-center justify-between gap-4">
                     <div className="flex gap-2.5">
                       <ProductSizeSelector sizes={product.productSizeInfo?.columns ?? []} />
                     </div>
+                    <Button onClick={modalHandlers.open} className="p-2 text-xs rounded whitespace-nowrap  left-0">
+                      راهنمای سایز
+                    </Button>
                   </div>
-                  <Button
-                    onClick={modalHandlers.open}
-                    className="p-2 text-xs rounded whitespace-nowrap absolute  left-0"
-                  >
-                    راهنمایی سایز
-                  </Button>
                 </div>
               )}
 
               {product.productFeatureInfo?.colorDTOs?.length! > 0 && (
-                <div className="border-b-2 pt-1 items-center  flex sm:h-[52px] ">
+                <div className="border-b-2 pt-1 items-center  flex sm:min-h-[52px] ">
                   <div className="flex flex-col  sm:flex-row gap-2 sm:gap-0   w-full">
                     <div className="flex w-1/3">
                       <div className="text-gray-400 text-sm md:text-base whitespace-nowrap">رنگ :</div>
@@ -316,8 +492,8 @@ const SingleProduct: NextPage<Props> = (props) => {
                 const selectedValue = featureObjectValues[feature.id] // Get the selected value for this feature
 
                 return (
-                  <div key={feature.id} className="border-b-2 pt-1 items-center  flex sm:h-[52px] ">
-                    <div className="flex flex-col  sm:flex-row gap-2 sm:gap-0   w-full">
+                  <div key={feature.id} className="border-b-2  items-center  flex sm:min-h-[52px] ">
+                    <div className="flex flex-col items-center sm:flex-row gap-2 sm:gap-0   w-full">
                       <div className="flex w-1/3">
                         <div className="text-gray-400 text-sm md:text-base whitespace-nowrap ">
                           {selectedValue?.title} :
@@ -361,172 +537,52 @@ const SingleProduct: NextPage<Props> = (props) => {
           </div>
 
           {/* product features tabs :  */}
-          <div className="w-full px-2 sm:py-16 sm:px-0 pt-28 pb-6">
-            <Tab.Group className="sm:mx-4 mx-0">
-              <Tab.List className="flex justify-center xs:justify-start xs:flex-nowrap flex-wrap gap-3 rounded-md bg-[#f7f5f8] border p-4">
-                <Tab as={Fragment}>
-                  {({ selected }) => (
-                    <button
-                      className={classNames(
-                        'w-36 rounded flex  items-center justify-center py-2.5 text-sm sm:text-base  font-light  ',
-                        selected ? 'text-white bg-[#3F3A42] shadow ' : 'bg-[#f7f5f8] text-[#6b6b6b]'
+          <div className="w-full px-2 sm:py-16 sm:px-0 pt-28 sm:pb-0">
+            {tabsData.length !== 0 && (
+              <Tab.Group className="sm:mx-4 mx-0">
+                <Tab.List className="flex justify-center xs:justify-start xs:flex-nowrap flex-wrap gap-3 rounded-md bg-[#f7f5f8] border p-4">
+                  {tabsData.map((tab, index) => (
+                    // به جای Tab as={Fragment} از کامپوننت Tab به همراه تابع رندر استفاده می‌کنیم
+                    <Tab key={index} as={Fragment}>
+                      {({ selected }) => (
+                        <button
+                          className={classNames(
+                            'w-36 rounded flex items-center justify-center py-2.5 text-sm sm:text-base font-light',
+                            selected ? 'text-white bg-[#3F3A42] shadow' : 'bg-[#f7f5f8] text-[#6b6b6b] border'
+                          )}
+                        >
+                          {tab.label}
+                        </button>
                       )}
-                    >
-                      <TfiMenuAlt className="-mr-2 ml-1" />
-                      ویژگی محصول
-                    </button>
-                  )}
-                </Tab>
-                <Tab as={Fragment}>
-                  {({ selected }) => (
-                    <button
-                      className={classNames(
-                        'w-36 rounded flex  items-center justify-center py-2.5 text-sm sm:text-base  font-light  ',
-                        selected ? 'text-white bg-[#3F3A42] shadow ' : 'bg-[#f7f5f8] text-[#6b6b6b]'
-                      )}
-                    >
-                      <RiMenu5Fill className="-mr-2 ml-1" />
-                      توضیحات
-                    </button>
-                  )}
-                </Tab>
-
-                <Tab as={Fragment}>
-                  {({ selected }) => (
-                    <button
-                      className={classNames(
-                        'w-36 rounded flex  items-center justify-center py-2.5 text-sm sm:text-base  font-light  ',
-                        selected ? 'text-white bg-[#3F3A42] shadow ' : 'bg-[#f7f5f8] text-[#6b6b6b]'
-                      )}
-                    >
-                      <TfiRulerAlt2 className="-mr-2 ml-1" />
-                      راهنمای سایز
-                    </button>
-                  )}
-                </Tab>
-              </Tab.List>
-              <Tab.Panels className="mt-2">
-                <Tab.Panel className={classNames('bg-white rounded-xl p-3', 'bg-opacity-100')}>
-                  <div className="text-gray-700">
-                    <div className="w-full flex mb-6">
-                      <div className="text-[#9e9e9e]  sm:text-base w-[150px]">سایزبندی</div>
-                      <div className="flex items-center">
-                        {product.productSizeInfo?.columns?.map((size, index) => (
-                          <div key={size.id} className="flex items-center">
-                            <div className=" text-sm">{size.name}</div>
-                            {index < product.productSizeInfo?.columns!.length! - 1 && (
-                              <div className="text-red-600 mx-1">|</div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    {product.inStock > 0 && product.productFeatureInfo?.colorDTOs?.length! > 0 && (
-                      <div className="w-full flex">
-                        <div className="text-[#9e9e9e]  sm:text-base w-[150px]">رنگ</div>
-                        {product.productFeatureInfo?.colorDTOs?.map((color, index) => (
-                          <div key={color.id} className="flex items-center">
-                            <div className=" whitespace-nowrap text-sm">{color.name}</div>
-                            {index < product.productFeatureInfo?.colorDTOs!.length! - 1 && (
-                              <div className="text-red-600 mx-1">|</div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {product.inStock > 0 &&
-                      product.productFeatureInfo?.featureValueInfos?.length! > 0 &&
-                      product.productFeatureInfo?.featureValueInfos?.map((item, index) => (
-                        <div key={item.id} className="w-full flex mt-6">
-                          <div className="text-[#9e9e9e]  sm:text-base w-[150px]">{item.title}</div>
-                          {item.value?.map((itemValue, index) => (
-                            <div key={itemValue.id} className="flex items-center">
-                              <div className=" whitespace-nowrap text-sm">{itemValue.name}</div>
-                              {index < item.value?.length! - 1 && <div className="text-red-600 mx-1">|</div>}
-                            </div>
-                          ))}
-                        </div>
-                      ))}
-                  </div>
-                </Tab.Panel>
-                <Tab.Panel className={classNames('bg-white rounded-xl p-3 border', 'bg-opacity-100')}>
-                  {/* محتوای توضیحات */}
-                  <div
-                    className="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred max-h-[500px]"
-                    dangerouslySetInnerHTML={{ __html: product.description }}
-                  />
-                </Tab.Panel>
-
-                <Tab.Panel className={classNames('bg-white rounded-xl p-3', 'bg-opacity-100')}>
-                  {product.productSizeInfo?.columns?.length! > 0 && (
-                    <div className="flex flex-col-reverse  items-center sm:flex-row gap-x-6 pb-4 px-5">
-                      <div className="flex flex-col flex-1">
-                        <div className="text-center sm:text-start">
-                          <span className="font-normal">
-                            - تلورانس اندازه گیری تا {digitsEnToFa('5%')} طبیعی است <br /> - اعداد بر حسب{' '}
-                            <span className="text-red-600">
-                              {product.productSizeInfo?.sizeType === '0' ? 'سانتیمتر' : 'میلیمتر'}
-                            </span>{' '}
-                            میباشد
-                          </span>
-                        </div>
-                        <Button className="bg-white mt-1.5 text-gray-800 font-semibold border rounded">اندازه</Button>
-                        <table className="table-auto mt-4 border-collapse w-full">
-                          <thead className="bg-[#8fdcff]">
-                            <tr>
-                              <th className=" px-4 py-2"></th>
-                              {product.productSizeInfo?.columns?.map((column) => (
-                                <th key={column.id} className="px-4 py-2 w-[135px] font-normal">
-                                  {column.name}
-                                </th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {product.productSizeInfo?.rows?.map((row, rowIndex) => (
-                              <tr key={rowIndex} className={rowIndex % 2 === 0 ? 'bg-gray-100' : ''}>
-                                <td className="px-4 py-2">{row.productSizeValue}</td>
-                                {product.productSizeInfo?.columns?.map((column, colIndex) => (
-                                  <td key={colIndex} className="px-4 py-2 font-normal">
-                                    <div className="border h-9 w-full flex justify-start  items-center pr-1 rounded-md bg-white">
-                                      {row.scaleValues![colIndex] || ''}
-                                    </div>
-                                  </td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                      <div className="rounded-lg shadow-product w-[400px] h-[400px]">
-                        <img
-                          className="w-full h-full rounded-lg"
-                          src={product.productSizeInfo?.imagesSrc?.imageUrl}
-                          alt="عکس اندازه محصول"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </Tab.Panel>
-              </Tab.Panels>
-            </Tab.Group>
+                    </Tab>
+                  ))}
+                </Tab.List>
+                <Tab.Panels className="mt-2">
+                  {tabsData.map((tab, index) => (
+                    <Tab.Panel key={index} className={classNames('bg-white rounded-xl p-3', 'bg-opacity-100')}>
+                      {tab.renderPanel}
+                    </Tab.Panel>
+                  ))}
+                </Tab.Panels>
+              </Tab.Group>
+            )}
           </div>
 
           {/* reviews */}
-          <div className="w-full px-2 sm:py-16 sm:px-0 pt-28 pb-6">
+          <div className={`w-full px-2  sm:px-0 ${tabsData.length === 0 ? '' : 'pt-28 sm:py-16'} pb-6`}>
             <Tab.Group className="sm:mx-4 mx-0">
-              <Tab.List className="flex justify-center xs:justify-start sm:flex-nowrap flex-wrap gap-3 rounded-md bg-[#f7f5f8] border p-4">
+              <Tab.List className="flex relative justify-center xs:justify-start sm2:flex-nowrap flex-wrap gap-3 rounded-md bg-[#f7f5f8] border p-4">
                 <Tab as={Fragment}>
                   {({ selected }) => (
                     <button
                       className={classNames(
-                        'w-40 rounded flex  items-center justify-center whitespace-nowrap py-2.5 text-sm sm:text-base  font-light  ',
-                        selected ? 'text-white bg-[#3F3A42] shadow ' : 'bg-[#f7f5f8] text-[#6b6b6b]'
+                        'w-40 rounded flex gap-1 items-center justify-center whitespace-nowrap py-2.5 text-sm sm:text-base  font-light  ',
+                        selected ? 'text-white bg-[#3F3A42] shadow ' : 'bg-[#f7f5f8] text-[#6b6b6b] border'
                       )}
                     >
                       دیدگاه کاربران{' '}
                       <span className={`${selected ? 'text-white' : ' text-[#6b6b6b]'} mr-0.5`}>
-                        ({digitsEnToFa(`${product.reviewCount}`)} نظر)
+                        ({digitsEnToFa(`${product.reviewCount}`)})
                       </span>
                     </button>
                   )}
@@ -535,16 +591,19 @@ const SingleProduct: NextPage<Props> = (props) => {
                   {({ selected }) => (
                     <button
                       className={classNames(
-                        'w-36 rounded flex  items-center justify-center whitespace-nowrap py-2.5 text-sm sm:text-base  font-light  ',
-                        selected ? 'text-white bg-[#3F3A42] shadow ' : 'bg-[#f7f5f8] text-[#6b6b6b]'
+                        'w-36 rounded flex gap-1 items-center justify-center whitespace-nowrap py-2.5 text-sm sm:text-base  font-light  ',
+                        selected ? 'text-white bg-[#3F3A42] shadow ' : 'bg-[#f7f5f8] text-[#6b6b6b] border'
                       )}
                     >
                       پرسش و پاسخ
+                      <span className={`${selected ? 'text-white' : ' text-[#6b6b6b]'} mr-0.5`}>
+                        ({digitsEnToFa(`0`)})
+                      </span>
                     </button>
                   )}
                 </Tab>
 
-                <div className="whitespace-nowrap flex items-center gap-3">
+                <div className="whitespace-nowrap flex items-center gap-3 mdx:mr-64">
                   <div className="font-light">میانگین امتیاز این محصول</div>
                   <div className="flex gap-1">{renderStars(product.rating ?? 0)}</div>
                 </div>

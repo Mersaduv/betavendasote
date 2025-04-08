@@ -55,6 +55,8 @@ export interface IProductForm {
   Thumbnail?: File[] | null
   CategoryId: string
   Description: string
+  GuideDescription: string
+  InventoryLocation: string
   IsFake: boolean
   status: 'New' | 'Used'
   productType: 'Product' | 'ProductFile'
@@ -277,6 +279,7 @@ export interface IUserForm {
   birthDate?: string
   idNumber?: string
   nationalCode?: string
+  email?: string
   bankAccountNumber?: string
   shabaNumber?: string
   note?: string
@@ -401,9 +404,9 @@ export interface IEditPriceForm {
 }
 
 export interface ICostsForm {
-  id?:string
-  giftWrapped:number
-  deliveryCost:number
+  id?: string
+  giftWrapped: number
+  deliveryCost: number
 }
 
 export interface IJewelryForm {

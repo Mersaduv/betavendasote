@@ -103,7 +103,7 @@ const TabDashboardLayout: React.FC<TabDashboardLayoutProps> = ({ children, jewel
         </div>
       </nav>
       {/* Page Content */}
-      <div className={`mt-[88px] mb-4 rounded-lg shadow-item mx-3 bg-white ${jewelry ? '' : 'overflow-auto'}`}>
+      <div className={`mt-[88px] mb-4 rounded-lg shadow-item mx-3 bg-white ${jewelry ? '' : ''}`}>
         {children}
       </div>
     </div>

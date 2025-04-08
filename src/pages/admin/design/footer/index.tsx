@@ -57,7 +57,7 @@ const Footer: NextPage = () => {
     defaultValues: {
       designItems: [],
       sloganFooter: {},
-      support: {},
+      support: { address:"آدرس"},
       columnFooters: [],
       copyright: {},
     },

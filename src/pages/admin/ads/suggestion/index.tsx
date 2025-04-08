@@ -235,8 +235,8 @@ const Suggestions: NextPage = () => {
                       <Tab
                         className={({ selected }) =>
                           selected
-                            ? 'px-4 py-2 text-sky-500 rounded cursor-pointer text-sm'
-                            : 'px-4 py-2 hover:text-sky-500 rounded cursor-pointer text-sm'
+                            ? 'px-4 py-2  rounded cursor-pointer text-sm'
+                            : 'px-4 py-2  rounded cursor-pointer text-sm'
                         }
                       >
                         تعداد ({digitsEnToFa(allSuggestions?.data?.dataLength ?? 0)})

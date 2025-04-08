@@ -99,8 +99,8 @@ const SubCategorySizesUpdateModal: React.FC<Props> = (props) => {
         if (imageFile) {
           setSelectedFile([imageFile])
         }
-        console.log(productSizeCategoryData , "productSizeCategoryData");
-        
+        console.log(productSizeCategoryData, 'productSizeCategoryData')
+
         const productSizeValues = productSizeCategoryData.data.productSizeValues || []
         const tagsData = productSizeValues.map((value) => ({
           id: value.id,
@@ -117,7 +117,7 @@ const SubCategorySizesUpdateModal: React.FC<Props> = (props) => {
       }
     }
     loadData()
-  }, [productSizeCategoryData])
+  }, [productSizeCategoryData, refetch , onClose])
 
   useEffect(() => {
     setValue(
@@ -290,11 +290,20 @@ const SubCategorySizesUpdateModal: React.FC<Props> = (props) => {
         effect="bottom-to-top"
       >
         <Modal.Content
-          onClose={onClose}
+          onClose={() => {
+            onClose()
+            refetch()
+          }}
           className="flex h-full flex-col z-[199] gap-y-5 bg-white  py-5 pb-0 md:rounded-lg "
         >
-          <Modal.Header notBar onClose={onClose}>
-          <div className="text-start text-base flex gap-2">
+          <Modal.Header
+            notBar
+            onClose={() => {
+              onClose()
+              refetch()
+            }}
+          >
+            <div className="text-start text-base flex gap-2">
               انتخاب اندازه برای <div className="text-sky-500"> {category?.name}</div>
             </div>
           </Modal.Header>

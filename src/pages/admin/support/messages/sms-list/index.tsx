@@ -14,19 +14,25 @@ import {
   useGetTicketsQuery,
 } from '@/services'
 import { useRouter } from 'next/router'
-import { ITicket, UserTypes } from '@/types'
-import { useAppDispatch, useDisclosure } from '@/hooks'
-import { Fragment, useEffect, useState } from 'react'
+import { ISmsMessage, ITicket, IUser, UserTypes } from '@/types'
+import { useAppDispatch, useAppSelector, useDisclosure } from '@/hooks'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Pagination } from '@/components/navigation'
 import { LuSearch } from 'react-icons/lu'
-import { Button } from '@/components/ui'
+import { Button, Modal } from '@/components/ui'
 import { ProtectedRouteWrapper } from '@/components/user'
 import { GetNotificationsResult, GetSmsMessageResult, GetTicketsResult } from '@/services/user/types'
 import moment from 'moment-jalaali'
 import { ConfirmDeleteModal, UsersDetailModal } from '@/components/modals'
+import { Close, Search } from '@/icons'
+interface SmsDetailProp {
+  users: IUser[]
+  smsData: ISmsMessage
+}
 const SmsMessages: NextPage = () => {
   // States
   const [isShowConfirmDeleteModal, confirmDeleteModalHandlers] = useDisclosure()
+  const [selectedUsersForModal, setSelectedUsersForModal] = useState<SmsDetailProp | null>(null)
 
   const [deleteInfo, setDeleteInfo] = useState({
     id: '',
@@ -36,7 +42,7 @@ const SmsMessages: NextPage = () => {
   const [tabKey, setTabKey] = useState('allSms')
   const [userType, setUserType] = useState('')
   const [selectUserTypeState, setSelectUserTypeState] = useState<string | undefined>(undefined)
-
+  const { generalSetting } = useAppSelector((state) => state.design)
   // ? Assets
   const { query, push } = useRouter()
   const smsPage = query.page ? +query.page : 1
@@ -90,7 +96,7 @@ const SmsMessages: NextPage = () => {
     isFetching: isEventSmsFetching,
     isSuccess: isEventSmsSuccess,
     refetch: refetchEventSms,
-  } = useFetchSms('1')
+  } = useFetchSms('2')
 
   const {
     data: urgentSms,
@@ -98,7 +104,7 @@ const SmsMessages: NextPage = () => {
     isFetching: isUrgentSmsFetching,
     isSuccess: isUrgentSmsSuccess,
     refetch: refetchUrgentSms,
-  } = useFetchSms('2')
+  } = useFetchSms('1')
 
   useEffect(() => {
     if (allSms) {
@@ -162,6 +168,10 @@ const SmsMessages: NextPage = () => {
   return (
     <ProtectedRouteWrapper>
       <>
+        {selectedUsersForModal && (
+          <UserDetailSmsListModal smsDetail={selectedUsersForModal} onClose={() => setSelectedUsersForModal(null)} />
+        )}
+
         <ConfirmDeleteModal
           deleted
           title="حذف اعلان"
@@ -259,8 +269,8 @@ const SmsMessages: NextPage = () => {
                             <option className="appearance-none text-sm" value="">
                               همه
                             </option>
+                            <option value="1">{generalSetting?.title}</option>
                             <option value="0">مشتری</option>
-                            <option value="1">پرسنل</option>
                             <option value="2">فروشنده</option>
                           </select>
                           <div
@@ -304,14 +314,19 @@ const SmsMessages: NextPage = () => {
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد پیامک</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عنوان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
-                                  ارسال به
+                                <th className="text-sm py-3 px-2 pr-6 text-gray-600 font-normal text-start w-[15%]">
+                                  کد پیامک
                                 </th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  فرستنده
+                                </th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-start">گیرنده</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  عنوان
+                                </th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان ارسال</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کاربران</th>
+
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
                               </tr>
                             </thead>
@@ -323,14 +338,16 @@ const SmsMessages: NextPage = () => {
                                       key={smsItem.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="text-sm text-center farsi-digits">{smsItem.smsCode}</td>
-                                      <td className="text-sm text-center farsi-digits">{smsItem.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {moment(
-                                          smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
-                                        ).format('jYYYY/jMM/jDD HH:mm')}
+                                      <td className="text-sm text-start farsi-digits px-2">{smsItem.smsCode}</td>
+                                      <td className="text-sm text-start farsi-digits relative group">
+                                        <div>{generalSetting?.title}</div>
+                                        <div className="absolute hidden group-hover:flex flex-col bg-white border border-gray-300 shadow-lg p-2 rounded-md z-10">
+                                          <div className="text-center mb-1">{smsItem.user.fullName}</div>
+                                          <div className="text-center">{smsItem.user.mobileNumber}</div>
+                                          <div className="text-center">{smsItem.user.userSpecification.role.title}</div>
+                                        </div>
                                       </td>
-                                      <td className="text-sm text-center farsi-digits">
+                                      <td className="text-sm text-start farsi-digits">
                                         {' '}
                                         {/* {smsItem.user.fullName === ' '
                                           ? smsItem.user.mobileNumber
@@ -356,6 +373,20 @@ const SmsMessages: NextPage = () => {
                                           ? 'مشتری'
                                           : '-'}
                                       </td>
+                                      <td className="text-sm text-start farsi-digits">{smsItem.subject}</td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        <div>
+                                          {moment(
+                                            smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                          ).format('jYYYY/jMM/jDD')}
+                                        </div>
+                                        <div>
+                                          {moment(
+                                            smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                          ).format('HH:mm')}
+                                        </div>
+                                      </td>
+
                                       <td className="text-sm text-center">
                                         {smsItem.sendingTime == 1 ? (
                                           <div className="">فوری</div>
@@ -364,9 +395,6 @@ const SmsMessages: NextPage = () => {
                                         ) : (
                                           <div className="">فوری</div>
                                         )}
-                                      </td>
-                                      <td className="text-sm text-center">
-                                        <UsersDetailModal users={smsItem.recipients} />
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
                                         <Menu as="div" className="dropdown">
@@ -391,21 +419,31 @@ const SmsMessages: NextPage = () => {
                                               <Menu.Item>
                                                 {({ close }) => (
                                                   <>
-                                                    <button
-                                                      disabled={
-                                                        smsItem.sendingTime == 1 ||
-                                                        new Date(smsItem.scheduledDate) <= new Date()
-                                                      }
-                                                      onClick={() => {
-                                                        if (new Date(smsItem.scheduledDate) > new Date()) {
+                                                    {smsItem.sendingTime === 1 ||
+                                                    new Date(smsItem.scheduledDate) <= new Date() ? (
+                                                      <button
+                                                        onClick={() => {
+                                                          setSelectedUsersForModal({
+                                                            users: smsItem.recipients,
+                                                            smsData: smsItem,
+                                                          })
+                                                          close()
+                                                        }}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        مشاهده
+                                                      </button>
+                                                    ) : (
+                                                      <button
+                                                        onClick={() => {
                                                           push(`/admin/support/messages/sms-list/edit/${smsItem.id}`)
-                                                        }
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>ویرایش</span>
-                                                    </button>
+                                                          close()
+                                                        }}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        ویرایش
+                                                      </button>
+                                                    )}
                                                     <button
                                                       onClick={() => {
                                                         handleDelete(smsItem.id)
@@ -413,7 +451,7 @@ const SmsMessages: NextPage = () => {
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
                                                     >
-                                                      <span>حذف</span>
+                                                      حذف
                                                     </button>
                                                   </>
                                                 )}
@@ -451,15 +489,20 @@ const SmsMessages: NextPage = () => {
                         >
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد پیامک</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عنوان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
-                                  ارسال به
+                            <tr>
+                                <th className="text-sm py-3 px-2 pr-6 text-gray-600 font-normal text-start w-[15%]">
+                                  کد پیامک
                                 </th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  فرستنده
+                                </th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-start">گیرنده</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  عنوان
+                                </th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کاربران</th>
+
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
                               </tr>
                             </thead>
@@ -471,14 +514,16 @@ const SmsMessages: NextPage = () => {
                                       key={smsItem.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="text-sm text-center farsi-digits">{smsItem.smsCode}</td>
-                                      <td className="text-sm text-center farsi-digits">{smsItem.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {moment(
-                                          smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
-                                        ).format('jYYYY/jMM/jDD HH:mm')}
+                                      <td className="text-sm text-start farsi-digits px-2">{smsItem.smsCode}</td>
+                                      <td className="text-sm text-start farsi-digits relative group">
+                                        <div>{generalSetting?.title}</div>
+                                        <div className="absolute hidden group-hover:flex flex-col bg-white border border-gray-300 shadow-lg p-2 rounded-md z-10">
+                                          <div className="text-center mb-1">{smsItem.user.fullName}</div>
+                                          <div className="text-center">{smsItem.user.mobileNumber}</div>
+                                          <div className="text-center">{smsItem.user.userSpecification.role.title}</div>
+                                        </div>
                                       </td>
-                                      <td className="text-sm text-center farsi-digits">
+                                      <td className="text-sm text-start farsi-digits">
                                         {' '}
                                         {/* {smsItem.user.fullName === ' '
                                           ? smsItem.user.mobileNumber
@@ -504,6 +549,20 @@ const SmsMessages: NextPage = () => {
                                           ? 'مشتری'
                                           : '-'}
                                       </td>
+                                      <td className="text-sm text-start farsi-digits">{smsItem.subject}</td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        <div>
+                                          {moment(
+                                            smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                          ).format('jYYYY/jMM/jDD')}
+                                        </div>
+                                        <div>
+                                          {moment(
+                                            smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                          ).format('HH:mm')}
+                                        </div>
+                                      </td>
+
                                       <td className="text-sm text-center">
                                         {smsItem.sendingTime == 1 ? (
                                           <div className="">فوری</div>
@@ -512,9 +571,6 @@ const SmsMessages: NextPage = () => {
                                         ) : (
                                           <div className="">فوری</div>
                                         )}
-                                      </td>
-                                      <td className="text-sm text-center">
-                                        <UsersDetailModal users={smsItem.recipients} />
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
                                         <Menu as="div" className="dropdown">
@@ -539,21 +595,31 @@ const SmsMessages: NextPage = () => {
                                               <Menu.Item>
                                                 {({ close }) => (
                                                   <>
-                                                    <button
-                                                      disabled={
-                                                        smsItem.sendingTime == 1 ||
-                                                        new Date(smsItem.scheduledDate) <= new Date()
-                                                      }
-                                                      onClick={() => {
-                                                        if (new Date(smsItem.scheduledDate) > new Date()) {
+                                                    {smsItem.sendingTime === 1 ||
+                                                    new Date(smsItem.scheduledDate) <= new Date() ? (
+                                                      <button
+                                                        onClick={() => {
+                                                          setSelectedUsersForModal({
+                                                            users: smsItem.recipients,
+                                                            smsData: smsItem,
+                                                          })
+                                                          close()
+                                                        }}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        مشاهده
+                                                      </button>
+                                                    ) : (
+                                                      <button
+                                                        onClick={() => {
                                                           push(`/admin/support/messages/sms-list/edit/${smsItem.id}`)
-                                                        }
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>ویرایش</span>
-                                                    </button>
+                                                          close()
+                                                        }}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        ویرایش
+                                                      </button>
+                                                    )}
                                                     <button
                                                       onClick={() => {
                                                         handleDelete(smsItem.id)
@@ -561,7 +627,7 @@ const SmsMessages: NextPage = () => {
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
                                                     >
-                                                      <span>حذف</span>
+                                                      حذف
                                                     </button>
                                                   </>
                                                 )}
@@ -599,15 +665,20 @@ const SmsMessages: NextPage = () => {
                         >
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
-                              <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد پیامک</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عنوان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
-                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">
-                                  ارسال به
+                            <tr>
+                                <th className="text-sm py-3 px-2 pr-6 text-gray-600 font-normal text-start w-[15%]">
+                                  کد پیامک
                                 </th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  فرستنده
+                                </th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-start">گیرنده</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-[15%]">
+                                  عنوان
+                                </th>
+                                <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal text-center">زمان</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نوع ارسال</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کاربران</th>
+
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">عملیات</th>
                               </tr>
                             </thead>
@@ -619,14 +690,16 @@ const SmsMessages: NextPage = () => {
                                       key={smsItem.id}
                                       className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}
                                     >
-                                      <td className="text-sm text-center farsi-digits">{smsItem.smsCode}</td>
-                                      <td className="text-sm text-center farsi-digits">{smsItem.subject}</td>
-                                      <td className="text-sm text-center farsi-digits">
-                                        {moment(
-                                          smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
-                                        ).format('jYYYY/jMM/jDD HH:mm')}
+                                      <td className="text-sm text-start farsi-digits px-2">{smsItem.smsCode}</td>
+                                      <td className="text-sm text-start farsi-digits relative group">
+                                        <div>{generalSetting?.title}</div>
+                                        <div className="absolute hidden group-hover:flex flex-col bg-white border border-gray-300 shadow-lg p-2 rounded-md z-10">
+                                          <div className="text-center mb-1">{smsItem.user.fullName}</div>
+                                          <div className="text-center">{smsItem.user.mobileNumber}</div>
+                                          <div className="text-center">{smsItem.user.userSpecification.role.title}</div>
+                                        </div>
                                       </td>
-                                      <td className="text-sm text-center farsi-digits">
+                                      <td className="text-sm text-start farsi-digits">
                                         {' '}
                                         {/* {smsItem.user.fullName === ' '
                                           ? smsItem.user.mobileNumber
@@ -652,6 +725,20 @@ const SmsMessages: NextPage = () => {
                                           ? 'مشتری'
                                           : '-'}
                                       </td>
+                                      <td className="text-sm text-start farsi-digits">{smsItem.subject}</td>
+                                      <td className="text-sm text-center farsi-digits">
+                                        <div>
+                                          {moment(
+                                            smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                          ).format('jYYYY/jMM/jDD')}
+                                        </div>
+                                        <div>
+                                          {moment(
+                                            smsItem.sendingTime == 2 ? smsItem.scheduledDate : smsItem.created
+                                          ).format('HH:mm')}
+                                        </div>
+                                      </td>
+
                                       <td className="text-sm text-center">
                                         {smsItem.sendingTime == 1 ? (
                                           <div className="">فوری</div>
@@ -660,9 +747,6 @@ const SmsMessages: NextPage = () => {
                                         ) : (
                                           <div className="">فوری</div>
                                         )}
-                                      </td>
-                                      <td className="text-sm text-center">
-                                        <UsersDetailModal users={smsItem.recipients} />
                                       </td>
                                       <td className="text-center text-sm text-gray-600">
                                         <Menu as="div" className="dropdown">
@@ -687,21 +771,31 @@ const SmsMessages: NextPage = () => {
                                               <Menu.Item>
                                                 {({ close }) => (
                                                   <>
-                                                    <button
-                                                      disabled={
-                                                        smsItem.sendingTime == 1 ||
-                                                        new Date(smsItem.scheduledDate) <= new Date()
-                                                      }
-                                                      onClick={() => {
-                                                        if (new Date(smsItem.scheduledDate) > new Date()) {
+                                                    {smsItem.sendingTime === 1 ||
+                                                    new Date(smsItem.scheduledDate) <= new Date() ? (
+                                                      <button
+                                                        onClick={() => {
+                                                          setSelectedUsersForModal({
+                                                            users: smsItem.recipients,
+                                                            smsData: smsItem,
+                                                          })
+                                                          close()
+                                                        }}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        مشاهده
+                                                      </button>
+                                                    ) : (
+                                                      <button
+                                                        onClick={() => {
                                                           push(`/admin/support/messages/sms-list/edit/${smsItem.id}`)
-                                                        }
-                                                        close()
-                                                      }}
-                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
-                                                    >
-                                                      <span>ویرایش</span>
-                                                    </button>
+                                                          close()
+                                                        }}
+                                                        className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                      >
+                                                        ویرایش
+                                                      </button>
+                                                    )}
                                                     <button
                                                       onClick={() => {
                                                         handleDelete(smsItem.id)
@@ -709,7 +803,7 @@ const SmsMessages: NextPage = () => {
                                                       }}
                                                       className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
                                                     >
-                                                      <span>حذف</span>
+                                                      حذف
                                                     </button>
                                                   </>
                                                 )}
@@ -742,6 +836,151 @@ const SmsMessages: NextPage = () => {
         </DashboardLayout>
       </>
     </ProtectedRouteWrapper>
+  )
+}
+
+interface Props {
+  smsDetail: SmsDetailProp
+  onClose: () => void
+}
+
+const UserDetailSmsListModal: React.FC<Props> = ({ smsDetail, onClose }) => {
+  const [search, setSearch] = useState('')
+  const searchRef = useRef<HTMLInputElement | null>(null)
+  const [isShowSearchModal, searchModalHanlders] = useDisclosure(true)
+
+  const filteredUsers = smsDetail.users.filter((user) => {
+    const searchLower = search.toLowerCase()
+    return user.mobileNumber.toLowerCase().includes(searchLower) || user.fullName.toLowerCase().includes(searchLower)
+  })
+
+  useEffect(() => {
+    if (!isShowSearchModal) {
+      setSearch('')
+    }
+  }, [isShowSearchModal])
+
+  useEffect(() => {
+    if (isShowSearchModal) {
+      const timeoutId = setTimeout(() => {
+        searchRef.current?.focus()
+      }, 100)
+
+      return () => clearTimeout(timeoutId)
+    }
+  }, [isShowSearchModal])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value)
+  }
+
+  const handleRemoveSearch = () => {
+    setSearch('')
+  }
+
+  return (
+    <Modal
+      isShow={isShowSearchModal}
+      onClose={() => {
+        searchModalHanlders.close()
+        onClose()
+      }}
+      effect="bottom-to-top"
+    >
+      <Modal.Content
+        onClose={() => {
+          searchModalHanlders.close()
+          onClose()
+        }}
+        className="flex h-screen flex-col gap-y-3 bg-white py-3 pl-2 pr-4 md:rounded-lg lg:h-fit"
+      >
+        <Modal.Header
+          onClose={() => {
+            searchModalHanlders.close()
+            onClose()
+          }}
+          notBar
+        >
+          {smsDetail.smsData.smsCode}
+        </Modal.Header>
+
+        <Modal.Body>
+          <div className="w-full">
+            <div>
+              {/* <div>{smsDetail.smsData.subject}</div> */}
+              <div className="flex py-6 pt-4 pb-0 flex-col xs:flex-row">
+                <label
+                  htmlFor="subject"
+                  className="flex items-center xs:py-0 pt-2 justify-center px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
+                >
+                  <div className="w-5 h-5">
+                    <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" />
+                  </div>
+                  <span className="whitespace-nowrap text-center w-[113px]">عنوان</span>
+                </label>
+                <input
+                  className="w-full border rounded-r-none border-gray-200 rounded-md "
+                  type="text"
+                  id="subject"
+                  disabled
+                  value={smsDetail.smsData.subject}
+                />
+              </div>
+              {/* <div>{smsDetail.smsData.description}</div> */}
+              <div className="bg-white w-full">
+                <div className="flex flex-col xs:flex-row pb-0 pt-4">
+                  <textarea
+                    className="input resize-none w-full h-[200px] border border-gray-200 rounded-md bg-white"
+                    id="description"
+                    value={smsDetail.smsData.description}
+                    disabled
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="my-3 flex rounded-md bg-zinc-200/80">
+              <input
+                type="text"
+                placeholder="جستجو..."
+                className="input grow bg-transparent p-1 pr-3 text-right outline-none"
+                ref={searchRef}
+                value={search}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="overflow-y-auto lg:max-h-[500px]">
+              <table className="w-[700px] md:w-full mx-auto">
+                <thead className="bg-sky-300">
+                  <tr>
+                    <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">نام</th>
+                    <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">شماره کاربری</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredUsers.length > 0 ? (
+                    filteredUsers.map((item, index) => (
+                      <tr key={item.id} className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}>
+                        <td className="text-sm text-center farsi-digits">
+                          {item.fullName.trim() === '' ? '-' : item.fullName}
+                        </td>
+                        <td className="text-sm text-center farsi-digits">{item.mobileNumber}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={2} className="text-center py-4">
+                        کاربری یافت نشد
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal.Content>
+    </Modal>
   )
 }
 

@@ -29,7 +29,7 @@ const RedirectForm: React.FC = () => {
       <div className="bg-white flex flex-col justify-between w-full rounded-md shadow-item">
         <div>
           <div className="flex justify-between items-center border-b p-5 px-6">
-            <h3 className=" text-gray-600 whitespace-nowrap">ریدایرکت ها</h3>
+            <h3 className=" text-gray-600 whitespace-nowrap">ریدایرکت </h3>
           </div>
           <div className="flex flex-col sm:flex-row px-20 py-8 gap-4">
             <div className="sm:w-[80%] flex items-center justify-start pr-20">قوانین و حریم خصوصی</div>
@@ -69,7 +69,7 @@ const RedirectForm: React.FC = () => {
           </div>
         </div>
         <div className="bg-gray-50  w-full rounded-b-lg px-8 py-2">
-          <span className="font-normal text-[11px] pt-2">از بین مقالات ریدایرکت مورد نظر را انتخاب کنید</span>
+          <span className="font-normal text-[11px] pt-2">از بین مقالات, ریدایرکت مورد نظر را انتخاب کنید</span>
         </div>
       </div>
     </div>

@@ -477,7 +477,7 @@ const Coupon: NextPage = () => {
                               <tr>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">نام کوپن</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">کد کوپن</th>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-center">توضیحات</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start">توضیحات</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
                                 <th className="text-sm py-3 px-2 text-gray-600 font-normal">عملیات</th>
                               </tr>
@@ -486,10 +486,10 @@ const Coupon: NextPage = () => {
                               {fakeCoupons.map((coupon, index) => (
                                 <tr key={coupon.id} className={`h-16 border-b ${index % 2 === 0 ? 'bg-gray-50' : ''}`}>
                                   <td className="text-center px-2 text-sm">{coupon.name}</td>
-                                  <td className="text-center px-2 text-sm text-sky-500 cursor-pointer">
+                                  <td className="text-center px-2 text-sm">
                                     {coupon.couponCode}
                                   </td>
-                                  <td className="text-center px-2 text-sm">
+                                  <td className="text-start px-2 text-sm">
                                     {coupon.description === ' ' ? '-' : coupon.description}
                                   </td>
                                   <td className="text-center text-sm">
@@ -522,6 +522,15 @@ const Coupon: NextPage = () => {
                                           <Menu.Item>
                                             {({ close }) => (
                                               <>
+                                              <button
+                                                  onClick={() => {
+                                                    handleDelete(coupon)
+                                                    close()
+                                                  }}
+                                                  className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                >
+                                                  <span>ویرایش</span>
+                                                </button>
                                                 <button
                                                   onClick={() => {
                                                     handleDelete(coupon)

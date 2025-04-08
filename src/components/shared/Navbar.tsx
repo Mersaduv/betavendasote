@@ -188,7 +188,7 @@ export default function Navbar() {
         onMouseOver={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <BiCategory className="icon text-gray-500 opacity-65" />
+        <BiCategory className="text-[20px] text-gray-500 opacity-65" />
         دسته‌بندی کالاها
       </button>
       <div className={`fixed left-0 z-20 h-screen w-full  ${hover ? 'block' : 'hidden'}`} />

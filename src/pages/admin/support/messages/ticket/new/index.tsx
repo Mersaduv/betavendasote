@@ -163,14 +163,14 @@ const NewTicket: NextPage<Props> = () => {
                       <h3 className="border-b p-6 text-gray-600 flex gap-2">تیکت جدید</h3>
 
                       <div className="flex flex-col">
-                        <div>
-                          <div className="flex px-10 py-6 pt-6 flex-col xs:flex-row">
+                        <div className="w-1/2 mx-auto">
+                          <div className="flex px-4 py-6 pt-6 flex-col xs:flex-row">
                             <label
                               htmlFor="userType"
                               className="flex items-center justify-center xs:py-0 py-2 px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                             >
                               {/* <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" /> */}
-                              <FaUsers className='w-5 h-5' />
+                              <FaUsers className="w-5 h-5" />
                               <span className="whitespace-nowrap text-center w-[113px]">ارسال به</span>
                             </label>
                             <select
@@ -184,21 +184,21 @@ const NewTicket: NextPage<Props> = () => {
                               <option className="appearance-none text-sm" value="">
                                 انتخاب کنید
                               </option>
+                              <option value={'1'}>{generalSetting?.title}</option>
                               <option value={'0'}>مشتری</option>
-                              <option value={'1'}>پرسنل</option>
                               <option value={'2'}>فروشنده</option>
                             </select>
                           </div>
                         </div>
 
                         {userType !== '' && (
-                          <div className="flex px-10 py-0 flex-col xs:flex-row">
+                          <div className="flex px-3 py-0 flex-col xs:flex-row w-1/2 mx-auto">
                             <label
                               htmlFor="towards"
                               className="flex items-center justify-center xs:py-0 py-2 px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                             >
                               {/* <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" /> */}
-                              <HiUsers className='w-5 h-5' />
+                              <HiUsers className="w-5 h-5" />
                               <span className="whitespace-nowrap text-center w-[113px]">سمت</span>
                             </label>
                             <select
@@ -219,13 +219,13 @@ const NewTicket: NextPage<Props> = () => {
                         )}
 
                         {towards === '2' && (
-                          <div className="flex px-10 py-6 flex-col xs:flex-row">
+                          <div className="flex px-3 py-6 flex-col xs:flex-row w-1/2 mx-auto">
                             <label
                               htmlFor="userRole"
                               className="flex items-center justify-center xs:py-0 py-2 px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                             >
                               {/* <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" /> */}
-                              <FaUserTie className='w-5 h-5' />
+                              <FaUserTie className="w-5 h-5" />
                               <span className="whitespace-nowrap text-center w-[113px]">سمت ها</span>
                             </label>
                             <select
@@ -245,13 +245,13 @@ const NewTicket: NextPage<Props> = () => {
                         )}
 
                         {towards === '1' && (
-                          <div className="flex flex-col xs:flex-row px-10 py-6">
+                          <div className="flex flex-col xs:flex-row px-3 py-6 w-1/2 mx-auto">
                             <label
                               htmlFor="userCode"
                               className="flex items-center justify-center xs:py-0 py-2 px-3 rounded-l-none rounded-md bg-[#f5f8fa]"
                             >
                               {/* <img className="w-5 h-5" src="/assets/svgs/duotone/text.svg" alt="" /> */}
-                              <FaUserPen className='w-5 h-5' />
+                              <FaUserPen className="w-5 h-5" />
                               <span className="whitespace-nowrap text-center w-[113px]">شماره کاربری</span>
                             </label>
                             <input
@@ -265,98 +265,93 @@ const NewTicket: NextPage<Props> = () => {
                         <div className="pr-8">
                           <DisplayError errors={formErrors.userType} />
                         </div>
-                        <div className="bg-gray-50 bottom-0 w-full  rounded-b-lg px-8 flex flex-col pb-2"></div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-1">
-                  <div className="bg-white w-full rounded-md shadow-item">
-                    <h3 className="border-b p-6 text-gray-600">محتوا</h3>
-                    <div className="flex mt-6 items-center px-4 gap-4 flex-col sm:flex-row">
-                      <div className="w-full">
-                        <label htmlFor={`ticket-type`} className="block mb-1 text-gray-900">
-                          نوع تیکت را انتخاب کنید
-                        </label>
-                        <select
-                          id={`ticket-type`}
-                          className="bg-gray-50 border border-gray-300 w-full text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                          value={ticketType}
-                          {...register('ticketTypeId', { onChange: handleChangeUserType })}
-                        >
-                          <option value="">انتخاب مرجوعی خرید</option>
-                          {ticketTypeData?.data?.data?.map((ticketType) => (
-                            <option key={ticketType.id} value={ticketType.id}>
-                              {ticketType.name}
-                            </option>
-                          ))}
-                        </select>
-                        <DisplayError errors={formErrors.ticketTypeId} />
-                      </div>
-
-                      <div className="w-full">
-                        <Controller
-                          name="subject"
-                          control={control}
-                          render={({ field }) => (
-                            <TextField
-                              classStyle={`bg-white rounded-md`}
-                              isUserForm
-                              {...field}
-                              control={control}
-                              errors={formErrors.subject}
-                              label="عنوان تیکت را وارد کنید"
-                            />
-                          )}
-                        />
-                      </div>
-                    </div>
-                    <div className="px-4">
-                      <label className=" text-gray-700 md:min-w-max lg:text-sm" htmlFor="message">
-                        محتوای تیکت را وارد کنید
-                      </label>
-                      <textarea
-                        className="input mt-1 h-24 resize-none bg-white rounded-md border border-gray-200"
-                        id="message"
-                        {...register('message')}
-                      />
-                      <DisplayError errors={formErrors.message} />
-                    </div>
-
-                    <div className="border mb-4 mx-4 border-dashed border-[#009ef7] bg-[#f1faff] rounded text-center">
-                      <input type="file" multiple className="hidden" id="Thumbnail" onChange={handleFileChange} />
-                      <label htmlFor="Thumbnail" className="block cursor-pointer p-6 py-8 text-sm font-normal">
-                        {selectedFiles.length > 0 ? (
-                          <div className="flex flex-wrap gap-5 mt-0 px-8">
-                            {selectedFiles.map((file, index) => (
-                              <div key={index} className="text-sm text-gray-600 relative cursor-default">
-                                <img
-                                  src={URL.createObjectURL(file)}
-                                  alt={file.name}
-                                  className="w-[80px] h-[88px] object-cover rounded-lg shadow-product"
-                                />
-                                <button
-                                  type="button"
-                                  className="absolute -top-2 -right-2 shadow-product hover:bg-red-500 hover:text-white bg-gray-50 p-0.5 rounded-full text-gray-500"
-                                  onClick={(e) => {
-                                    e.stopPropagation()
-                                    e.preventDefault()
-                                    handleDelete(index)
-                                  }}
-                                >
-                                  <MdClose className="text-base" />
-                                </button>
-                              </div>
-                            ))}
+                      <div className="w-1/2 mx-auto rounded-md">
+                        <div className="flex items-center px-4 gap-4 flex-col">
+                          <div className="w-full">
+                            <label htmlFor={`ticket-type`} className="block mb-1 text-gray-900">
+                              نوع تیکت  </label>
+                            <select
+                              id={`ticket-type`}
+                              className="bg-gray-50 border border-gray-300 w-full text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                              value={ticketType}
+                              {...register('ticketTypeId', { onChange: handleChangeUserType })}
+                            >
+                              <option value="">انتخاب مرجوعی خرید</option>
+                              {ticketTypeData?.data?.data?.map((ticketType) => (
+                                <option key={ticketType.id} value={ticketType.id}>
+                                  {ticketType.name}
+                                </option>
+                              ))}
+                            </select>
+                            <DisplayError errors={formErrors.ticketTypeId} />
                           </div>
-                        ) : (
-                          <div className="text-base">عکس ها را اینجا بکشید یا برای انتخاب کلیک کنید </div>
-                        )}
-                      </label>
+
+                          <div className="w-full">
+                            <Controller
+                              name="subject"
+                              control={control}
+                              render={({ field }) => (
+                                <TextField
+                                  classStyle={`bg-white rounded-md`}
+                                  isUserForm
+                                  {...field}
+                                  control={control}
+                                  errors={formErrors.subject}
+                                  label="عنوان تیکت"
+                                />
+                              )}
+                            />
+                          </div>
+                        </div>
+                        <div className="px-4">
+                          <label className=" text-gray-700 md:min-w-max lg:text-sm" htmlFor="message">
+                            محتوای تیکت
+                          </label>
+                          <textarea
+                            className="input mt-1 h-24 resize-none bg-white rounded-md border border-gray-200"
+                            id="message"
+                            {...register('message')}
+                          />
+                          <DisplayError errors={formErrors.message} />
+                        </div>
+
+                        <div className="border mb-4 mx-4 border-dashed border-[#009ef7] bg-[#f1faff] rounded text-center">
+                          <input type="file" multiple className="hidden" id="Thumbnail" onChange={handleFileChange} />
+                          <label htmlFor="Thumbnail" className="block cursor-pointer p-6 py-8 text-sm font-normal">
+                            {selectedFiles.length > 0 ? (
+                              <div className="flex flex-wrap gap-5 mt-0 px-8">
+                                {selectedFiles.map((file, index) => (
+                                  <div key={index} className="text-sm text-gray-600 relative cursor-default">
+                                    <img
+                                      src={URL.createObjectURL(file)}
+                                      alt={file.name}
+                                      className="w-[80px] h-[88px] object-cover rounded-lg shadow-product"
+                                    />
+                                    <button
+                                      type="button"
+                                      className="absolute -top-2 -right-2 shadow-product hover:bg-red-500 hover:text-white bg-gray-50 p-0.5 rounded-full text-gray-500"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        e.preventDefault()
+                                        handleDelete(index)
+                                      }}
+                                    >
+                                      <MdClose className="text-base" />
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div className="text-base">فایل مورد نظر را اینجا بکشید یا برای انتخاب کلیک کنید </div>
+                            )}
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                    <div className="bg-gray-50 bottom-0 w-full  rounded-b-lg px-8 flex flex-col pb-2"></div>
                   </div>
                 </div>
+                <div className="flex flex-1"></div>
                 <div className="flex justify-end w-full">
                   {/* <div className="flex flex-col">
                               <p className={`text-red-500 h-5 px-10  visible`}>

@@ -9,14 +9,17 @@ import {
   useGetSupportQuery,
 } from '@/services'
 import { IArticle } from '@/types'
+import { ArrowLeft } from 'heroicons-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
+import { IoIosArrowForward } from 'react-icons/io'
 interface Article {
   id: number
   title: string
 }
 const Footer = () => {
   // ? States
+  const [expanded, setExpanded] = useState(false)
   const { logoImages } = useAppSelector((state) => state.design)
   const [columnFooters, setColumnFooters] = useState<IArticle[]>([])
   //  ? Query
@@ -69,17 +72,34 @@ const Footer = () => {
   const getArticleSlugById = (articleId: string): string => {
     return articleSlugMap[articleId] || 'اسلک موجود نیست'
   }
-
   return (
     <footer className="w-full bg-gray-100 text-gray-800 py-8">
       <div className="mx-auto flex flex-col px-8">
         <div className="flex flex-col  justify-between items-center lg:items-center">
-          <div className=" text-center mx-20 mb-8 lg:mb-0">
+          <div className="text-center mx-20 mb-8 lg:mb-0">
             <h2 className="text-xl font-bold mb-4">{sloganFooterData?.data?.headline}</h2>
             <p
-              className="ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred"
-              dangerouslySetInnerHTML={{ __html: sloganFooterData?.data?.introductionText || '' }}
+              // className={`ck ck-content ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred transition-all duration-300 overflow-hidden ${
+              //   expanded ? 'line-clamp-none' : 'line-clamp-3'
+              // }`}
+              className={`ck-editor__editable ck-rounded-corners ck-editor__editable_inline ck-blurred transition-all duration-300 overflow-hidden ${
+                expanded ? 'line-clamp-none' : 'line-clamp-3'
+              }`}
+              dangerouslySetInnerHTML={{
+                __html: sloganFooterData?.data?.introductionText || '',
+              }}
             />
+            <div className="flex justify-end mt-2">
+              <div
+                className="text-xs text-sky-500 w-fit flex items-center cursor-pointer"
+                onClick={() => setExpanded((prev) => !prev)}
+              >
+                <div>{expanded ? 'مشاهده کمتر' : 'مشاهده بیشتر'}</div>
+                <IoIosArrowForward
+                  className={`rotate-180 transition-transform duration-300 ${expanded ? 'transform rotate-0' : ''}`}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="w-full bg-blue-950 my-8 rounded-lg">
@@ -128,9 +148,12 @@ const Footer = () => {
                 </div>
               </div>
               <div className="flex flex-col pt-0 justify-center h-full w-[30%] pl-2 pr-6 gap-1">
-                <div className="text-white flex flex-col justify-center">
-                  <div className="text-[#e90089] whitespace-nowrap">همراه ما باشید</div>
-                </div>
+                {designItemsData?.data?.filter((item) => item.type === 'socialMedia') &&
+                  designItemsData?.data?.filter((item) => item.type === 'socialMedia').length > 0 && (
+                    <div className="text-white flex flex-col justify-center">
+                      <div className="text-[#e90089] whitespace-nowrap">همراه ما باشید</div>
+                    </div>
+                  )}
                 <div className="flex flex-col justify-center">
                   <div className="flex gap-4 flex-wrap">
                     {designItemsData?.data
@@ -194,7 +217,7 @@ const Footer = () => {
                       <Link
                         href={`/articles/${getArticleSlugById(footerArticleColumn.articleId)}`}
                         key={footerArticleColumn.id}
-                        className='text-start w-1/2 line-clamp-1 overflow-hidden text-ellipsis'
+                        className="text-start w-1/2 line-clamp-1 overflow-hidden text-ellipsis"
                       >
                         {getArticleTitleById(footerArticleColumn.articleId)}
                       </Link>

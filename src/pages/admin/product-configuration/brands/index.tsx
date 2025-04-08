@@ -354,7 +354,7 @@ const Brands: NextPage = () => {
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">عکس</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">تصویر</th>
                                 <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
                                   <div className="">نام فارسی</div>
                                 </th>
@@ -387,8 +387,8 @@ const Brands: NextPage = () => {
                                       </td>
                                       <td className="text-center">
                                         <div
-                                          onClick={() => handlerEditBrandModal(brand)}
-                                          className="text-sm text-sky-500 cursor-pointer px-2"
+                                         
+                                          className="text-sm px-2"
                                         >
                                           {brand.nameFa}
                                         </div>
@@ -442,6 +442,15 @@ const Brands: NextPage = () => {
                                               <Menu.Item>
                                                 {({ close }) => (
                                                   <>
+                                                  <button
+                                                      onClick={() => {
+                                                        handlerEditBrandModal(brand)
+                                                        close()
+                                                      }}
+                                                      className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                                    >
+                                                      <span>ویرایش</span>
+                                                    </button>
                                                     <button
                                                       onClick={() => {
                                                         handleDelete(brand)
@@ -488,7 +497,7 @@ const Brands: NextPage = () => {
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">عکس</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">تصویر</th>
                                 <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
                                   <div className="">نام برند</div>
                                 </th>
@@ -631,7 +640,7 @@ const Brands: NextPage = () => {
                           <table className="w-[700px] md:w-full mx-auto">
                             <thead className="bg-sky-300">
                               <tr>
-                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">عکس</th>
+                                <th className="text-sm py-3 px-2 text-gray-600 font-normal w-1/12">تصویر</th>
                                 <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[18%] text-center">
                                   <div className="">نام برند</div>
                                 </th>

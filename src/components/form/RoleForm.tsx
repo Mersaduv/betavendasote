@@ -134,7 +134,7 @@ const RoleForm: React.FC<Props> = (props) => {
 
               <div className="flex pt-6 flex-col w-full">
                 <label htmlFor="isActive" className="mb-1.5">
-                  <span className="whitespace-nowrap text-center">وضعیت فعالیت </span>
+                  <span className="whitespace-nowrap text-center">وضعیت  </span>
                 </label>
                 <select
                   className={`w-full text-center rounded-md border border-gray-300 ${
@@ -157,8 +157,8 @@ const RoleForm: React.FC<Props> = (props) => {
               <table className="w-[700px] md:w-full mx-auto">
                 <thead className="bg-sky-300">
                   <tr>
-                    <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start">دسترسی ها </th>
-                    <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-1/2">مشاهده</th>
+                    <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start">قسمت ها</th>
+                    <th className="text-sm py-3 px-2 text-gray-600 font-normal text-start w-1/2">مجوز</th>
                   </tr>
                 </thead>
                 <tbody>

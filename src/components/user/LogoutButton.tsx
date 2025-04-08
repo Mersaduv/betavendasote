@@ -29,12 +29,12 @@ export default function LogoutButton(prop: Props) {
         </div>
       ) : (
         <Button
-          className={!isShowDropDown ? 'bg-white p-0 mr-4' : 'bg-gray-50 p-0 flex w-44 pr-4 py-2'}
+          className={!isShowDropDown ? 'bg-white p-0 mr-4' : 'bg-white p-0 flex w-44 pr-4 py-2'}
           onClick={handleLogout}
         >
           <BiLogOut className="w-5 h-5 text-red-500" />
           {isShowDropDown ? (
-            <span className="ml-auto mr-2 text-gray-700 text-xs whitespace-nowrap font-semibold">
+            <span className="ml-auto mr-2 text-gray-700 text-xs whitespace-nowrap font-normal">
               خروج از حساب کاربری
             </span>
           ) : (

@@ -26,6 +26,52 @@ const VerifyCodeForm: React.FC<Props> = ({ onSubmit, isLoading, resendHandler, m
   const [timeLeft, setTimeLeft] = useState(120)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
+  useEffect(() => {
+    // تنظیم تایمر و فوکوس اولیه
+    startTimer()
+    setTimeout(() => {
+      inputRefs.current[0]?.focus()
+    }, 0)
+
+    // استفاده از Web OTP API برای دریافت کد به صورت خودکار
+    if ('OTPCredential' in window) {
+      const abortController = new AbortController()
+      // درخواست دریافت OTP
+      // توجه کنید که این بخش تنها در محیط‌های امن (HTTPS) و در مرورگرهای پشتیبان کار می‌کند.
+      // همچنین باید مطمئن شوید که شماره تلفن در پیامک به فرمت مورد انتظار است.
+      navigator.credentials
+        .get({
+          otp: { transport: ['sms'] },
+          signal: abortController.signal,
+        } as any)
+        .then((otp: any) => {
+          if (otp && otp.code) {
+            // تقسیم کد به حروف جداگانه و تنظیم فیلدها
+            const codeDigits = otp.code.split('')
+            codeDigits.forEach((digit: any, idx: any) => {
+              if (idx < 4) {
+                setValue(`code.${idx}`, digit)
+              }
+            })
+            // به صورت خودکار ارسال فرم پس از پر شدن کد
+            handleSubmit(onSubmitHandler)()
+          }
+        })
+        .catch((err) => {
+          console.error('OTP Error:', err)
+        })
+      return () => {
+        abortController.abort()
+      }
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [])
+  
   const startTimer = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current)
@@ -59,7 +105,7 @@ const VerifyCodeForm: React.FC<Props> = ({ onSubmit, isLoading, resendHandler, m
       inputRefs.current[index + 1]?.focus()
     }
 
-    // Check if all fields are filled
+    // چک کردن پر بودن تمام فیلدها
     const allFieldsFilled = Array.from({ length: 4 }).every((_, idx) => getValues(`code.${idx}`))
     if (allFieldsFilled) {
       handleSubmit(onSubmitHandler)()
@@ -80,7 +126,8 @@ const VerifyCodeForm: React.FC<Props> = ({ onSubmit, isLoading, resendHandler, m
         setValue(`code.${idx}`, char)
       })
 
-      inputRefs.current[5]?.focus()
+      // فوکوس را به آخرین فیلد تنظیم می‌کنیم
+      inputRefs.current[3]?.focus()
 
       handleSubmit(onSubmitHandler)()
     }
@@ -119,7 +166,7 @@ const VerifyCodeForm: React.FC<Props> = ({ onSubmit, isLoading, resendHandler, m
                     inputMode="numeric"
                     maxLength={1}
                     dir="ltr"
-                    className={`w-[50px] h-[42px] font-bold farsi-digits text-center text-xl focus:ring-0 focus:outline-none focus:ring-offset-0 focus:border-none border-white border-b-[#ccc] border-2`}
+                    className={`w-[50px] h-[42px] font-bold farsi-digits text-center text-xl focus:ring-0 focus:outline-none focus:ring-offset-0 focus:border-t-0 focus:border-r-0 focus:border-l-0 focus:border-b-2 border-white border-b-[#ccc] border-2`}
                     ref={(el) => {
                       inputRefs.current[index] = el
                     }}

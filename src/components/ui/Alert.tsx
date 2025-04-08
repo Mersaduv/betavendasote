@@ -35,7 +35,7 @@ export default function Alert() {
     if (isShow) {
       const timeout = setTimeout(() => {
         dispatch(removeAlert())
-      }, 2000)
+      }, 5000)
       return () => clearTimeout(timeout)
     }
   }, [isShow])

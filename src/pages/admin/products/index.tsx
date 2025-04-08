@@ -787,7 +787,7 @@ const Products: NextPage = () => {
                                   <th className="text-sm py-3 px-2 text-gray-600 font-normal">نوع</th>
                                   <th className="text-sm py-3 px-2 text-gray-600 font-normal">تعداد</th>
                                   <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[10%]">فروشنده</th>
-                                  <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th>
+                                  {/* <th className="text-sm py-3 px-2 text-gray-600 font-normal">دیدگاه</th> */}
                                   <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
                                   <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[2%]">عملیات</th>
                                 </tr>
@@ -814,7 +814,7 @@ const Products: NextPage = () => {
                                           alt="p-img"
                                         />
                                       </td>
-                                      <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-2">
+                                      <td className="text-sm text-gray-600  line-clamp-2 overflow-hidden text-ellipsis pt-6">
                                         <Link className="text-sky-500" href={`/products/${product.slug}`}>
                                           {product.title}
                                         </Link>
@@ -842,7 +842,7 @@ const Products: NextPage = () => {
                                           : digitsEnToFa(product.inStock)}
                                       </td>
                                       <td className="text-center text-sm text-gray-600">{generalSetting?.title}</td>
-                                      <td className="text-center text-sm text-gray-600">
+                                      {/* <td className="text-center text-sm text-gray-600">
                                         {product.reviewCount === 0 ? (
                                           '-'
                                         ) : (
@@ -850,7 +850,7 @@ const Products: NextPage = () => {
                                             {'✓'}
                                           </Link>
                                         )}
-                                      </td>
+                                      </td> */}
                                       <td className="text-center">
                                         {product.publishTime ? (
                                           <span className="text-sm text-orange-400 font-medium">در انتظار</span>

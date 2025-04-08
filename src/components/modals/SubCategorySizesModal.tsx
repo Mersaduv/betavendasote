@@ -266,14 +266,29 @@ const SubCategorySizesModal: React.FC<Props> = (props) => {
         onClose={() => {
           onClose()
           refetch()
+          setSelectedFile([])
+          setInputValue('')
+          setTags([])
         }}
         effect="bottom-to-top"
       >
         <Modal.Content
-          onClose={onClose}
+          onClose={() => {
+            onClose()
+            refetch()
+            setSelectedFile([])
+            setInputValue('')
+            setTags([])
+          }}
           className="flex h-full flex-col z-[199] gap-y-5 bg-white  py-5 pb-0 md:rounded-lg "
         >
-          <Modal.Header notBar onClose={onClose}>
+          <Modal.Header notBar onClose={() => {
+            onClose()
+            refetch()
+            setSelectedFile([])
+            setInputValue('')
+            setTags([])
+          }}>
             <div className="text-start text-base flex gap-2">
               انتخاب اندازه برای <div className="text-sky-500"> {category?.name}</div>
             </div>

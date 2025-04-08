@@ -52,9 +52,6 @@ const SloganFooterForm: React.FC = () => {
             />
           )}
         />
-        <div className="bg-gray-50 bottom-0 w-full rounded-b-lg px-8 flex flex-col pb-2">
-          <span className="font-normal text-[11px] pt-2">......</span>
-        </div>
       </div>
     </div>
   )

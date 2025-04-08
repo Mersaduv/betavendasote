@@ -296,8 +296,7 @@ const Features: NextPage = () => {
                             <tr key={feature.id} className={`h-16 border-b ${index % 2 !== 0 ? 'bg-gray-50' : ''}`}>
                               <td className="text-start">
                                 <div
-                                  onClick={() => handlerEditFeatureModal(feature)}
-                                  className={`text-sm ${feature.name === 'رنگ' ? '' : ' text-sky-500'}   px-2`}
+                                  className={`text-sm ${feature.name === 'رنگ' ? '' : ' '}   px-2`}
                                 >
                                   {feature.name}
                                 </div>
@@ -335,6 +334,14 @@ const Features: NextPage = () => {
                                     <Menu.Items className="dropdown__items w-32 ">
                                       <Menu.Item>
                                         <>
+                                        {feature.name === 'رنگ' ? null : (
+                                            <button
+                                              onClick={() => handlerEditFeatureModal(feature)}
+                                              className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                            >
+                                              <span>ویرایش</span>
+                                            </button>
+                                          )}
                                           <button
                                             onClick={() => handleChangeRoute(feature.id)}
                                             className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"

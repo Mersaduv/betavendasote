@@ -139,7 +139,7 @@ const FooterBannerForm: React.FC<FooterBannerFormProps> = ({ banners, setBanners
     <div className="flex flex-1">
       <div className="bg-white w-full rounded-md shadow-item">
         <div className="flex justify-between items-center border-b p-5 px-6">
-          <h3 className=" text-gray-600 whitespace-nowrap">بنر فوتر</h3>
+          <h3 className=" text-gray-600 whitespace-nowrap">بنر پایین</h3>
           <ControlledCheckbox name="footerBannersIsActive" control={control} label="وضعیت نمایش" />
         </div>
         <div className="w-full px-6">

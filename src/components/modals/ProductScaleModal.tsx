@@ -37,11 +37,10 @@ const ProductScaleModal: React.FC<Props> = (props) => {
                     میباشد
                   </span>
                 </div>
-                <Button className="bg-white mt-1.5 text-gray-800 font-semibold border rounded">اندازه</Button>
                 <table className="table-auto mt-4 border-collapse w-full">
                   <thead className="bg-[#8fdcff]">
                     <tr>
-                      <th className=" px-4 py-2"></th>
+                    <th className=" px-4 py-2 text-start">اندازه</th>
                       {productSizeInfo?.columns?.map((column) => (
                         <th key={column.id} className="px-4 py-2 w-[135px] font-normal">
                           {column.name}
@@ -55,7 +54,7 @@ const ProductScaleModal: React.FC<Props> = (props) => {
                         <td className="px-4 py-2">{row.productSizeValue}</td>
                         {productSizeInfo?.columns?.map((column, colIndex) => (
                           <td key={colIndex} className="px-4 py-2 font-normal">
-                            <div className="border h-9 w-full flex justify-start  items-center pr-1 rounded-md bg-white">
+                            <div className="border h-9 w-full flex justify-center farsi-digits items-center pr-1 rounded-md bg-white">
                               {row.scaleValues![colIndex] || ''}
                             </div>
                           </td>

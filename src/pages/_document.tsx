@@ -92,7 +92,7 @@ export default function Document() {
           crossOrigin="anonymous"
         />
       </Head>
-      <body>
+      <body className='font-iransans'>
         <Main></Main>
         <NextScript />
       </body>

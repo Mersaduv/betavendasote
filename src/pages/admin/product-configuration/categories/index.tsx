@@ -273,7 +273,7 @@ const Categories: NextPage = () => {
                       <table className="w-[700px] md:w-full mx-auto">
                         <thead className="bg-sky-300">
                           <tr>
-                            <th className="text-sm py-3 px-2  font-normal w-[70px] text-center">عکس</th>
+                            <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[70px] text-center">تصویر</th>
                             <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-center">
                               نام
                             </th>

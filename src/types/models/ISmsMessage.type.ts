@@ -10,6 +10,7 @@ export interface ISmsMessage {
   allRoles: boolean
   towards: string
   recipients: IUser[]
+  user: IUser
   isPublic: boolean
   created: string
   lastUpdated: string

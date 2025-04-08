@@ -49,6 +49,8 @@ import { BiCartDownload } from 'react-icons/bi'
 import { JalaliDatePicker } from '../shared'
 import DateObject from 'react-date-object'
 import persian from 'react-date-object/calendars/persian'
+import Link from 'next/link'
+import { InventoryLocationModal } from '../modals'
 const generateUniqueId = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0,
@@ -137,7 +139,9 @@ const ProductForm: React.FC<Props> = (props) => {
   const [isDetailsSkip, setIsDetailsSkip] = useState(true)
   const [isProductScale, setIsProductScale] = useState(false)
   const [isFake, setIsFake] = useState<IProductIsFake | null>({ id: 'false', name: 'محصول اصل' })
-
+  const [isShowInventoryLocationModal, inventoryLocationModalHandlers] = useDisclosure()
+  const [inventoryLocationState, setInventoryLocationState] = useState<string>('')
+  const [guideDescriptionState, setGuideDescriptionState] = useState<string>('')
   const [isStock, setIsStock] = useState(false)
   const [isFeaturesSkip, setIsFeaturesSkip] = useState(false)
   const [isRemoveProductSize, setIsRemoveProductSize] = useState(false)
@@ -317,6 +321,9 @@ const ProductForm: React.FC<Props> = (props) => {
     formData.append('Status', data.status)
 
     formData.append('CategoryId', data.CategoryId)
+    formData.append('Description', content)
+    formData.append('GuideDescription', guideDescriptionState)
+    formData.append('InventoryLocation', inventoryLocationState)
     formData.append('Description', content)
     if (date !== undefined) formData.append('Date', date)
     formData.append('IsFake', data.IsFake.toString())
@@ -550,7 +557,11 @@ const ProductForm: React.FC<Props> = (props) => {
     }
   }, [stateFeature])
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    if (inventoryLocationState) {
+      setValue('InventoryLocation', inventoryLocationState)
+    }
+  }, [inventoryLocationState])
 
   const handleMainFeatureSelect = (newFeatures: ProductFeature) => {
     setMainSelectedFeatures(newFeatures || ({} as ProductFeature))
@@ -685,8 +696,19 @@ const ProductForm: React.FC<Props> = (props) => {
     }
     setIsCalendarOpen((prev) => !prev)
   }
+
+  const handleChangeInventoryLocation = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInventoryLocationState(e.target.value)
+  }
+
   return (
     <section>
+      <InventoryLocationModal
+        isShow={isShowInventoryLocationModal}
+        onClose={inventoryLocationModalHandlers.close}
+        inventoryLocationState={inventoryLocationState}
+        onChange={handleChangeInventoryLocation}
+      />
       <form className="flex gap-4 flex-col p-7 px-4 mx-2" onSubmit={handleSubmit(editedCreateHandler)}>
         {/* register title , isActive */}
         <div className="flex flex-col md:flex-row gap-4">
@@ -907,6 +929,25 @@ const ProductForm: React.FC<Props> = (props) => {
                 </div>
               </div>
             </div>
+            <div className="flex flex-1">
+              <div className="bg-white w-full rounded-md shadow-item">
+                <h3 className="border-b p-6 text-gray-600">راهنمای استفاده از محصول</h3>
+                {/* <CustomEditor textEditor={textEditor} setTextEditor={setTextEditor} /> */}
+                <CustomEditor
+                  value={guideDescriptionState}
+                  onChange={(event: any, editor: any) => {
+                    const data = editor.getData()
+                    setGuideDescriptionState(data)
+                  }}
+                  placeholder=""
+                />
+                <div className="bg-gray-50 bottom-0 w-full  rounded-b-lg px-8 flex flex-col pb-2">
+                  <span className="font-normal text-[11px] pt-2">
+                    توضیحات مربوط به نحوه استفاده از محصول را وارد کنید
+                  </span>
+                </div>
+              </div>
+            </div>
             {/* is show Product features,size */}
             <div className="flex flex-1 ">
               <div className="bg-white w-full rounded-md shadow-item">
@@ -1061,7 +1102,7 @@ const ProductForm: React.FC<Props> = (props) => {
                                       inputMode="numeric"
                                       dir="ltr"
                                       type="text"
-                                      className=" appearance-none border border-gray-200 rounded-lg"
+                                      className=" appearance-none border border-gray-200 rounded-lg text-center"
                                       value={digitsEnToFa(
                                         productScaleCreate?.Rows![rowIndex].scaleValues![colIndex] || ''
                                       )}
@@ -1108,24 +1149,12 @@ const ProductForm: React.FC<Props> = (props) => {
                 <div className="bg-white w-full rounded-md shadow-item mb-2">
                   <div className="flex items-center border-b p-2 pr-6">
                     <h3 className=" text-gray-600 w-full">تعداد و قیمت محصول</h3>
-                    <div className="relative w-full">
-                      <input
-                        dir="rtl"
-                        type="text"
-                        className="peer m-0 block rounded-lg h-[42px] w-full border border-solid border-gray-200 bg-transparent bg-clip-padding pr-4 pl-3 py-4 text-xl font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-white dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
-                        id="floatingInput"
-                        placeholder="موقعیت کالا در انبار"
-                        {...register('stockTag')}
-                        // onChange={(e) => handleInputChange(idx, 'stockTag', digitsFaToEn(e.target.value))}
-                        // value={digitsEnToFa(addCommas(stockItems[idx]?.stockTag || ''))}
-                      />
-                      <label
-                        htmlFor="floatingInput"
-                        className="pointer-events-none absolute right-0 top-0 origin-[0_0] border border-solid border-transparent pr-2.5 pb-4 pt-2.5 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-400 dark:peer-focus:text-primary"
-                      >
-                        موقعیت کالا در انبار
-                      </label>
-                    </div>
+                    <Button
+                      onClick={inventoryLocationModalHandlers.open}
+                      className="p-0 px-2 text-xs py-2 bg-blue-500 hover:bg-blue-600 whitespace-nowrap"
+                    >
+                      موقعیت کالا در انبار
+                    </Button>
                   </div>
                   <Table
                     features={stateFeature}
@@ -1188,6 +1217,7 @@ const ProductForm: React.FC<Props> = (props) => {
     </section>
   )
 }
+
 type Duration = 'none' | '1day' | '2days' | '3days' | '1week'
 const Table: React.FC<PropTable> = (props) => {
   const {

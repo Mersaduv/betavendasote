@@ -179,8 +179,8 @@ const NewNotification: NextPage<Props> = () => {
                               <option className="appearance-none text-sm" value="">
                                 انتخاب کنید
                               </option>
+                              <option value={'1'}>{generalSetting?.title}</option>
                               <option value={'0'}>مشتری</option>
-                              <option value={'1'}>پرسنل</option>
                               <option value={'2'}>فروشنده</option>
                             </select>
                           </div>

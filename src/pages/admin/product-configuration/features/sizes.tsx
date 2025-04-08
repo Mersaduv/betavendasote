@@ -235,8 +235,7 @@ const Sizes: NextPage = () => {
                             <tr key={size.id} className={`h-16 border-b ${index % 2 !== 0 ? 'bg-gray-50' : ''}`}>
                               <td className="text-start">
                                 <div
-                                  onClick={() => handlerEditSizesModal(size)}
-                                  className="text-sm text-sky-500 cursor-pointer px-2"
+                                  className="text-sm px-2"
                                 >
                                   {digitsEnToFa(size.name)}
                                 </div>
@@ -251,7 +250,7 @@ const Sizes: NextPage = () => {
                                 <div className="cursor-pointer">{size.description !== '' ? '✓' : '-'}</div>
                               </td>
 
-                              <td className="text-center text-sm text-gray-600">
+                              {/* <td className="text-center text-sm text-gray-600">
                                 <div className="flex justify-center">
                                   <Button
                                     className="bg-white text-red-600 hover:text-white border border-red-600 hover:bg-red-600 px-4 py-2 "
@@ -260,6 +259,54 @@ const Sizes: NextPage = () => {
                                     حذف
                                   </Button>
                                 </div>
+                              </td> */}
+                              <td className="text-center text-sm text-gray-600">
+                                <Menu as="div" className="dropdown">
+                                  <Menu.Button className="">
+                                    <div className="w-full flex justify-center items-center">
+                                      <span className="text-2xl hover:bg-gray-300 cursor-pointer bg-gray-200 text-gray-700 p-1 pb-1.5 px-1.5 h-8 flex justify-center items-center rounded-md">
+                                        :
+                                      </span>
+                                    </div>
+                                  </Menu.Button>
+
+                                  <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95"
+                                  >
+                                    <Menu.Items className="dropdown__items w-32 ">
+                                      <Menu.Item>
+                                        {({ close }) => (
+                                          <>
+                                            <button
+                                              onClick={() => {
+                                                handlerEditSizesModal(size)
+                                                close()
+                                              }}
+                                              className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                            >
+                                              <span>ویرایش</span>
+                                            </button>
+                                            <button
+                                              onClick={() => {
+                                                handleDelete(size)
+                                                close()
+                                              }}
+                                              className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                            >
+                                              <span>حذف</span>
+                                            </button>
+                                          </>
+                                        )}
+                                      </Menu.Item>
+                                    </Menu.Items>
+                                  </Transition>
+                                </Menu>
                               </td>
                             </tr>
                           )

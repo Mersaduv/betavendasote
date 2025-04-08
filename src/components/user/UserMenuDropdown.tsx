@@ -62,7 +62,7 @@ const UserMenuDropdown: React.FC<Props> = (props) => {
             <div className="transition-colors">
               <Link
                 href="/admin"
-                className="flex-center justify-start gap-x-1 py-2.5 text-xs xl:text-sm ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
+                className="flex-center justify-start gap-x-1 py-2.5 text-xs ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
               >
                 <div>
                   <AiOutlineProduct className="h-5 w-5 text-gray-500 ml-1.5" />
@@ -76,7 +76,7 @@ const UserMenuDropdown: React.FC<Props> = (props) => {
           <div className="transition-colors">
             <Link
               href="/profile"
-              className="flex-center justify-start gap-x-1 py-2.5 text-xs xl:text-sm ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
+              className="flex-center justify-start gap-x-1 py-2.5 text-xs ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
             >
               <div>
                 <BiUser className="h-5 w-5 text-gray-500 ml-1.5" />
@@ -89,7 +89,7 @@ const UserMenuDropdown: React.FC<Props> = (props) => {
           <div className="transition-colors">
             <Link
               href="/profile"
-              className="flex-center justify-start gap-x-1 py-2.5 text-xs xl:text-sm ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
+              className="flex-center justify-start gap-x-1 py-2.5 text-xs ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
             >
               <div>
                 <BiBasket className="h-5 w-5 text-gray-500 ml-1.5" />
@@ -102,7 +102,7 @@ const UserMenuDropdown: React.FC<Props> = (props) => {
           <div className="transition-colors">
             <Link
               href="/"
-              className="flex-center justify-start gap-x-1 py-2.5 text-xs xl:text-sm ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
+              className="flex-center justify-start gap-x-1 py-2.5 text-xs ml-auto pr-4 text-gray-700 hover:text-[#e90089] font-normal hover:bg-gray-50"
             >
               <div>
                 <BiHeart className="h-5 w-5 text-gray-500 ml-1.5" />

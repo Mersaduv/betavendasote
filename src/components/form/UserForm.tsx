@@ -5,9 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, CloseIconButton, Combobox, DisplayError, TextField } from '@/components/ui'
 import { IUser, IUserForm } from '@/types'
 import { userFormValidationSchema } from '@/utils'
-import {
-  useGetRolesQuery,
-} from '@/services'
+import { useGetRolesQuery } from '@/services'
 import { useAppDispatch } from '@/hooks'
 import { showAlert } from '@/store'
 import jalaali from 'jalaali-js'
@@ -149,6 +147,8 @@ const UserForm: React.FC<Props> = (props) => {
     if (data.birthDate) formData.append('BirthDate', data.birthDate)
     if (data.idNumber) formData.append('IdNumber', data.idNumber)
     if (data.nationalCode) formData.append('NationalCode', data.nationalCode)
+    if (data.email) formData.append('Email', data.email)
+
     if (data.bankAccountNumber) formData.append('BankAccountNumber', data.bankAccountNumber)
     if (data.shabaNumber) formData.append('ShabaNumber', data.shabaNumber)
     if (data.note) formData.append('Note', data.note)
@@ -344,6 +344,7 @@ const UserForm: React.FC<Props> = (props) => {
           birthDate: userSpecification.birthDate,
           nationalCode: userSpecification.nationalCode,
           idNumber: userSpecification.idNumber,
+          email: userSpecification.email,
           bankAccountNumber: userSpecification.bankAccountNumber,
           shabaNumber: userSpecification.shabaNumber,
           note: userSpecification.note,
@@ -370,8 +371,8 @@ const UserForm: React.FC<Props> = (props) => {
 
         const mainImageFile = await fetchImageAsFile(imageSrc?.imageUrl ?? '')
         const idImageFile = await fetchImageAsFile(userSpecification.idCardImageSrc?.imageUrl ?? '')
-        console.log(idImageFile , "idImageFile");
-        console.log(userSpecification , "userSpecification");
+        console.log(idImageFile, 'idImageFile')
+        console.log(userSpecification, 'userSpecification')
         if (imageSrc) {
           setSelectedUserFiles([mainImageFile])
         }
@@ -582,13 +583,11 @@ const UserForm: React.FC<Props> = (props) => {
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      type="number"
+                      type="text"
                       {...field}
                       label="رمز ورود"
                       control={control}
                       errors={formErrors.passCode}
-                      inputMode="numeric"
-                      pattern="[0-9]*"
                       classStyle={`bg-white rounded-md`}
                       isUserForm
                       isCenter
@@ -864,6 +863,21 @@ const UserForm: React.FC<Props> = (props) => {
                 />
 
                 <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      type="email"
+                      {...field}
+                      label="ایمیل"
+                      control={control}
+                      errors={formErrors.email}
+                      classStyle={`bg-white rounded-md`}
+                      isUserForm
+                    />
+                  )}
+                />
+                <Controller
                   name="bankAccountNumber"
                   control={control}
                   render={({ field }) => (
@@ -888,7 +902,7 @@ const UserForm: React.FC<Props> = (props) => {
                     <TextField
                       type="number"
                       {...field}
-                      label="شماره کارت بانکی"
+                      label="شماره شبا"
                       control={control}
                       errors={formErrors.shabaNumber}
                       inputMode="numeric"

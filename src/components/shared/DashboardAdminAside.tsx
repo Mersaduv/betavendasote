@@ -47,9 +47,9 @@ interface ProfilePath {
     id: number
     name: string
     Icon: any
-    path: string
+    path: string[]
   }[]
-  path?: string
+  path?: string[]
   pathName?: string
 }
 
@@ -72,14 +72,14 @@ function makeIdsUnique(arr: ProfilePath[]) {
 }
 
 const profileData: ProfilePath[] = [
-  { id: 1, name: 'پیشخوان', Icon: BiSolidGridAlt, path: '/admin' },
+  { id: 1, name: 'پیشخوان', Icon: BiSolidGridAlt, path: ['/admin'] },
   {
     id: 7,
     name: 'نمای سایت',
     Icon: MdOutlinePreview,
-    path: '/admin/ads/main',
+    path: ['/admin/ads/main', '/admin/design/paints', '/admin/design/footer', '/admin/design/siteItems'],
   },
-  { id: 1, name: 'سفارشات', Icon: IoCart, path: '/admin/orders' },
+  { id: 1, name: 'سفارشات', Icon: IoCart, path: ['/admin/orders'] },
   {
     id: 1,
     name: 'محصولات',
@@ -89,13 +89,13 @@ const profileData: ProfilePath[] = [
         id: 1,
         name: 'محصول جدید',
         Icon: TbPointFilled,
-        path: '/admin/products/create',
+        path: ['/admin/products/create'],
       },
       {
         id: 12,
         name: 'همه محصولات',
         Icon: TbPointFilled,
-        path: '/admin/products',
+        path: ['/admin/products'],
       },
     ],
   },
@@ -108,19 +108,19 @@ const profileData: ProfilePath[] = [
         id: 21,
         name: 'پیشنهاد شگفت انگیز',
         Icon: TbPointFilled,
-        path: '/admin/ads/suggestion',
+        path: ['/admin/ads/suggestion'],
       },
       {
         id: 22,
         name: 'هدایا',
         Icon: TbPointFilled,
-        path: '/admin/ads/gift',
+        path: ['/admin/ads/gift'],
       },
       {
         id: 23,
         name: 'تخفیفات',
         Icon: TbPointFilled,
-        path: '/admin/ads/coupon',
+        path: ['/admin/ads/coupon'],
       },
     ],
   },
@@ -133,13 +133,13 @@ const profileData: ProfilePath[] = [
         id: 3,
         name: 'مقاله جدید',
         Icon: TbPointFilled,
-        path: '/admin/articles/create',
+        path: ['/admin/articles/create'],
       },
       {
         id: 3,
         name: 'همه مقالات',
         Icon: TbPointFilled,
-        path: '/admin/articles',
+        path: ['/admin/articles'],
       },
     ],
   },
@@ -152,19 +152,19 @@ const profileData: ProfilePath[] = [
         id: 4,
         name: 'کاربر جدید',
         Icon: TbPointFilled,
-        path: '/admin/users/create',
+        path: ['/admin/users/create'],
       },
       {
         id: 4,
         name: 'همه کاربران',
         Icon: TbPointFilled,
-        path: '/admin/users/personnel',
+        path: ['/admin/users/personnel'],
       },
       {
         id: 4,
         name: 'سمت ها',
         Icon: TbPointFilled,
-        path: '/admin/users/roles',
+        path: ['/admin/users/roles'],
       },
     ],
   },
@@ -177,13 +177,17 @@ const profileData: ProfilePath[] = [
         id: 5,
         name: 'پیام ها',
         Icon: TbPointFilled,
-        path: '/admin/support/messages/ticket',
+        path: [
+          '/admin/support/messages/ticket',
+          '/admin/support/messages/sms-list',
+          '/admin/support/messages/notifications',
+        ],
       },
       {
         id: 5,
         name: 'دیدگاه',
         Icon: TbPointFilled,
-        path: '/admin/support/review/product',
+        path: ['/admin/support/review/product'],
       },
     ],
   },
@@ -196,19 +200,19 @@ const profileData: ProfilePath[] = [
         id: 6,
         name: 'درآمد',
         Icon: TbPointFilled,
-        path: '/admin/analyze',
+        path: ['/admin/analyze'],
       },
       {
         id: 6,
         name: 'مالیات',
         Icon: TbPointFilled,
-        path: '/admin/analyze',
+        path: ['/admin/analyze'],
       },
       {
         id: 6,
         name: 'نمودار فروش',
         Icon: TbPointFilled,
-        path: '/admin/analyze',
+        path: ['/admin/analyze'],
       },
     ],
   },
@@ -221,19 +225,19 @@ const profileData: ProfilePath[] = [
         id: 8,
         name: 'پیکربندی محصولات',
         Icon: TbPointFilled,
-        path: '/admin/product-configuration/categories',
+        path: ['/admin/product-configuration/categories'],
       },
       {
         id: 8,
         name: 'مبالغ و هزینه ها',
         Icon: TbPointFilled,
-        path: '/admin/amount-and-cost/edit-price',
+        path: ['/admin/amount-and-cost/edit-price'],
       },
       {
         id: 8,
         name: 'دپارتمان',
         Icon: TbPointFilled,
-        path: '/admin/department/department-ticket',
+        path: ['/admin/department/department-ticket'],
       },
     ],
   },
@@ -259,10 +263,10 @@ export default function DashboardAdminAside(props: Props) {
   }, [userData])
 
   useEffect(() => {
-    profilePaths.forEach((item, index) => {
+    profilePaths.forEach((item) => {
       if (item.subItem) {
         item.subItem.forEach((subItem) => {
-          if (router.pathname === subItem.path) {
+          if (subItem.path.includes(router.pathname)) {
             setOpenIndex(item.id)
           }
         })
@@ -274,11 +278,12 @@ export default function DashboardAdminAside(props: Props) {
     setOpenIndex(openIndex === index ? null : index)
   }
 
-  const isPathActive = (path: string) => router.pathname === path
+  const isPathActive = (paths: string[]) => paths.includes(router.pathname)
 
-  const isParentPathActive = (subItems?: { path: string }[]) => {
+  const isParentPathActive = (subItems?: { path: string[] }[]) => {
     return subItems?.some((subItem) => isPathActive(subItem.path))
   }
+
   // if (userData) {
   //   console.log(userData, 'userData')
   // }
@@ -291,33 +296,28 @@ export default function DashboardAdminAside(props: Props) {
             {profilePaths.map((item, index) => {
               const isDashboard = item.name === 'پیشخوان'
 
-              // برای سایر آیتمها بررسی permission
               const hasPermission = isDashboard || permissions?.some((p) => p.name === item.name)
 
-              // اگر آیتم دارای subItem است، بررسی تطابق با childPermissions
               const validSubItems = item.subItem?.filter((subItem) => {
                 const parentPermission = permissions?.find((permission) => permission.name === item.name)
                 return parentPermission?.childPermissions?.some((childPerm) => childPerm.name === subItem.name)
               })
 
-              // اگر permission نداشته باشد، این آیتم را نمایش نده
               if (!hasPermission) return null
 
+              const isItemActive = item.path?.includes(router.pathname)
+
               return item.path ? (
-                <Link href={item.path} key={index}>
+                <Link href={item.path[0]} key={index}>
                   <div
                     className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
-                      router.pathname === item.path ? 'text-[#e90089] bg-[#1b1b28]' : ' text-gray-700'
+                      isItemActive ? 'text-[#e90089] bg-[#1b1b28]' : ' text-gray-700'
                     }`}
                     onClick={() => handleToggle(item.id)}
                   >
                     <div className="flex gap-3 items-center">
-                      <item.Icon
-                        className={`text-xl ${router.pathname === item.path ? 'text-[#e90089]' : 'text-[#5a6080]'}`}
-                      />
-                      <span className={`ml-2 ${router.pathname === item.path ? 'text-white' : ' text-gray-400'}`}>
-                        {item.name}
-                      </span>
+                      <item.Icon className={`text-xl ${isItemActive ? 'text-[#e90089]' : 'text-[#5a6080]'}`} />
+                      <span className={`ml-2 ${isItemActive ? 'text-white' : ' text-gray-400'}`}>{item.name}</span>
                     </div>
                     {item.subItem && validSubItems && validSubItems.length > 0 && (
                       <span className="text-white">
@@ -334,7 +334,7 @@ export default function DashboardAdminAside(props: Props) {
                 <div key={index}>
                   <div
                     className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
-                      router.pathname === item.pathName
+                      item.pathName?.includes(router.pathname)
                         ? 'text-[#e90089] bg-[#1b1b28]'
                         : openIndex === item.id
                         ? 'bg-[#1b1b28]'
@@ -344,13 +344,7 @@ export default function DashboardAdminAside(props: Props) {
                   >
                     <div className="flex gap-3 items-center">
                       <item.Icon className="text-xl text-[#5a6080]" />
-                      <span
-                        className={`ml-2 ${
-                          isPathActive(item.pathName || '') || isParentPathActive(item.subItem)
-                            ? 'text-white'
-                            : 'text-gray-400'
-                        }`}
-                      >
+                      <span className={`ml-2 ${isParentPathActive(item.subItem) ? 'text-white' : 'text-gray-400'}`}>
                         {item.name}
                       </span>
                     </div>
@@ -373,13 +367,15 @@ export default function DashboardAdminAside(props: Props) {
                     {validSubItems?.map((subItem, subIndex) => (
                       <Link
                         key={subIndex}
-                        href={subItem.path}
+                        href={subItem.path[0]}
                         className="flex items-center hover:bg-[#1b1b28] py-2.5 text-sm px-6 w-full gap-3 text-[#9899ac]"
                       >
                         <subItem.Icon
-                          className={`mr-4 text-sm ${isPathActive(subItem.path) ? 'text-[#e90089]' : 'text-[#5a6080]'}`}
+                          className={`mr-4 text-sm ${
+                            subItem.path.includes(router.pathname) ? 'text-[#e90089]' : 'text-[#5a6080]'
+                          }`}
                         />
-                        <span className={`${isPathActive(subItem.path) ? 'text-white' : 'text-gray-400'}`}>
+                        <span className={`${subItem.path.includes(router.pathname) ? 'text-white' : 'text-gray-400'}`}>
                           {subItem.name}
                         </span>
                       </Link>
@@ -404,6 +400,7 @@ export default function DashboardAdminAside(props: Props) {
               {profilePaths.map((item, index) => {
                 const isDashboard = item.name === 'پیشخوان'
                 const hasPermission = isDashboard || permissions?.some((p) => p.name === item.name)
+
                 const validSubItems = item.subItem?.filter((subItem) => {
                   const parentPermission = permissions?.find((permission) => permission.name === item.name)
                   return parentPermission?.childPermissions?.some((childPerm) => childPerm.name === subItem.name)
@@ -411,21 +408,19 @@ export default function DashboardAdminAside(props: Props) {
 
                 if (!hasPermission) return null
 
+                const isItemActive = item.path?.includes(router.pathname)
+
                 return item.path ? (
-                  <Link href={item.path} key={index}>
+                  <Link href={item.path[0]} key={index}>
                     <div
                       className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
-                        router.pathname === item.path ? 'text-[#e90089] bg-[#1b1b28]' : 'text-gray-700'
+                        isItemActive ? 'text-[#e90089] bg-[#1b1b28]' : 'text-gray-700'
                       }`}
                       onClick={() => handleToggle(item.id)}
                     >
                       <div className="flex gap-3 items-center">
-                        <item.Icon
-                          className={`text-xl ${router.pathname === item.path ? 'text-[#e90089]' : 'text-[#5a6080]'}`}
-                        />
-                        <span className={`ml-2 ${router.pathname === item.path ? 'text-white' : 'text-gray-400'}`}>
-                          {item.name}
-                        </span>
+                        <item.Icon className={`text-xl ${isItemActive ? 'text-[#e90089]' : 'text-[#5a6080]'}`} />
+                        <span className={`ml-2 ${isItemActive ? 'text-white' : 'text-gray-400'}`}>{item.name}</span>
                       </div>
                       {validSubItems && validSubItems.length > 0 && (
                         <span className="text-white">
@@ -442,7 +437,7 @@ export default function DashboardAdminAside(props: Props) {
                   <div key={index}>
                     <div
                       className={`flex cursor-pointer hover:bg-[#1b1b28] justify-between items-center py-2.5 text-sm px-6 pl-4 w-full gap-3 text-[#9899ac] ${
-                        router.pathname === item.pathName
+                        item.pathName?.includes(router.pathname)
                           ? 'text-[#e90089] bg-[#1b1b28]'
                           : openIndex === item.id
                           ? 'bg-[#1b1b28]'
@@ -452,13 +447,7 @@ export default function DashboardAdminAside(props: Props) {
                     >
                       <div className="flex gap-3 items-center">
                         <item.Icon className="text-xl text-[#5a6080]" />
-                        <span
-                          className={`ml-2 ${
-                            isPathActive(item.pathName || '') || isParentPathActive(item.subItem)
-                              ? 'text-white'
-                              : 'text-gray-400'
-                          }`}
-                        >
+                        <span className={`ml-2 ${isParentPathActive(item.subItem) ? 'text-white' : 'text-gray-400'}`}>
                           {item.name}
                         </span>
                       </div>
@@ -481,15 +470,17 @@ export default function DashboardAdminAside(props: Props) {
                       {validSubItems?.map((subItem, subIndex) => (
                         <Link
                           key={subIndex}
-                          href={subItem.path}
+                          href={subItem.path[0]}
                           className="flex items-center hover:bg-[#1b1b28] py-2.5 text-sm px-6 w-full gap-3 text-[#9899ac]"
                         >
                           <subItem.Icon
                             className={`mr-4 text-sm ${
-                              isPathActive(subItem.path) ? 'text-[#e90089]' : 'text-[#5a6080]'
+                              subItem.path?.includes(router.pathname) ? 'text-[#e90089]' : 'text-[#5a6080]'
                             }`}
                           />
-                          <span className={`${isPathActive(subItem.path) ? 'text-white' : 'text-gray-400'}`}>
+                          <span
+                            className={`${subItem.path?.includes(router.pathname) ? 'text-white' : 'text-gray-400'}`}
+                          >
                             {subItem.name}
                           </span>
                         </Link>

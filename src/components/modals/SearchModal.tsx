@@ -66,26 +66,32 @@ const SearchModal: React.FC<Props> = (props) => {
       searchRef.current.focus() // فوکوس کردن بر روی input
     }
   }, [isShowSearchInput])
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
-        setIsShowSearchInput(false)
-      }
-    }
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
+  //       setIsShowSearchInput(false)
+  //     }
+  //   }
 
-    document.addEventListener('mousedown', handleClickOutside)
+  //   document.addEventListener('mousedown', handleClickOutside)
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside)
+  //   }
+  // }, [])
   // ? Render(s)
   return (
     <>
+    {isShowSearchInput && (
+        <div
+          className="fixed inset-0 z-10"
+          onClick={() => setIsShowSearchInput(false)}
+        />
+      )}
       <div className={`sm:w-2/3 w-full border relative rounded-md ${isShowSearchInput ? 'rounded-b-none' : ''} `}>
         {/* input   */}
         {isShowSearchInput ? (
-          <div ref={searchInputRef} className="w-full rounded-md rounded-b-none px-3 pb-2 bg-white shadow-item">
+          <div ref={searchInputRef} className="w-full rounded-md rounded-b-none px-3 pb-2 bg-white shadow-item relative z-20">
             <div className="flex flex-row-reverse  border-b border-blue-300 w-full ">
               <input
                 type="text"

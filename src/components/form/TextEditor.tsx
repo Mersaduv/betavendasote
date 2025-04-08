@@ -939,6 +939,23 @@ const Editor: React.FC<EditorProps> = ({ value, onChange, placeholder , isSuppor
       '|',
       'removeFormat',
     ],
+    fontFamily: {
+      options: [
+        'default',
+        'IRANSansWeb, sans-serif',
+        'Arial, Helvetica, sans-serif',
+        'Courier New, Courier, monospace',
+        'Georgia, serif',
+        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+        'Tahoma, Geneva, sans-serif',
+        'Times New Roman, Times, serif',
+        'Trebuchet MS, Helvetica, sans-serif',
+        'Verdana, Geneva, sans-serif',
+      ],
+      supportAllValues: true,
+      default: 'IRANSansWeb',
+    },
+    
     heading: {
       options: [
         {

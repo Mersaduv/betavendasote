@@ -15,12 +15,14 @@ import { Button, DisplayError } from '@/components/ui'
 import { FaUserPen, FaUsers } from 'react-icons/fa6'
 import { HiUsers } from 'react-icons/hi'
 import { FaUserTie } from 'react-icons/fa'
+import { useAppSelector } from '@/hooks'
 
 interface Props {}
 const NewSms: NextPage<Props> = () => {
   // ? Assets
   const { query, push } = useRouter()
   const [userType, setUserType] = useState('')
+  const { generalSetting } = useAppSelector((state) => state.design)
   const [towards, setTowards] = useState('0')
   const [userRole, setUserRole] = useState('0')
   const [sendingTime, setSendingTime] = useState(1)
@@ -127,6 +129,7 @@ const NewSms: NextPage<Props> = () => {
             error={error}
             message={data?.message}
             onSuccess={onSuccess}
+            errorAndSuccess={data?.success}
           />
         )}
 
@@ -184,8 +187,8 @@ const NewSms: NextPage<Props> = () => {
                               <option className="appearance-none text-sm" value="">
                                 انتخاب کنید
                               </option>
+                              <option value={'1'}>{generalSetting?.title}</option>
                               <option value={'0'}>مشتری</option>
-                              <option value={'1'}>پرسنل</option>
                               <option value={'2'}>فروشنده</option>
                             </select>
                           </div>
