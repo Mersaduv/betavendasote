@@ -44,14 +44,14 @@ const ArticleBanners: React.FC = () => {
         {articleBannerSort.slice(0, 4).map((articleBanner, index) => (
           <Link href={`/articles/${getArticleSlugById(articleBanner.articleId)}`} className="relative" key={articleBanner.id}>
             <div
-              className={`rounded-lg p-[13px] absolute bottom-[30px] ${
+              className={`rounded-lg p-[13px]  absolute bottom-[30px] ${
                 index % 2 === 0 ? 'right-0 rounded-r-none' : 'left-0 rounded-l-none'
               } bg-[#f7f7f5] shadow-article-banner${index % 2 === 0 ? '' : '-l'}`}
             >
               <div className="line-clamp-1 overflow-hidden text-ellipsis max-w-96">{articleBanner.title}</div>
             </div>
             <img
-              className="h-auto max-w-full rounded-lg"
+              className="h-auto max-w-full rounded-lg shadow-item"
               src={articleBanner.imagesSrc?.imageUrl}
               alt={articleBanner.title}
             />

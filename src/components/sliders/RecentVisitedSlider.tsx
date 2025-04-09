@@ -92,6 +92,8 @@ const RecentVisitedSlider: React.FC<Props> = (props) => {
                 }
                 return false
               }
+              const availableItems = product.stockItems.filter((item) => item.price > 0 && item.quantity > 0)
+            const isInStock = product.stockItems.some((item) => item.quantity > 0)
 
               return (
                 <div
@@ -113,27 +115,26 @@ const RecentVisitedSlider: React.FC<Props> = (props) => {
                           {product.title}
                         </h2>
                         <div className="mt-1.5 flex justify-center gap-x-2 px-2 relative">
-                          {!getStockStatus(product.stockItems) ? (
-                            <div className="text-gray-400 font-semibold mb-1">ناموجود</div>
-                          ) : filteredItems.length > 0 ? (
-                            <>
-                              {filteredItems[0].discount > 0 && (
-                                <ProductDiscountTag
-                                  price={filteredItems[0].price}
-                                  discount={filteredItems[0].discount}
-                                  isSlider
-                                />
-                              )}
-
-                              <ProductPriceDisplay
-                                inStock={product.inStock}
-                                discount={filteredItems[0].discount}
-                                price={filteredItems[0].price}
+                        {!isInStock ? (
+                          <div className="text-gray-400 font-semibold mb-1">ناموجود</div>
+                        ) : availableItems.length > 0 ? (
+                          <>
+                            {availableItems[0].discount > 0 && (
+                              <ProductDiscountTag
+                                price={availableItems[0].price}
+                                discount={availableItems[0].discount}
+                                isSlider
                               />
-                            </>
-                          ) : (
-                            <div className="text-gray-400 font-semibold mb-1">ناموجود</div>
-                          )}
+                            )}
+                            <ProductPriceDisplay
+                              inStock={product.inStock}
+                              discount={availableItems[0].discount}
+                              price={availableItems[0].price}
+                            />
+                          </>
+                        ) : (
+                          <div className="text-gray-400 font-semibold mb-1">ناموجود</div>
+                        )}
                           {/* <div className="">
                           {filteredItems[0].discount > 0 && (
                             <ProductDiscountTag

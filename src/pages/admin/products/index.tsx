@@ -144,54 +144,54 @@ const Products: NextPage = () => {
     isSuccess: isAllProductsSuccess,
     refetch: refetchAllProducts,
   } = useFetchProducts('adminList')
-  // const {
-  //   data: activeProducts,
-  //   isError: isActiveProductsError,
-  //   isFetching: isActiveProductsFetching,
-  //   isSuccess: isActiveProductsSuccess,
-  //   refetch: refetchActiveProducts,
-  // } = useFetchProducts('isActive')
-  // const {
-  //   data: inactiveProducts,
-  //   isError: isInactiveProductsError,
-  //   isFetching: isInactiveProductsFetching,
-  //   isSuccess: isInactiveProductsSuccess,
-  //   refetch: refetchInactiveProducts,
-  // } = useFetchProducts('inActive')
-  // const {
-  //   data: deletedProducts,
-  //   isError: isDeletedProductsError,
-  //   isFetching: isDeletedProductsFetching,
-  //   isSuccess: isDeletedProductsSuccess,
-  //   refetch: refetchDeletedProducts,
-  // } = useFetchProducts('isDeleted')
+  const {
+    data: activeProducts,
+    isError: isActiveProductsError,
+    isFetching: isActiveProductsFetching,
+    isSuccess: isActiveProductsSuccess,
+    refetch: refetchActiveProducts,
+  } = useFetchProducts('isActive')
+  const {
+    data: inactiveProducts,
+    isError: isInactiveProductsError,
+    isFetching: isInactiveProductsFetching,
+    isSuccess: isInactiveProductsSuccess,
+    refetch: refetchInactiveProducts,
+  } = useFetchProducts('inActive')
+  const {
+    data: deletedProducts,
+    isError: isDeletedProductsError,
+    isFetching: isDeletedProductsFetching,
+    isSuccess: isDeletedProductsSuccess,
+    refetch: refetchDeletedProducts,
+  } = useFetchProducts('isDeleted')
 
-  // const {
-  //   data: pendingProducts,
-  //   isError: isPendingProductsError,
-  //   isFetching: isPendingProductsFetching,
-  //   isSuccess: isPendingProductsSuccess,
-  //   refetch: refetchPendingProducts,
-  // } = useFetchProducts('isPublishTime')
+  const {
+    data: pendingProducts,
+    isError: isPendingProductsError,
+    isFetching: isPendingProductsFetching,
+    isSuccess: isPendingProductsSuccess,
+    refetch: refetchPendingProducts,
+  } = useFetchProducts('isPublishTime')
 
   useEffect(() => {
     if (allProducts) setProductsPagination(allProducts)
   }, [allProducts])
 
-  // useEffect(() => {
-  //   if (activeProducts) setProductsActivePagination(activeProducts)
-  // }, [activeProducts])
+  useEffect(() => {
+    if (activeProducts) setProductsActivePagination(activeProducts)
+  }, [activeProducts])
 
-  // useEffect(() => {
-  //   if (inactiveProducts) setProductsInActivePagination(inactiveProducts)
-  // }, [inactiveProducts])
+  useEffect(() => {
+    if (inactiveProducts) setProductsInActivePagination(inactiveProducts)
+  }, [inactiveProducts])
 
-  // useEffect(() => {
-  //   if (deletedProducts) setProductsIsDeletedPagination(deletedProducts)
-  // }, [deletedProducts])
-  // useEffect(() => {
-  //   if (pendingProducts) setProductsIsPendingPagination(pendingProducts)
-  // }, [pendingProducts])
+  useEffect(() => {
+    if (deletedProducts) setProductsIsDeletedPagination(deletedProducts)
+  }, [deletedProducts])
+  useEffect(() => {
+    if (pendingProducts) setProductsIsPendingPagination(pendingProducts)
+  }, [pendingProducts])
   useEffect(() => {
     switch (name) {
       case 'allProducts':

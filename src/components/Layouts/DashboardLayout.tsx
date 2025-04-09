@@ -78,11 +78,11 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
           <div className="pl-2 sm:pl-4 md:pl-6">{digitsEnToFa(currentDate)}</div>
         </div>
       </header>
-      <div className="flex mt-[75px] bg-[#f5f8fa] h-screen w-full">
+      <div className="flex mt-[75px] bg-[#f5f8fa]  w-full">
         <div className="">
           <DashboardAdminAside setOpenRight={setOpenRight} openRight={openRight} />
         </div>
-        <div className="w-full flex flex-col items-start max-w-screen-2xl  mx-auto">{children}</div>
+        <div className="w-full flex flex-col items-start max-w-screen-2xl bg-[#f5f8fa] mx-auto">{children}</div>
       </div>
     </ProtectedRouteWrapper>
   )

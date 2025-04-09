@@ -120,6 +120,15 @@ export { default as Support } from './svgs/support.svg'
 export { default as CashOnDelivery } from './svgs/cash-on-delivery.svg'
 export { default as Daysreturn } from './svgs/days-return.svg'
 export { default as OriginalProducts } from './svgs/original-products.svg'
+
+export { default as CartAd } from './svgs/cart2.svg'
+export { default as DislikeAd } from './svgs/dislike2.svg'
+export { default as RepeatAd } from './svgs/repeat2.svg'
+export { default as EmailAd } from './svgs/email2.svg'
+export { default as MessageAd } from './svgs/messsage2.svg'
+export { default as WalletAd } from './svgs/wallet2.svg'
+
+
 import user2 from './svgs/user-2.png';
 import user3 from './svgs/user-3.png';
 

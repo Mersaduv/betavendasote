@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 
-import { addToCart, showAlert } from '@/store'
+import { addToCart, setInStock, showAlert } from '@/store'
 
 import { exsitItem } from '@/utils'
 
 import { useAppDispatch, useAppSelector } from '@/hooks'
 
 import { CartItemActions } from '@/components/cart'
-import { ArrowLink } from '@/components/ui'
+import { ArrowLink, Button } from '@/components/ui'
 import { ProductPriceDisplay } from '@/components/product'
 
 import type { IProduct, ICart } from '@/types'
@@ -25,10 +25,11 @@ const CartOperations: React.FC<Porps> = (props) => {
 
   // ? Store
   const { cartItems, tempColor, tempSize, tempObjectValue } = useAppSelector((state) => state.cart)
-
+  const { inStock } = useAppSelector((state) => state.stateString)
   // ? State
   const [currentItemInCart, setCurrentItemInCart] = useState<ICart | undefined>(undefined)
-  const firstStockItemWithPriceOrDiscount = product.stockItems.find(item => item.price > 0 || item.discount > 0) || product.stockItems[0];
+  const firstStockItemWithPriceOrDiscount =
+    product.stockItems.find((item) => item.price > 0 || item.discount > 0) || product.stockItems[0]
   const [currentPrice, setCurrentPrice] = useState(firstStockItemWithPriceOrDiscount?.price ?? 0)
   const [currentDiscount, setCurrentDiscount] = useState(firstStockItemWithPriceOrDiscount?.discount ?? 0)
 
@@ -122,14 +123,31 @@ const CartOperations: React.FC<Porps> = (props) => {
             <ArrowLink path="/checkout/cart">مشاهده سبد خرید</ArrowLink>
           </div>
         </div>
-      ) : (
+      ) : inStock === 'true' ? (
         <button onClick={handleAddItem} className="btn text-sm xs:px-12 whitespace-nowrap xs:text-base md:w-1/2 ">
           افزودن به سید خرید{' '}
         </button>
-      )}
+      ) : null}
 
       <div className="min-w-fit md:flex md:justify-center md:w-full md:self-end">
-        <ProductPriceDisplay inStock={product.inStock} discount={currentDiscount} price={currentPrice} singleProduct />
+        {(() => {
+          const availableItems = product.stockItems.filter((item) => item.price > 0 && item.quantity > 0)
+          const isInStock = product.stockItems.some((item) => item.quantity > 0)
+
+          if (!isInStock || availableItems.length === 0 || currentPrice <= 0) {
+            dispatch(setInStock('false'))
+            return null
+          }
+          dispatch(setInStock('true'))
+          return (
+            <ProductPriceDisplay
+              inStock={product.inStock}
+              discount={currentDiscount}
+              price={currentPrice}
+              singleProduct
+            />
+          )
+        })()}
       </div>
     </div>
   )

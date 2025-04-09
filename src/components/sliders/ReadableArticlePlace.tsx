@@ -84,7 +84,7 @@ const ReadableArticlePlace: React.FC<Props> = (props) => {
                         <img
                           src={article.image.imageUrl}
                           alt={article.title}
-                          className="rounded-lg transition duration-300 ease-in-out transform hover:scale-110"
+                          className="rounded-lg transition duration-300 ease-in-out transform hover:scale-110 shadow-item"
                         />
                         <p
                           dir="rtl"

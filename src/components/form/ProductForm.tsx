@@ -1503,7 +1503,7 @@ const Table: React.FC<PropTable> = (props) => {
               <th className="px-4 whitespace-nowrap py-2 font-normal">
                 <div className="flex items-center justify-center gap-1">
                   <div>قیمت خرید</div>
-                  <div title="تکرار مبلغ خرید" className="py-2 px-1 cursor-pointer">
+                  <div title="تکرار قیمت خرید" className="py-2 px-1 cursor-pointer">
                     <FaArrowDownLong
                       onClick={() => handleCheckboxChange('purchasePrice', true)}
                       className="text-gray-400 hover:border border-gray-400"
@@ -1654,10 +1654,10 @@ const Table: React.FC<PropTable> = (props) => {
                         className="peer m-0 block rounded-lg h-[50px] w-full border border-solid border-gray-200 bg-transparent bg-clip-padding pr-0 pl-3 py-4 text-xl font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none peer-focus:text-primary dark:border-neutral-400 dark:text-white dark:autofill:shadow-autofill dark:focus:border-primary dark:peer-focus:text-primary [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem]"
                         id="floatingInput"
                         placeholder="موجودی انبار"
-                        value={digitsEnToFa(stockItems[idx]?.quantity || 0)}
+                        value={digitsEnToFa(stockItems[idx]?.quantity || '')}
                         onChange={(e) => handleInputChange(idx, 'quantity', digitsFaToEn(e.target.value))}
                         onFocus={(e) => (e.target.value = digitsEnToFa(stockItems[idx]?.quantity || ''))}
-                        onBlur={(e) => (e.target.value = digitsEnToFa(stockItems[idx]?.quantity || 0))}
+                        onBlur={(e) => (e.target.value = digitsEnToFa(stockItems[idx]?.quantity || ''))}
                       />
                       <label
                         htmlFor="floatingInput"
@@ -1671,11 +1671,11 @@ const Table: React.FC<PropTable> = (props) => {
                       dir="ltr"
                       type="text"
                       placeholder=""
-                      value={digitsEnToFa(stockItems[idx]?.quantity || 0)}
+                      value={digitsEnToFa(stockItems[idx]?.quantity || '')}
                       onChange={(e) => handleInputChange(idx, 'quantity', digitsFaToEn(e.target.value))}
                       className="w-36 h-9 rounded-lg text-center border border-gray-300"
                       onFocus={(e) => (e.target.value = digitsEnToFa(stockItems[idx]?.quantity || ''))}
-                      onBlur={(e) => (e.target.value = digitsEnToFa(stockItems[idx]?.quantity || 0))}
+                      onBlur={(e) => (e.target.value = digitsEnToFa(stockItems[idx]?.quantity || ''))}
                     />
                   )}
                 </td>

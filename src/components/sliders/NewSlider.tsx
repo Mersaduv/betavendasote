@@ -25,7 +25,7 @@ const NewSlider: React.FC<Props> = (props) => {
   const carouselOptions = {
     margin: 10,
     nav: true,
-    startPosition: products ? products.filter(item=> item.stockItems.every((item) => item.quantity !== 0)).length - 1 : 0,
+    startPosition: products ? products.length - 1 : 0,
     responsive: {
       0: {
         items: 2,
@@ -66,27 +66,9 @@ const NewSlider: React.FC<Props> = (props) => {
           {...carouselOptions}
           dir="ltr"
         >
-          {products?.filter(item=> item.stockItems.every((item) => item.quantity !== 0)).map((product) => {
-            const filteredItems = product.stockItems.filter((item) => {
-              if (item.discount === 0 && item.price > 0 && item.quantity === 0) {
-                return true
-              } else if (item.discount > 0 && item.price > 0 && item.quantity === 0) {
-                return true
-              } else if (item.discount === 0 && item.price > 0 && item.quantity > 0) {
-                return true
-              } else if (item.discount > 0 && item.price > 0 && item.quantity > 0) {
-                return true
-              }
-              return false
-            })
-
-            const getStockStatus = (stockItems: GetStockItems[]) => {
-              if (stockItems.every((item) => item.quantity !== 0)) {
-                return true
-              }
-              return false
-            }
-
+          {products.map((product) => {
+            const availableItems = product.stockItems.filter((item) => item.price > 0 && item.quantity > 0)
+            const isInStock = product.stockItems.some((item) => item.quantity > 0)
             return (
               <div
                 key={product.id}
@@ -107,22 +89,21 @@ const NewSlider: React.FC<Props> = (props) => {
                         {product.title}
                       </h2>
                       <div className="mt-1.5 flex justify-center gap-x-2 px-2 relative">
-                        {!getStockStatus(product.stockItems) ? (
+                        {!isInStock ? (
                           <div className="text-gray-400 font-semibold mb-1">ناموجود</div>
-                        ) : filteredItems.length > 0 ? (
+                        ) : availableItems.length > 0 ? (
                           <>
-                            {filteredItems[0].discount > 0 && (
+                            {availableItems[0].discount > 0 && (
                               <ProductDiscountTag
-                                price={filteredItems[0].price}
-                                discount={filteredItems[0].discount}
+                                price={availableItems[0].price}
+                                discount={availableItems[0].discount}
                                 isSlider
                               />
                             )}
-
                             <ProductPriceDisplay
                               inStock={product.inStock}
-                              discount={filteredItems[0].discount}
-                              price={filteredItems[0].price}
+                              discount={availableItems[0].discount}
+                              price={availableItems[0].price}
                             />
                           </>
                         ) : (

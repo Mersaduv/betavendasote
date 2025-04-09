@@ -313,15 +313,15 @@ const SubCategoryUpdateModal: React.FC<Props> = (props) => {
               <div className="flex py-3 pt-2 items-start gap-x-12 border mx-6 rounded-lg px-2">
                 <div className="flex flex-col w-full">
                   <h3 className="text-start pb-2">محل قرارگیری دسته</h3>
-                  {categoryList.length > 0 && (
+                    {categoryList.length > 0 && (
                     <SelectParentCategoryCombobox
                       selectedCategory={selectedCategory}
                       setSelectedCategory={setSelectedCategory}
                       setParentCategory={setParentCategory}
-                      categories={categoryList ?? []}
+                      categories={categoryList.filter((c) => c.name !== category?.name) ?? []}
                       onCategorySelect={handleCategorySelect}
                     />
-                  )}
+                    )}
                 </div>
               </div>
 

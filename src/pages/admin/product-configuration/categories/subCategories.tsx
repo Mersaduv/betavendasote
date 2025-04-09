@@ -14,6 +14,7 @@ import { NextPage } from 'next'
 import {
   ConfirmDeleteModal,
   FeaturesModal,
+  RefundModal,
   SizesModal,
   SubCategoryModal,
   SubCategorySizesModal,
@@ -75,6 +76,7 @@ const ParentSubCategoriesTree: NextPage = () => {
     const dispatch = useAppDispatch()
     const [isShowConfirmDeleteModal, confirmDeleteModalHandlers] = useDisclosure()
     const [isShowFeaturesModal, featuresModalHandlers] = useDisclosure()
+    const [isShowRefundModal, refundModalHandlers] = useDisclosure()
     const [stateCategoryFeatures, setStateCategoryFeatures] = useState<ICategory>()
     const [deleteInfo, setDeleteInfo] = useState({
       id: '',
@@ -108,6 +110,10 @@ const ParentSubCategoriesTree: NextPage = () => {
     const handlerEditFeaturesModal = (category: ICategory) => {
       setStateCategoryFeatures(category)
       featuresModalHandlers.open()
+    }
+
+    const handlerRefundModal = () => {
+      refundModalHandlers.open()
     }
 
     //*   Delete Handlers
@@ -163,6 +169,7 @@ const ParentSubCategoriesTree: NextPage = () => {
     return (
       <ProtectedRouteWrapper>
         <>
+          <RefundModal isShow={isShowRefundModal} onClose={refundModalHandlers.close} />
           <FeaturesModal
             refetch={subRefetch}
             category={stateCategoryFeatures ?? undefined}
@@ -250,8 +257,7 @@ const ParentSubCategoriesTree: NextPage = () => {
                         {category.productSizeCount > 0 ? <span className="pr-1.5 text-white">{'✓'}</span> : ''}
                       </Button>
                       <Button
-                        disabled={!category.isActiveProduct}
-                        onClick={() => handlerEditFeaturesModal(category)}
+                        onClick={handlerRefundModal}
                         className={` ${
                           category.isActiveProduct ? 'bg-sky-500' : ' bg-gray-400'
                         } text-white text-xs  font-medium rounded-md w-[70px] pr-0 pl-0 text-start whitespace-nowrap h-[10px]`}

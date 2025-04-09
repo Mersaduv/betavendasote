@@ -89,6 +89,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
       inStock: '1',
       pageSize: 30,
       isActive: true,
+      isClient:true
     },
     {
       selectFromResult: ({ data, isFetching }) => ({
@@ -108,6 +109,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
       // sortBy: 'LastUpdated',
       // sort: "desc",
       // inStock: '1',
+      isClient:true
     },
     {
       selectFromResult: ({ data, isFetching }) => ({
@@ -123,6 +125,7 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
       inStock: '1',
       pageSize: 30,
       isActive: true,
+      isClient:true
     },
     {
       selectFromResult: ({ data, isFetching }) => ({
@@ -161,7 +164,6 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
     isActive: true,
   })
   console.log(newProductsData, 'newProductsData')
-
   // ? Render(s)
   return (
     <ClientLayout>
@@ -175,8 +177,8 @@ const Home: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = (props) =
           <MainSlider data={sliders?.data ?? []} />
 
           {/* //  newest slider */}
-          {newProductsData &&
-            newProductsData.filter((item) => item.stockItems.every((item) => item.quantity !== 0)).length > 0 && (
+          { newProductsData &&
+            newProductsData.length > 0 && (
               <div className="relative pt-28 sm:pt-0">
                 <div className="w-full block  sm:hidden text-center px-3 line-clamp-2 overflow-hidden text-ellipsis  whitespace-nowrap -mt-20 text-lg text-gray-400 ">
                   جدید ترین های {generalSetting?.title}

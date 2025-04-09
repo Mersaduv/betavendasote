@@ -37,7 +37,7 @@ const ProductsHome: NextPage = () => {
   const { generalSetting } = useAppSelector((state) => state.design)
   // ? Querirs
   //*    Get Products Data
-  const { data, ...productsQueryProps } = useGetProductsQuery({ ...query, sort: sort })
+  const { data, ...productsQueryProps } = useGetProductsQuery({ ...query, sort: sort, isActive: true, isClient: true })
 
   const { data: singleCategoryData, refetch: refetchSingleCategoryData } = useGetSingleCategoryQuery({
     id: categoryId,
@@ -52,6 +52,7 @@ const ProductsHome: NextPage = () => {
       // sortBy: 'LastUpdated',
       // sort: "desc",
       // inStock: '1',
+      isClient: true,
     },
     {
       selectFromResult: ({ data, isFetching }) => ({
@@ -67,6 +68,7 @@ const ProductsHome: NextPage = () => {
       inStock: '1',
       pageSize: 30,
       isActive: true,
+      isClient: true,
     },
     {
       selectFromResult: ({ data, isFetching }) => ({
@@ -178,7 +180,7 @@ const ProductsHome: NextPage = () => {
         {/* //  discount slider */}
         {discountProductsData && discountProductsData.length > 0 && (
           <div className="pt-28 sm:pt-0 relative">
-             <hr className="pb-10 mx-8 border-t-2 mt-28" />
+            <hr className="pb-10 mx-8 border-t-2 mt-28" />
             <div className="w-full block text-center px-3 line-clamp-2 overflow-hidden text-ellipsis  sm:hidden whitespace-nowrap -mt-20 text-lg text-gray-400 ">
               تخفیف های {generalSetting?.title}
             </div>

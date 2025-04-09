@@ -17,7 +17,13 @@ import { useAppDispatch, useDisclosure } from '@/hooks'
 import { ProductFeature } from '@/services/feature/types'
 import { useDeleteCategoryMutation, useGetAllCategoriesQuery, useGetParenSubCategoriesQuery } from '@/services'
 import { useRouter } from 'next/router'
-import { CategoryModal, CategoryUpdateModal, ConfirmDeleteModal, SizesModal, CategoryBrandsModal } from '@/components/modals'
+import {
+  CategoryModal,
+  CategoryUpdateModal,
+  ConfirmDeleteModal,
+  SizesModal,
+  CategoryBrandsModal,
+} from '@/components/modals'
 import { showAlert } from '@/store'
 import { ProtectedRouteWrapper } from '@/components/user'
 
@@ -39,6 +45,8 @@ const Categories: NextPage = () => {
   const [subCategorySearchTerm, setSubCategorySearchTerm] = useState('')
   const [isShowBrandsModal, brandsModalHandlers] = useDisclosure()
   const [stateCategoryBrands, setStateCategoryBrands] = useState<ICategory>()
+  const [brandsModalKey, setBrandsModalKey] = useState(Date.now())
+
   // ? Assets
   const dispatch = useAppDispatch()
   const { query, push } = useRouter()
@@ -96,6 +104,11 @@ const Categories: NextPage = () => {
   }
 
   // ? Handlers
+  const handleCloseBrandsModal = () => {
+    setBrandsModalKey(Date.now())
+    brandsModalHandlers.close()
+  }
+
   const handleSearchSubCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSubCategorySearchTerm(event.target.value)
   }
@@ -161,9 +174,9 @@ const Categories: NextPage = () => {
   }
 
   const handlerEditBrandsModal = (category: ICategory) => {
-      setStateCategoryBrands(category)
-      brandsModalHandlers.open()
-    }
+    setStateCategoryBrands(category)
+    brandsModalHandlers.open()
+  }
   return (
     <ProtectedRouteWrapper>
       <>
@@ -218,11 +231,12 @@ const Categories: NextPage = () => {
         />
 
         <CategoryBrandsModal
+          key={brandsModalKey}
           brands={stateCategoryBrands?.brands ?? undefined}
           refetch={refetch}
           category={stateCategoryBrands ?? undefined}
           isShow={isShowBrandsModal}
-          onClose={brandsModalHandlers.close}
+          onClose={handleCloseBrandsModal}
         />
 
         <DashboardLayout>
@@ -273,11 +287,11 @@ const Categories: NextPage = () => {
                       <table className="w-[700px] md:w-full mx-auto">
                         <thead className="bg-sky-300">
                           <tr>
-                            <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[70px] text-center">تصویر</th>
-                            <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-center">
+                            <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[150px] text-start">تصویر</th>
+                            <th className="text-sm py-3 px-2 pr-0 text-gray-600 font-normal w-[150px] text-start">
                               نام
                             </th>
-                            <th className="text-sm py-3 px-2 text-gray-600 font-normal">زیردسته</th>
+                            <th className="text-sm py-3 px-2 text-gray-600 font-normal w-[20%]">زیردسته</th>
                             <th className="text-sm py-3 px-2 text-gray-600 font-normal">برند</th>
                             <th className="text-sm py-3 px-2 text-gray-600 font-normal">محصولات مرتبط</th>
                             <th className="text-sm py-3 px-2 text-gray-600 font-normal">وضعیت</th>
@@ -295,10 +309,10 @@ const Categories: NextPage = () => {
                                     alt="p-img"
                                   />
                                 </td>
-                                <td className="text-center">
+                                <td className="text-start">
                                   <div
-                                    onClick={() => handlerEditCategoryModal(category)}
-                                    className="text-sm text-sky-500 cursor-pointer "
+                                    // onClick={() => handlerEditCategoryModal(category)}
+                                    className="text-sm"
                                   >
                                     {category.name}
                                   </div>
@@ -306,7 +320,10 @@ const Categories: NextPage = () => {
                                 <td className="text-center text-sm text-gray-600">
                                   {digitsEnToFa(countAllChildCategories(category))}
                                 </td>
-                                <td onClick={() => handlerEditBrandsModal(category)} className="text-center text-sm text-sky-500 cursor-pointer farsi-digits">
+                                <td
+                                  onClick={() => handlerEditBrandsModal(category)}
+                                  className="text-center text-sm text-sky-500 cursor-pointer farsi-digits"
+                                >
                                   {category.brands.length}
                                 </td>
                                 <td className="text-center text-sm text-gray-600">
@@ -362,6 +379,15 @@ const Categories: NextPage = () => {
                                         </> */}
                                           {({ close }) => (
                                             <>
+                                              <button
+                                                onClick={() => {
+                                                  handlerEditCategoryModal(category)
+                                                  close()
+                                                }}
+                                                className="flex justify-start gap-x-2 px-3 py-2 hover:bg-gray-100 w-full"
+                                              >
+                                                <span>ویرایش</span>
+                                              </button>
                                               <button
                                                 onClick={() => {
                                                   handleChangeRoute(category.id)

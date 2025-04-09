@@ -80,12 +80,13 @@ const SingleProduct: NextPage<Props> = (props) => {
   const [lastSeenData, setLastSeenData] = useState<IProduct[]>([])
   const { generalSetting } = useAppSelector((state) => state.design)
   const { featureObjectValues } = useAppSelector((state) => state.objectValue)
-
+  const { inStock } = useAppSelector((state) => state.stateString)
   // ? Queries
   const { products: productDataLastSeen, isFetching: isFetchingLastSeen } = useGetProductsQuery(
     {
       pageSize: 9999, //
       isActive: true,
+      isClient: true,
     },
     {
       selectFromResult: ({ data, isFetching }) => ({
@@ -233,25 +234,31 @@ const SingleProduct: NextPage<Props> = (props) => {
               {product.productSizeInfo?.columns?.map((size, index) => (
                 <div key={size.id} className="flex items-center">
                   <div className="text-sm">{size.name}</div>
-                  {product?.productSizeInfo?.columns && index <  product?.productSizeInfo?.columns.length - 1 && <div className="text-red-600 mx-1">|</div>}
-                </div>
-              ))}
-            </div>
-          </div>
-          {product.inStock > 0 &&product.productFeatureInfo?.colorDTOs&& product.productFeatureInfo?.colorDTOs?.length > 0 && (
-            <div className="w-full flex">
-              <div className="text-[#9e9e9e]  sm:text-base w-[150px]">رنگ</div>
-              {product.productFeatureInfo.colorDTOs.map((color, index) => (
-                <div key={color.id} className="flex items-center">
-                  <div className="whitespace-nowrap text-sm">{color.name}</div>
-                  {product.productFeatureInfo?.colorDTOs && index < product.productFeatureInfo.colorDTOs.length - 1 && (
+                  {product?.productSizeInfo?.columns && index < product?.productSizeInfo?.columns.length - 1 && (
                     <div className="text-red-600 mx-1">|</div>
                   )}
                 </div>
               ))}
             </div>
-          )}
-          {product.inStock > 0 && product.productFeatureInfo?.featureValueInfos&&
+          </div>
+          {product.inStock > 0 &&
+            product.productFeatureInfo?.colorDTOs &&
+            product.productFeatureInfo?.colorDTOs?.length > 0 && (
+              <div className="w-full flex">
+                <div className="text-[#9e9e9e]  sm:text-base w-[150px]">رنگ</div>
+                {product.productFeatureInfo.colorDTOs.map((color, index) => (
+                  <div key={color.id} className="flex items-center">
+                    <div className="whitespace-nowrap text-sm">{color.name}</div>
+                    {product.productFeatureInfo?.colorDTOs &&
+                      index < product.productFeatureInfo.colorDTOs.length - 1 && (
+                        <div className="text-red-600 mx-1">|</div>
+                      )}
+                  </div>
+                ))}
+              </div>
+            )}
+          {product.inStock > 0 &&
+            product.productFeatureInfo?.featureValueInfos &&
             product.productFeatureInfo?.featureValueInfos?.length > 0 &&
             product.productFeatureInfo.featureValueInfos.map((item) => (
               <div key={item.id} className="w-full flex mt-6">
@@ -516,16 +523,29 @@ const SingleProduct: NextPage<Props> = (props) => {
               })}
 
               <div className="z-[99]">
-                {product.inStock > 0 ? (
-                  <AddToCartButton product={product} />
-                ) : (
+                {/* {(() => {
+                  if (inStock == 'false') {
+                    return (
+                      <div className="w-full flex justify-center pt-20">
+                        <Button className="btn bg-gray-300 text-sm xs:px-12 whitespace-nowrap xs:text-base md:w-1/2 ">
+                          اتمام موجودی
+                        </Button>
+                      </div>
+                    )
+                  }
+
+                  return <AddToCartButton product={product} />
+                })()} */}
+                {inStock == 'false' ? (
                   <div className="w-full flex justify-center pt-20">
-                    {' '}
                     <Button className="btn bg-gray-300 text-sm xs:px-12 whitespace-nowrap xs:text-base md:w-1/2 ">
                       اتمام موجودی
                     </Button>
                   </div>
-                )}
+                ) : inStock == 'false' ? (
+                  <AddToCartButton product={product} />
+                ) : null}
+                <AddToCartButton product={product} />
               </div>
             </div>
 
@@ -671,13 +691,13 @@ const SingleProduct: NextPage<Props> = (props) => {
         {lastSeenData.length > 0 && (
           <div className="pt-10 sm:pt-0 relative pb-10">
             <div className="w-full block text-center px-3 line-clamp-2 overflow-hidden text-ellipsis  sm:hidden whitespace-nowrap -mt-20 text-lg text-gray-400 ">
-              بازدید های اخیر شما
+              بازدید های اخیر
             </div>
             <div className="flex w-full bg-slate-300 relative  h-[340px] sm:h-[275px] mt-28">
               <div className="hidden w-[38%] sm:block md:w-[20%]">
                 <div className="hidden sm:block">
                   <div className=" line-clamp-2 overflow-hidden text-ellipsis text-center -mt-20 text-lg text-gray-400  px-3 w-full">
-                    بازدید های اخیر شما
+                    بازدید های اخیر
                   </div>
                 </div>
                 <div className="mt-20 flex justify-center">
