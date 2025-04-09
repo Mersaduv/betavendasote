@@ -9,6 +9,7 @@ import { Pagination } from '@/components/navigation'
 
 import { useGetAllArticleReviewsQuery, useGetProductReviewsQuery } from '@/services'
 import { IArticle, IPagination, IProduct, IReview } from '@/types'
+import { useAppSelector } from '@/hooks'
 
 interface Props {
   numReviews: number
@@ -18,7 +19,6 @@ interface Props {
 const ReviewsList: React.FC<Props> = (props) => {
   // ? Props
   const { numReviews, product } = props
-
   // ? Assets
   const { query } = useRouter()
   const page = query.page ? +query.page : 1

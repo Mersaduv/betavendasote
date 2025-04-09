@@ -54,7 +54,7 @@ const LoginUserForm: React.FC<Props> = (props) => {
   }
 
   return (
-    <form className="space-y-0.5" onSubmit={handleSubmit(onSubmitHandler)}>
+    <form className="flex flex-col justify-between h-full" onSubmit={handleSubmit(onSubmitHandler)}>
       <h2 className="text-gray-300 text-base text-center pb-6">رمز خود را وارد کنید</h2>
       <TextField
         control={control}
@@ -72,8 +72,8 @@ const LoginUserForm: React.FC<Props> = (props) => {
       </LoginButton>
 
       <div className="pt-2 flex items-center ">
-        <p className="ml-1 inline text-gray-800 text-sm mt-6">رمز عبور رو فراموش کردی؟</p>
-        <div className="text-blue-400 text-sm mt-6">فراموشی رمز عبور</div>
+        <p className="ml-1 inline text-gray-800 text-sm mt-6 text-[10px] sm:text-sm">رمز عبور رو فراموش کردی؟</p>
+        <div className="text-blue-400 text-sm mt-6 text-[10px] sm:text-sm">فراموشی رمز عبور</div>
       </div>
     </form>
   )

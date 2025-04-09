@@ -8,7 +8,7 @@ import { ratingStatus, reviewSchema } from '@/utils'
 import { SubmitHandler, useFieldArray, useForm, Resolver } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { useDisclosure } from '@/hooks'
+import { useAppSelector, useDisclosure } from '@/hooks'
 
 import { ArrowLeft, Comment, Delete, Minus, Plus } from '@/icons'
 import { HandleResponse } from '@/components/shared'
@@ -17,6 +17,7 @@ import { Modal, TextField, DisplayError, SubmitModalButton, Button, ResponsiveIm
 import type { IReviewForm } from '@/types'
 import { FaStar } from 'react-icons/fa'
 import { MdClose } from 'react-icons/md'
+import { useRouter } from 'next/router'
 
 interface Props {
   productTitle: string
@@ -31,7 +32,7 @@ interface Props {
 const ReviewModal: React.FC<Props> = (props) => {
   // ? Props
   const { productTitle, prdouctID, productImg } = props
-
+  const { replace, query, push } = useRouter()
   // ? Refs
   const positiveRef = useRef<HTMLInputElement | null>(null)
   const negativeRef = useRef<HTMLInputElement | null>(null)
@@ -40,7 +41,7 @@ const ReviewModal: React.FC<Props> = (props) => {
   const [rating, setRating] = useState(1)
   const [hoverRating, setHoverRating] = useState(0)
   const [isShowReviewModal, reviewModalHandlers] = useDisclosure()
-
+  const { userInfo } = useAppSelector((state) => state.auth)
   // ? Create Review Query
   const [createReview, { isSuccess, isLoading, data, isError, error }] = useCreateReviewMutation()
   const [selectedFiles, setSelectedFiles] = useState<any[]>([])
@@ -83,7 +84,6 @@ const ReviewModal: React.FC<Props> = (props) => {
     name: 'negativePoints',
     control,
   })
-
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -167,7 +167,13 @@ const ReviewModal: React.FC<Props> = (props) => {
       return () => clearTimeout(timeoutId)
     }
   }, [isShowReviewModal])
-
+  const handleOpenModal = () => {
+    if (userInfo) {
+      reviewModalHandlers.open()
+    } else {
+      push('/authentication/login')
+    }
+  }
   // ? Render(s)
   return (
     <>
@@ -193,7 +199,7 @@ const ReviewModal: React.FC<Props> = (props) => {
         />
       )}
 
-      <Button type="button" onClick={reviewModalHandlers.open} className="flex items-center px-3 rounded py-2">
+      <Button type="button" onClick={handleOpenModal} className="flex items-center px-3 rounded py-2">
         <span className="text-sm text-white">دیدگاه خود را بنویسید</span>
       </Button>
 
